@@ -7,7 +7,7 @@
                 <!-- <button type="button" class="btn btn-primary px-4 mt-0 mb-3" onclick="location.href='../hospital/add-patient.html'"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</button> -->
                 <button type="button" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3">
                 
-                    <a href="#" class="mr-2" data-toggle="modal" data-animation="bounce" data-target=".patient-create"><i class="mdi mdi-plus-circle-outline mr-2"></i><span style="color: white;">Add New Patient</span> </a>
+                    <a href="#" class="mr-2" data-toggle="modal" data-animation="bounce" data-target=".patient-create"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</a>
                 </button>
                 <div class="table-responsive">
                     <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -67,8 +67,8 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title mt-0" id="exampleModalLabel">Modal title</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="toast-body">
@@ -116,7 +116,7 @@
 </div>
 {% endblock main %} {% block custome_js %}
 
-<div class="modal fade bs-example-modal-lg patient-create" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg patient_create" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,30 +183,6 @@
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
                     <!-- <button type="button" class="btn btn-sm btn-danger">Delete</button>              -->
                 </form>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal create -->
-
-<!-- MODAL CONFIRM DELETE -->
-<div class="modal fade bs-example-modal-center show confirm-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="padding-right: 15px;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mt-0" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="toast-body">
-                    Are you sure you want to delete {{object}}?
-                </div>
-                <button class="btn btn-danger btn-small">Confirm</button>
-
             </div>
         </div>
         <!-- /.modal-content -->

@@ -1,0 +1,75 @@
+{% extends '_base.html' %} {% load static %} {% load widget_tweaks %} {% block main %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <button type="button" class="btn btn-primary px-4 mt-0 mb-3" data-toggle="modal" data-animation="bounce" data-target=".appointment_create"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Appointment</button>
+                <div class="table-responsive">
+                    <table id="datatable" class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Age</th>
+                            <th>Appo. Date</th>
+                            <th>Appo. Time</th>
+                            <th>Mobile No</th>
+                            <th class="text-right">Action</th>
+                        </tr><!--end tr-->
+                        </thead>
+
+                        <tbody>
+                            {% for object in object_list %}
+                        <tr>
+                            <td>{{object.patient.name}}</td>
+                            <td>{{object.patient.age}}</td>
+                            <td>{{object.date}}</td>
+                            <td>{{object.time}}</td>
+                            <td>{{object.patient.phone}}</td>                                                
+                            <td class="text-right">                                                       
+                                <a href="{{object.get_update_url}}" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                <a href="#" data-toggle="modal" data data-target=".confirm-delete"><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                            </td>
+                        </tr><!--end tr-->
+                        <!-- MODAL CONFIRM DELETE -->
+                        <div class="modal fade bs-example-modal-center show confirm-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="padding-right: 15px;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title mt-0" id="exampleModalLabel">Confirm Delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="toast-body">
+                                            <form method="post" action="{% url 'patients_delete' object.id %}">
+                                                {% csrf_token %} Are you sure you want to delete the appointment of {{object.patient.name}}?
+                                        </div>
+                                        <button class="btn btn-danger btn-small">
+                                            <a href="{{object.get_delete_url}}">Confirm</a>
+                                            
+                                        </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        {% endfor %}
+                                                     
+                        </tbody>
+                    </table>                    
+                </div>                                         
+            </div><!--end card-body--> 
+        </div><!--end card--> 
+    </div> <!--end col-->                               
+</div><!--end row-->    
+
+{% endblock main %}
+
+{% block custome_js %} 
+
+
+
+{% endblock %}

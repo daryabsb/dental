@@ -56,6 +56,7 @@ GENDER = (
 )
 
 class Doctor(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='doctors')
     name = models.CharField(max_length=60)
     degree = models.CharField(max_length=60)
     dob = models.DateField()
@@ -101,6 +102,7 @@ WEEKDAYS = (
 )
 
 class Timetable(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='timetables')
     name = models.CharField(max_length=60)
     weekdays = MultiSelectField(choices=WEEKDAYS)
     start_time = models.TimeField()
@@ -112,6 +114,7 @@ class Timetable(models.Model):
         # return f'{self.name} - {self.weekdays}'
 
 class Schedule(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='schedules')
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
     timetable = models.ForeignKey('Timetable', on_delete=models.CASCADE)
     start_date = models.DateTimeField()
@@ -129,6 +132,7 @@ class Schedule(models.Model):
         return reverse('doctors_schedule_delete', args=(self.pk,))
 
 class Patient(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='patients')
     name = models.CharField(max_length=60)
     dob = models.DateField()
     age = models.PositiveIntegerField(null=True, blank=True)
@@ -157,11 +161,33 @@ class Patient(models.Model):
         return reverse('patients_delete', args=(self.pk,))
 
 class Appointment(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='appointments')
     patient = models.ForeignKey(
         'Patient', on_delete=models.SET_NULL, 
         null=True, blank=True)
-    appointment_date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
+    note = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ('-date',)
 
     def __str__(self):
-        return f'{self.patient} - {self.appointment_date}'
+        return f'{self.patient} - {self.date}({self.time})'
+
+    def get_update_url(self):
+        return reverse('appointments_update', args=(self.pk,))
+
+    def get_delete_url(self):
+        return reverse('appointments_delete', args=(self.pk,))
+
+class CurrentPatients(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='currents')
+    patient = models.ForeignKey(
+        'Patient', on_delete=models.CASCADE)
+
+    arrive_time = models.DateTimeField(auto_now_add=True)
+    appointment = models.ForeignKey(
+        'Appointment', on_delete=models.CASCADE)
+
 

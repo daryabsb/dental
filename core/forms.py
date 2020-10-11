@@ -1,5 +1,5 @@
 from django import forms
-from core.models import User, Address, Doctor, Patient, Timetable, Schedule
+from core.models import User, Address, Doctor, Patient, Timetable, Schedule, Appointment
 # from django_select2.forms import Select2Widget,ModelSelect2Widget
 # from contact.models import Customer
 # from product.models import ProductVariant
@@ -34,6 +34,13 @@ class DoctorScheduleForm(forms.ModelForm):
             'doctor', 'timetable','start_date','end_date', 'note' 
         ]
 
+class AppointmentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Appointment
+        fields = [
+            'patient', 'date','time', 'note'
+        ]
 
 
 class AddressForm(forms.ModelForm):
