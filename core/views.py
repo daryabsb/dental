@@ -7,8 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 
 
-from .models import User, Address, Doctor, Patient, Appointment, Schedule
-from .forms import DoctorForm, PatientForm, DoctorScheduleForm, AppointmentForm
+from .models import (
+    User, Address, Doctor, Patient, Appointment, Schedule,
+    Attachment, Treatment,)
+from .forms import (
+    DoctorForm, PatientForm, DoctorScheduleForm, AppointmentForm,
+    TreatmentForm,)
 
 from django.views.generic import View, ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -234,3 +238,42 @@ class AppointmentDeleteView(DeleteView):
 
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)
+
+
+class TreatmentListView(ListView):
+    model = Treatment
+
+
+class TreatmentCreateView(CreateView):
+    model = Treatment
+    form_class = TreatmentForm
+    template_name = 'treatments/add_treatment.html'
+    # success_url = 
+
+    # class PlaceFormView(CreateView):
+    #     form_class = PlaceForm
+
+    # @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        print(self.get_patient())
+        return super(TreatmentCreateView, self).dispatch(*args, **kwargs)
+
+    def get_patient(self, *args, **kwargs):
+        id = self.kwargs['pk']
+        patient = Patient.objects.get(id=id)
+        return patient
+
+    def form_valid(self, form,  *args, **kwargs):
+        print(form.cleaned_data)
+        patient = self.get_patient()
+
+        print(patient)
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        obj.patient = patient
+        obj.save()        
+        return  HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self):
+        patient = self.get_patient()
+        return reverse('patient_detail', args=(patient.id,))

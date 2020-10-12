@@ -1,0 +1,49 @@
+<div class="modal fade bs-example-modal-lg select_patient" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Select a Patient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+               
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="DoctorName">Patient Name</label>
+                                <select name="patient" class="custom-select" id="patient-id">
+                                    <option selected="">-- Select --</option>
+                                    {% for object in object_list %}
+                                    <option value="{{object.id}}">{{object.name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                      
+                    </div>
+                   
+                    <button type="button" onclick="selectPatient()" class="btn btn-sm btn-primary" data-dismiss="modal" aria-hidden="true">Proceed</button>
+                    <!-- <button type="button" class="btn btn-sm btn-danger">Delete</button>              -->
+              
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+    //called when user clicks login
+    function selectPatient() {
+        var patientId = $("#patient-id").val();
+        window.location = patientId + '/treatments/create'
+        console.log(patientId);
+       
+    }
+    
+    /*//called when the modal is closed, logs values grabbed from the modal in login()
+    $('#myModal').on('hidden', function() {
+        console.log('username : '+$("#main-username").val());
+        console.log('result : '+$("#main-result").val());
+    })*/
+    </script>

@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 
-from .models import User, Address, Doctor, Patient, Appointment, Timetable, Schedule
+from .models import (
+    User, Address, Doctor, Patient, Appointment, Timetable, Schedule,
+    Attachment, Treatment,)
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -30,3 +32,5 @@ admin.site.register(Timetable)
 admin.site.register(Schedule)
 admin.site.register(Patient)
 admin.site.register(Appointment)
+admin.site.register(Attachment)
+admin.site.register(Treatment)

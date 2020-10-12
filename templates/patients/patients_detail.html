@@ -55,6 +55,9 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title mt-0 mb-3">Experience</h4>
+                <button type="button" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3" data-toggle="modal" data-animation="bounce" data-target=".patient_create"><i class="mdi mdi-plus-circle-outline mr-2"></i>
+                    <a href="{% url 'treatments_create' object.id %}">Add New Patient</a> 
+                </button>
                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 365.352px;">
                     <div class="slimscroll education-activity" style="overflow: hidden; width: auto; height: 365.352px;">
                         <div class="activity">

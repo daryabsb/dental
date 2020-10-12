@@ -1,18 +1,19 @@
 from django.urls import path, include
-# from rest_framework import routers
+from rest_framework import routers
 
-# from . import api
+# from .api.views import AttachmentViewSet
 from . import views
 
 # router = routers.DefaultRouter()
-# router.register(r'invoice', api.InvoiceViewSet)
+# router.register('attachments', AttachmentViewSet)
 # router.register(r'invoiceitem', api.InvoiceItemViewSet)
 # router.register(r'Receive', api.ReceiveViewSet)
 
 
 urlpatterns = (
     # urls for Django Rest Framework API
-    path("", views.Home.as_view(), name="home"),
+    path("home", views.Home.as_view(), name="home"),
+    # path('', include(router.urls)),
     path("login", views.LoginView.as_view(), name='login'),
     path("logout", views.LogoutView.as_view(), name='logout')
     
@@ -54,5 +55,13 @@ urlpatterns += (
     path('appointments/create', views.AppointmentCreateView.as_view(), name='appointments_create'),
     path('appointments/update/<int:pk>', views.AppointmentUpdateView.as_view(), name='appointments_update'),
     path('appointments/delete/<int:pk>', views.AppointmentDeleteView.as_view(), name='appointments_delete'),
+)
+
+urlpatterns += (
+    # urls for Schedule
+    path('patients/<int:pk>/treatments/', views.TreatmentListView.as_view(), name='treatments_list'),
+    path('patients/<int:pk>/treatments/create', views.TreatmentCreateView.as_view(), name='treatments_create'),
+    # path('appointments/update/<int:pk>', views.AppointmentUpdateView.as_view(), name='appointments_update'),
+    # path('appointments/delete/<int:pk>', views.AppointmentDeleteView.as_view(), name='appointments_delete'),
 )
 

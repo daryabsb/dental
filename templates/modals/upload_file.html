@@ -1,0 +1,65 @@
+{% load static %}
+
+<div class="modal fade bs-example-modal-lg upload_file" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a New Doctor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" id="upload_file">
+                    {% csrf_token %}
+                        <div class="dropify-wrapper has-preview">
+                        <div class="dropify-message">
+                            <span class="file-icon"></span> 
+                            <p>Drag and drop a file here or click</p>
+                            <p class="dropify-error">Ooops, something wrong appended.</p>
+                        </div>
+                        <div class="dropify-loader" style="display: none;"></div>
+                        <div class="dropify-errors-container"><ul></ul></div>
+                        <input type="file" id="input-file-now-custom-1" class="dropify" data-default-file="{% static 'assets/images/users/dr-pro.png' %}"><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview" style="display: block;"><span class="dropify-render"><img src="{% static 'assets/images/users/dr-pro.png' %}"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner">dr-pro.png</span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>                                        
+                
+                      <button class="btn btn-info" type="submit">Upload</button>
+                    </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+{% block custome_js%}
+
+<script type="text/javascript">
+
+    $('#upload_file').on('submit', function(event){
+        event.preventDefault();
+        console.log("File uploaded")  // sanity check
+        //create_post();
+    });
+
+
+
+
+</script>
+
+<script >
+    /*called when user clicks login
+    function selectPatient() {
+        var patientId = $("#patient-id").val();
+        window.location = patientId + '/treatments/create'
+        console.log(patientId);
+       
+    }
+    
+    ///called when the modal is closed, logs values grabbed from the modal in login()
+    $('#myModal').on('hidden', function() {
+        console.log('username : '+$("#main-username").val());
+        console.log('result : '+$("#main-result").val());
+    })*/
+    </script>
+
+{% endblock %}
