@@ -144,12 +144,23 @@ class Patient(models.Model):
     email = models.EmailField(max_length=60)
     description = models.TextField(null=True, blank=True)
     status = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     doctor = models.ForeignKey(
         'Doctor', on_delete=models.SET_NULL, 
         null=True, blank=True)
 
+    class Meta:
+        ordering = ('-created',)
+
+
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        print(kwargs)
+        print(args)
+        super(Patient, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('patients_detail', kwargs={'pk': self.pk})

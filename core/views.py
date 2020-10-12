@@ -1,6 +1,7 @@
+from datetime import date
 from django.views.generic import View
-from django.shortcuts import render, HttpResponse
-from django.urls import reverse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -122,6 +123,24 @@ class PatientCreateView(CreateView):
     model = Patient
     form_class = PatientForm
     template_name = 'patients/patients_create.html'
+    # success_url = 
+
+    # class PlaceFormView(CreateView):
+    #     form_class = PlaceForm
+
+    # @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PatientCreateView, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        obj.save()        
+        return  HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self):
+        return reverse('patients_list')
 
 
 class PatientDetailView(DetailView):
@@ -188,7 +207,18 @@ class AppointmentCreateView(CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'appointments/appointment_create.html'
-    success_url = '/appointments/'
+
+    def dispatch(self, *args, **kwargs):
+        return super(AppointmentCreateView, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        obj.save()        
+        return  HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self):
+        return reverse('appointments_list')
 
 
 class AppointmentUpdateView(UpdateView):

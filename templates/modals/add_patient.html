@@ -1,5 +1,3 @@
-
-
 <div class="modal fade bs-example-modal-lg patient_create" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -10,76 +8,77 @@
             <div class="modal-body">
                 <form method="POST" action="{% url 'patients_create' %}">
                     {% csrf_token %}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="PatientName">Patient Name</label>
-                <input type="text" name="name" class="form-control" id="PatientName" required="">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="PatientName_select" class="mr-2">Doctor Name</label>
-                <select name="doctor" class="custom-select" id="DoctorName_select">
+                    <input type="hidden" name="user" value="{{request.user}}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PatientName">Patient Name</label>
+                                <input type="text" name="name" class="form-control" id="PatientName" required="">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PatientName_select" class="mr-2">Doctor Name</label>
+                                <select name="doctor" class="custom-select" id="DoctorName_select">
                     <option selected="">-- Select --</option>
                     {% for doctor in request.user.doctors.all %}
                     <option value="{{doctor.id}}">{{doctor.name}}</option>
                     {% endfor %}
                 </select>
-            </div>                                    
-        </div> 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="PatientName">DOB</label>
-                <input type="date" name="dob" class="form-control" id="PatientName" >
-            </div>
-        </div>                                    
-    </div>
-    <div class="row">  
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                <select name="gender" class="custom-select" id="DoctorName_select">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PatientName">DOB</label>
+                                <input type="date" name="dob" class="form-control" id="PatientName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select name="gender" class="custom-select" id="DoctorName_select">
                     <option selected="">-- Select --</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                    
                 </select>
-            </div>
-        </div>                                 
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" name="phone" class="form-control" id="phone" required="">
-            </div>
-        </div>      
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" name="email" class="form-control" id="email" required="">
-            </div>
-        </div>  
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="PhoneNo">Phone No</label>
-                <input type="text" class="form-control" id="PhoneNo" required="">
-            </div>
-        </div>
-    </div> 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="note">Note</label>
-                <textarea name="note" rows="5" class="form-control" id="note" required=""></textarea>
-            </div>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-sm btn-primary">Save</button>  
-    <button type="button" class="btn btn-sm btn-danger">Delete</button>             
-</form>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" name="phone" class="form-control" id="phone" required="">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" class="form-control" id="email" required="">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PhoneNo">Phone No</label>
+                                <input type="text" class="form-control" id="PhoneNo" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <textarea name="note" rows="5" class="form-control" id="note" required=""></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-danger">Delete</button>
+                </form>
 
-</div>
-</div>
-<!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->

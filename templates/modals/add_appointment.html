@@ -1,0 +1,49 @@
+<div class="modal fade bs-example-modal-lg appointment_create" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" tabindex="-1" aria-modal="true" aria-hidden="true" style="padding-right: 15px;">
+
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Large modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+
+                <form method="POST" action="{% url 'appointments_create' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PatientName_select" class="mr-2">Doctor Name</label>
+                                <select name="patient" class="custom-select" id="DoctorName_select">
+                                    <option selected="">-- Select --</option>
+                                    {% for patient in request.user.patients.all %}
+                                     <option value="{{patient.id}}">{{patient.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" name="date" class="form-control" id="time">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" name="time" class="form-control" id="time">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

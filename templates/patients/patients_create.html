@@ -28,11 +28,10 @@
                         </div>
                         <div class="col-md-3">
                             {% render_field form.gender class="form-control" %}
-                           
+
                         </div>
                         <div class="col-md-3 inline">
-                            <label for="status">Status</label>
-                            {% render_field form.status label="Status" placeholder="Status" class="form-control" %}
+                            <label for="status">Status</label> {% render_field form.status label="Status" placeholder="Status" class="form-control" %}
                         </div>
                     </div>
 
@@ -43,17 +42,17 @@
                         <div class="col-md-3">
                             {% render_field form.phone placeholder="Phone no." class="form-control" %}
                         </div>
-                       
+
                         <div class="col-md-3">
                             {% render_field form.email placeholder="Email" class="form-control" %}
                         </div>
                     </div>
 
-                    
+
                     <div class="form-group">
                         {% render_field form.description rows="8" placeholder="Describe the patient" class="form-control" %}
                         <button class="btn btn-danger btn-sm text-light px-4 mt-3 float-right mb-0 ml-2">
-                        <a href="{% url 'patients_list' %}"></a>    Cancel
+                        <a href="{% url 'patients_list' %}" style="color: white;">Cancel</a>    
                         </button>
                         <button type="submit" class="btn btn-primary btn-sm text-light px-4 mt-3 float-right mb-0">Save</button>
                     </div>
@@ -65,6 +64,3 @@
 <!--end col-->
 </div>
 {% endblock main %}
-
-
-
