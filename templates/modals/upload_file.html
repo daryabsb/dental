@@ -11,18 +11,21 @@
                 <!-- <form  method="post" id="upload_file"> -->
 
 
-                <form action="#" method="post" class="card-box" id="form-upload">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="exampleFormControlFile1">Example file input</label>
-                        <input type="file" name="file" class="form-control-file" id="uploaded_file">
-                    </div>
-                    <button type="button" onclick="upload()" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Upload</button>
-
-                </form>
+                    <form method="post" class="card-box" id="form-upload" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Example file input</label>
+                            <input type="file" name="file" class="form-control file" id="uploaded_file">
+                        </div>
+    
+                    
+                    <button type="submit" value="Post" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3" data-dismiss="modal" aria-hidden="true"><i class="mdi mdi-plus-circle-outline mr-2"></i>Upload Files
+                    </button>
+                    </form>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+    <!--  -->
 </div>
