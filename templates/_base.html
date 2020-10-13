@@ -47,11 +47,11 @@
                             English <img src="{% static 'assets/images/flags/us_flag.jpg" class="ml-2" height="16" alt=""/> <i class="mdi mdi-chevron-down"></i> 
                         </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="javascript: void(0);"><span> German </span><img src="../assets/images/flags/germany_flag.jpg" alt="" class="ml-2 float-right" height="14"/></a>
-                        <a class="dropdown-item" href="javascript: void(0);"><span> Italian </span><img src="../assets/images/flags/italy_flag.jpg" alt="" class="ml-2 float-right" height="14"/></a>
-                        <a class="dropdown-item" href="javascript: void(0);"><span> French </span><img src="../assets/images/flags/french_flag.jpg" alt="" class="ml-2 float-right" height="14"/></a>
-                        <a class="dropdown-item" href="javascript: void(0);"><span> Spanish </span><img src="../assets/images/flags/spain_flag.jpg" alt="" class="ml-2 float-right" height="14"/></a>
-                        <a class="dropdown-item" href="javascript: void(0);"><span> Russian </span><img src="../assets/images/flags/russia_flag.jpg" alt="" class="ml-2 float-right" height="14"/></a>
+                        <a class="dropdown-item" href="javascript: void(0);"><span> German </span><img src="{% static 'assets/images/flags/germany_flag.jpg' %}" alt="" class="ml-2 float-right" height="14"/></a>
+                        <a class="dropdown-item" href="javascript: void(0);"><span> Italian </span><img src="{% static 'assets/images/flags/italy_flag.jpg' %}" alt="" class="ml-2 float-right" height="14"/></a>
+                        <a class="dropdown-item" href="javascript: void(0);"><span> French </span><img src="{% static 'assets/images/flags/french_flag.jpg' %}" alt="" class="ml-2 float-right" height="14"/></a>
+                        <a class="dropdown-item" href="javascript: void(0);"><span> Spanish </span><img src="{% static 'assets/images/flags/spain_flag.jpg' %}" alt="" class="ml-2 float-right" height="14"/></a>
+                        <a class="dropdown-item" href="javascript: void(0);"><span> Russian </span><img src="{% static 'assets/images/flags/russia_flag.jpg' %}" alt="" class="ml-2 float-right" height="14"/></a>
                     </div>
                 </li>
                 <!--end li-->
@@ -189,7 +189,7 @@
 
                         </li>
                         <!--end has-submenu-->
-                        
+
                         <li class="has-submenu">
                             <a href="{% url 'appointments_list' %}"><i class="dripicons-clipboard"></i>Appointments</a>
                             <ul class="submenu">
@@ -385,13 +385,13 @@
     <script src="{% static 'assets/js/waves.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery.slimscroll.min.js' %}"></script>
 
-    {% block custome_plugins %} 
-    {% endblock custome_plugins %}
+    {% block custome_plugins %} {% endblock custome_plugins %}
 
 
 
     <!-- App js -->
     <script src="{% static 'assets/js/app.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
 
     <!-- Code injected by live-server -->
     <script type="text/javascript">
