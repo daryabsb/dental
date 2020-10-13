@@ -62,7 +62,6 @@ $( "#form-upload" ).submit(function( event ) {
     }
 });
 */
-$('#datatable').DataTable();
 // using jQuery
 function getCookie(name) {
     var cookieValue = null;
@@ -80,18 +79,21 @@ function getCookie(name) {
     return cookieValue;
 }
 var csrftoken = getCookie('csrftoken');
+console.log(csrftoken)
 
 // Select your input type file and store it in a variable
-const input = document.getElementById('uploaded_files');
+
 const form = document.getElementById('file-form');
+const list = document.getElementById('file_list');
 
 // var csrftoken = Cookies.get('csrftoken');
 // This will upload the file after having read it
 
-form.addEventListener('upload', function(event){
-    event.preventDefault()
+/*form.addEventListener('submit', function(event){
+    event.preventDefault();
 var url = '/api/attachments/';
     var file = input.value;
+    const list = document.getElementById('file_list');
     
   fetch(url, { // Your POST endpoint
     method: "post",
@@ -102,11 +104,16 @@ var url = '/api/attachments/';
         "Content-Type": "application/json",
         "X-CSRFToken": csrftoken,
     },
-    body: JSON.stringify({'file': file})
+    body: {'file': file}
   }).then(
-    response => {response.json(); console.log(response)} // if the response is a JSON object
-  ).then(
-    success => console.log(success) // Handle the success response object
+    response => {
+        response.json(); 
+        console.log(response); // if the response is a JSON object
+        list.innerHTML = `<li>${response.json()}</li>`;
+    }
+  ).then(success => {console.log(success);} // Handle the success response object
+        
+    
   ).catch(
     error => console.log(error) // Handle the error response object
   );
@@ -114,3 +121,36 @@ var url = '/api/attachments/';
 
 
 });
+
+*/
+var url = '/api/attachments/';
+form.addEventListener('submit', uploadData(url));
+
+async function uploadData(url) {
+    // Default options are marked with *
+    const input = document.getElementById('uploaded_files');
+    var file = document.getElementById('uploaded_files').value;
+    const list = document.getElementById('file_list');
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      //mode: 'cors', // no-cors, *cors, same-origin
+      //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      //redirect: 'follow', // manual, *follow, error
+      //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({'file':file}) // body data type must match "Content-Type" header
+    });
+
+    return console.log(response.json()); // parses JSON response into native JavaScript objects
+  }
+  
+
+
+    
