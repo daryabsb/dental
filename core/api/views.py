@@ -22,8 +22,7 @@ class AttachmentViewSet(viewsets.ModelViewSet):
 
     # def perform_create(self, serializer):
     #     """Create a new attachment"""
-    #     print(serializer.data)
-    #     serializer.save()
+    #     serializer.save(user=self.request.user)
 
 
 """
