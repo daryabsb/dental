@@ -108,29 +108,21 @@
                         </div>
                     </form>
                 </div>
-                <form id="file-form" method="POST" enctype="multipart/form-data" class="form-horizontal" novalidate="">
-
+                <form id="file-form" enctype="multipart/form-data" class="form-horizontal" novalidate="">
+                    {% csrf_token %}
                     <fieldset>
-                        <input type="hidden" name="csrfmiddlewaretoken" value="I4WIxywmPwkJsuv31A9WEAL4hoTjhu9fzeq15uyubyfFdN6EQ0udA7X6ZvqTvZEP">
-
-
-
-
-
                         <div class="form-group ">
-
-                            <label class="col-sm-2 control-label ">
-File
-</label>
+                            <label class="col-sm-2 control-label ">File</label>
                             <div class="col-sm-10">
-                                <input id="file" name="file" type="file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                                <input id="file" name="file" type="file">
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button class="btn btn-primary js-tooltip" title="" data-original-title="Make a POST request on the Attachment List resource">POST</button>
+                            <button type="submit" class="btn btn-primary js-tooltip" title="" data-original-title="Make a POST request on the Attachment List resource">POST</button>
                         </div>
                     </fieldset>
                 </form>
+                <hr>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="file" id="uploaded_files" class="form-control">

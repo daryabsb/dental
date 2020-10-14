@@ -255,7 +255,7 @@ class TreatmentCreateView(CreateView):
 
     # @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        print(self.get_patient())
+        #print(self.get_patient())
         return super(TreatmentCreateView, self).dispatch(*args, **kwargs)
 
     def get_patient(self, *args, **kwargs):

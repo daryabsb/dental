@@ -10,3 +10,12 @@ class AttachmentSerializer(serializers.ModelSerializer):
         model = Attachment
         fields = ('id', 'file')
         read_only_Fields = ('id',)
+
+    def create(self, validated_data):
+
+        file = Attachment(file=validated_data['file'])
+        file.save()
+
+        print(validated_data['file'])
+
+        return file
