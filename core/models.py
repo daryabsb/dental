@@ -202,7 +202,7 @@ class CurrentPatients(models.Model):
         'Appointment', on_delete=models.CASCADE)
 
 class Attachment(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    # user = models.ForeignKey('User', on_delete=models.CASCADE)
     file = models.FileField(upload_to='upload_files')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

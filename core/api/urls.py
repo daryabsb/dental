@@ -1,7 +1,7 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import routers
 
-from .views import AttachmentViewSet
+from .views import AttachmentViewSet, FileUploadView
 
 
 router = routers.DefaultRouter()
@@ -11,5 +11,6 @@ router.register('attachments', AttachmentViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    re_path(r'^upload/(?P<filename>[^/]+)$', FileUploadView.as_view())
 ]
