@@ -1,40 +1,75 @@
-const form = document.getElementById('file-form');
-const file = document.getElementById("file");
+var app = new Vue({
+    delimitters: ["[[", "]]"],
+    el: '#app',
+    data: {
+        message: "Hello World",
+        selectedFile: null,
+        fileName: '',
+        listEl: '',
+        fileIds: []
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    //console.log(e);
-    let selFile = file.files[0];
-    let selName = selFile.name;
-    let formData = new FormData(e.target);
-    //formData.append("file",selFile, selName);
-    //console.log()
-    let data = formData
-    
-	const url = '/api/attachments/';
-    postData(url, data);
-});
+    },
+    methods: {
+        async uploadFile() {
+            //e.preventDefault();
+            //alert(this.message);
+            try {
+                let url = '/api/attachments/'
+                const options = {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        "X-CSRFToken": csrftoken
+                    }
+                };
+                let formData = new FormData();
+                formData.append("file", this.selectedFile, this.fileName);
+                //let res = await axios.get('http://jsonplaceholder.typicode.com/todos');
 
-// Example POST method implementation:
-async function postData(url = '', data) {
-    // Default options are marked with *
-    try {
-        const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "X-CSRFToken": csrftoken,
-            },
-            body : JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-       
-        return response.json(); // parses JSON response into native JavaScript objects
-    } catch (error) {
-        console.log("BAD REQUEST");
-        console.log(error)
+                let res = await axios.post(url, formData, options);
+                console.log(res.data.file)
+                this.selectedFile = null;
+                this.fileIds.push(res.data.id)
+                this.fileName = '';
+                this.listEl += `<li>${res.data.file}</li>`
+                console.log(this.fileIds)
+
+
+                console.log(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
+                //   console.log(this.selectedFile);
+            this.fileName = event.target.files[0].name
+                //   console.log(this.fileName);
+
+        },
+        async onAddProduct() {
+            console.log('tags', this.tagID)
+            let formData = new FormData()
+            formData.append('category', this.categoryID)
+            formData.append('tags', this.tagID[0]),
+                formData.append('title', this.productTitle),
+                formData.append('stock', this.productStock)
+            formData.append('price', this.productPrice)
+            formData.append('image', this.selectedFile, this.fileName)
+
+
+            try {
+                let result = await this.$axios.$post('/product/products/', formData)
+                console.log(formData)
+                    // console.log("SUCCESS");
+                this.$router.push('/')
+            } catch (err) {
+                console.log('Cannot access the api!')
+                console.log(err)
+            }
+        }
     }
-
-};
+});
 
 function getCookie(name) {
     var cookieValue = null;

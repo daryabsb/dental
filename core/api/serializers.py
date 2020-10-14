@@ -16,6 +16,8 @@ class AttachmentSerializer(serializers.ModelSerializer):
         file = Attachment(file=validated_data['file'])
         file.save()
 
+        print('==|==|==')
         print(validated_data['file'])
+        print('==|==|==')
 
         return file
