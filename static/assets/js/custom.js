@@ -6,6 +6,9 @@ var app = new Vue({
         selectedFile: null,
         fileName: '',
         listEl: '',
+        listElLink: '',
+        fileId: '',
+        listElName:'',
         fileIds: []
 
     },
@@ -27,10 +30,34 @@ var app = new Vue({
 
                 let res = await axios.post(url, formData, options);
                 console.log(res.data.file)
-                this.selectedFile = null;
+                
                 this.fileIds.push(res.data.id)
+                this.fileId = res.data.id;
+                
+                let alertElement = `
+                <div class="alert icon-custom-alert alert-outline-purple fade show" role="alert">                                            
+                    <!-- <i class="mdi mdi-alert-outline alert-icon"></i> -->
+                    <div class="alert-text">
+                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                    </div>
+                    
+                    <div class="alert-close">
+
+                        <button type="button" @click.prevent="deleteAttached(${this.fileId})" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="mdi mdi-close text-danger"></i></span>
+                        </button>
+                    </div>
+                </div>
+                `
+
+
+
+
+
+
+                this.listEl += alertElement;
                 this.fileName = '';
-                this.listEl += `<li>${res.data.file}</li>`
+                this.selectedFile = null;
                 console.log(this.fileIds)
 
 
@@ -46,6 +73,9 @@ var app = new Vue({
             this.fileName = event.target.files[0].name
                 //   console.log(this.fileName);
 
+        },
+        async deleteAttached(id) {
+            console.log(id)
         },
         async onAddProduct() {
             console.log('tags', this.tagID)
