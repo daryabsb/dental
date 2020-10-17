@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Attachment
+from core.models import Patient, Attachment
 
 
 
@@ -24,3 +24,15 @@ class AttachmentSerializer(serializers.ModelSerializer):
         print('==|==|==')
 
         return file
+
+class PatientSerializer(serializers.ModelSerializer):
+    # Serializer for uploading images for recipes
+
+    class Meta:
+        model = Patient
+        fields = [
+            'id', 'name', 'doctor', 'dob', 'gender', 'description', 'address', 'phone',
+            'email', 'status' 
+         
+        ]
+        read_only_Fields = ('id',)

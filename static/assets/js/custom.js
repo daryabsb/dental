@@ -1,9 +1,16 @@
-var patientId = JSON.parse(document.getElementById("patientID").textContent);
-var user = JSON.parse(document.getElementById("user").textContent);
 
-var treatAdd = new Vue({
+if (document.getElementById("patientID")){
+    var patientId = JSON.parse(document.getElementById("patientID").textContent);
+}
+if (document.getElementById("user")){
+    var user = JSON.parse(document.getElementById("user").textContent);
+
+}
+
+
+var app = new Vue({
     delimiters: ["[[", "]]"],
-    el: '#treatAdd',
+    el: '#app',
     data: {
         message: "Hello World",
         user: user,
@@ -18,7 +25,9 @@ var treatAdd = new Vue({
         filelist: [],
         description: '',
         addDescription: '',
-        title: 'Treatment Detail'
+        title: 'Treatment Detail',
+        searchArray: rData,
+        test: 'test'
 
     },
     methods: {
@@ -98,11 +107,39 @@ var treatAdd = new Vue({
             }
 
         },
+        async deletePatient(object, id) {
+            id = parseInt(id);
+            console.log('Id is: ', id);
+            let indexOfFile = this.fileIds.indexOf(id);
+            console.log('Index of Id is: ', indexOfFile);
+            const options = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "X-CSRFToken": csrftoken
+                }
+            };
+
+            this.fileIds.splice(indexOfFile, 1);
+
+            let url = `http://127.0.0.1:8000/api/attachments/${id}/`;
+            console.log(url);
+            try {
+                await axios.delete(url, options);
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
         onAddDescription(event) {
             console.log(typeof this.fileIds);
             this.description += this.addDescription;
             this.addDescription = '';
             console.log(this.description);
+        },
+        onSearchFilter() {
+            //console.log(rData)
+            //console.log('key works')
+
         },
         async onAddProduct() {
             console.log('tags', this.tagID)
@@ -127,7 +164,25 @@ var treatAdd = new Vue({
         }
     }
 });
+/*
+var patientlist = new Vue({
+    delimiters: ["[[", "]]"],
+    el: '#patientlist',
+    data: {
+        searchArray: []
 
+    },
+    methods: {
+        onSearchFilter() {
+            const json_data = "{{qs_json}}";
+    //console.log(json_data)
+    
+let rData = JSON.parse(json_data.replace(/&quot;/g, '"'));
+            console.log('key works')
+        }   
+    }
+});
+*/
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {

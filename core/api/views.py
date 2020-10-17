@@ -11,8 +11,8 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
-from core.models import Attachment
-from .serializers import AttachmentSerializer
+from core.models import Patient, Attachment
+from .serializers import AttachmentSerializer, PatientSerializer
 
 
 class AttachmentViewSet(viewsets.ModelViewSet):
@@ -39,6 +39,12 @@ class ListFiles(APIView):
         serializer = AttachmentSerializer(files)
         return Response(serializer.data)
 """
+
+class PatientViewSet(viewsets.ModelViewSet):
+    # Manage ingredientss in the database
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    lookup_field = 'id'
 
 
 

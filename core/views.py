@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-
+import json
 
 from .models import (
     calculateAge,
@@ -118,6 +118,7 @@ class PatientListView(ListView):
         form = PatientForm()
         apt_form = AppointmentForm()
         context['form'] = form
+        context['qs_json'] = json.dumps(list(Patient.objects.values()), default=str)
         context['apt_form'] = apt_form
         # print(context)
 

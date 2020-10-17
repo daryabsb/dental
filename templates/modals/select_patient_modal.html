@@ -32,18 +32,3 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<script type="text/javascript">
-    //called when user clicks login
-    function selectPatient() {
-        var patientId = $("#patient-id").val();
-        window.location = patientId + '/treatments/create'
-        console.log(patientId);
-       
-    }
-    
-    /*//called when the modal is closed, logs values grabbed from the modal in login()
-    $('#myModal').on('hidden', function() {
-        console.log('username : '+$("#main-username").val());
-        console.log('result : '+$("#main-result").val());
-    })*/
-    </script>

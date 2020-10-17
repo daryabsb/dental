@@ -1,5 +1,6 @@
 {% extends '_base.html' %} {% load static %} {% load widget_tweaks %} {% block main %}
 <!-- Page-Title -->
+<div >
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
@@ -40,7 +41,7 @@
                                 <div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div>
+                                <div id="datatable_filter" class="dataTables_filter"><label>Search:<input @keyup.prevent="onSearchFilter" type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div>
                             </div>
                         </div>
                         <div class="row">
@@ -67,24 +68,23 @@
                                         <!--end tr-->
                                         <!--end tr-->
                                         <!--end tr-->
-                                        {% for object in object_list %}
-                                        <tr role="row" class="odd">
+                                       [[test]]
+                                        <tr role="row" class="odd" v-for="object in searchArray" :key="object.id">
                                             <td class="sorting_1">
-                                                <a href="{{object.get_absolute_url}}"><img src="{% static 'assets/images/users/user-10.jpg' %}" alt="" class="thumb-sm rounded-circle mr-2">{{object.name}}</a>
+                                                <a href="#"><img src="{% static 'assets/images/users/user-10.jpg' %}" alt="" class="thumb-sm rounded-circle mr-2">[[object.name]]</a>
                                             </td>
-                                            <td>{{object.age}}</td>
-                                            <td>#{{object.id}}</td>
-                                            <td>{{object.address.address_line1}}</td>
-                                            <td>{{object.phone}}</td>
+                                            <td>[[object.age]]</td>
+                                            <td>#[[object.id]]</td>
+                                            <td>[[object.address]]</td>
+                                            <td>[[object.phone]]</td>
                                             <td>18/07/2019</td>
                                             <td><span class="badge badge-soft-success">Approved</span></td>
                                             <td class="text-right">
-                                                <a href="{{object.get_update_url}}" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                                <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
                                                 <a href="#" data-toggle="modal" data data-target=".confirm-delete"><i class="fas fa-trash-alt text-danger font-16"></i></a>
 
                                             </td>
-                                        </tr>
-                                        <!-- MODAL CONFIRM DELETE -->
+                                             <!-- MODAL CONFIRM DELETE -->
                                         <div class="modal fade bs-example-modal-center show confirm-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="padding-right: 15px;" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
@@ -96,11 +96,13 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="toast-body">
-                                                            <form method="post" action="{% url 'patients_delete' object.id %}">
-                                                                {% csrf_token %} Are you sure you want to delete {{object}}?
+
+                                                            <form method="post">
+                                                                
+                                                                {% csrf_token %} Are you sure you want to delete [[object]]?
                                                         </div>
-                                                        <button class="btn btn-danger btn-small">
-                                                            <a href="{{object.get_delete_url}}">Confirm</a>
+                                                        <button @click="deletePatient(object.id)" class="btn btn-danger btn-small">
+                                                            <a href="#">Confirm</a>
                                                             
                                                         </button>
                                                         </form>
@@ -110,7 +112,9 @@
                                             </div>
                                             <!-- /.modal-dialog -->
                                         </div>
-                                        {% endfor %}
+
+                                        </tr>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -139,9 +143,12 @@
     <!--end col-->
 </div>
 {% endblock main %} {% block custome_js %}
+<script>
+    const json_data = "{{qs_json}}";
+//console.log(json_data)
+const rData = JSON.parse(json_data.replace(/&quot;/g, '"'));
 
-
-
+</script>
 <!-- ADD TREATMENT MODAL ENDED -->
 
 {% endblock custome_js %}
