@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -12,6 +13,15 @@ from django.contrib.auth.models import PermissionsMixin
 from django.conf import settings
 
 from django.db.models import Sum
+
+# CALCULATE AGE:
+def calculateAge(birthDate): 
+    today = date.today() 
+    age = today.year - birthDate.year - (
+        (today.month, today.day) < (birthDate.month, birthDate.day)
+        ) 
+  
+    return age 
 
 
 class UserManager(BaseUserManager):
@@ -158,8 +168,8 @@ class Patient(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        print(kwargs)
-        print(args)
+        if not self.pk is None:
+            self.age = calculateAge(self.dob)
         super(Patient, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -203,23 +213,28 @@ class CurrentPatients(models.Model):
 
 class Attachment(models.Model):
     # user = models.ForeignKey('User', on_delete=models.CASCADE)
+    filename = models.CharField(max_length=120)
     file = models.FileField(upload_to='upload_files')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
-        return self.file.url
-    
-    # def __str__(self):
+    # def __unicode__(self):
     #     return self.file.url
+    
+    def __str__(self):
+        return self.file.url
 
 class Treatment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='treatments')
+    title = models.CharField(max_length=90, default='Treatment')
     description = models.CharField(max_length=200)
     files = models.ManyToManyField('Attachment')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
 
     def __str__(self):
         return f'{self.patient.name} - {self.created}'

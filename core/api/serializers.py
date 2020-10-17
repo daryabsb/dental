@@ -8,12 +8,15 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attachment
-        fields = ('id', 'file')
+        fields = ('id', 'filename', 'file')
         read_only_Fields = ('id',)
 
     def create(self, validated_data):
 
-        file = Attachment(file=validated_data['file'])
+        file = Attachment(
+            file=validated_data['file'], 
+            filename=validated_data['filename']
+            )
         file.save()
 
         print('==|==|==')

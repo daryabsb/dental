@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 from .models import (
+    calculateAge,
     User, Address, Doctor, Patient, Appointment, Schedule,
     Attachment, Treatment,)
 from .forms import (
@@ -106,8 +107,8 @@ class DoctorDeleteView(DeleteView):
 
 # PATIENT VIEW CLASSES
 class PatientListView(ListView):
-    title = 'Create'
-    page_head = 'Add a new Doctor'
+    title = 'All PAtients'
+    page_head = 'Patients List'
     model = Patient
     template_name = 'patients/patients_list.html'
 
@@ -121,6 +122,7 @@ class PatientListView(ListView):
         # print(context)
 
         return context
+
 
 
 class PatientCreateView(CreateView):
@@ -140,6 +142,8 @@ class PatientCreateView(CreateView):
         print(form.cleaned_data)
         obj = form.save(commit=False)
         obj.user = self.request.user
+        obj.age = calculateAge(obj.dob)
+        print(obj.age)
         obj.save()        
         return  HttpResponseRedirect(self.get_success_url())
     
@@ -148,9 +152,18 @@ class PatientCreateView(CreateView):
 
 
 class PatientDetailView(DetailView):
+    title = 'Patients Detail'
     model = Patient
     template_name = 'patients/patients_detail.html'
 
+    """
+    def get_context_data(self, *args, **kwargs):
+        contex = super(PatientDetailView, self).get_context_data(*args, **kwargs)
+        patient = self.get_object()
+        treatments = Treatment.objects.filter(patient=patient)
+        contex['treatments'] = treatments
+        return contex
+    """
 
 class PatientUpdateView(UpdateView):
     model = Patient
@@ -194,6 +207,7 @@ class DoctorScheduleDeleteView(DeleteView):
 #  APPOINTMENT VIEWS
 
 class AppointmentListView(ListView):
+    title = 'Patients Appointments'
     model = Appointment
     template_name = 'appointments/appointment_list.html'
 
@@ -247,7 +261,7 @@ class TreatmentListView(ListView):
 class TreatmentCreateView(CreateView):
     model = Treatment
     form_class = TreatmentForm
-    template_name = 'treatments/add_treatment.html'
+    template_name = 'patients/patients_detail.html'
     # success_url = 
 
     # class PlaceFormView(CreateView):
@@ -263,17 +277,29 @@ class TreatmentCreateView(CreateView):
         patient = Patient.objects.get(id=id)
         return patient
 
-    def form_valid(self, form,  *args, **kwargs):
-        print(form.cleaned_data)
-        patient = self.get_patient()
+    def get_files(self, *args, **kwargs):
+        files = self.kwargs['files']
+        print(files)
+        return files
 
-        print(patient)
-        obj = form.save(commit=False)
-        obj.user = self.request.user
-        obj.patient = patient
+    def form_valid(self, form,  *args, **kwargs):
+        print(form.cleaned_data['files'])
+        print(form.cleaned_data['user'])
+        patient = self.get_patient()
+        # print(self.get_files)
+
+        
+        obj = form.save(commit=True)
+
+        for file in form.cleaned_data['files']:
+            obj.files.add(file.id)
+        
+        # obj.user = self.request.user
+                
+        # obj.patient = patient
         obj.save()        
         return  HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self):
         patient = self.get_patient()
-        return reverse('patient_detail', args=(patient.id,))
+        return reverse('patients_detail', args=(patient.id,))

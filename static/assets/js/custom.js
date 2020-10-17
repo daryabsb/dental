@@ -1,15 +1,24 @@
-var app = new Vue({
-    delimitters: ["[[", "]]"],
-    el: '#app',
+var patientId = JSON.parse(document.getElementById("patientID").textContent);
+var user = JSON.parse(document.getElementById("user").textContent);
+
+var treatAdd = new Vue({
+    delimiters: ["[[", "]]"],
+    el: '#treatAdd',
     data: {
         message: "Hello World",
+        user: user,
+        patientID: patientId,
         selectedFile: null,
         fileName: '',
         listEl: '',
         listElLink: '',
         fileId: '',
-        listElName:'',
-        fileIds: []
+        listElName: '',
+        fileIds: [],
+        filelist: [],
+        description: '',
+        addDescription: '',
+        title: 'Treatment Detail'
 
     },
     methods: {
@@ -25,49 +34,41 @@ var app = new Vue({
                     }
                 };
                 let formData = new FormData();
+                formData.append("filename", this.fileName);
                 formData.append("file", this.selectedFile, this.fileName);
                 //let res = await axios.get('http://jsonplaceholder.typicode.com/todos');
-
+                console.log(Array.from(formData))
                 let res = await axios.post(url, formData, options);
-                console.log(res.data.file)
-                
-                this.fileIds.push(res.data.id)
-                this.fileId = res.data.id;
-                
                 let alertElement = `
-                <div class="alert icon-custom-alert alert-outline-purple fade show" role="alert">                                            
-                    <!-- <i class="mdi mdi-alert-outline alert-icon"></i> -->
-                    <div class="alert-text">
-                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                    </div>
-                    
-                    <div class="alert-close">
-
-                        <button type="button" @click.prevent="deleteAttached(${this.fileId})" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="mdi mdi-close text-danger"></i></span>
-                        </button>
-                    </div>
+                <div role="alert" class="alert alert-secondary alert-outline-purple">
+                                <button type="button" data-dismiss="alert" aria-label="Close" class="close">
+                                    <span aria-hidden="true">
+                                        <i class="mdi mdi-close"></i>
+                                    </span>
+                                </button>
+                                <strong>Well done!</strong>
                 </div>
-                `
+                `;
 
 
+                this.filelist.push(res.data);
 
+                // console.log("From the res: ", res.data.id);
+                // console.log(this.fileIds);
 
-
-
-                this.listEl += alertElement;
+                this.fileId = res.data.id;
+                this.fileIds.push(this.fileId);
+                console.log(this.fileIds)
+                    //this.listEl += alertElement;
                 this.fileName = '';
                 this.selectedFile = null;
-                console.log(this.fileIds)
-
-
-                console.log(res.data);
             } catch (error) {
                 console.log(error);
             }
 
         },
         onFileSelected(event) {
+            console.log('Vue is working!')
             this.selectedFile = event.target.files[0]
                 //   console.log(this.selectedFile);
             this.fileName = event.target.files[0].name
@@ -75,7 +76,33 @@ var app = new Vue({
 
         },
         async deleteAttached(id) {
-            console.log(id)
+            id = parseInt(id);
+            console.log('Id is: ', id);
+            let indexOfFile = this.fileIds.indexOf(id);
+            console.log('Index of Id is: ', indexOfFile);
+            const options = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "X-CSRFToken": csrftoken
+                }
+            };
+
+            this.fileIds.splice(indexOfFile, 1);
+
+            let url = `http://127.0.0.1:8000/api/attachments/${id}/`;
+            console.log(url);
+            try {
+                await axios.delete(url, options);
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
+        onAddDescription(event) {
+            console.log(typeof this.fileIds);
+            this.description += this.addDescription;
+            this.addDescription = '';
+            console.log(this.description);
         },
         async onAddProduct() {
             console.log('tags', this.tagID)
@@ -90,7 +117,7 @@ var app = new Vue({
 
             try {
                 let result = await this.$axios.$post('/product/products/', formData)
-                console.log(formData)
+                    // console.log(formData)
                     // console.log("SUCCESS");
                 this.$router.push('/')
             } catch (err) {

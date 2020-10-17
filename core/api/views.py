@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 
-from rest_framework import parsers, viewsets, mixins, status, views
+from rest_framework import authentication, permissions, parsers, viewsets, mixins, status, views
 
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
@@ -19,6 +19,7 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
+    lookup_field = 'id'
 
     # def perform_create(self, serializer):
     #     """Create a new attachment"""

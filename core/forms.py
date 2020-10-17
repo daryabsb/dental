@@ -48,9 +48,51 @@ class TreatmentForm(forms.ModelForm):
     class Meta:
         model = Treatment
         fields = [
-            'patient', 'description','files'
+            'user', 'patient', 'description','files'
         ]
+"""        
+        files = forms.ModelMultipleChoiceField(queryset=Attachment.objects.all())
 
+    def __init__(self, *args, **kwargs):
+        # Only in case we build the form from an instance
+        # (otherwise, 'toppings' list should be empty)
+        if kwargs.get('instance'):
+            print(kwargs)
+            # We get the 'initial' keyword argument or initialize it
+            # as a dict if it didn't exist.
+            initial = kwargs.setdefault('initial', {})
+            # The widget for a ModelMultipleChoiceField expects
+            # a list of primary key for the selected data.
+            initial['files'] = [f.pk for f in 
+                kwargs['instance'].attachment_set.all()]
+
+        forms.ModelForm.__init__(self, *args, **kwargs)
+
+    # Overriding save allows us to process the value of 'toppings' field
+    def save(self, commit=True):
+        # Get the unsaved Pizza instance
+        instance = forms.ModelForm.save(self, False)
+
+        # Prepare a 'save_m2m' method for the form,
+        old_save_m2m = self.save_m2m
+
+        def save_m2m():
+            old_save_m2m()
+            # This is where we actually link the pizza with toppings
+            instance.attachment_set.clear()
+            for file in self.cleaned_data['files']:
+                instance.attachment_set.add(file)
+
+        self.save_m2m = save_m2m
+
+        # Do we need to save all changes now?
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+        return instance
+
+"""
 
 class AddressForm(forms.ModelForm):
 
