@@ -1,6 +1,7 @@
 // import axios from '@nuxtjs/axios';
 const state = () => ({
     patients: [],
+    csrftoken: ''
 });
 
 const mutations = {
@@ -8,9 +9,10 @@ const mutations = {
         state.patients = payload
     },
     'ADD_PATIENT' (state, payload) {
-        state.patients.push(payload)
+        state.patients.unshift(payload)
     }
 };
+
 /*
 function getCookie(name) {
     var cookieValue = null;
@@ -31,19 +33,17 @@ var csrftoken = getCookie('csrftoken');
 console.log(csrftoken)
 */
 
-//const csrftoken = '2XVeuUq5JZzetsys3Iiw2rK8uOvLDQNphOSkiCI82pR6nnjBhRMs04oucSCTLANK'
 
-var csrftoken = '';
 const actions = {
     async nuxtServerInit({ state, commit }, { app }) {
 
-        csrftoken = app.$cookiz.get('csrftoken');
-        console.log('OnLoad:', csrftoken);
+        state.csrftoken = app.$cookiz.get('csrftoken');
+        console.log('OnLoad:', state.csrftoken);
 
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data",
-                "X-CSRFToken": csrftoken
+                "X-CSRFToken": state.csrftoken
             }
         };
         let url = "http://127.0.0.1:8000/api/patients/";
@@ -62,14 +62,16 @@ const actions = {
         }
 
     },
-    test({state, commit},app) {},
-    async addPatient({ state, commit }, payload, app ) {
+    test({ state, commit }, app) {},
+    async addPatient({ state, commit }, payload) {
         //const csrftoken = app.$cookiz.get('csrftoken');
-        console.log('csrf', csrftoken);
+        console.log(payload)
+            // csrftoken = this.$cookie.get('csrftoken');
+        console.log('csrf', state.csrftoken);
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data",
-                "X-CSRFToken": csrftoken
+                "X-CSRFToken": state.csrftoken
             }
         };
         let url = "http://127.0.0.1:8000/api/patients/";

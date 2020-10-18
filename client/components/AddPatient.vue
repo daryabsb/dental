@@ -120,6 +120,7 @@ export default {
             /* CREATE PAYLOAD FROM FORM  */
 
             let formData = new FormData();
+            formData.append('user', 1);
             formData.append('name', this.name);
             formData.append('doctor', this.selDoctor);
             formData.append('dob', this.dob);
