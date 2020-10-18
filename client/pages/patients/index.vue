@@ -1,5 +1,9 @@
 <template>
     <div class="container-fluid">
+
+<AddPatient @toggle-show="isActive = !isActive" :class="{ show: isActive }" />
+
+         
                     <!-- Page-Title -->
                     <div class="row">
                         <div class="col-sm-12">
@@ -19,8 +23,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <button type="button" class="btn btn-primary px-4 mt-0 mb-3" onclick="location.href='../hospital/add-patient.html'"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</button>
+                                <div class="card-body card-body__modal">
+                                    <button type="button" @click="showModal()" data-toggle="modal" data-animation="bounce" data-target=".patient_create" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</button>
+                                    <button type="button" data-toggle="modal" data-animation="bounce" data-target=".select_patient" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment</button>
+                                   
                                     <div class="table-responsive">
                                         <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div></div></div><div class="row"><div class="col-sm-12"><table id="datatable" class="table dataTable no-footer" role="grid" aria-describedby="datatable_info">
                                             <thead class="thead-light">
@@ -40,27 +46,9 @@
                                                                          
                                             <tr role="row" class="odd" v-for="patient in patients" :key="patient.id">
                                                 <td class="sorting_1">
-
-
-<nuxt-link :to="`/patients/${patient.id}`" class="a-link-normal">
-                            <img src="~assets/images/users/user-10.jpg" alt="" class="thumb-sm rounded-circle mr-2">
-                              {{patient.name}}
-                             
-                            
-</nuxt-link>
-
-
-
-
-
-
-
-
-                                                   
-                                                
-                                                
-                                                
-                                                
+                                                    <nuxt-link :to="`/patients/${patient.id}`" class="a-link-normal">
+                                                    <img src="~assets/images/users/user-10.jpg" alt="" class="thumb-sm rounded-circle mr-2">{{patient.name}}
+                                                    </nuxt-link>
                                                 </td>
                                                 <td>{{patient.age}}</td>
                                                 <td>#{{patient.id}}</td>
@@ -72,6 +60,8 @@
                                                     <a href="../hospital/patient-edit.html" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
                                                     <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                                 </td>
+                                             
+                                             
                                             </tr>
                                             
                                             </tbody>
@@ -81,22 +71,34 @@
                             </div><!--end card--> 
                         </div> <!--end col-->                               
                     </div><!--end row-->    
-
+                     
                 </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
+    data(){
+        return {
+            isActive: false
+        }
+    },
     components: {
         },
     methods: {
-        
+        showModal() {
+        this.isActive = !this.isActive;
+      },
     },
-    mounted: {
+    computed: {
         patients(){
             return this.$store.state.patients
         }
     },
 }
 </script>
+<style scoped>
+.showModal {
+    display: none;
+}
+</style>

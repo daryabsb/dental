@@ -49,7 +49,7 @@ const actions = {
         try {
 
             const allPatients = await this.$axios.get(url, options);
-            console.log(allPatients.data)
+            // console.log(allPatients.data)
             commit("GET_PATIENTS", allPatients.data);
             //   console.log(allPatients.data)
 
