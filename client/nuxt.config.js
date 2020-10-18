@@ -16,6 +16,8 @@ export default {
     
      
       { src: "~assets/js/jquery.slimscroll.min.js", body: true }
+     // { src: "https://unpkg.com/vue-cookies@1.7.4/vue-cookies.js", body: true }
+      
   ]
   },
 

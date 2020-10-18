@@ -16,7 +16,11 @@
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "vue-cookie": "^1.1.4",
+    "vue-cookies": "^1.7.4",
+    "vue-popper": "^0.3.8",
+    "vue-popperjs": "^2.3.0"
   },
   "devDependencies": {}
 }
