@@ -56,6 +56,7 @@ export default {
         ["cookie-universal-nuxt", { alias: "cookiz", parseJSON: false }],
         // https://go.nuxtjs.dev/bootstrap
         //"bootstrap-vue/nuxt",
+        '@nuxtjs/auth',
         // https://go.nuxtjs.dev/axios
         "@nuxtjs/axios",
         // https://go.nuxtjs.dev/pwa
@@ -67,6 +68,26 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {},
+    auth: {
+        strategies: {
+          local: {
+            endpoints: {
+              login: {
+                url: "http://127.0.0.1:8000/api/user/token/",
+                method: "POST",
+                propertyName: "token"
+              },
+              logout: true,
+              user: {
+                url: "http://127.0.0.1:8000/api/user/me",
+                method: "get",
+                propertyName: false
+              }
+            },
+            tokenType: "Token "
+          }
+        }
+      },
     server: {
         port: 8080, // default: 3000
         host: "0.0.0.0" // default: localhost

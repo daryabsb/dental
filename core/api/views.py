@@ -1,6 +1,12 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from rest_framework import generics, authentication, permissions
+
+
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
+
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework import status
@@ -12,7 +18,29 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.permissions import IsAuthenticated
 
 from core.models import Patient, Attachment
-from .serializers import AttachmentSerializer, PatientSerializer
+from .serializers import UserSerializer, AuthTokenSerializer, AttachmentSerializer, PatientSerializer
+
+
+class CreateUserView(generics.CreateAPIView):
+    """Create a new user in the system"""
+    serializer_class = UserSerializer
+
+
+class CreateTokenView(ObtainAuthToken):
+    """Create a new auth token for the user"""
+    serializer_class = AuthTokenSerializer
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+
+class ManageUserView(generics.RetrieveUpdateAPIView):
+    # Manage authenticated user
+    serializer_class = UserSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        # Retrieve and return authenticated user
+        return self.request.user
 
 
 class AttachmentViewSet(viewsets.ModelViewSet):

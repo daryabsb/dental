@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
     'widget_tweaks',
@@ -60,6 +61,24 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+ # add this block below MIDDLEWARE
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',  
+)
+
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"^https://\w+\.localhost:3000$",
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
 
 ROOT_URLCONF = 'app.urls'
 

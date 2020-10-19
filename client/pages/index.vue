@@ -1,20 +1,17 @@
 <template>
  
-        <div class="page-wrapper">
-            
 
-            <!-- Page Content-->
-            <div class="page-content">
 
-                <div class="container-fluid">
+
+
+ 
+                <div class="container-fluid" v-if="isAuthenticated">
                     <!-- Page-Title -->
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="page-title-box">
                                 <div class="float-right">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Hospital</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Hospital</a></li>
                                         <li class="breadcrumb-item active">Dashboard</li>
                                     </ol><!--end breadcrumb-->
                                 </div><!--end /div-->
@@ -447,23 +444,20 @@
                             </div><!--end card--> 
                         </div> <!--end col-->                               
                     </div><!--end row-->  
-
                 </div><!-- container -->
-            </div>
-            <!-- end page content -->
-            <footer class="footer text-center text-sm-left">
-               <div class="boxed-footer">
-                    &copy; 2019 Metrica <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Mannatthemes</span>
-               </div>
-            </footer><!--end footer-->
-        </div>
-        <!-- end page-wrapper -->
+                <div class="container-fluid" v-else>
+                    <h1>You have to login to view this page</h1>
+                </div>
+         
+        
 </template>
 
 <script>
-export default {}
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+  }
+}
 </script>
-
-<style>
-
-</style>

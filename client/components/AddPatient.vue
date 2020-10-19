@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a New Patient</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" @click="closeModal()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                     <div class="row">
@@ -69,8 +69,8 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button"  v-on:click="addNewPatient()" class="btn btn-sm btn-primary">Save</button>
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="button" @click="addNewPatient()" class="btn btn-sm btn-primary">Save</button>
+                    <button type="button" @click="closeModal()" class="btn btn-sm btn-danger">Delete</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -88,9 +88,6 @@ export default {
   
     data(){
         return {
-            
-         
-           
             name: '',
             doctor: [{'id':1, 'name': 'Handren Ameer Kurda'}],
             selDoctor: '',
@@ -136,6 +133,10 @@ export default {
             this.$store.dispatch('addPatient', formData);
 
             // CLOSE FORM
+            this.closeModal()
+            //this.$emit('toggle-show');
+        },
+        closeModal() {
             this.$emit('toggle-show');
         }
 
@@ -155,8 +156,9 @@ export default {
     
 }
 .show {
-display: block;
+    display: block;
 }
+
 </style>
 
 

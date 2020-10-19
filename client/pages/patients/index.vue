@@ -10,9 +10,8 @@
                             <div class="page-title-box">
                                 <div class="float-right">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Hospital</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Patients</a></li>
-                                        <li class="breadcrumb-item active">Patients</li>
+                                        <li class="breadcrumb-item"><nuxt-link to="/">Home</nuxt-link></li>
+                                        <li class="breadcrumb-item">Patients</li>
                                     </ol><!--end breadcrumb-->
                                 </div><!--end /div-->
                                 <h4 class="page-title">All Patients</h4>

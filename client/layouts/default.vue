@@ -18,5 +18,7 @@
 </template>
 
 <style>
-
+.show {
+display: block;
+}
 </style>
