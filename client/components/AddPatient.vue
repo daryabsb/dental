@@ -3,7 +3,7 @@
         
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            {{editPatient}}
+            {{patient}}
             <div class="modal-header">
                 <h5 class="modal-title mt-0" >Add a New Patient</h5>
                 <button type="button" @click="closeModal()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -13,14 +13,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="PatientName">Patient Name</label>
-                                <input v-model="name" type="text" name="name" class="form-control" required="">
+                                <input v-model="editName" type="text" name="name" class="form-control" required="">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="PatientName_select" class="mr-2">Doctor Name</label>
-                                <select  class="form-control">
-                                    <option selected="">-- Select --</option>
+                                <select v-model="editDoctor"  class="form-control">
                               <option
                                 v-for="d in doctor"
                                 :key="d.id"
@@ -33,7 +32,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="PatientName">DOB</label>
-                                <input type="date" name="dob" class="form-control"  v-model="dob">
+                                <input type="date" name="dob" class="form-control"  v-model="editDob">
                             </div>
                         </div>
                     </div>
@@ -41,7 +40,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="gender">Gender</label>
-                                <select v-model="selGender" name="gender" class="custom-select" >
+                                <select v-model="editGender" name="gender" class="custom-select" >
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -50,13 +49,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="text" v-model="phone" name="phone" class="form-control"  required="">
+                                <input type="text" v-model="editPhone" name="phone" class="form-control"  required="">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" v-model="email" name="email" class="form-control"  required="">
+                                <input type="text" v-model="editEmail" name="email" class="form-control"  required="">
                             </div>
                         </div>
                        
@@ -65,7 +64,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="note">Note</label>
-                                <textarea name="note" v-model="description" rows="5" class="form-control" ></textarea>
+                                <textarea name="note" v-model="editDescription" rows="5" class="form-control" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -85,22 +84,24 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-    props: ['editPatient'],
+    props: ['patient', 'editName', 'editDoctor', 'editDob', 'editGender', 'editPhone', 'editEmail', 'editDescription', 'editStatus'],
+
     data(){
         return {
-            name: 'this.editPatient.name',
+            //patient: [],
+            name: this.editName,
             doctor: [{'id':1, 'name': 'Handren Ameer Kurda'}],
-            selDoctor:  'this.editPatient.doctor',
-            dob: 'this.editPatient.dob',
+            selDoctor:  this.editDoctor,
+            dob: this.editDob,
             gender: [
                 {'male': 'Male'}, 
                 {'female': 'Femal'}
                 ],
-            selGender: 'this.editPatient.gender',
-            description: 'this.editPatient.description',
-            phone: 'this.editPatient.phone',
-            email: 'this.editPatient.email',
-            state:  'this.editPatient.state',
+            selGender: this.editGender,
+            description: this.editDescription,
+            phone: this.editPhone,
+            email: this.editEmail,
+            state:  this.editStatUS,
             status: [
                 {'active': 'true'},
                 {'inactive': 'false'}
@@ -131,17 +132,29 @@ export default {
             console.log(Array.from(formData))
 
             /* DISPATCH ACTION @STORE */
-            this.$store.dispatch('addPatient', formData);
-
+            if (this.editId) {
+                this.$emit('editPatient', formData);
+            } else {
+                this.$store.dispatch('addPatient', formData);
+            }
+            
+            this.patient = {};
             // CLOSE FORM
-            this.closeModal()
+            this.closeModal();
             //this.$emit('toggle-show');
         },
         closeModal() {
             this.$emit('toggle-show');
         }
 
-    }
+    },
+    computed: {
+        // editPpatient(){
+        //     return this.editPatient.name;
+        
+        // }
+    },
+    
 }
 </script>
 <style scoped>

@@ -10,6 +10,10 @@ const mutations = {
     },
     'ADD_PATIENT' (state, payload) {
         state.patients.unshift(payload)
+    },
+    // NO NEED TO BE CALLED IN CASE OF EDIT
+    'EDIT_PATIENT' (state, payload) {
+        state.patients.unshift(payload)
     }
 };
 
@@ -82,6 +86,33 @@ const actions = {
             const newPatient = await this.$axios.post(url, payload, options);
             // console.log(allPatients.data)
             commit("ADD_PATIENT", newPatient.data);
+            //   console.log(allPatients.data)
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+    async editPatient({ state, commit }, payload) {
+        //const csrftoken = app.$cookiz.get('csrftoken');
+        console.log(payload)
+            // csrftoken = this.$cookie.get('csrftoken');
+            //console.log('csrf', state.csrftoken);
+        const options = {
+            headers: {
+                "Content-Type": "multipart/form-data"
+                    // "X-CSRFToken": state.csrftoken
+            }
+        };
+        let url = "http://127.0.0.1:8000/api/patients/";
+        // console.log(url);
+
+        try {
+
+            const newPatient = await this.$axios.put(url, payload, options);
+            // console.log(allPatients.data)
+            //commit("EDIT_PATIENT", newPatient.data);
             //   console.log(allPatients.data)
 
 

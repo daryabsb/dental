@@ -1,7 +1,19 @@
 <template>
     <div class="container-fluid">
 
-<AddPatient :patient="editPatient" @toggle-show="addUserModal = !addUserModal" :class="{ show: addUserModal }" />
+<AddPatient :patient="editPatient"
+            :editId="editId"
+            :editName="editName"
+            :editDoctor="editDoctor"
+            :editDob="editDob"
+            :editGender="editGender"
+            :editPhone="editPhone"
+            :editEmail="editEmail"
+            :editDescription="editDescription"
+            :editStatus="editStatus"
+
+
+            @toggle-show="addUserModal = !addUserModal" :class="{ show: addUserModal }" />
 
          
                     <!-- Page-Title -->
@@ -56,7 +68,7 @@
                                                 <td>18/07/2019</td>
                                                 <td><span class="badge badge-soft-success">Approved</span></td>                                                                                               
                                                 <td class="text-right">                                                       
-                                                    <a @click="onEditPatient(patient)" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                                    <a @click="showModal('editUser', patient)" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
                                                     <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                                 </td>
                                              
@@ -79,30 +91,82 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data(){
         return {
-            editPatient: {},
-            addUserModal: false
+            editPatient: [],
+            addUserModal: false,
+            editId: '',
+            editName: '',
+            editDoctor: 1,
+            editDob: '',
+            editGender: '',
+            editPhone: '',
+            editEmail: '',
+            editDescription: '',
+            editStatus: ''
         }
     },
     components: {
         },
     methods: {
-        showModal(modalName) {
+        showModal(modalName, data={}) {
             if (modalName == 'addUser') {
+                this.editId = '';
+                 this.editName = '';
+                this.editDoctor = 1;
+                this.editDob = '';
+                this.editGender = '';
+                this.editPhone = '';
+                this.editEmail = '';
+                this.editDescription = '';
+                this.editStatus = '';
+
+                this.addUserModal = !this.addUserModal;
+
+            } else if (modalName == 'editUser') {
+                this.editId = data.id;
+                this.editName = data.name;
+                this.editDoctor = data.doctor;
+                this.editDob = data.dob;
+                this.editGender = data.gender;
+                this.editPhone = data.phone;
+                this.editEmail = data.email;
+                this.editDescription = data.description;
+                this.editStatus = data.description;
                 this.addUserModal = !this.addUserModal;
             }
         
       },
       onEditPatient(patient) {
-          this.editPatient.name = patient.name;
-          this.editPatient.doctor = 1;
-          this.editPatient.dob = patient.dob;
-          this.editPatient.email = patient.email;
-          this.editPatient.phone = patient.phone;
-          this.editPatient.description = patient.description;
-          this.editPatient.state = patient.status;
-          this.editPatient.gender = patient.gender;
+          this.editPatient = patient;
           this.showModal('addUser')
       },
+      editNewPatient () {
+
+            /* CREATE PAYLOAD FROM FORM  */
+console.log('RECEIVED');
+/*
+            let formData = new FormData();
+            formData.append('user', 1);
+            formData.append('name', this.name);
+            formData.append('doctor', this.selDoctor);
+            formData.append('dob', this.dob);
+            formData.append('gender', this.selGender);
+            formData.append('description', this.description);
+            formData.append('phone', this.phone);
+            formData.append('email', this.email);
+            formData.append('status', this.state);
+
+            console.log(Array.from(formData))
+
+            /* DISPATCH ACTION @STORE */
+           
+               // this.$store.dispatch('editPatient', formData);
+           
+            
+           
+            // CLOSE FORM
+           // this.addUserModal = !this.addUserModal;
+            //this.$emit('toggle-show');
+        }
       
     },
     computed: {
