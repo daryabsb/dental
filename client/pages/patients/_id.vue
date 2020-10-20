@@ -3,6 +3,7 @@
     <div class="container-fluid">
                     <!-- Page-Title -->
                     <div class="row">
+                        {{patient}}
                         <div class="col-sm-12">
                             <div class="page-title-box">
                                 <div class="float-right">

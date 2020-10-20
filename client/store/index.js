@@ -37,13 +37,13 @@ console.log(csrftoken)
 const actions = {
     async nuxtServerInit({ state, commit }, { app }) {
 
-       //state.csrftoken = app.$cookiz.get('csrftoken');
+        //state.csrftoken = app.$cookiz.get('csrftoken');
         //console.log('OnLoad:', state.csrftoken);
 
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data"
-                //"X-CSRFToken": state.csrftoken
+                    //"X-CSRFToken": state.csrftoken
             }
         };
         let url = "http://127.0.0.1:8000/api/patients/";
@@ -67,11 +67,11 @@ const actions = {
         //const csrftoken = app.$cookiz.get('csrftoken');
         console.log(payload)
             // csrftoken = this.$cookie.get('csrftoken');
-        //console.log('csrf', state.csrftoken);
+            //console.log('csrf', state.csrftoken);
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data"
-               // "X-CSRFToken": state.csrftoken
+                    // "X-CSRFToken": state.csrftoken
             }
         };
         let url = "http://127.0.0.1:8000/api/patients/";
@@ -102,11 +102,11 @@ const getters = {
     },
     isAuthenticated(state) {
         return state.auth.loggedIn
-      },
-    
+    },
+
     loggedInUser(state) {
         return state.auth.user
-      }
+    }
 
 }
 

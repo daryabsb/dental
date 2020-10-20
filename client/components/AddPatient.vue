@@ -3,8 +3,9 @@
         
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            {{editPatient}}
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a New Patient</h5>
+                <h5 class="modal-title mt-0" >Add a New Patient</h5>
                 <button type="button" @click="closeModal()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -12,7 +13,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="PatientName">Patient Name</label>
-                                <input v-model="name" type="text" name="name" class="form-control" id="Patient_Name" required="">
+                                <input v-model="name" type="text" name="name" class="form-control" required="">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -32,7 +33,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="PatientName">DOB</label>
-                                <input type="date" name="dob" class="form-control" id="PatientName" v-model="dob">
+                                <input type="date" name="dob" class="form-control"  v-model="dob">
                             </div>
                         </div>
                     </div>
@@ -40,8 +41,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="gender">Gender</label>
-                                <select v-model="gender" name="gender" class="custom-select" id="gender">
-                                    <option selected="">-- Select --</option>
+                                <select v-model="selGender" name="gender" class="custom-select" >
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -50,13 +50,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="text" v-model="phone" name="phone" class="form-control" id="phone" required="">
+                                <input type="text" v-model="phone" name="phone" class="form-control"  required="">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" v-model="email" name="email" class="form-control" id="email" required="">
+                                <input type="text" v-model="email" name="email" class="form-control"  required="">
                             </div>
                         </div>
                        
@@ -65,7 +65,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="note">Note</label>
-                                <textarea name="note" v-model="description" rows="5" class="form-control" id="note" required=""></textarea>
+                                <textarea name="note" v-model="description" rows="5" class="form-control" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -85,21 +85,22 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  
+    props: ['editPatient'],
     data(){
         return {
-            name: '',
+            name: 'this.editPatient.name',
             doctor: [{'id':1, 'name': 'Handren Ameer Kurda'}],
-            selDoctor: '',
-            dob: 1/1/2020,
+            selDoctor:  'this.editPatient.doctor',
+            dob: 'this.editPatient.dob',
             gender: [
                 {'male': 'Male'}, 
                 {'female': 'Femal'}
                 ],
-            description: '',
-            phone: '',
-            email: '',
-            state: 'true',
+            selGender: 'this.editPatient.gender',
+            description: 'this.editPatient.description',
+            phone: 'this.editPatient.phone',
+            email: 'this.editPatient.email',
+            state:  'this.editPatient.state',
             status: [
                 {'active': 'true'},
                 {'inactive': 'false'}
@@ -121,7 +122,7 @@ export default {
             formData.append('name', this.name);
             formData.append('doctor', this.selDoctor);
             formData.append('dob', this.dob);
-            formData.append('gender', this.gender);
+            formData.append('gender', this.selGender);
             formData.append('description', this.description);
             formData.append('phone', this.phone);
             formData.append('email', this.email);

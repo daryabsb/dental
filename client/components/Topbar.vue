@@ -79,12 +79,12 @@
                     </li><!--end notification-list-->
 
                     <li class="dropdown">
-                        <a @click="showMenu()" class="nav-link dropdown-toggle waves-effect waves-light nav-user pr-0">
+                        <a @click="showModal('showMenu')" class="nav-link dropdown-toggle waves-effect waves-light nav-user pr-0">
                             <img src="../assets/images/users/user-4.jpg" alt="profile-user" class="rounded-circle" /> 
                             <span class="ml-1 nav-user-name hidden-sm">{{$auth.user.name}} <i class="mdi mdi-chevron-down"></i> </span>
                         </a>
 
-                    <UserMenu @toggle-show="isActive = !isActive" :class="{ show: isActive }" />
+                    <UserMenu @toggle-show="showMenu = !showMenu" :class="{ show: showMenu }" />
                     </li><!--end dropdown-->
                     <li class="menu-item">
                         <!-- Mobile menu toggle-->
@@ -154,13 +154,13 @@
                                 <li>
 
 
-                                    <a @click="showModal()">
+                                    <a @click="showModal('addUser')">
                                         <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</a>
 
 
                                 </li>
                                 <!-- ADD NEW PATIENT MODAL -->
-                                <AddPatient @toggle-show="patientModal = !patientModal" :class="{ show: patientModal }" />
+                                <AddPatient @toggle-show="addUserModal = !addUserModal" :class="{ show: addUserModal }" />
                                 <!--end has-submenu-->
                             </ul>
                             <!--end submenu-->
@@ -199,18 +199,22 @@ import { mapGetters } from 'vuex'
 export default {
     data(){
         return {
-            isActive: false,
+            showMenu: false,
+            addUserModal: false,
             patientModal: false
         }
     },
     methods: {
         
-    showModal() {
-        this.patientModal = !this.patientModal;
-      },
-    showMenu() {
-        this.isActive = !this.isActive;
+    showModal(modalName) {
+            if (modalName == 'addUser') {
+                this.addUserModal = !this.addUserModal;
+            } else if (modalName == 'showMenu') {
+                this.showMenu = !this.showMenu
+            }
+        
       }
+    
         },
   computed: {
     ...mapGetters(['isAuthenticated', 'loggedInUser'])

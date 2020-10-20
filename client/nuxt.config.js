@@ -64,30 +64,32 @@ export default {
     ],
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-    axios: {},
+    axios: {
+        //baseUrl: 'http://127.0.0.1:8000/api'
+    },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {},
     auth: {
         strategies: {
-          local: {
-            endpoints: {
-              login: {
-                url: "http://127.0.0.1:8000/api/user/token/",
-                method: "POST",
-                propertyName: "token"
-              },
-              logout: true,
-              user: {
-                url: "http://127.0.0.1:8000/api/user/me",
-                method: "get",
-                propertyName: false
-              }
-            },
-            tokenType: "Token "
-          }
+            local: {
+                endpoints: {
+                    login: {
+                        url: "http://127.0.0.1:8000/api/user/token/",
+                        method: "POST",
+                        propertyName: "token"
+                    },
+                    logout: true,
+                    user: {
+                        url: "http://127.0.0.1:8000/api/user/me",
+                        method: "get",
+                        propertyName: false
+                    }
+                },
+                tokenType: "Token "
+            }
         }
-      },
+    },
     server: {
         port: 8080, // default: 3000
         host: "0.0.0.0" // default: localhost

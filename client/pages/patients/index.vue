@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
 
-<AddPatient @toggle-show="isActive = !isActive" :class="{ show: isActive }" />
+<AddPatient :patient="editPatient" @toggle-show="addUserModal = !addUserModal" :class="{ show: addUserModal }" />
 
          
                     <!-- Page-Title -->
@@ -23,7 +23,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body card-body__modal">
-                                    <button type="button" @click="showModal()" data-toggle="modal" data-animation="bounce" data-target=".patient_create" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</button>
+                                    <button type="button" @click="showModal('addUser')" data-toggle="modal" data-animation="bounce" data-target=".patient_create" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</button>
                                     <button type="button" data-toggle="modal" data-animation="bounce" data-target=".select_patient" class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment</button>
                                    
                                     <div class="table-responsive">
@@ -56,7 +56,7 @@
                                                 <td>18/07/2019</td>
                                                 <td><span class="badge badge-soft-success">Approved</span></td>                                                                                               
                                                 <td class="text-right">                                                       
-                                                    <a href="../hospital/patient-edit.html" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                                                    <a @click="onEditPatient(patient)" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
                                                     <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                                 </td>
                                              
@@ -79,15 +79,31 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data(){
         return {
-            isActive: false
+            editPatient: {},
+            addUserModal: false
         }
     },
     components: {
         },
     methods: {
-        showModal() {
-        this.isActive = !this.isActive;
+        showModal(modalName) {
+            if (modalName == 'addUser') {
+                this.addUserModal = !this.addUserModal;
+            }
+        
       },
+      onEditPatient(patient) {
+          this.editPatient.name = patient.name;
+          this.editPatient.doctor = 1;
+          this.editPatient.dob = patient.dob;
+          this.editPatient.email = patient.email;
+          this.editPatient.phone = patient.phone;
+          this.editPatient.description = patient.description;
+          this.editPatient.state = patient.status;
+          this.editPatient.gender = patient.gender;
+          this.showModal('addUser')
+      },
+      
     },
     computed: {
         patients(){
