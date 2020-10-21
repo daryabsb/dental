@@ -11,6 +11,16 @@ const mutations = {
     'ADD_PATIENT' (state, payload) {
         state.patients.unshift(payload)
     },
+    'EDIT_PATIENT' (state, payload) {
+        
+        // FIND ITEM AND PLACE IN STATE
+        const editedPatient = state.patients.find((patient) => patient.id === payload.id);
+        let indexOfPatient = state.patients.indexOf(editedPatient);
+
+        // REPLACE EDITED ITEM WITH NEW INFO
+        state.patients.splice(indexOfPatient,1,payload);
+        
+    },
     "DELETE_PATIENT" (state, id) {
         let patient = state.patients.find(patient => patient.id === id);
         let indexOfPatient = state.patients.indexOf(patient)
@@ -39,7 +49,7 @@ const actions = {
 
         try {
 
-            const allPatients = await this.$axios.get(url, options);
+            const allPatients = await this.$axios.get(url);
             // console.log(allPatients.data)
             commit("GET_PATIENTS", allPatients.data);
             //   console.log(allPatients.data)
@@ -77,28 +87,23 @@ const actions = {
         }
 
     },
-    async editPatient(state, payload) {
-
-        console.log(payload);
-        const id = payload[1];
-        const patient = payload[0];
+    async editPatient({ state, commit }, payload) {
 
 
+        const id = payload.id;
 
-        const options = {
-            headers: {
-                "Content-Type": "multipart/form-data"
-                    // "X-CSRFToken": state.csrftoken
-            }
-        };
+       // console.log(payload.id)
+
         let url = `http://127.0.0.1:8000/api/patients/${id}/`;
         // console.log(url);
 
         try {
 
-            const newPatient = await this.$axios.put(url, patient, options);
-            console.log(newPatient.data)
-                //commit("EDIT_PATIENT", newPatient.data);
+            const newPatient = await this.$axios.put(url, payload);
+           //console.log("Updated Response: ", newPatient.data)
+
+
+                commit("EDIT_PATIENT", newPatient.data);
                 //   console.log(allPatients.data)
 
 

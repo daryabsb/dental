@@ -117,7 +117,7 @@
             Swal.fire({
                 title: 'Metrica Brand',
                 text: 'Modal with a custom image.',
-                imageUrl: '../assets/images/logo-sm.png',
+                imageUrl: '~assets/images/logo-sm.png',
                 imageHeight: 80,
                 animation: false
             })            

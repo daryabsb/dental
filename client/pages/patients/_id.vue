@@ -3,7 +3,6 @@
     <div class="container-fluid">
                     <!-- Page-Title -->
                     <div class="row">
-                        {{patient}}
                         <div class="col-sm-12">
                             <div class="page-title-box">
                                 <div class="float-right">
@@ -203,7 +202,7 @@ export default {
            const id = this.$route.params.id;
            let patients = this.$store.state.patients
            const patient = patients.find(p=>p.id = id)
-           console.log(patient)
+        //    console.log(patient)
            return patient
        }
     },

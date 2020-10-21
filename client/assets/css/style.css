@@ -351,6 +351,7 @@ code {
 
 /* Dropdown */
 .dropdown-menu {
+  display: block;
   padding: 4px 0;
   font-size: 13px;
   -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);

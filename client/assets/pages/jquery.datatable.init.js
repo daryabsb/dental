@@ -52,7 +52,7 @@ function format ( d ) {
  
 $(document).ready(function() {
     var table = $('#child_rows').DataTable( {
-        "ajax": "../assets/plugins/datatables/objects.txt",
+        "ajax": "~assets/plugins/datatables/objects.txt",
         "columns": [
             {
                 "className":      'details-control',
