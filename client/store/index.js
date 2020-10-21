@@ -11,31 +11,15 @@ const mutations = {
     'ADD_PATIENT' (state, payload) {
         state.patients.unshift(payload)
     },
-    // NO NEED TO BE CALLED IN CASE OF EDIT
-    'EDIT_PATIENT' (state, payload) {
-        state.patients.unshift(payload)
+    "DELETE_PATIENT" (state, id) {
+        let patient = state.patients.find(patient => patient.id === id);
+        let indexOfPatient = state.patients.indexOf(patient)
+        console.log(patient, indexOfPatient);
+
+        ;
+        state.patients.splice(indexOfPatient, 1);
     }
 };
-
-/*
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-console.log(csrftoken)
-*/
 
 
 const actions = {
@@ -66,7 +50,6 @@ const actions = {
         }
 
     },
-    test({ state, commit }, app) {},
     async addPatient({ state, commit }, payload) {
         //const csrftoken = app.$cookiz.get('csrftoken');
         console.log(payload)
@@ -94,37 +77,49 @@ const actions = {
         }
 
     },
-    async editPatient({ state, commit }, payload) {
-        //const csrftoken = app.$cookiz.get('csrftoken');
-        console.log(payload)
-            // csrftoken = this.$cookie.get('csrftoken');
-            //console.log('csrf', state.csrftoken);
+    async editPatient(state, payload) {
+
+        console.log(payload);
+        const id = payload[1];
+        const patient = payload[0];
+
+
+
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data"
                     // "X-CSRFToken": state.csrftoken
             }
         };
-        let url = "http://127.0.0.1:8000/api/patients/";
+        let url = `http://127.0.0.1:8000/api/patients/${id}/`;
         // console.log(url);
 
         try {
 
-            const newPatient = await this.$axios.put(url, payload, options);
-            // console.log(allPatients.data)
-            //commit("EDIT_PATIENT", newPatient.data);
-            //   console.log(allPatients.data)
+            const newPatient = await this.$axios.put(url, patient, options);
+            console.log(newPatient.data)
+                //commit("EDIT_PATIENT", newPatient.data);
+                //   console.log(allPatients.data)
 
 
         } catch (err) {
             console.log(err);
         }
 
+    },
+    async onDeletePatient({ state, commit }, id) {
+
+        try {
+
+            await this.$axios.delete(`http://127.0.0.1:8000/api/patients/${id}/`);
+            commit("DELETE_PATIENT", id);
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
-    /*,
-    addToCart({ commit }, payload){
-        commit('ADD_TO_CART', payload)
-    }*/
+
 }
 
 const getters = {

@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
 
-<AddPatient :patient="editPatient"
-            :editId="editId"
+<AddPatient :editId="editId"
+            :editUser="editUser ? editUser : 1"
             :editName="editName"
             :editDoctor="editDoctor"
             :editDob="editDob"
@@ -69,7 +69,7 @@
                                                 <td><span class="badge badge-soft-success">Approved</span></td>                                                                                               
                                                 <td class="text-right">                                                       
                                                     <a @click="showModal('editUser', patient)" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                                                    <a @click="deletePatient(patient.id)"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                                 </td>
                                              
                                              
@@ -94,6 +94,7 @@ export default {
             editPatient: [],
             addUserModal: false,
             editId: '',
+            editUser: '',
             editName: '',
             editDoctor: 1,
             editDob: '',
@@ -109,6 +110,7 @@ export default {
     methods: {
         showModal(modalName, data={}) {
             if (modalName == 'addUser') {
+                this.editUser = this.$auth.user.id;
                 this.editId = '';
                  this.editName = '';
                 this.editDoctor = 1;
@@ -122,6 +124,7 @@ export default {
                 this.addUserModal = !this.addUserModal;
 
             } else if (modalName == 'editUser') {
+                this.editUser = data.user
                 this.editId = data.id;
                 this.editName = data.name;
                 this.editDoctor = data.doctor;
@@ -130,42 +133,21 @@ export default {
                 this.editPhone = data.phone;
                 this.editEmail = data.email;
                 this.editDescription = data.description;
-                this.editStatus = data.description;
+                this.editStatus = data.status;
                 this.addUserModal = !this.addUserModal;
             }
         
-      },
-      onEditPatient(patient) {
-          this.editPatient = patient;
-          this.showModal('addUser')
-      },
-      editNewPatient () {
+        },
+        onEditPatient(patient) {
+            this.editPatient = patient;
+            this.showModal('addUser')
+        },
+        confirmDelete() {
 
-            /* CREATE PAYLOAD FROM FORM  */
-console.log('RECEIVED');
-/*
-            let formData = new FormData();
-            formData.append('user', 1);
-            formData.append('name', this.name);
-            formData.append('doctor', this.selDoctor);
-            formData.append('dob', this.dob);
-            formData.append('gender', this.selGender);
-            formData.append('description', this.description);
-            formData.append('phone', this.phone);
-            formData.append('email', this.email);
-            formData.append('status', this.state);
-
-            console.log(Array.from(formData))
-
-            /* DISPATCH ACTION @STORE */
-           
-               // this.$store.dispatch('editPatient', formData);
-           
-            
-           
-            // CLOSE FORM
-           // this.addUserModal = !this.addUserModal;
-            //this.$emit('toggle-show');
+        },
+        deletePatient(id) {
+                console.log(id);
+                this.$store.dispatch('onDeletePatient', id);
         }
       
     },
