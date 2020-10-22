@@ -41,7 +41,7 @@
           <div class="card-body card-body__modal">
             <button
               type="button"
-              @click="showModal('addUser')"
+              @click="showModal(false)"
               data-toggle="modal"
               data-animation="bounce"
               data-target=".patient_create"
@@ -230,7 +230,7 @@
                           </td>
                           <td class="text-right">
                             <a
-                              @click="showModal('editUser', patient)"
+                              @click="showModal(true, patient)"
                               class="mr-2"
                               ><i class="fas fa-edit text-info font-16"></i
                             ></a>
@@ -346,8 +346,8 @@ export default {
   },
   components: {},
   methods: {
-    showModal(modalName, data = {}) {
-      if (modalName == "addUser") {
+    showModal(modalState, data = {}) {
+      if (!modalState) {
         this.editUser = this.$auth.user.id;
         this.editId = "";
         this.editName = "";
@@ -358,12 +358,13 @@ export default {
         this.editEmail = "";
         this.editDescription = "";
         this.editStatus = "";
-
+        store.isEditModal
         //this.$store.conf.actions.dispatch('showAddUserModal');
+        store.isEditModal = false;
         mutations.toggleAddPatientModal();
 
         //this.addUserModal = !this.addUserModal;
-      } else if (modalName == "editUser") {
+      } else {
         this.editUser = data.user;
         this.editId = data.id;
         this.editName = data.name;
@@ -376,6 +377,7 @@ export default {
         this.editStatus = data.status;
 
         //this.addUserModal = !this.addUserModal;
+        store.isEditModal = true;
         mutations.toggleAddPatientModal();
       }
     },

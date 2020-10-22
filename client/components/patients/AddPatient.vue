@@ -134,6 +134,11 @@ export default {
 
             /* DISPATCH ACTION @STORE */
             this.$store.dispatch('addPatient', formData);
+            
+            // clearing the form
+            formData.reset();
+
+
 
             } else {
                 let data = {  
@@ -150,16 +155,19 @@ export default {
                 }
 
                 this.$store.dispatch('editPatient', data);
+               
             }
             
             // CLOSE FORM
             // this.closeModal();
+            store.isEditModal = false;
             mutations.toggleAddPatientModal();
             //this.$emit('toggle-show');
         },
         closeModal() {
             //console.log(this.name)
             // this.$emit('toggle-show');
+            store.isEditModal = false;
             mutations.toggleAddPatientModal();
         }
 
@@ -171,19 +179,23 @@ export default {
         patient: {
             // getter
             get: function () {
-            return {
-                'id': this.editId,
-                'user': this.editUser,
-                'name': this.editName,
-                'doctor': this.editDoctor,
-                'dob': this.editDob,
-                'description': this.editDescription,
-                'phone': this.editPhone,
-                'email': this.editEmail,
-                'gender': this.editGender,
-                'status': this.editStatus
+                if(store.isEditModal) {
+                    return {
+                        'id': this.editId,
+                        'user': this.editUser,
+                        'name': this.editName,
+                        'doctor': this.editDoctor,
+                        'dob': this.editDob,
+                        'description': this.editDescription,
+                        'phone': this.editPhone,
+                        'email': this.editEmail,
+                        'gender': this.editGender,
+                        'status': this.editStatus
 
                         }
+                } 
+                return {}
+            
             },
             // setter
             set: function (newValue) {

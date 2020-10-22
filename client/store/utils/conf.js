@@ -1,6 +1,7 @@
 import Vue from "vue";
 
 export const store = Vue.observable({
+    isEditModal: false,
     isUserNavOpen: false,
     isNotificationOpen: false,
     isAddPatientModalOpen: false,

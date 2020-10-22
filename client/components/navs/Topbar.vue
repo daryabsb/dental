@@ -112,7 +112,7 @@
                                 <li>
 
 
-                                    <a @click="showModal('addUser')">
+                                    <a @click="showModal()">
                                         <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient</a>
 
 
@@ -164,7 +164,7 @@ export default {
     },
     methods: {
         
-    showModal(modalName) {
+    showModal() {
             mutations.toggleAddPatientModal();
         
       },
