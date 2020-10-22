@@ -6,7 +6,8 @@ export const store = Vue.observable({
     isNotificationOpen: false,
     isAddPatientModalOpen: false,
     isLanguagesOpen: false,
-    isConfirmDeleteOpen: false
+    isConfirmDeleteOpen: false,
+    isTreatmentOpen: false
 });
 
 // We call toggleNav anywhere we need it in our app
@@ -22,6 +23,9 @@ export const mutations = {
     },
     toggleAddPatientModal() {
         store.isAddPatientModalOpen = !store.isAddPatientModalOpen
+    },
+    toggleTreatment() {
+        store.isTreatmentOpen = !store.isTreatmentOpen
     },
     toggleConfirmDelete() {
         store.isConfirmDeleteOpen = !store.isConfirmDeleteOpen

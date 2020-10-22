@@ -206,7 +206,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 .my-modal {
     position: fixed;
     width: 100%;
