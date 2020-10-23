@@ -66,8 +66,8 @@
                         
                     </div><!--end row-->
                     <div class="row">
-                        <PatientTreatment :patient="patient" />
-                        <PatientHistory :patient="patient" />
+                        <PatientTreatment :patientID="patient.id" :treatments="patient.treatments" />
+                        <!-- <PatientHistory :patient="patient" /> -->
 
                         
                     </div><!--end row-->
@@ -75,17 +75,21 @@
                 </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+// import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-    
-    computed: {
-       patient() {
-           const id = this.$route.params.id;
-           let patients = this.$store.state.patients
-           const patient = patients.find(p=>p.id = id)
-        //    console.log(patient)
-           return patient
-       }
-    },
+        async asyncData({ $axios, params }) {
+        
+        try {
+
+        let singlePatient = $axios.$get(`http://127.0.0.1:8000/api/patients/${params.id}/`);
+        const [patientResponse] = await Promise.all([singlePatient]);
+
+            return {
+                patient: patientResponse
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
 }
 </script>

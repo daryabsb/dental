@@ -1,0 +1,255 @@
+1
+00:00:00,240 --> 00:00:02,340
+Let's add a couple of products to our cart.
+
+2
+00:00:02,340 --> 00:00:05,730
+Go to Amazon homepage and let's go to Harry Potter.
+
+3
+00:00:05,820 --> 00:00:11,450
+Add to Cart and then if refresh it will disappear.
+
+4
+00:00:11,450 --> 00:00:16,430
+There is a way to fix that problem but before that we need to fix one single problem before we meet
+
+5
+00:00:16,460 --> 00:00:18,480
+our view X persisted.
+
+6
+00:00:18,500 --> 00:00:24,400
+So let's add the Harry Potter product I want to show you the book right now at the quantity increases.
+
+7
+00:00:24,410 --> 00:00:30,980
+But if we go back to Amazon if we go back to Harry Potter and try to add you can see that it shows not
+
+8
+00:00:30,980 --> 00:00:36,340
+a number because it's updating the new product quantity not the old product.
+
+9
+00:00:36,350 --> 00:00:41,080
+So in order for us to fix that we have to go back to View studio put index Rojas.
+
+10
+00:00:41,090 --> 00:00:49,370
+And you want to go to add product to cart and then in this L statement it has to be cart product or
+
+11
+00:00:49,370 --> 00:00:51,860
+else the quantity will be undefined.
+
+12
+00:00:51,860 --> 00:00:58,930
+And if we saved is go back and refresh and add to cart it shows for.
+
+13
+00:00:58,940 --> 00:01:05,390
+So if you go back to homepage and we go back to Harry Potter and then now if you click Add to Cart then
+
+14
+00:01:05,390 --> 00:01:08,300
+it will update the quantity of the product in the cart instead.
+
+15
+00:01:08,360 --> 00:01:14,150
+So now let's go to our cart and now our goal is to make this product persisted so that when we refresh
+
+16
+00:01:14,150 --> 00:01:15,990
+the page it will still stay there.
+
+17
+00:01:16,040 --> 00:01:17,980
+So to do that we have to go back to our editor.
+
+18
+00:01:18,230 --> 00:01:27,440
+And then you want to cancel your client and then you went to npm install you X persisted state dash
+
+19
+00:01:27,630 --> 00:01:36,440
+chief and then you want to go to plug ins this will first time creating a plug in file so new file and
+
+20
+00:01:36,440 --> 00:01:49,730
+name it local storage ideas and then you want to type import create persistent state from view X persistent
+
+21
+00:01:49,740 --> 00:01:53,180
+state and export default.
+
+22
+00:01:53,260 --> 00:02:04,420
+Now you add store and your window on NOx ready callback function here and then create persistence date
+
+23
+00:02:04,710 --> 00:02:09,050
+and an empty bracket in here and then we want to pass the store here
+
+24
+00:02:11,950 --> 00:02:18,340
+closes down so this library will store the view x state like cart or cart land into the local storage
+
+25
+00:02:18,370 --> 00:02:25,120
+or cookies so that when we have fresh the page the view X will grab the cart and cart Lang from local
+
+26
+00:02:25,120 --> 00:02:28,750
+storage or cookies and store it into view X once again.
+
+27
+00:02:29,290 --> 00:02:30,790
+So what is going on here.
+
+28
+00:02:30,800 --> 00:02:37,160
+First important to create persistent state it is a function that has been created by view X persistent
+
+29
+00:02:37,170 --> 00:02:38,110
+state library.
+
+30
+00:02:38,110 --> 00:02:42,280
+And then when NOx is ready you in the next app is ready.
+
+31
+00:02:42,490 --> 00:02:49,450
+We want to pass that store to our cookies or local storage so that it can map the local storage or cookies
+
+32
+00:02:49,510 --> 00:02:50,500
+back to our store.
+
+33
+00:02:50,530 --> 00:02:54,900
+So it is just utilizing the local storage or the cookies.
+
+34
+00:02:54,940 --> 00:02:56,680
+That's all there is nothing special about it.
+
+35
+00:02:56,800 --> 00:02:59,280
+And last thing we want to do is want to go to next conflict.
+
+36
+00:02:59,340 --> 00:03:00,070
+Yes.
+
+37
+00:03:00,160 --> 00:03:02,030
+And we have two important plugins.
+
+38
+00:03:02,050 --> 00:03:08,210
+So by adding a plug in as you can read here plugins will load before mounting the application when the
+
+39
+00:03:08,220 --> 00:03:09,370
+app was about to mount.
+
+40
+00:03:09,400 --> 00:03:14,890
+Then it will run that specific function which is great persistent state and then it will actually map
+
+41
+00:03:14,920 --> 00:03:19,300
+the local storage value or cookies to our view store.
+
+42
+00:03:19,300 --> 00:03:27,940
+So now we want to add a plug in in here which will be SLC then plug ins then that name or file that
+
+43
+00:03:27,940 --> 00:03:35,590
+we just created which would be storage local storage that yes and then we would add SS are false and
+
+44
+00:03:35,590 --> 00:03:41,220
+let's save this and let's go back to our beach and let's refresh the speech.
+
+45
+00:03:41,380 --> 00:03:50,400
+Oh sorry I need to we need to start a server back which run port nine thousand NPM run death so let's
+
+46
+00:03:50,400 --> 00:03:54,110
+go back and let's try to refresh this speech.
+
+47
+00:03:54,410 --> 00:03:56,670
+Let's tried to add a couple of products
+
+48
+00:04:00,130 --> 00:04:03,100
+or add this and let's try another product.
+
+49
+00:04:03,130 --> 00:04:08,270
+You'll be given a truant cart and try to refreshed it
+
+50
+00:04:11,700 --> 00:04:18,330
+and it can see the data persisted because we have upgraded our view X to work together with local storage
+
+51
+00:04:18,360 --> 00:04:19,080
+and cookies.
+
+52
+00:04:19,080 --> 00:04:20,490
+This library is amazing.
+
+53
+00:04:20,490 --> 00:04:24,750
+Or else we have to manually map the view X to local storage and cookies.
+
+54
+00:04:24,750 --> 00:04:30,780
+So we go to application and let's check local store it is going to see if you click view X and if you
+
+55
+00:04:30,780 --> 00:04:36,010
+go down here we make it bigger and you can see that as a cart.
+
+56
+00:04:36,090 --> 00:04:42,990
+State of state and cart Lang state you can ignore off because of it's already been persistent before
+
+57
+00:04:43,020 --> 00:04:44,000
+by the library.
+
+58
+00:04:44,130 --> 00:04:50,640
+But we're going to focus on car and cart length which we persisted in the local storage and it did not
+
+59
+00:04:50,640 --> 00:04:53,370
+save in cookies it just save in local storage.
+
+60
+00:04:53,400 --> 00:04:58,500
+So there's no VFX here so it's only save in local storage.
+
+61
+00:04:58,500 --> 00:05:04,440
+So right now we don't have the ability to change the quantity of our product and or delete the product
+
+62
+00:05:04,710 --> 00:05:10,800
+in the next video we will implement the change quantity feature so that user can change the quantity
+
+63
+00:05:10,800 --> 00:05:11,660
+of the product.
+
+64
+00:05:11,670 --> 00:05:13,500
+I'll see you guys in the next video.

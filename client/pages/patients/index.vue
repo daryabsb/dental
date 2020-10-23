@@ -35,6 +35,9 @@
     </div>
     <!--end row-->
     <!-- end page title end breadcrumb -->
+    <div class="">
+     
+    </div>
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -206,6 +209,7 @@
                           v-for="patient in patients"
                           :key="patient.id"
                         >
+                        
                           <td class="sorting_1">
                             <nuxt-link
                               :to="`/patients/${patient.id}`"

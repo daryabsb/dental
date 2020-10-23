@@ -1,0 +1,167 @@
+1
+00:00:00,480 --> 00:00:04,260
+Since we already learn about view X now it is time to implement it.
+
+2
+00:00:04,320 --> 00:00:10,290
+So let's go to our index dot J S under store folder which is the view x file and then we want to create
+
+3
+00:00:10,350 --> 00:00:16,470
+export cons state and this would be all of us state.
+
+4
+00:00:16,620 --> 00:00:23,450
+You're gonna have cart which would be in every cart lane which would be zero.
+
+5
+00:00:23,490 --> 00:00:32,520
+We want to create actions so export Bond's actions and the name to action that we're going to implement
+
+6
+00:00:32,520 --> 00:00:37,350
+first is at product to cart and then state.
+
+7
+00:00:37,430 --> 00:00:39,700
+Kim banana product.
+
+8
+00:00:40,270 --> 00:00:42,320
+I'll explain to you line by line after this.
+
+9
+00:00:42,350 --> 00:00:43,590
+So now let's just write a code.
+
+10
+00:00:43,810 --> 00:00:49,420
+Cut product to state not card not fine.
+
+11
+00:00:49,610 --> 00:00:52,610
+And then it will be brought down.
+
+12
+00:00:52,960 --> 00:00:53,510
+I.
+
+13
+00:00:55,880 --> 00:00:59,110
+Equals to product.
+
+14
+00:01:02,420 --> 00:01:11,070
+No product then commit push product to court.
+
+15
+00:01:32,390 --> 00:01:38,720
+So in order for you to create an action you need to pass state and commit state is because we want to
+
+16
+00:01:38,720 --> 00:01:40,700
+access the state here.
+
+17
+00:01:40,700 --> 00:01:46,750
+CART AND CART length and then commit gives us the ability to access mutations function.
+
+18
+00:01:46,910 --> 00:01:53,060
+And if you see this comment this is how we going to access the mutation functions of Iran which we have
+
+19
+00:01:53,060 --> 00:01:53,780
+to create.
+
+20
+00:01:53,810 --> 00:01:57,880
+Product is the product that the user will add and the logic is simple.
+
+21
+00:01:57,920 --> 00:02:04,610
+First we check in our cart state to find whether the product that the user about to ate exists or not
+
+22
+00:02:04,700 --> 00:02:05,690
+in the cart.
+
+23
+00:02:05,690 --> 00:02:12,200
+Hence why we are doing equals to product that the user will add and a product in the cart we check does
+
+24
+00:02:12,200 --> 00:02:13,010
+it exist.
+
+25
+00:02:13,040 --> 00:02:18,790
+If a product doesn't exist then we want to push it a product to the cart bypassing this product and
+
+26
+00:02:18,790 --> 00:02:19,570
+user want to.
+
+27
+00:02:19,760 --> 00:02:22,850
+And this will be sent to our mutation function later on.
+
+28
+00:02:22,850 --> 00:02:29,530
+Else if the product does exist in the cart we simply just want to increase the quantity of the product
+
+29
+00:02:29,960 --> 00:02:33,810
+which is another mutation function that we have to create later on.
+
+30
+00:02:33,920 --> 00:02:37,110
+And if we pass in the product that we want to increase the quantity of.
+
+31
+00:02:37,130 --> 00:02:41,420
+And finally another mutation function just to increase the length of the cart.
+
+32
+00:02:41,420 --> 00:02:43,060
+So it is really simple.
+
+33
+00:02:43,070 --> 00:02:46,590
+We just learn about state and then we learn about action.
+
+34
+00:02:47,210 --> 00:02:52,710
+So in the next video we will learn on how to implement this tree mutations functions.
+
+35
+00:02:52,730 --> 00:02:58,070
+You must be wondering why not just do the push to cart in here and increment product cure and as well
+
+36
+00:02:58,070 --> 00:02:59,420
+as increment cart length here.
+
+37
+00:02:59,420 --> 00:03:00,970
+Can we just do it in one action.
+
+38
+00:03:00,980 --> 00:03:06,440
+We can do that but a conventional view access is better to separate when you want to mutate a state
+
+39
+00:03:06,470 --> 00:03:12,500
+in a separate function which is in mutation and action simply just to navigate which mutation that you
+
+40
+00:03:12,500 --> 00:03:14,240
+want to use.
+
+41
+00:03:14,240 --> 00:03:16,600
+So we are actually following the best practice.
+
+42
+00:03:16,880 --> 00:03:20,420
+So I'll see you guys in the next video where we're going to implement mutations function.

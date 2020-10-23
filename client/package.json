@@ -18,12 +18,13 @@
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "nuxt": "^2.14.6",
+    "nuxt-dropzone": "^1.0.4",
+    "uuid": "^8.3.1",
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
     "vue-file-agent": "^1.7.3",
     "vue-popper": "^0.3.8",
     "vue-popperjs": "^2.3.0",
-    "vue2-dropzone": "^3.6.0",
     "vue2-perfect-scrollbar": "^1.5.0"
   },
   "devDependencies": {}

@@ -1,6 +1,8 @@
 // import axios from '@nuxtjs/axios';
 const state = () => ({
     patients: [],
+    curTreats: [],
+    files: [],
     csrftoken: ''
 });
 
@@ -8,18 +10,24 @@ const mutations = {
     'GET_PATIENTS' (state, payload) {
         state.patients = payload
     },
+    // 'GET_PATIENT_TREATS' (state, payload) {
+    //     const curPatient = state.patients
+    //         .filter(patient => patient.id === payload.id)
+    //     state.curTreats = curPatient.treatments
+    //     console.log(state.curTreats)
+    // },
     'ADD_PATIENT' (state, payload) {
         state.patients.unshift(payload)
     },
     'EDIT_PATIENT' (state, payload) {
-        
+
         // FIND ITEM AND PLACE IN STATE
         const editedPatient = state.patients.find((patient) => patient.id === payload.id);
         let indexOfPatient = state.patients.indexOf(editedPatient);
 
         // REPLACE EDITED ITEM WITH NEW INFO
-        state.patients.splice(indexOfPatient,1,payload);
-        
+        state.patients.splice(indexOfPatient, 1, payload);
+
     },
     "DELETE_PATIENT" (state, id) {
         let patient = state.patients.find(patient => patient.id === id);
@@ -28,6 +36,17 @@ const mutations = {
 
         ;
         state.patients.splice(indexOfPatient, 1);
+    },
+    'PUSH_NEW_FILES' (state, payload) {
+        state.files.push(payload);
+    },
+    'REMOVE_ATTACHED_FILE' (state, id) {
+        let fileToFind = state.files.find(file => file.id === id);
+        let indexOfFile = state.files.indexOf(fileToFind)
+        state.files.splice(indexOfFile, 1);
+    },
+    'ADD_NEW_TREATMENT' (state, payload) {
+        console.log(payload)
     }
 };
 
@@ -62,9 +81,9 @@ const actions = {
     },
     async addPatient({ state, commit }, payload) {
         //const csrftoken = app.$cookiz.get('csrftoken');
-        console.log(payload)
-            // csrftoken = this.$cookie.get('csrftoken');
-            //console.log('csrf', state.csrftoken);
+        //console.log(payload)
+        // csrftoken = this.$cookie.get('csrftoken');
+        //console.log('csrf', state.csrftoken);
         const options = {
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -92,7 +111,7 @@ const actions = {
 
         const id = payload.id;
 
-       // console.log(payload.id)
+        // console.log(payload.id)
 
         let url = `http://127.0.0.1:8000/api/patients/${id}/`;
         // console.log(url);
@@ -100,11 +119,11 @@ const actions = {
         try {
 
             const newPatient = await this.$axios.put(url, payload);
-           //console.log("Updated Response: ", newPatient.data)
+            //console.log("Updated Response: ", newPatient.data)
 
 
-                commit("EDIT_PATIENT", newPatient.data);
-                //   console.log(allPatients.data)
+            commit("EDIT_PATIENT", newPatient.data);
+            //   console.log(allPatients.data)
 
 
         } catch (err) {
@@ -112,6 +131,7 @@ const actions = {
         }
 
     },
+
     async onDeletePatient({ state, commit }, id) {
 
         try {
@@ -123,6 +143,67 @@ const actions = {
             console.log(error)
         }
 
+    },
+    async onUploadFile({ state, commit }, payload) {
+        try {
+            let url = 'http://127.0.0.1:8000/api/attachments/'
+                // const options = {
+                //     headers: {
+                //         "Content-Type": "multipart/form-data",
+                //     }
+                // };
+
+            //let res = await axios.get('http://jsonplaceholder.typicode.com/todos');
+            // console.log(Array.from(formData))
+            let res = await this.$axios.post(url, payload);
+            console.log(res.data)
+            commit('PUSH_NEW_FILES', res.data)
+
+
+
+
+            // console.log("From the res: ", res.data.id);
+            // console.log(this.fileIds);
+
+            //this.listEl += alertElement;
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    },
+    async deleteAttached({ state, commit }, id) {
+
+        let url = `http://127.0.0.1:8000/api/attachments/${id}/`;
+        console.log(url);
+        try {
+            await this.$axios.delete(url);
+
+            commit('REMOVE_ATTACHED_FILE', id);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    },
+    async addNewTreatment({ state, commit }, payload) {
+        // 
+        const options = {
+            headers: {
+                "Content-Type": "multipart/form-data"
+                    // "X-CSRFToken": state.csrftoken
+            }
+        };
+        let url = "http://127.0.0.1:8000/api/treatments/";
+
+        try {
+            const newTreatment = await this.$axios.post(url, payload);
+            commit("ADD_NEW_TREATMENT", newTreatment.data);
+
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 }

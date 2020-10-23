@@ -1,0 +1,111 @@
+1
+00:00:00,450 --> 00:00:05,250
+In this video we will add the ability for the user to delete one of the products in the cart.
+
+2
+00:00:05,250 --> 00:00:12,900
+Let's go to our index DOJ s and we have to add another mutation function which will be removed.
+
+3
+00:00:13,030 --> 00:00:26,090
+Product let's write the algorithm up here and the algorithm is remove the product quantity from the
+
+4
+00:00:26,150 --> 00:00:35,820
+cart length and then the second one is get the index of the product that we want to delete.
+
+5
+00:00:36,270 --> 00:00:45,150
+And the final one is remove that product by using splice and in the parameter you want to pass in the
+
+6
+00:00:45,150 --> 00:00:46,510
+state and then a product.
+
+7
+00:00:46,580 --> 00:00:49,570
+And the first we need to remove the products quantity from the cart length.
+
+8
+00:00:49,570 --> 00:01:00,070
+So do state that cart length minus product quantity.
+
+9
+00:01:00,180 --> 00:01:03,250
+After that we want to get the index of a product that we wanted to lead.
+
+10
+00:01:03,300 --> 00:01:12,970
+So let index off product it goes to state the card not index of an end product.
+
+11
+00:01:14,100 --> 00:01:17,290
+Finally we want to remove that product by using this place.
+
+12
+00:01:17,460 --> 00:01:23,260
+So state DOT card dots place as in the index of the product.
+
+13
+00:01:24,930 --> 00:01:28,000
+And then we just want to remove one element from the car every.
+
+14
+00:01:28,240 --> 00:01:33,560
+So now we have to call this you know a cart to go to cart a view and that's fine.
+
+15
+00:01:33,640 --> 00:01:37,030
+Delete button we can directly call it here.
+
+16
+00:01:37,030 --> 00:01:41,020
+So at click would you be store
+
+17
+00:01:46,380 --> 00:01:49,620
+and then the name of the mutation would be removed.
+
+18
+00:01:49,610 --> 00:02:00,440
+Product and we simply have to pass in the product in save it and we have to make it single quote or
+
+19
+00:02:00,440 --> 00:02:01,400
+else we wouldn't work
+
+20
+00:02:04,600 --> 00:02:05,990
+because it's already double quote.
+
+21
+00:02:06,010 --> 00:02:12,740
+So we need to make it single couldn't say who saved is and let's go back to a cart strike to refresh
+
+22
+00:02:12,730 --> 00:02:19,510
+it first and let's remove one of products remove Harry Potter and there we have it.
+
+23
+00:02:19,520 --> 00:02:25,160
+It removes the product and even it removes the product quantity from cart length.
+
+24
+00:02:25,310 --> 00:02:29,730
+And now the total price is 6 to 3 which is correct can play around with it.
+
+25
+00:02:29,740 --> 00:02:38,250
+We can change and if we refresh a report that won't be there anymore and we have it now we have implemented
+
+26
+00:02:38,280 --> 00:02:44,040
+the Add to Cart feature it is working correctly and in the next feed you will implement the payment
+
+27
+00:02:44,040 --> 00:02:46,500
+system so we can buy all the products.
+
+28
+00:02:46,520 --> 00:02:47,780
+I'll see you guys in the next video.

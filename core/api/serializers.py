@@ -1,14 +1,15 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from core.models import Patient, Attachment, Doctor
+from core.models import Patient, Attachment, Doctor, Treatment
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the users object"""
    
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password', 'name',)
+        fields = ('id','email', 'password', 'name',)
         extra_kwargs = {'password': {'write_only': True, 'min_length': 4}}
+        read_only_Fields = ('id',)
 
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""
@@ -75,17 +76,50 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
         return file
 
+class TreatmentSerializer(serializers.ModelSerializer):
+    # Serializer for uploading images for recipes
+
+    files = AttachmentSerializer(many=True)
+    
+    class Meta:
+        model = Treatment
+        fields = [
+            'id', 'user', 'patient', 'title', 'description', 'files', 'created'         
+        ]
+        read_only_Fields = ('id',)
+
+    def create(self, validated_data):
+        print(validated_data)
+        files = validated_data.pop('files')
+        treatment = Treatment.objects.create(**validated_data)
+        files = validated_data['files']
+        for file in files:
+            treatment.add(file)
+        # Profile.objects.create(user=user, **profile_data)
+        return treatment
+
 class PatientSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
-    doctor = serializers.PrimaryKeyRelatedField(
-       queryset=Doctor.objects.all()
-       )
+    # treatments = serializers.SerializerMethodField()
+    # treatments = serializers.PrimaryKeyRelatedField(
+    #     source='treatment_set',
+    #     many=True,
+    #     read_only=True,
+    #     )
+    # doctor = serializers.PrimaryKeyRelatedField(
+    #    queryset=Doctor.objects.all()
+    #    )
+    treatments = TreatmentSerializer(many=True)
 
     class Meta:
         model = Patient
         fields = [
             'id', 'user', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'status' 
+            'email', 'treatments', 'status' 
          
         ]
+        # depth = 1
         read_only_Fields = ('id',)
+    # def get_treatments(self, obj):
+    #     return obj.treatments
+

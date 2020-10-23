@@ -17,8 +17,10 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
-from core.models import Patient, Attachment
-from .serializers import UserSerializer, AuthTokenSerializer, AttachmentSerializer, PatientSerializer
+from core.models import Patient, Attachment, Treatment
+from .serializers import (
+    UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
+    PatientSerializer, TreatmentSerializer,)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -53,6 +55,11 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     #     """Create a new attachment"""
     #     serializer.save(user=self.request.user)
 
+class TreatmentViewSet(viewsets.ModelViewSet):
+    # Manage ingredientss in the database
+    queryset = Treatment.objects.all()
+    serializer_class = TreatmentSerializer
+    lookup_field = 'id'
 
 """
 class ListFiles(APIView):

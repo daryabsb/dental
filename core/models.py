@@ -172,6 +172,10 @@ class Patient(models.Model):
             self.age = calculateAge(self.dob)
         super(Patient, self).save(*args, **kwargs)
 
+    @property
+    def treatments(self):
+        return self.treatment_set()
+
     def get_absolute_url(self):
         return reverse('patients_detail', kwargs={'pk': self.pk})
 
@@ -229,12 +233,16 @@ class Treatment(models.Model):
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='treatments')
     title = models.CharField(max_length=90, default='Treatment')
     description = models.CharField(max_length=200)
-    files = models.ManyToManyField('Attachment')
+    files = models.ManyToManyField('Attachment', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
+
+    @property
+    def upload_files(self):
+        return self.attachment_set()
 
     def __str__(self):
         return f'{self.patient.name} - {self.created}'

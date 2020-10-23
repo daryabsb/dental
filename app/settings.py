@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+from corsheaders.defaults import default_headers
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,10 @@ SECRET_KEY = 'k&*6+z7d1u_9y*@p$*&$q)!9z(^y(e6tv8fr5j$%m5v%e&n8en'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "172.16.10.49", "62.201.232.212"]
+ALLOWED_HOSTS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
 
 
 # Application definition
@@ -38,9 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
+   
 
     'widget_tweaks',
 
@@ -60,7 +66,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+
+
+ # add this block below MIDDLEWARE
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
  # add this block below MIDDLEWARE
 CORS_ORIGIN_WHITELIST = (
@@ -78,7 +91,6 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
-
 
 ROOT_URLCONF = 'app.urls'
 

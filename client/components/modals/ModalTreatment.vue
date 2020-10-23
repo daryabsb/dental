@@ -11,106 +11,85 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+                                 <div class="input-group mb-1">
+                                    <!-- <div class="alert alert-outline-danger">
+                                    <p class="alert-heading font-12">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                </div> -->
 
+                                </div>
+                                <div class="input-group mb-1 ">                                
+                                    <label for="title" class="inline mr-3"><h4>TITLE: </h4></label>
+                                    <input v-model="title" name="title" class="form-control" />
+                                </div>
+                                 <div class="form-group mb-1">
+                                            <label for="exampleFormControlTextarea1">Description</label>
+                                            <textarea v-model="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
                                 <div class="input-group mb-3">
                                     <!-- VUE UPLOAD AGENT -->
-                                <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+                                
+                                <Dropzone />
                                 </div>
-                                    <!-- :accept="'image/*,.zip'" -->
+                                   
+                    
+                <button type="button" @click="closeModal" class="btn btn-secondary waves-effect">Close</button> 
+                <button @click="onSaveTreatment" type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>     
                                 </div>
-
-                                <!-- <div class="bd-example"> -->
-
-
-                                <div class="input-group mb-3 ">
-                                    
-                                    <h4>SOMETHING HERE</h4>
-                                </div>
-
-
-                                <!-- FILE WILL BE DROPPED HERE -->
-                                <div id="attached-list">
-                                    SOMETHING ELSE HERE
-
-                                </div>
-
-                                <!-- FILE DROP END -->
-                                <div role="alert" class="alert alert-light mb-0">
-                                    <h4 class="alert-heading font-18">title</h4>
-                                    <ul>
-
-                                    </ul>
-                                </div>
+                                             
+ 
                             </div>
+                             <div class="modal-footer">
+                          
+            </div>
                         </div>
                     </div>
                 </div>
                                                     
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" @click="closeModal" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
-                                                </div>
+                                               
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
-                                    </div>
 </template>
 
 <script>
 
 import { store, mutations } from '../../store/utils/conf';
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
 export default {
-    components: {
-    vueDropzone: vue2Dropzone
+    props: ['patientId'],
+    data() {
+        return {
+            title: '',
+            description: '',
+        }
     },
-    data () {
-      return {
-          dropzoneOptions: {
-          url: 'http://127.0.0.1:8000/patients/26/attachments/create/',
-          thumbnailWidth: 150,
-          maxFilesize: 100,
-          headers: { "Content-Type": "multipart/form-data" }
-      }
-     
-      };
-    },
-
     methods: {
-        
+        onSaveTreatment() {
+            console.log(this.$auth.user)
+            let formData = new FormData();
+            formData.append('user', this.$auth.user.id);
+            formData.append('patient', this.patientId);
+            formData.append('title', this.title);
+            formData.append('description', this.description);
+            formData.append('files', this.$store.state.files);
+
+            this.$store.dispatch('addNewTreatment', formData);
+            this.closeModal()
+        },
         closeModal() {
             //console.log(this.name)
             // this.$emit('toggle-show');
             store.isEditModal = false;
             mutations.toggleTreatment();
         },
-        
-     
-    
     },
-    
     computed: {
+        pId() {
+            return this.patientId
+        },
         isTreatmentOpen() {
             return store.isTreatmentOpen
         }
     }
 }
 </script>
-
-
-  components: {
-    vueDropzone: vue2Dropzone
-  },
-  data: function () {
-    return {
-      dropzoneOptions: {
-          url: 'https://httpbin.org/post',
-          thumbnailWidth: 150,
-          maxFilesize: 0.5,
-          headers: { "My-Awesome-Header": "header value" }
-      }
-    }
-  }
-

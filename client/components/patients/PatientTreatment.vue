@@ -10,26 +10,28 @@
                                         <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
                                         </button>
                                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 363px;"><div class="slimscroll education-activity" style="overflow: hidden; width: auto; height: 363px;">
-                                       <ModalTreatment />
+                                       <ModalTreatment :patientId="patientID" />
                                         <perfect-scrollbar> 
                                             <div class="activity">
+                                                <div v-for="treat in treatments" :key="treat.id">
                                             <i class="mdi mdi-school icon-success"></i>
                                             <div class="time-item">
                                                 <div class="item-info">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Oxford University</h6>
-                                                        <span class="text-muted">Oct-2009 to Oct-2011</span>
+                                                        <h6 class="m-0">{{treat.title}}</h6>
+                                                        <span class="text-muted">{{treat.created}}</span>
                                                     </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+                                                    <p class="text-muted mt-3">{{treat.description}}
                                                         <a href="#" class="text-info">[more info]</a>
                                                     </p>
                                                     <div>
-                                                        <span class="badge badge-soft-secondary">Design</span>
+                                                        <span class="badge badge-soft-secondary" v-for="file in treat.files" :key="file.id">{{file.filename}}</span>
                                                         <span class="badge badge-soft-secondary">HTML</span>                                                    
                                                         <span class="badge badge-soft-secondary">Css</span>
                                                         
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                             <i class="mdi mdi-medal icon-pink"></i>                                                                                                           
                                             <div class="time-item">
@@ -204,14 +206,19 @@ import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from '../../store/utils/conf';
 
 export default {
+    props: ['treatments', 'patientID'],
     components: {
         PerfectScrollbar
     },
+   
     methods: {
+
+        //getTreatments() {}
+        
         showModal() {
             mutations.toggleTreatment();
         }
-        },
+    },
     }
 </script> 
 <style src="vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css"/>
