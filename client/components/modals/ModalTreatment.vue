@@ -65,7 +65,13 @@ export default {
     },
     methods: {
         onSaveTreatment() {
-            console.log(this.$auth.user)
+
+            //console.log(this.$auth.user)
+            
+            let files = this.$store.state.files.map(file=>file.id);
+
+            console.log(files)
+            
             let formData = new FormData();
             formData.append('user', this.$auth.user.id);
             formData.append('patient', this.patientId);
