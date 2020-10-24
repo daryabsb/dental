@@ -20,7 +20,7 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 from core.models import Patient, Attachment, Treatment
 from .serializers import (
     UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
-    PatientSerializer, TreatmentSerializer,)
+    PatientSerializer, TreatmentSerializer, TreatmentListSerializer,)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -61,19 +61,11 @@ class TreatmentViewSet(viewsets.ModelViewSet):
     serializer_class = TreatmentSerializer
     lookup_field = 'id'
 
-"""
-class ListFiles(APIView):
-   
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAdminUser]
-
-    def get(self, request, format=None):
-       
-        print(request)
-        files = Attachment.objects.all()
-        serializer = AttachmentSerializer(files)
-        return Response(serializer.data)
-"""
+    def get_serializer_class(self):
+        # return apropriate serializer class
+        if self.action == 'list':
+            return TreatmentListSerializer
+        return self.serializer_class
 
 class PatientViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
@@ -81,24 +73,3 @@ class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     lookup_field = 'id'
 
-
-
-
-
-class FileList(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
-    def get(self, request, format=None):
-        files = Attachment.objects.all()
-        serializer = AttachmentSerializer(files, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        print(request)
-        serializer = AttachmentSerializer(data=request.data)
-        print(serializer.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_410_BAD_REQUEST)

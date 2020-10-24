@@ -70,16 +70,27 @@ export default {
             
             let files = this.$store.state.files.map(file=>file.id);
 
-            console.log(files)
+           // console.log(files)
             
             let formData = new FormData();
+         
             formData.append('user', this.$auth.user.id);
             formData.append('patient', this.patientId);
             formData.append('title', this.title);
             formData.append('description', this.description);
-            formData.append('files', this.$store.state.files);
+            formData.append('files', files);
 
-            this.$store.dispatch('addNewTreatment', formData);
+            let data = {
+                "user": this.$auth.user.id,
+                "patient": this.patientId,
+                "title": this.title,
+                "description": this.description,
+                "files": files
+            }
+            console.log(data)
+           
+
+            this.$store.dispatch('addNewTreatment', data);
             this.closeModal()
         },
         closeModal() {

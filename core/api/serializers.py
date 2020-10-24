@@ -70,16 +70,25 @@ class AttachmentSerializer(serializers.ModelSerializer):
             )
         file.save()
 
-        print('==|==|==')
-        print(validated_data['file'])
-        print('==|==|==')
+        # print('==|==|==')
+        # print(validated_data['file'])
+        # print('==|==|==')
 
         return file
+
+
+
+
 
 class TreatmentSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
 
-    files = AttachmentSerializer(many=True)
+    # files = serializers.PrimaryKeyRelatedField(
+    #     queryset=Attachment.objects.all(),
+    #     many=True
+    # )
+    # files = AttachmentSerializer(many=True)
+    # files = AttachmentSerializer
     
     class Meta:
         model = Treatment
@@ -88,27 +97,27 @@ class TreatmentSerializer(serializers.ModelSerializer):
         ]
         read_only_Fields = ('id',)
 
-    def create(self, validated_data):
-        print(validated_data)
-        files = validated_data.pop('files')
-        treatment = Treatment.objects.create(**validated_data)
-        files = validated_data['files']
-        for file in files:
-            treatment.add(file)
-        # Profile.objects.create(user=user, **profile_data)
-        return treatment
+class TreatmentListSerializer(serializers.ModelSerializer):
+    # Serializer for uploading images for recipes
+
+    # files = serializers.PrimaryKeyRelatedField(
+    #     queryset=Attachment.objects.all(),
+    #     many=True
+    # )
+    files = AttachmentSerializer(many=True)
+    # files = AttachmentSerializer
+    
+    class Meta:
+        model = Treatment
+        fields = [
+            'id', 'user', 'patient', 'title', 'description', 'files', 'created'         
+        ]
+        read_only_Fields = ('id',)
+    
+
 
 class PatientSerializer(serializers.ModelSerializer):
-    # Serializer for uploading images for recipes
-    # treatments = serializers.SerializerMethodField()
-    # treatments = serializers.PrimaryKeyRelatedField(
-    #     source='treatment_set',
-    #     many=True,
-    #     read_only=True,
-    #     )
-    # doctor = serializers.PrimaryKeyRelatedField(
-    #    queryset=Doctor.objects.all()
-    #    )
+   
     treatments = TreatmentSerializer(many=True)
 
     class Meta:
@@ -118,8 +127,5 @@ class PatientSerializer(serializers.ModelSerializer):
             'email', 'treatments', 'status' 
          
         ]
-        # depth = 1
         read_only_Fields = ('id',)
-    # def get_treatments(self, obj):
-    #     return obj.treatments
 

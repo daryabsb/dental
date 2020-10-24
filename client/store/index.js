@@ -1,6 +1,7 @@
 // import axios from '@nuxtjs/axios';
 const state = () => ({
     patients: [],
+    treatments: [],
     curTreats: [],
     files: [],
     csrftoken: ''
@@ -9,6 +10,14 @@ const state = () => ({
 const mutations = {
     'GET_PATIENTS' (state, payload) {
         state.patients = payload
+    },
+    'GET_TREATMENTS' (state, payload) {
+        state.treatments = payload
+    },
+    'GET_PATIENT_TREATMENTS' (state, id) {
+        // console.log(state.treatments)
+        state.curTreats = state.treatments
+        .filter(treat=>treat.patient===id)
     },
     // 'GET_PATIENT_TREATS' (state, payload) {
     //     const curPatient = state.patients
@@ -32,7 +41,7 @@ const mutations = {
     "DELETE_PATIENT" (state, id) {
         let patient = state.patients.find(patient => patient.id === id);
         let indexOfPatient = state.patients.indexOf(patient)
-        console.log(patient, indexOfPatient);
+        // console.log(patient, indexOfPatient);
 
         ;
         state.patients.splice(indexOfPatient, 1);
@@ -46,7 +55,11 @@ const mutations = {
         state.files.splice(indexOfFile, 1);
     },
     'ADD_NEW_TREATMENT' (state, payload) {
-        console.log(payload)
+        state.treatments.unshift(payload)
+        state.treatments[0].files = [];
+        state.treatments[0].files = state.files;
+        state.files = [];
+        // console.log(payload)
     }
 };
 
@@ -64,13 +77,16 @@ const actions = {
             }
         };
         let url = "http://127.0.0.1:8000/api/patients/";
+        let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
         // console.log(url);
 
         try {
 
             const allPatients = await this.$axios.get(url);
+            const allTreatments = await this.$axios.get(treatmentUrl);
             // console.log(allPatients.data)
             commit("GET_PATIENTS", allPatients.data);
+            commit("GET_TREATMENTS", allTreatments.data);
             //   console.log(allPatients.data)
 
 
@@ -187,16 +203,11 @@ const actions = {
 
     },
     async addNewTreatment({ state, commit }, payload) {
-        // 
-        const options = {
-            headers: {
-                "Content-Type": "multipart/form-data"
-                    // "X-CSRFToken": state.csrftoken
-            }
-        };
+        
         let url = "http://127.0.0.1:8000/api/treatments/";
 
         try {
+            console.log(Array.from(payload));
             const newTreatment = await this.$axios.post(url, payload);
             commit("ADD_NEW_TREATMENT", newTreatment.data);
 
@@ -204,6 +215,9 @@ const actions = {
         } catch (err) {
             console.log(err);
         }
+    },
+    getPatientTreats({state, commit}, id) {
+        commit('GET_PATIENT_TREATMENTS', id)
     }
 
 }

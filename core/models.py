@@ -233,7 +233,7 @@ class Treatment(models.Model):
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='treatments')
     title = models.CharField(max_length=90, default='Treatment')
     description = models.CharField(max_length=200)
-    files = models.ManyToManyField('Attachment', null=True, blank=True)
+    files = models.ManyToManyField('Attachment')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

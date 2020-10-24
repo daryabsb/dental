@@ -13,21 +13,21 @@
                                        <ModalTreatment :patientId="patientID" />
                                         <perfect-scrollbar> 
                                             <div class="activity">
-                                                <div v-for="treat in treatments" :key="treat.id">
+                                                <!-- <pre>{{treats}}</pre> -->
+                                                <div v-for="treat in treats" :key="treat.id">
                                             <i class="mdi mdi-school icon-success"></i>
                                             <div class="time-item">
                                                 <div class="item-info">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">{{treat.title}}</h6>
+                                                        <h6 class="m-0 text-pink">{{treat.title}}</h6>
                                                         <span class="text-muted">{{treat.created}}</span>
                                                     </div>
-                                                    <p class="text-muted mt-3">{{treat.description}}
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
+                                                    <h6>{{treat.description}}
+                                                        <a href="#" class="text-info">[more info]</a></h6>
+                                                    
                                                     <div>
+                                                        <!-- <span class="badge badge-soft-secondary">{{treat.files}}</span> -->
                                                         <span class="badge badge-soft-secondary" v-for="file in treat.files" :key="file.id">{{file.filename}}</span>
-                                                        <span class="badge badge-soft-secondary">HTML</span>                                                    
-                                                        <span class="badge badge-soft-secondary">Css</span>
                                                         
                                                     </div>
                                                 </div>
@@ -91,104 +91,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <i class="mdi mdi-medal icon-pink"></i>                                                                                                           
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Apollo Hospital</h6>
-                                                        <span class="text-muted">Oct-2006 to Oct-209</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
-                                                    <div>
-                                                        <span class="badge badge-soft-secondary">Python</span>
-                                                        <span class="badge badge-soft-secondary">Django</span>
-                                                    </div>
-                                                </div>                                            
-                                            </div>
-                                            <i class="mdi mdi-book-open-page-variant icon-purple"></i> 
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Stanford Hospitals</h6>
-                                                        <span class="text-muted">Oct-2003 to Oct-2006</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
-                                                </div>
-                                            </div>                                         
-                                            <i class="mdi mdi-lead-pencil icon-warning"></i>
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Karolinska Hospital</h6>
-                                                        <span class="text-muted">Oct-1996 to Oct-2003</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>                                                
-                                                </div>
-                                            </div>  
-                                            <i class="mdi mdi-school icon-success"></i>
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Oxford University</h6>
-                                                        <span class="text-muted">Oct-2009 to Oct-2011</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
-                                                    <div>
-                                                        <span class="badge badge-soft-secondary">Design</span>
-                                                        <span class="badge badge-soft-secondary">HTML</span>                                                    
-                                                        <span class="badge badge-soft-secondary">Css</span>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <i class="mdi mdi-medal icon-pink"></i>                                                                                                           
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Apollo Hospital</h6>
-                                                        <span class="text-muted">Oct-2006 to Oct-209</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
-                                                    <div>
-                                                        <span class="badge badge-soft-secondary">Python</span>
-                                                        <span class="badge badge-soft-secondary">Django</span>
-                                                    </div>
-                                                </div>                                            
-                                            </div>
-                                            <i class="mdi mdi-book-open-page-variant icon-purple"></i> 
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Stanford Hospitals</h6>
-                                                        <span class="text-muted">Oct-2003 to Oct-2006</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>
-                                                </div>
-                                            </div>                                         
-                                            <i class="mdi mdi-lead-pencil icon-warning"></i>
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="m-0">Karolinska Hospital</h6>
-                                                        <span class="text-muted">Oct-1996 to Oct-2003</span>
-                                                    </div>
-                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                        <a href="#" class="text-info">[more info]</a>
-                                                    </p>                                                
-                                                </div>
-                                            </div>     
+                                               
                                             
                                             </div><!--end activity--> 
  </perfect-scrollbar>
@@ -219,6 +122,13 @@ export default {
             mutations.toggleTreatment();
         }
     },
+    computed: {
+        treats() {
+            this.$store.dispatch('getPatientTreats', this.patientID)
+            return this.$store.state.curTreats
+        }
+    },
+    
     }
 </script> 
 <style src="vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css"/>

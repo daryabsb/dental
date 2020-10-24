@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
-    PatientViewSet, FileList, TreatmentViewSet,)
+    PatientViewSet, TreatmentViewSet,)
 
 
 router = routers.DefaultRouter()
