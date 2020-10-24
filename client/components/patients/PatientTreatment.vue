@@ -2,7 +2,7 @@
     <div class="col-lg-6">
                             <div class="card">                                       
                                 <div class="card-body"> 
-                                    <h4 class="header-title mt-0 mb-3">Experience</h4>
+                                    <h4 class="header-title mt-0 mb-3">Treatments</h4>
                                    <button 
                                    @click="showModal()"
                                    type="button" 

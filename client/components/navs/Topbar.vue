@@ -8,10 +8,10 @@
                 <div class="topbar-left">
                     <a href="../projects/projects-index.html" class="logo">
                         <span>
-                            <img src="~assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                            <img src="~assets/images/logo-sm-2.png" alt="logo-small" class="logo-sm">
                         </span>
                         <span>
-                            <img src="~assets/images/logo-dark.png" alt="logo-large" class="logo-lg">
+                            <img src="~assets/images/logo-dark-2.png" alt="logo-large" class="logo-lg">
                         </span>
                     </a>
                 </div><!--topbar-left-->
@@ -19,13 +19,14 @@
 
                 <!--end logo-->
                 <ul class="list-unstyled topbar-nav float-right mb-0" v-if="isAuthenticated"> 
+                    <!-- li LANGUAGE
                     <li @click="showLanguages" class="hidden-sm">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="javascript: void(0);" role="button"
                             aria-haspopup="false" aria-expanded="false">
                             English <img src="~assets/images/flags/us_flag.jpg" class="ml-2" height="16" alt=""/> <i class="mdi mdi-chevron-down"></i> 
                         </a>
                         <LanguagesNav />
-                    </li><!--end li-->
+                    </li>
 
                     <li @click="showNotifications" class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" role="button"
@@ -34,11 +35,11 @@
                             <span class="badge badge-danger badge-pill noti-icon-badge">2</span>
                         </a>
                         <NotificationNav />
-                    </li><!--end notification-list-->
+                    </li>end notification-list-->
 
                     <li class="dropdown">
                         <a @click="showMenu" class="nav-link dropdown-toggle waves-effect waves-light nav-user pr-0">
-                            <img src="~assets/images/users/user-4.jpg" alt="profile-user" class="rounded-circle" /> 
+                            <img src="~assets/images/users/user-41.jpg" alt="profile-user" class="rounded-circle" /> 
                             <span class="ml-1 nav-user-name hidden-sm">{{$auth.user.name}} <i class="mdi mdi-chevron-down"></i> </span>
                         </a>
 <UserMenu />
