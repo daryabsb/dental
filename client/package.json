@@ -25,7 +25,10 @@
     "vue-file-agent": "^1.7.3",
     "vue-popper": "^0.3.8",
     "vue-popperjs": "^2.3.0",
-    "vue2-perfect-scrollbar": "^1.5.0"
+    "vue2-perfect-scrollbar": "^1.5.0",
+    "vuejs-datepicker": "^1.6.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/moment": "^1.6.1"
+  }
 }
