@@ -39,7 +39,8 @@ export default {
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
         { src: '~/plugins/vue-datepicker', ssr: false }, // datepicker plugin here
-        { src: "./plugins/axios.js", ssr: false }
+        { src: "./plugins/axios.js", ssr: false },
+        { src: "./plugins/vue-pdf.js", ssr: false }
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
@@ -50,7 +51,9 @@ export default {
     components: true,
 
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-    buildModules: [],
+    buildModules: [
+        
+    ],
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
@@ -58,6 +61,7 @@ export default {
         // https://go.nuxtjs.dev/bootstrap
         //"bootstrap-vue/nuxt",
         '@nuxtjs/auth',
+        '@nuxtjs/moment',
         // https://go.nuxtjs.dev/axios
         "@nuxtjs/axios",
         // https://go.nuxtjs.dev/pwa

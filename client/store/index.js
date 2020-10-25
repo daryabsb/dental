@@ -232,6 +232,9 @@ const getters = {
 
     loggedInUser(state) {
         return state.auth.user
+    },
+    getTreatments(state) {
+        return state.treatments
     }
 
 }

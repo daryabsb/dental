@@ -23,6 +23,7 @@
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
     "vue-file-agent": "^1.7.3",
+    "vue-pdf": "^4.2.0",
     "vue-popper": "^0.3.8",
     "vue-popperjs": "^2.3.0",
     "vue2-perfect-scrollbar": "^1.5.0",
