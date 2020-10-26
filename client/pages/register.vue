@@ -1,5 +1,5 @@
 <template>
-    <div class="row vh-100 ">
+    <div class="row vh-100 " v-if="isAuthenticated && $auth.user.is_staff ">
             <div class="col-12 align-self-center">
                 <div class="auth-page">
                     
