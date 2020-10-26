@@ -1,3 +1,4 @@
 import Vue from 'vue'
-import Datepicker from 'vuejs-datepicker'
-Vue.component('date-picker', Datepicker)
+import pdf from "vue-pdf";
+
+Vue.component('pdf-view', pdf)

@@ -3,8 +3,8 @@
     <a class="dropdown-item"
       ><i class="dripicons-user text-muted mr-2"></i> Profile</a
     >
-    <a class="dropdown-item"
-      ><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a
+    <nuxt-link to="/register" class="dropdown-item"
+      ><i class="dripicons-wallet text-muted mr-2"></i> Add Staff</nuxt-link
     >
     <a class="dropdown-item"
       ><i class="dripicons-gear text-muted mr-2"></i> Settings</a

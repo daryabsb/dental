@@ -15,7 +15,9 @@ export default {
         scripts: [
 
 
-            { src: "~assets/js/jquery.slimscroll.min.js", body: true }
+            { src: "~assets/js/jquery.slimscroll.min.js", body: true },
+            // { src: "~assets/js/pdfobject.min.js", body: true },
+            // { src: "~assets/js/pdf.js", body: true }
             // { src: "https://unpkg.com/vue-cookies@1.7.4/vue-cookies.js", body: true }
 
         ]
@@ -40,7 +42,8 @@ export default {
     plugins: [
         { src: '~/plugins/vue-datepicker', ssr: false }, // datepicker plugin here
         { src: "./plugins/axios.js", ssr: false },
-        { src: "./plugins/vue-pdf.js", ssr: false }
+        { src: "~/plugins/vue-pdf.js", ssr: false },
+        { src: "./plugins/vue-instant-pdf.js", ssr: false }
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
@@ -74,7 +77,17 @@ export default {
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
-    build: {},
+    build: {
+        extend(config, ctx) {
+            config.output.globalObject = 'this'
+            config.module.rules.push(
+              {
+                test: /\.pdf$/,
+                loader: 'url-loader'
+              }
+            )
+        },
+    },
     auth: {
         strategies: {
             local: {

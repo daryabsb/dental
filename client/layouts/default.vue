@@ -10,7 +10,7 @@
     <Nuxt />
     </div>
             <!-- end page content -->
-            <Footer />
+            <!-- <Footer /> -->
             
         </div>
         <!-- end page-wrapper -->

@@ -35,10 +35,10 @@
                                 </div>
                             </div>
                             <div class="skill-box"> 
-                                <h4 class="skill-title">Inefections [dc/ml]</h4> 
+                                <h4 class="skill-title">Smoking [cig/d]-MAX=40</h4> 
                                 <div class="progress-line"> 
-                                    <span data-percent="90" style="width: 35%;">
-                                        <span class="percent-tooltip">35</span>
+                                    <span data-percent="90" style="width: 50%;">
+                                        <span class="percent-tooltip">20</span>
                                     </span> 
                                 </div>
                             </div>

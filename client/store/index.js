@@ -12,6 +12,10 @@ const mutations = {
         state.patients = payload
     },
     'GET_TREATMENTS' (state, payload) {
+        payload.forEach(treat=>{
+            let patient = state.patients.find(p=>p.id === treat.patient)
+            treat.patientName = patient.name
+        });
         state.treatments = payload
     },
     'GET_PATIENT_TREATMENTS' (state, id) {
