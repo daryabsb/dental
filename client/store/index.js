@@ -34,8 +34,21 @@ const mutations = {
     //     state.curTreats = curPatient.treatments
     //     console.log(state.curTreats)
     // },
+    'ADD_USER' (state, payload) {
+        state.users.unshift(payload)
+    },
     'ADD_PATIENT' (state, payload) {
         state.patients.unshift(payload)
+    },
+    'EDIT_USER' (state, payload) {
+
+        // FIND ITEM AND PLACE IN STATE
+        const editedUser = state.users.find((user) => user.id === payload.id);
+        let indexOfUser = state.users.indexOf(editedUser);
+
+        // REPLACE EDITED ITEM WITH NEW INFO
+        state.users.splice(indexOfUser, 1, payload);
+
     },
     'EDIT_PATIENT' (state, payload) {
 
@@ -99,6 +112,56 @@ const actions = {
             commit("GET_PATIENTS", allPatients.data);
             commit("GET_USERS", allUsers.data);
             commit("GET_TREATMENTS", allTreatments.data);
+            //   console.log(allPatients.data)
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+    async addUser({state, commit}, payload) {
+
+        console.log('Payload: ', payload)
+        const options = {
+            headers: {
+                "Content-Type": "multipart/form-data"
+                    // "X-CSRFToken": state.csrftoken
+            }
+        };
+        let url = "http://127.0.0.1:8000/api/user/create/";
+        // console.log(url);
+
+        try {
+
+            const newUser = await this.$axios.post(url, payload, options);
+            // console.log(allPatients.data)
+            commit("ADD_USER", newUser.data);
+              console.log('Created: ', newUser.data)
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+    async editUser({ state, commit }, payload) {
+
+
+        const id = payload.id;
+
+        // console.log(payload.id)
+
+        let url = `http://127.0.0.1:8000/api/users/${id}/`;
+        // console.log(url);
+
+        try {
+
+            const newUser = await this.$axios.put(url, payload);
+            //console.log("Updated Response: ", newPatient.data)
+
+
+            commit("EDIT_USER", newUser.data);
             //   console.log(allPatients.data)
 
 

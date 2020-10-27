@@ -34,14 +34,15 @@
                         </div>
                        
                     </div>
-                     <div class="row" v-if="!isEditModalToHide">
+                       
+                    </div>
+                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="password">Confirm Password</label>
-                                <input type="password" v-model="password2" name="password" class="form-control"  required="">
+                            <div class="form-group form-check">
+                        <input v-model="user.isStaff" type="checkbox" class="form-check-input mr-3">
+                        <label class="ml-3 form-check-label" for="exampleCheck1"> Add user as ADMIN</label>
                             </div>
                         </div>
-                       
                     </div>
                    
                     <button type="button" @click="addNewUser()" class="btn btn-sm btn-primary">Save</button>
@@ -66,10 +67,10 @@ export default {
     data(){
         return {
             name: '',
-           password: '',
-           password2: '',
+            password: '',
+            password2: '',
             email: '',
-            isStaff:  '',
+            isStaff:  false,
 
         }
     },
@@ -80,20 +81,20 @@ export default {
 
             /* CREATE PAYLOAD FROM FORM  */
             if (!this.editId) {
+                console.log(this.user)
+   
                 let formData = new FormData();
-                formData.append('name', this.user.name);
                 formData.append('email', this.user.email);
                 formData.append('password', this.user.password);
+                formData.append('name', this.user.name);
+                // formData.append('password2', this.password2);
                 formData.append('is_staff', this.user.isStaff);
+
+                console.log(Array.from(formData))
 
             /* DISPATCH ACTION @STORE */
             this.$store.dispatch('addUser', formData);
-            
-            // clearing the form
-            formData.reset();
-
-
-
+          
             } else {
                 let data = {  
                     "id": this.user.id,
@@ -135,11 +136,16 @@ export default {
                         'id': this.editId,
                         'name': this.editName,
                          'email': this.editEmail,
-                        'status': this.editIsStaff
+                        'isStaff': this.editIsStaff
 
                         }
                 } 
-                return {}
+                return {
+                    'id': '',
+                        'name': '',
+                         'email': '',
+                        'isStaff': false
+                }
             
             },
             // setter

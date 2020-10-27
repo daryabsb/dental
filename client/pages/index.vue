@@ -25,13 +25,13 @@
             <div class="col-lg-4">
               <div class="card hospital-info">
                 <div class="card-body">
-                  <h4 class="header-title mt-0 mb-3">Appointments</h4>
+                  <h4 class="header-title mt-0 mb-3">Users</h4>
                   <div class="media">
                     <div class="data-icon align-self-center">
-                      <i class="fas fa-wheelchair rounded-circle text-danger"></i>
+                      <i class="fas fa-user rounded-circle text-success"></i>
                     </div>
                     <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">40</h3>
+                      <h3 class="mt-0">{{numUsers}}</h3>
                       <p class="text-muted mb-0 text-nowrap">Yesterday 32 App.</p>
                     </div>
                     <!--end media body-->
@@ -45,13 +45,13 @@
             <div class="col-lg-4">
               <div class="card hospital-info">
                 <div class="card-body">
-                  <h4 class="header-title mt-0 mb-3">New Admit</h4>
+                  <h4 class="header-title mt-0 mb-3">Patients</h4>
                   <div class="media">
                     <div class="data-icon align-self-center">
                       <i class="fas fa-bed rounded-circle text-warning"></i>
                     </div>
                     <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">21</h3>
+                      <h3 class="mt-0">{{numPatients}}</h3>
                       <p class="text-muted mb-0 text-nowrap">Yesterday 22 Add.</p>
                     </div>
                     <!--end media body-->
@@ -68,10 +68,10 @@
                   <h4 class="header-title mt-0 mb-3">Operations</h4>
                   <div class="media">
                     <div class="data-icon align-self-center">
-                      <i class="fas fa-cut rounded-circle text-success"></i>
+                      <i class="fas fa-briefcase-medical rounded-circle text-success"></i>
                     </div>
                     <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">10</h3>
+                      <h3 class="mt-0">{{numTreatments}}</h3>
                       <p class="text-muted mb-0 text-nowrap">Yesterday 12 Ope.</p>
                     </div>
                     <!--end media body-->
@@ -256,6 +256,18 @@ export default {
             .includes(this.searchQuery.toLowerCase())
         );
       });
+    },
+    numUsers() {
+      return this.$store.state.users.length;
+    
+    },
+    numTreatments() {
+      return this.$store.state.treatments.length;
+    
+    },
+    numPatients() {
+      return this.$store.state.patients.length;
+    
     },
     ...mapGetters(["isAuthenticated", "loggedInUser", "getTreatments"]),
   },

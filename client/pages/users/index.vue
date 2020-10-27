@@ -310,7 +310,7 @@ export default {
       editId: "",
       editName: "",
       editEmail: "",
-      editIsStaff: "",
+      editIsStaff: false,
     };
   },
   components: {},
@@ -320,8 +320,7 @@ export default {
         this.editId = "";
         this.editName = "";
         this.editEmail = "";
-        this.editIsStaff = "";
-        store.isEditModal
+        this.editIsStaff = false;
         //this.$store.conf.actions.dispatch('showAddUserModal');
         store.isEditModal = false;
         mutations.toggleUserModal();

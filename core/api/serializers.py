@@ -3,12 +3,30 @@ from rest_framework import serializers
 from core.models import Patient, Attachment, Doctor, Treatment
 
 class UserListSerializer(serializers.ModelSerializer):
+
    
     class Meta:
         model = get_user_model()
         fields = ('id','email', 'password', 'name', 'is_staff','created',)
-        extra_kwargs = {'password': {'write_only': True, 'min_length': 4}}
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 4, 'required':False}}
         read_only_Fields = ('id',)
+
+        def create(self, validated_data):
+            return User.objects.create(**validated_data)
+
+        def update(self, instance, validated_data):
+            # password = validated_data.pop('password')
+            # Unless the application properly enforces that this field is
+            # always set, the following could raise a `DoesNotExist`, which
+            # would need to be handled.
+            print(instance)
+
+            instance.email = validated_data.get('email', instance.email)
+            instance.name = validated_data.get('name', instance.name)
+            instance.password = validated_data.get('password', instance.password)
+            instance.is_staff = validated_data.get('is_staff', instance.is_staff)
+            instance.save()
+            return instance
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the users object"""
