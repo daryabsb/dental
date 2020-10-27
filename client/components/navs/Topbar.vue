@@ -26,16 +26,15 @@
                             English <img src="~assets/images/flags/us_flag.jpg" class="ml-2" height="16" alt=""/> <i class="mdi mdi-chevron-down"></i> 
                         </a>
                         <LanguagesNav />
-                    </li>
+                    </li> end of language -->
 
                     <li @click="showNotifications" class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" role="button"
-                            aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect">
                             <i class="dripicons-bell noti-icon"></i>
-                            <span class="badge badge-danger badge-pill noti-icon-badge">2</span>
+                            <span class="badge badge-danger badge-pill noti-icon-badge">{{$store.state.appointments.length}}</span>
                         </a>
                         <NotificationNav />
-                    </li>end notification-list-->
+                    </li> <!--end notification-list-->
 
                     <li class="dropdown">
                         <a @click="showMenu" class="nav-link dropdown-toggle waves-effect waves-light nav-user pr-0">

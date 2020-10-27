@@ -17,10 +17,10 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
-from core.models import User, Patient, Attachment, Treatment
+from core.models import User, Patient, Attachment, Treatment, ComingTreatment
 from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
-    PatientSerializer, TreatmentSerializer, TreatmentListSerializer,)
+    PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -59,6 +59,16 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     # def perform_create(self, serializer):
     #     """Create a new attachment"""
     #     serializer.save(user=self.request.user)
+
+class AppointmentViewSet(viewsets.ModelViewSet):
+    # Manage ingredientss in the database
+    queryset = ComingTreatment.objects.all()
+    serializer_class = AppointmentSerializer
+    lookup_field = 'id'
+
+    def perform_create(self, serializer):
+        """Create a new appointment"""
+        serializer.save(user=self.request.user)
 
 class TreatmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database

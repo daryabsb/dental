@@ -237,6 +237,13 @@ class Treatment(models.Model):
     title = models.CharField(max_length=90, default='Treatment')
     description = models.CharField(max_length=200)
     files = models.ManyToManyField('Attachment')
+    has_appointment = models.BooleanField(default=False)
+    appointment = models.ForeignKey(
+        'ComingTreatment', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True
+        )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -247,8 +254,28 @@ class Treatment(models.Model):
     def upload_files(self):
         return self.attachment_set()
 
+    def save(self, *args, **kwargs):
+        if self.appointment is not None:
+            self.has_appointment = True
+        super(Treatment, self).save(*args, **kwargs)    
+
     def __str__(self):
         return f'{self.patient.name} - {self.created}'
+
+class ComingTreatment(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='appointments')
+    description = models.CharField(max_length=200)
+    date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    # class Meta:
+    #     ordering = ('-created',)
+
+   
+    def __str__(self):
+        return f'{self.patient.name} - {self.date}'
 
 
 

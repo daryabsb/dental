@@ -60,7 +60,20 @@
         
                                     <div class="form-group mb-0 row">
                                         <div class="col-6 mt-2">
-                                            <button class="btn btn-primary btn-round btn-block waves-effect waves-light"  @click="addNewUser()">Register <i class="fas fa-sign-in-alt ml-1"></i></button>
+
+                                            <button 
+                                                class="btn btn-primary btn-round btn-block waves-effect waves-light"  
+                                                @click="addNewUser()"
+                                                v-if="!isEditModalToHide"
+                                            >Register <i class="fas fa-sign-in-alt ml-1"></i>
+                                            </button>
+                                            <button 
+                                                class="btn btn-primary btn-round btn-block waves-effect waves-light"  
+                                                @click="addNewUser()"
+                                                v-ielse
+                                            >Update <i class="fas fa-sign-in-alt ml-1"></i>
+                                            </button>
+
                                         </div><!--end col--> 
                                         <div class="col-6 mt-2">
                                             <button class="btn btn-primary btn-round btn-block waves-effect waves-light" @click="closeModal()">Cancel <i class="fas fa-sign-in-alt ml-1"></i></button>

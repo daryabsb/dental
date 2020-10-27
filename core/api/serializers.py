@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from core.models import Patient, Attachment, Doctor, Treatment
+from core.models import Patient, Attachment, Doctor, Treatment, ComingTreatment
 
 class UserListSerializer(serializers.ModelSerializer):
 
@@ -79,7 +79,6 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
-
 class AttachmentSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
 
@@ -103,7 +102,13 @@ class AttachmentSerializer(serializers.ModelSerializer):
         return file
 
 
+class AppointmentSerializer(serializers.ModelSerializer):
+    # Serializer for uploading images for recipes
 
+    class Meta:
+        model = ComingTreatment
+        fields = ('id', 'patient', 'description', 'date')
+        read_only_Fields = ('id',)
 
 
 class TreatmentSerializer(serializers.ModelSerializer):
@@ -145,12 +150,13 @@ class TreatmentListSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
    
     treatments = TreatmentSerializer(many=True, required=False)
+    appointments = AppointmentSerializer(many=True, required=False)
 
     class Meta:
         model = Patient
         fields = [
             'id', 'user', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'treatments', 'status' 
+            'email', 'treatments', 'status','appointments'
          
         ]
         read_only_Fields = ('id',)

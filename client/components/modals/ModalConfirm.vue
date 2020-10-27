@@ -14,12 +14,6 @@
         </div>
         <div class="modal-body">
           <div class="toast-body">
-            <form method="post"></form>
-            <input
-              type="hidden"
-              name="csrfmiddlewaretoken"
-              value="3sY0KpygKvuR4quDoYMOjid25XhrI1v9xPrK95Oh3cOwxuNTHzGtiIR9ja45tDlG"
-            />
             Are you sure you want to delete {{ name }}?
           </div>
           <button class="btn btn-danger btn-small">
@@ -33,11 +27,15 @@
 <script>
 import { store, mutations } from '../../store/utils/conf'
 export default {
-  props: ["title", "modal", "name", "id"],
+  props: ["title", "module", "moduleName", "name", "id"],
   methods: {
     deletePatient(id) {
-      console.log(id);
-      this.$store.dispatch("onDeletePatient", id);
+      let payload = {
+        id: id,
+        module: this.module,
+        moduleName: this.moduleName
+      }
+      this.$store.dispatch("onDelete", payload);
       mutations.toggleConfirmDelete();
     },
     close() {

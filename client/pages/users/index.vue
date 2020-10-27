@@ -219,9 +219,10 @@
                         </tr>
                         <ModalConfirm
                           :title="'Confirm Delete'"
-                          :modal="'delete'"
-                          :name="userNameDelete"
-                          :id="userIdDelete"
+                          :module="$store.state.users"
+                          :moduleName="'users'"
+                          :name="nameDelete"
+                          :id="idDelete"
                         />
                       </tbody>
                     </table>
@@ -304,8 +305,8 @@ import { store, mutations } from "../../store/utils/conf";
 export default {
   data() {
     return {
-      userNameDelete: "",
-      userIdDelete: "",
+      nameDelete: "",
+      idDelete: "",
     //   editUser: [],
       editId: "",
       editName: "",
@@ -338,8 +339,8 @@ export default {
       }
     },
     confirmDelete(name, id) {
-      (this.userNameDelete = name),
-        (this.userIdDelete = id),
+      (this.nameDelete = name),
+        (this.idDelete = id),
         mutations.toggleConfirmDelete();
     },
   },

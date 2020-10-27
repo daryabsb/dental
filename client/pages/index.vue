@@ -185,10 +185,17 @@
                           ><i class="fas fa-edit text-danger font-16"></i
                         ></a>
                         <Pdf :url="url" :page="pdfPage" />
-                        <a href="#"
-                          ><i class="fas fa-trash-alt text-danger font-16"></i
-                        ></a>
+                        <a @click="confirmDelete(`treatment for ${treat.patientName}`, treat.id)">
+                          <i class="fas fa-trash-alt text-danger font-16"></i>
+                            </a>
                       </td>
+                      <ModalConfirm
+                          :title="'Confirm Delete'"
+                          :module="$store.state.treatments"
+                          :moduleName="'treatments'"
+                          :name="nameDelete"
+                          :id="idDelete"
+                        />
                     </tr>
                     <!-- </perfect-scrollbar> -->
                   </tbody>
@@ -221,6 +228,8 @@ export default {
   },
   data() {
     return {
+      nameDelete: "",
+      idDelete: "",
       date_today: new Date(),
       link: "",
       searchQuery: "",
@@ -243,6 +252,11 @@ export default {
       this.url = link;
       mutations.togglePdfModal();
     },
+    confirmDelete(name, id) {
+      (this.nameDelete = name),
+        (this.idDelete = id),
+        mutations.toggleConfirmDelete();
+    },
   },
   computed: {
     searchTreatments() {
@@ -256,6 +270,9 @@ export default {
             .includes(this.searchQuery.toLowerCase())
         );
       });
+    },
+    isConfirmDeleteOpen() {
+      return store.isConfirmDeleteOpen;
     },
     numUsers() {
       return this.$store.state.users.length;

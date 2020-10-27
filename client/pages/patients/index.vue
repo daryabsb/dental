@@ -247,7 +247,8 @@
                         </tr>
                         <ModalConfirm
                           :title="'Confirm Delete'"
-                          :modal="'delete'"
+                         :module="$store.state.patients"
+                          :moduleName="'patients'"
                           :name="patientNameDelete"
                           :id="patientIdDelete"
                         />

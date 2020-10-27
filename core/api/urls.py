@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
-    PatientViewSet, TreatmentViewSet, UserViewSet)
+    PatientViewSet, TreatmentViewSet, UserViewSet, AppointmentViewSet,)
 
 
 router = routers.DefaultRouter()
@@ -11,6 +11,7 @@ router.register('users', UserViewSet)
 router.register('attachments', AttachmentViewSet)
 router.register('patients', PatientViewSet)
 router.register('treatments', TreatmentViewSet)
+router.register('appointments', AppointmentViewSet)
 # router.register(r'Receive', api.ReceiveViewSet)
 
 
