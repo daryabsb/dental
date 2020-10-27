@@ -2,6 +2,14 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from core.models import Patient, Attachment, Doctor, Treatment
 
+class UserListSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = get_user_model()
+        fields = ('id','email', 'password', 'name', 'is_staff','created',)
+        extra_kwargs = {'password': {'write_only': True, 'min_length': 4}}
+        read_only_Fields = ('id',)
+
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the users object"""
    

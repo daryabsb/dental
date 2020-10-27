@@ -1,5 +1,6 @@
 // import axios from '@nuxtjs/axios';
 const state = () => ({
+    users: [],
     patients: [],
     treatments: [],
     curTreats: [],
@@ -11,9 +12,13 @@ const mutations = {
     'GET_PATIENTS' (state, payload) {
         state.patients = payload
     },
+    'GET_USERS' (state, payload) {
+        console.log(payload)
+        state.users = payload
+    },
     'GET_TREATMENTS' (state, payload) {
-        payload.forEach(treat=>{
-            let patient = state.patients.find(p=>p.id === treat.patient)
+        payload.forEach(treat => {
+            let patient = state.patients.find(p => p.id === treat.patient)
             treat.patientName = patient.name
         });
         state.treatments = payload
@@ -21,7 +26,7 @@ const mutations = {
     'GET_PATIENT_TREATMENTS' (state, id) {
         // console.log(state.treatments)
         state.curTreats = state.treatments
-        .filter(treat=>treat.patient===id)
+            .filter(treat => treat.patient === id)
     },
     // 'GET_PATIENT_TREATS' (state, payload) {
     //     const curPatient = state.patients
@@ -45,7 +50,7 @@ const mutations = {
     "DELETE_PATIENT" (state, id) {
         let patient = state.patients.find(patient => patient.id === id);
         let indexOfPatient = state.patients.indexOf(patient)
-        // console.log(patient, indexOfPatient);
+            // console.log(patient, indexOfPatient);
 
         ;
         state.patients.splice(indexOfPatient, 1);
@@ -82,14 +87,17 @@ const actions = {
         };
         let url = "http://127.0.0.1:8000/api/patients/";
         let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
+        let usersUrl = "http://127.0.0.1:8000/api/users/";
         // console.log(url);
 
         try {
 
             const allPatients = await this.$axios.get(url);
             const allTreatments = await this.$axios.get(treatmentUrl);
-            // console.log(allPatients.data)
+            const allUsers = await this.$axios.get(usersUrl);
+            console.log(allUsers.data)
             commit("GET_PATIENTS", allPatients.data);
+            commit("GET_USERS", allUsers.data);
             commit("GET_TREATMENTS", allTreatments.data);
             //   console.log(allPatients.data)
 
@@ -207,7 +215,7 @@ const actions = {
 
     },
     async addNewTreatment({ state, commit }, payload) {
-        
+
         let url = "http://127.0.0.1:8000/api/treatments/";
 
         try {
@@ -220,7 +228,7 @@ const actions = {
             console.log(err);
         }
     },
-    getPatientTreats({state, commit}, id) {
+    getPatientTreats({ state, commit }, id) {
         commit('GET_PATIENT_TREATMENTS', id)
     }
 

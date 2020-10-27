@@ -3,10 +3,11 @@ from rest_framework import routers
 
 from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
-    PatientViewSet, TreatmentViewSet,)
+    PatientViewSet, TreatmentViewSet, UserViewSet)
 
 
 router = routers.DefaultRouter()
+router.register('users', UserViewSet)
 router.register('attachments', AttachmentViewSet)
 router.register('patients', PatientViewSet)
 router.register('treatments', TreatmentViewSet)

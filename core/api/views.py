@@ -17,9 +17,9 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
-from core.models import Patient, Attachment, Treatment
+from core.models import User, Patient, Attachment, Treatment
 from .serializers import (
-    UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
+    UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
     PatientSerializer, TreatmentSerializer, TreatmentListSerializer,)
 
 
@@ -44,6 +44,11 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
         # Retrieve and return authenticated user
         return self.request.user
 
+class UserViewSet(viewsets.ModelViewSet):
+    # Manage ingredientss in the database
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    lookup_field = 'id'
 
 class AttachmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database

@@ -55,6 +55,9 @@ class User(PermissionsMixin, AbstractBaseUser):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-created',)
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

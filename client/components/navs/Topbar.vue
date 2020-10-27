@@ -129,13 +129,13 @@
                         <!--end has-submenu-->
 
                         <li class="has-submenu">
-                            <a href="#"><i class="dripicons-clipboard"></i>Appointments</a>
+                            <nuxt-link to="/users"><i class="dripicons-clipboard"></i>Users</nuxt-link>
                             <ul class="submenu">
 
-                                <li><a href="#"><i class="dripicons-meter"></i>All Appointments</a></li>
+                                <li><nuxt-link to="/users"><i class="dripicons-meter"></i>All Users</nuxt-link></li>
                                 <li>
                                     <a data-toggle="modal" data-animation="bounce" data-target=".appointment_create">
-                                        <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Appointment</a>
+                                        <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New User</a>
                                 </li>
                             </ul>
                             <!--end submenu-->
