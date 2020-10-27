@@ -9,7 +9,8 @@ export const store = Vue.observable({
     isConfirmDeleteOpen: false,
     isTreatmentOpen: false,
     isPdfOpen: false,
-    isUserModalOpen: false
+    isUserModalOpen: false,
+    isAppointmentModalOpen: false
 });
 
 // We call toggleNav anywhere we need it in our app
@@ -37,6 +38,9 @@ export const mutations = {
     },
     toggleUserModal() {
         store.isUserModalOpen = !store.isUserModalOpen
+    },
+    toggleAppointmentModal() {
+        store.isAppointmentModalOpen = !store.isAppointmentModalOpen
     },
 
 };
