@@ -15,7 +15,7 @@
                                     <!-- <div class="alert alert-outline-danger">
                                     <p class="alert-heading font-12">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                                 </div> -->
-  <h1> this {{pid}} that</h1> 
+  <h1> this {{patientID}} that</h1> 
                                 </div>
                                 <div class="input-group mb-1 ">                                
                                     <label for="title" class="inline mr-3"><h4>TITLE: </h4></label>
@@ -57,7 +57,7 @@
 import { store, mutations } from '../../store/utils/conf';
 
 export default {
-    props: ['title', 'id'],
+    props: ['patientID'],
     data() {
         return {
             title: '',
@@ -71,7 +71,7 @@ export default {
             
             let files = this.$store.state.files.map(file=>parseInt(file.id));
 
-           console.log(this.patientID)
+        //    console.log(this.patientID)
             
             let formData = new FormData();
          
@@ -81,7 +81,7 @@ export default {
             formData.append('description', this.description);
             formData.append('files', files);
 
-            console.log(Array.from(formData));
+            // console.log(Array.from(formData));
 
             let data = {
                 // "user": this.$auth.user.id,
@@ -90,7 +90,7 @@ export default {
                 "description": this.description,
                 "files": files
             }
-            console.log(data)
+            // console.log(data)
            
 
             this.$store.dispatch('addNewTreatment', data);
@@ -104,9 +104,6 @@ export default {
         },
     },
     computed: {
-        pid() {
-            return 'this.title'
-        },
         isTreatmentOpen() {
             return store.isTreatmentOpen
         }

@@ -1,0 +1,179 @@
+1
+00:00:00,390 --> 00:00:07,980
+In order for us to map the state to our NAF bar here which is the cart length we need to at getters
+
+2
+00:00:08,040 --> 00:00:09,820
+in our index DOJ us file.
+
+3
+00:00:09,870 --> 00:00:12,000
+So let's go to our editor and you want to type here.
+
+4
+00:00:12,000 --> 00:00:17,530
+Export Carnes getters getters is to get the state.
+
+5
+00:00:17,880 --> 00:00:19,080
+That's all.
+
+6
+00:00:19,080 --> 00:00:23,790
+We just want to return to state a map that state corresponding component.
+
+7
+00:00:23,790 --> 00:00:30,990
+So we need to type for example since we want to get the Lambert car we type GET cart Lang and we pass
+
+8
+00:00:31,060 --> 00:00:39,130
+interstate and we just wanted to one thing return state DOT cart Lane.
+
+9
+00:00:39,240 --> 00:00:39,840
+That's all we want.
+
+10
+00:00:39,840 --> 00:00:41,490
+We just want the value of cart length.
+
+11
+00:00:42,210 --> 00:00:48,990
+So if we go to nav bar under components and you want to go down you want to type import.
+
+12
+00:00:49,470 --> 00:00:58,440
+Since we have to map the getters to our cart component we have to map getters from view x.
+
+13
+00:00:58,530 --> 00:01:00,270
+But how do we map these getters.
+
+14
+00:01:00,270 --> 00:01:04,570
+Do we have to put it in methods because method is only for actions.
+
+15
+00:01:04,590 --> 00:01:07,780
+But do we put get map getters to data.
+
+16
+00:01:07,790 --> 00:01:09,710
+We are not going to map getters.
+
+17
+00:01:09,750 --> 00:01:10,980
+This doesn't work this way.
+
+18
+00:01:10,980 --> 00:01:19,600
+We have to use computed properties to actually map the getters so that we can use GET cart length.
+
+19
+00:01:19,680 --> 00:01:23,570
+So you must be wondering what is computed computed property.
+
+20
+00:01:23,580 --> 00:01:30,300
+Allow us to define a property which is something like get cart length to use the same way as data which
+
+21
+00:01:30,300 --> 00:01:36,350
+is it is the same thing as data actually but all the difference is is in computed.
+
+22
+00:01:36,600 --> 00:01:38,620
+We can add some custom logic.
+
+23
+00:01:38,640 --> 00:01:45,660
+So for example in data when we return it's gonna be like name and then we can do any computation here
+
+24
+00:01:45,810 --> 00:01:49,180
+or we can do any like custom logic in this name property.
+
+25
+00:01:49,290 --> 00:01:56,760
+But in it you can do name but you have to make it as a function and you have to return and then you
+
+26
+00:01:56,760 --> 00:02:06,470
+can do any logic you want you can see Jack plus one plus Sparrow so we can use this name property under
+
+27
+00:02:06,530 --> 00:02:13,020
+computed and then we can just simply put it here and then we can just put it like name super simple
+
+28
+00:02:14,680 --> 00:02:19,930
+so remember you only want to use compute it if you want to do some logic or you want to do some custom
+
+29
+00:02:19,930 --> 00:02:24,440
+logic in it like any logic they could think off then you can use compute it.
+
+30
+00:02:24,480 --> 00:02:30,660
+We never used computer before except right now because we need to map the getters you know compute it
+
+31
+00:02:31,120 --> 00:02:36,730
+this is the convention where you cannot map getters to data so you can only map getters to compute it
+
+32
+00:02:37,060 --> 00:02:38,560
+hence why we have to use compute it.
+
+33
+00:02:38,650 --> 00:02:45,130
+But in a future in index the jazz under these getters we're going to have some getter function that
+
+34
+00:02:45,130 --> 00:02:49,080
+will do some computation kind of make sense to map it to compute it.
+
+35
+00:02:49,090 --> 00:02:58,030
+So right now let's remove this and let's remove this and now we can pass this get cart Lang and we can
+
+36
+00:02:58,030 --> 00:03:06,400
+find a cart which is will be next thing to cart and then this will be get cart length.
+
+37
+00:03:06,460 --> 00:03:07,170
+Simple as that.
+
+38
+00:03:07,180 --> 00:03:09,580
+It will just return the length of the cart from the state.
+
+39
+00:03:09,910 --> 00:03:15,850
+So if we go back and go back to our main page and let's add some product into our cart so let's at Harry
+
+40
+00:03:15,850 --> 00:03:24,730
+Potter and I simply click Add to Cart and you can see it increase the cart length is now is three four
+
+41
+00:03:24,760 --> 00:03:32,560
+five and if you go back to inspect and check our view def tools and you can see if you look the state
+
+42
+00:03:33,070 --> 00:03:39,550
+and now we have one object which is one product and but the quantity is five which is correct.
+
+43
+00:03:39,670 --> 00:03:45,100
+So we have successfully map the state to the corresponding components in a next video we are going to
+
+44
+00:03:45,100 --> 00:03:50,060
+go to cart and we're going to map the cart data to the shopping cart.
+
+45
+00:03:50,290 --> 00:03:51,970
+So I'll see you guys in the next video.

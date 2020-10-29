@@ -9,9 +9,11 @@
                                    class="btn btn-primary btn-outline-white px-4 mt-0 mb-3">
                                         <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
                                         </button>
+                                        <modal-treatment :patientID="patientID" />
+                                         <!-- <test-comp :patientID="patientID" /> -->
+
                                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 363px;"><div class="slimscroll education-activity" style="overflow: hidden; width: auto; height: 363px;">
-                                       <ModalTreatment title="treat.title" :id="id" />
-                                       {{id}}
+                                      
                                         <perfect-scrollbar> 
                                             <div class="activity">
                                                 <!-- <pre>{{treats}}</pre> -->
@@ -128,9 +130,6 @@ export default {
             this.$store.dispatch('getPatientTreats', this.patientID)
             return this.$store.state.curTreats
         },
-        id() {
-            return this.patientID;
-        }
     },
     
     }

@@ -10,7 +10,7 @@
                             <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Condition
                         </button>
                 
-                        <ModalTreatment :patient="patient" />
+                        <!-- <ModalTreatment :patient="patient" /> -->
                         
                         <div class="row">
                             <div class="col-4">
