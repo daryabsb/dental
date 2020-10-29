@@ -65,8 +65,9 @@
                         
                         
                     </div><!--end row-->
-                    <!-- <pre>{{patient}}</pre> -->
+                   
                     <div class="row">
+                         <!-- <pre>{{patient.id}}</pre> -->
                         <PatientTreatment :patientID="patient.id" :treatments="patient.treatments" />
                         <PatientHistory :patient="patient" />
 

@@ -173,15 +173,15 @@ const actions = {
     }
   },
   async addPatient({ state, commit }, payload) {
-    const options = {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    };
+    // const options = {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data"
+    //   }
+    // };
     let url = "http://127.0.0.1:8000/api/patients/";
 
     try {
-      const newPatient = await this.$axios.post(url, payload, options);
+      const newPatient = await this.$axios.post(url, payload);
       commit("ADD_PATIENT", newPatient.data);
     } catch (err) {
       console.log(err);

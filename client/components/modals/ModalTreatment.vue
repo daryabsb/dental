@@ -15,7 +15,7 @@
                                     <!-- <div class="alert alert-outline-danger">
                                     <p class="alert-heading font-12">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                                 </div> -->
-
+  <h1> this {{pid}} that</h1> 
                                 </div>
                                 <div class="input-group mb-1 ">                                
                                     <label for="title" class="inline mr-3"><h4>TITLE: </h4></label>
@@ -44,6 +44,7 @@
                         </div>
                     </div>
                 </div>
+             
                                                     
                                                 </div>
                                                
@@ -56,7 +57,7 @@
 import { store, mutations } from '../../store/utils/conf';
 
 export default {
-    props: ['patientId'],
+    props: ['title', 'id'],
     data() {
         return {
             title: '',
@@ -68,21 +69,23 @@ export default {
 
             //console.log(this.$auth.user)
             
-            let files = this.$store.state.files.map(file=>file.id);
+            let files = this.$store.state.files.map(file=>parseInt(file.id));
 
-           // console.log(files)
+           console.log(this.patientID)
             
             let formData = new FormData();
          
-            formData.append('user', this.$auth.user.id);
-            formData.append('patient', this.patientId);
+            // formData.append('user', this.$auth.user.id);
+            formData.append('patient', this.patientID);
             formData.append('title', this.title);
             formData.append('description', this.description);
             formData.append('files', files);
 
+            console.log(Array.from(formData));
+
             let data = {
-                "user": this.$auth.user.id,
-                "patient": this.patientId,
+                // "user": this.$auth.user.id,
+                "patient": this.patientID,
                 "title": this.title,
                 "description": this.description,
                 "files": files
@@ -101,8 +104,8 @@ export default {
         },
     },
     computed: {
-        pId() {
-            return this.patientId
+        pid() {
+            return 'this.title'
         },
         isTreatmentOpen() {
             return store.isTreatmentOpen

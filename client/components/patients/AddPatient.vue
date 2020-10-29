@@ -84,7 +84,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { store, mutations } from '../../store/utils/conf'
 export default {
-    props: ['editId', 'editUser', 'editName', 'editDoctor', 'editDob', 'editGender', 'editPhone', 'editEmail', 'editDescription', 'editStatus'],
+    props: ['editId', 'editName', 'editDoctor', 'editDob', 'editGender', 'editPhone', 'editEmail', 'editDescription', 'editStatus'],
 
     data(){
         return {
@@ -119,8 +119,8 @@ export default {
             /* CREATE PAYLOAD FROM FORM  */
             if (!this.editId) {
                 let formData = new FormData();
-                formData.append('id', this.patient.id);
-                formData.append('user', this.patient.user);
+                // formData.append('id', this.patient.id);
+                // formData.append('user', this.patient.user);
                 formData.append('name', this.patient.name);
                 //formData.append('address', 1);
                 //formData.append('age', 0);
@@ -130,20 +130,18 @@ export default {
                 formData.append('description', this.patient.description);
                 formData.append('phone', this.patient.phone);
                 formData.append('email', this.patient.email);
-                formData.append('status', this.patient.status);
+                formData.append('status',true);
+
+                // console.log(Array.from(formData))
 
             /* DISPATCH ACTION @STORE */
             this.$store.dispatch('addPatient', formData);
-            
-            // clearing the form
-            formData.reset();
-
 
 
             } else {
                 let data = {  
                     "id": this.patient.id,
-                    "user": this.patient.user,
+                    // "user": this.patient.user,
                     "name": this.patient.name,
                     "doctor": this.patient.doctor,
                     "dob": this.patient.dob,
@@ -182,7 +180,7 @@ export default {
                 if(store.isEditModal) {
                     return {
                         'id': this.editId,
-                        'user': this.editUser,
+                        // 'user': this.editUser,
                         'name': this.editName,
                         'doctor': this.editDoctor,
                         'dob': this.editDob,

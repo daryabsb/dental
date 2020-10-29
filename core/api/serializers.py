@@ -124,9 +124,9 @@ class TreatmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Treatment
         fields = [
-            'id', 'user', 'patient', 'title', 'description', 'files', 'created'         
+            'id', 'patient', 'title', 'description', 'files', 'created'         
         ]
-        read_only_Fields = ('id',)
+        read_only_Fields = ('id','created',)
 
 class TreatmentListSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
@@ -141,9 +141,9 @@ class TreatmentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Treatment
         fields = [
-            'id', 'user', 'patient', 'title', 'description', 'files', 'created'         
+            'id', 'patient', 'title', 'description', 'files', 'created'         
         ]
-        read_only_Fields = ('id',)
+        read_only_Fields = ('id','created',)
     
 
 
@@ -155,8 +155,8 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = [
-            'id', 'user', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'treatments', 'status','appointments'
+            'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
+            'email', 'treatments', 'appointments', 'status'
          
         ]
         read_only_Fields = ('id',)

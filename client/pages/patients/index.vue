@@ -346,7 +346,7 @@ export default {
       editPhone: "",
       editEmail: "",
       editDescription: "",
-      editStatus: "",
+      editStatus: true,
     };
   },
   components: {},
@@ -362,7 +362,7 @@ export default {
         this.editPhone = "";
         this.editEmail = "";
         this.editDescription = "";
-        this.editStatus = "";
+        this.editStatus = true;
         store.isEditModal
         //this.$store.conf.actions.dispatch('showAddUserModal');
         store.isEditModal = false;

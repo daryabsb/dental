@@ -76,6 +76,10 @@ class TreatmentViewSet(viewsets.ModelViewSet):
     serializer_class = TreatmentSerializer
     lookup_field = 'id'
 
+    def perform_create(self, serializer):
+        print(self.request.user)
+        serializer.save(user=self.request.user)
+
     def get_serializer_class(self):
         # return apropriate serializer class
         if self.action == 'list':
@@ -88,3 +92,6 @@ class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     lookup_field = 'id'
 
+    def perform_create(self, serializer):
+        print(self.request.user)
+        serializer.save(user=self.request.user)
