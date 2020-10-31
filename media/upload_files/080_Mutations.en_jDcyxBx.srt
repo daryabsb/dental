@@ -1,0 +1,203 @@
+1
+00:00:00,660 --> 00:00:01,430
+Hello everybody.
+
+2
+00:00:01,440 --> 00:00:07,310
+In this video we are going to create transmutation function so that we can mutate the cart state so
+
+3
+00:00:07,310 --> 00:00:11,150
+let's go and do that type export Khan's mutations
+
+4
+00:00:14,690 --> 00:00:20,780
+and then the first mutation function will be push product cart and then we have to pass in the state
+
+5
+00:00:20,930 --> 00:00:27,740
+so that we can access to cart state and then the product which will be from this comet and we type product
+
+6
+00:00:28,160 --> 00:00:37,450
+not quantity it goes to one and then state can't push product this mutation function is pushing the
+
+7
+00:00:37,450 --> 00:00:43,630
+product to cart for the first time we add an additional key to our product object which is quantity
+
+8
+00:00:44,080 --> 00:00:47,600
+equals to 1 and then we push the product into the cart state.
+
+9
+00:00:47,650 --> 00:00:48,390
+Very simple.
+
+10
+00:00:48,400 --> 00:00:53,260
+That is the logic of push product the cart and then the next mutation function would be incremental
+
+11
+00:00:53,530 --> 00:01:01,220
+product quantity and then when a passing state and a product as well so in here will be pretty much
+
+12
+00:01:01,220 --> 00:01:07,240
+the same we will be product not quantity but instead of setting into one because the product already
+
+13
+00:01:07,240 --> 00:01:09,120
+exists in the cart we do.
+
+14
+00:01:09,220 --> 00:01:10,390
+Plus plus.
+
+15
+00:01:10,630 --> 00:01:23,440
+And then let index of product ecosystem cart that index of passing the product then to state that cart
+
+16
+00:01:23,530 --> 00:01:30,150
+that's place index of product 1 and then product.
+
+17
+00:01:30,190 --> 00:01:32,910
+This mutation function will update the quantity.
+
+18
+00:01:33,130 --> 00:01:38,170
+So the product already exists in the cart then we just want to update the quantity and then we have
+
+19
+00:01:38,170 --> 00:01:45,010
+to update the old product in the cart with the updated version of the product because we increment the
+
+20
+00:01:45,010 --> 00:01:51,820
+quantity by one to do so we have to search for an index of the product in the cart which is index off
+
+21
+00:01:52,000 --> 00:01:58,930
+let's see in the cart there are apple orange and mango.
+
+22
+00:01:58,930 --> 00:02:05,980
+So how do we find the position of orange JavaScript as a function call index of bypassing orange in
+
+23
+00:02:05,980 --> 00:02:17,120
+here the index of product will be product is one because it is 0 1 index for 0 and index 1.
+
+24
+00:02:17,200 --> 00:02:19,450
+So we just want to get the position of the product.
+
+25
+00:02:19,450 --> 00:02:25,120
+So by getting the position or product we have to update the product to all product in the cart.
+
+26
+00:02:25,120 --> 00:02:30,760
+So let's say we want to update this orange into something different like for example we want to change
+
+27
+00:02:30,760 --> 00:02:32,100
+it to banana.
+
+28
+00:02:32,350 --> 00:02:41,020
+So we're passing banana in here we are replacing the object of this position which is orange to banana.
+
+29
+00:02:41,020 --> 00:02:44,890
+So now once we have run this function it will be
+
+30
+00:02:51,500 --> 00:02:54,350
+because we have to update our cart product.
+
+31
+00:02:54,380 --> 00:03:00,080
+If we just incremented quantity then a product in the court will be the same you wont change because
+
+32
+00:03:00,080 --> 00:03:02,540
+we did not update the product in a car yet.
+
+33
+00:03:02,540 --> 00:03:05,000
+So hence why we have to do splice to do so.
+
+34
+00:03:05,000 --> 00:03:14,540
+And a final mutation would be incremental cart length which we have to loop the cart.
+
+35
+00:03:14,690 --> 00:03:18,710
+So we just passed the state we didn't have to pass the product because we just want to loop de cart
+
+36
+00:03:18,920 --> 00:03:22,930
+and we do state DOT cart length will be zero.
+
+37
+00:03:23,630 --> 00:03:35,330
+And then if state DOT cart Lang is graded in 0 9 we do state not cart map but a product should be state
+
+38
+00:03:35,440 --> 00:03:43,440
+DOT cart length plus product not quantity and we say it simple as that.
+
+39
+00:03:43,450 --> 00:03:45,840
+So increment court logic is super simple.
+
+40
+00:03:45,910 --> 00:03:51,250
+Whenever this mutation function runs it will always set the cart to zero it will revert the cart length
+
+41
+00:03:51,250 --> 00:03:57,730
+of zero then we check if the cart Lang in the actual cart not Lang is greater than zero meaning they
+
+42
+00:03:57,730 --> 00:04:04,420
+are products in a cut that we want to loop the cart by using Matt function and we add the product quantity
+
+43
+00:04:04,510 --> 00:04:05,250
+to cart length.
+
+44
+00:04:05,260 --> 00:04:11,190
+So let's say they are the quantity of the product is three four and five.
+
+45
+00:04:11,230 --> 00:04:16,650
+So by adding to cart Lang it will be plus three.
+
+46
+00:04:17,110 --> 00:04:21,360
+And then we price for and final will be plus 5.
+
+47
+00:04:21,430 --> 00:04:25,690
+So the final result in cart Lang will be tough.
+
+48
+00:04:25,720 --> 00:04:31,720
+So the goal of this incremental cart Lang is to just accumulate all of the product quantity and make
+
+49
+00:04:31,720 --> 00:04:38,680
+it equal to the cart length in the next video we will implement the at product to cart action on our
+
+50
+00:04:38,680 --> 00:04:39,300
+product page.
+
+51
+00:04:39,310 --> 00:04:40,570
+I'll see you guys in the next few.

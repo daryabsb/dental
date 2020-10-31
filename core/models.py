@@ -188,40 +188,12 @@ class Patient(models.Model):
     def get_delete_url(self):
         return reverse('patients_delete', args=(self.pk,))
 
-class Appointment(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='appointments')
-    patient = models.ForeignKey(
-        'Patient', on_delete=models.SET_NULL, 
-        null=True, blank=True)
-    date = models.DateField()
-    time = models.TimeField()
-    note = models.TextField(null=True, blank=True)
-
-    class Meta:
-        ordering = ('-date',)
-
-    def __str__(self):
-        return f'{self.patient} - {self.date}({self.time})'
-
-    def get_update_url(self):
-        return reverse('appointments_update', args=(self.pk,))
-
-    def get_delete_url(self):
-        return reverse('appointments_delete', args=(self.pk,))
-
-class CurrentPatients(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='currents')
-    patient = models.ForeignKey(
-        'Patient', on_delete=models.CASCADE)
-
-    arrive_time = models.DateTimeField(auto_now_add=True)
-    appointment = models.ForeignKey(
-        'Appointment', on_delete=models.CASCADE)
-
 class Attachment(models.Model):
-    # user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='attachments')
     filename = models.CharField(max_length=120)
     file = models.FileField(upload_to='upload_files')
+    # description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

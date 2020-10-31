@@ -1,0 +1,59 @@
+1
+00:00:00,300 --> 00:00:01,170
+Hello everybody.
+
+2
+00:00:01,170 --> 00:00:07,450
+Finally we have come this far where we are going to bill the Add To Cart feature so that our using and
+
+3
+00:00:07,470 --> 00:00:13,440
+add products to the cart we need to structure the Schimmel speech first before anything so I have uploaded
+
+4
+00:00:13,440 --> 00:00:18,540
+file and lecture and I want to download a file and copy the content so I'm going to open it up and I'm
+
+5
+00:00:18,540 --> 00:00:25,110
+going to open a file and you want to copy this entire file and open up your client folder and open Page's
+
+6
+00:00:25,110 --> 00:00:32,630
+folder and create a new file and give it a name card and not view and what a piece is here.
+
+7
+00:00:32,640 --> 00:00:33,530
+Saved it.
+
+8
+00:00:33,730 --> 00:00:40,000
+And let's go back to a chrome and let's visit local those 9000 cart and see the content.
+
+9
+00:00:40,090 --> 00:00:40,710
+There we have it.
+
+10
+00:00:40,710 --> 00:00:42,460
+This is his shopping cart page.
+
+11
+00:00:42,510 --> 00:00:44,370
+It is the same as Amazon's one.
+
+12
+00:00:44,490 --> 00:00:49,520
+And if you see this recently viewed items this would be dummy data for the time being.
+
+13
+00:00:49,740 --> 00:00:52,560
+But this will be related to browsing history later on.
+
+14
+00:00:52,800 --> 00:00:57,560
+So in this section we are going to focus on building this entire Add To Cart feature.
+
+15
+00:00:57,570 --> 00:00:59,210
+So I'll see you guys in the next video.

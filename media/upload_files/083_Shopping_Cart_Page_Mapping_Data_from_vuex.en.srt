@@ -1,0 +1,263 @@
+1
+00:00:00,300 --> 00:00:05,910
+In this video we are going to map the cart object into view X and we're going to map it till a shopping
+
+2
+00:00:05,910 --> 00:00:06,850
+cart full.
+
+3
+00:00:06,880 --> 00:00:12,690
+Go ahead and do that to go to you enter and you want to go to cart that view and down here you want
+
+4
+00:00:12,690 --> 00:00:22,820
+to type scrip and then you want to import get her map from view X but we haven't created the gather
+
+5
+00:00:22,830 --> 00:00:24,750
+for getting this cart seat.
+
+6
+00:00:24,780 --> 00:00:26,780
+So we have to go the index of yes.
+
+7
+00:00:26,910 --> 00:00:33,790
+And you want to type GET cart past the state and then we'll be return state DOT cart.
+
+8
+00:00:33,810 --> 00:00:34,590
+Simple as that.
+
+9
+00:00:34,590 --> 00:00:40,170
+And then now we can go back to cart a view and then we can create computed properties and then we can
+
+10
+00:00:40,170 --> 00:00:40,890
+type.
+
+11
+00:00:41,100 --> 00:00:49,300
+Dot dot dot which is spread operator map getters and more call GET cart.
+
+12
+00:00:49,410 --> 00:00:54,770
+You can copy get a cart and find lists of the item which is this part.
+
+13
+00:00:55,110 --> 00:01:07,430
+And now here you want to V for product in get cart past a key should be product dot undescribed D.
+
+14
+00:01:08,580 --> 00:01:10,410
+And move and map all the data here.
+
+15
+00:01:10,500 --> 00:01:16,980
+So product will be in here will be S or C should be colon.
+
+16
+00:01:17,010 --> 00:01:20,610
+And then product Dot photo.
+
+17
+00:01:20,810 --> 00:01:25,770
+Now we have product title we change this to product
+
+18
+00:01:29,760 --> 00:01:36,640
+and then as we Product Owner so does we product dot owner name.
+
+19
+00:01:37,300 --> 00:01:39,540
+And I would go down quantity.
+
+20
+00:01:39,540 --> 00:01:47,370
+This will handle this section later on that product price which will be product that price
+
+21
+00:01:49,990 --> 00:01:51,650
+and that's all you want to save it.
+
+22
+00:01:51,670 --> 00:01:54,890
+You want to go back and there we have it all the products we add.
+
+23
+00:01:54,920 --> 00:02:00,000
+So let's say we add a new product let's say we add another product would you be game of truant.
+
+24
+00:02:00,010 --> 00:02:05,290
+So if you add and add to cart and go back to a cart there would have to have two products in here.
+
+25
+00:02:05,470 --> 00:02:09,370
+But now we have to fix our price because the price is not thirty nine.
+
+26
+00:02:09,400 --> 00:02:12,930
+Price plus to be 29 times the quantity of the product.
+
+27
+00:02:13,020 --> 00:02:18,920
+Speaker to go back and we get a good price that's fine.
+
+28
+00:02:18,920 --> 00:02:26,260
+Price though we'll do a little bit of computation and we shall be program price times product dot quantity
+
+29
+00:02:27,640 --> 00:02:33,390
+save it and they we have it 1 9 5 which is correct because if you multiply twenty nine times five it
+
+30
+00:02:33,450 --> 00:02:34,390
+will be 1 9 5.
+
+31
+00:02:34,420 --> 00:02:38,050
+Now we haven't figure out how to accumulate the total price.
+
+32
+00:02:38,080 --> 00:02:39,090
+So how do we do this.
+
+33
+00:02:39,110 --> 00:02:44,960
+So let's go back to our index Rojas file and then we have to type get cart.
+
+34
+00:02:45,040 --> 00:02:52,630
+Total price pass in the state here and even a top let total equal to zero.
+
+35
+00:02:52,630 --> 00:02:55,480
+We just want to compute all of the prices you know cart.
+
+36
+00:02:55,540 --> 00:02:59,890
+So if you compute one and five plus eighty nine it will be 2 8 4.
+
+37
+00:02:59,890 --> 00:03:07,210
+So we won that total price so let's go back and let's do state DOT cart dot map.
+
+38
+00:03:07,720 --> 00:03:16,210
+So we want to loop all the product end product and and we want it to total plus equals the product price
+
+39
+00:03:16,690 --> 00:03:24,010
+and then we have to multiply it with product dot quantity and after that you want to return the total
+
+40
+00:03:26,500 --> 00:03:27,670
+because we have to return it.
+
+41
+00:03:27,680 --> 00:03:33,940
+Now let's go back to World card the view let's go down and let's put here.
+
+42
+00:03:33,940 --> 00:03:35,570
+Get card.
+
+43
+00:03:35,710 --> 00:03:39,100
+Total price.
+
+44
+00:03:39,150 --> 00:03:39,890
+Let's see the name.
+
+45
+00:03:39,900 --> 00:03:40,800
+It is the same.
+
+46
+00:03:40,800 --> 00:03:42,060
+All right let's go back.
+
+47
+00:03:42,060 --> 00:03:43,640
+And now we can call this get card.
+
+48
+00:03:43,650 --> 00:03:45,180
+Total price getter.
+
+49
+00:03:45,180 --> 00:03:48,160
+And then we can set it to our total price.
+
+50
+00:03:48,300 --> 00:03:49,790
+We should be card into the price.
+
+51
+00:03:49,830 --> 00:03:53,510
+And then we can change this to get caught.
+
+52
+00:03:53,510 --> 00:03:55,030
+Total price.
+
+53
+00:03:55,130 --> 00:03:58,180
+So if we go back it will be two it four which is correct.
+
+54
+00:03:58,310 --> 00:04:05,610
+And I want to change this ninety nine to 2 8 4 as well so as find that sum total three are and then
+
+55
+00:04:05,940 --> 00:04:08,700
+get a card total price and it will be to it for as well.
+
+56
+00:04:08,760 --> 00:04:13,420
+And they want to change the subtotal to item to the total product in our card which is six.
+
+57
+00:04:13,440 --> 00:04:20,100
+So let's go back to our Ed and you want to go down and you want to call one more thing which is get
+
+58
+00:04:20,310 --> 00:04:25,060
+cart length and copy this.
+
+59
+00:04:25,200 --> 00:04:33,700
+You want to find up to introduce to get cart length and let's find another subtotal.
+
+60
+00:04:34,160 --> 00:04:34,520
+Save it.
+
+61
+00:04:34,520 --> 00:04:35,580
+Let's go back.
+
+62
+00:04:35,610 --> 00:04:37,940
+Now we have supper all six items it goes to here as well.
+
+63
+00:04:37,940 --> 00:04:43,990
+So now if you refresh the page the whole product in the cart will disappear.
+
+64
+00:04:43,990 --> 00:04:47,860
+This is not the correct behavior that we won for our shopping cart feature.
+
+65
+00:04:47,860 --> 00:04:49,340
+We want the data to persist.
+
+66
+00:04:49,360 --> 00:04:51,420
+We're going to fix this in the next video.

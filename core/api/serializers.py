@@ -84,22 +84,23 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attachment
-        fields = ('id', 'filename', 'file')
+        fields = ('id', 'patient', 'filename', 'file')
         read_only_Fields = ('id',)
 
-    def create(self, validated_data):
+    # def create(self, validated_data):
+        
+    #     file = Attachment(
+    #         patient=validated_data['patient'],
+    #         file=validated_data['file'], 
+    #         filename=validated_data['filename']
+    #         )
+    #     file.save()
 
-        file = Attachment(
-            file=validated_data['file'], 
-            filename=validated_data['filename']
-            )
-        file.save()
+    #     # print('==|==|==')
+    #     # print(validated_data['file'])
+    #     # print('==|==|==')
 
-        # print('==|==|==')
-        # print(validated_data['file'])
-        # print('==|==|==')
-
-        return file
+    #     return file
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
@@ -151,12 +152,13 @@ class PatientSerializer(serializers.ModelSerializer):
    
     treatments = TreatmentSerializer(many=True, required=False)
     appointments = AppointmentSerializer(many=True, required=False)
+    attachments = AttachmentSerializer(many=True, required=False)
 
     class Meta:
         model = Patient
         fields = [
             'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'treatments', 'appointments', 'status'
+            'email', 'treatments', 'appointments', 'attachments', 'status'
          
         ]
         read_only_Fields = ('id',)

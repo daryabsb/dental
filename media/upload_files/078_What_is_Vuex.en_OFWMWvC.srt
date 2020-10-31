@@ -1,0 +1,227 @@
+1
+00:00:00,180 --> 00:00:04,240
+What is view X view X is a state management.
+
+2
+00:00:04,290 --> 00:00:09,750
+When we have a single source of truth it is easier for all of the components to use.
+
+3
+00:00:09,750 --> 00:00:13,700
+For example we implemented the logging beach when we were logging.
+
+4
+00:00:13,710 --> 00:00:20,730
+We mutated the off state from logging falls to log true and if you realize we actually use the off state
+
+5
+00:00:21,090 --> 00:00:26,050
+user ID components like review beach nav bar and finally you use it in profile.
+
+6
+00:00:26,070 --> 00:00:32,490
+He made our life easier when we have view X but only use view X if many of the components required to
+
+7
+00:00:32,490 --> 00:00:33,870
+use it to aspirin for.
+
+8
+00:00:33,870 --> 00:00:34,680
+Off object.
+
+9
+00:00:34,680 --> 00:00:35,960
+I would never bars like these.
+
+10
+00:00:35,980 --> 00:00:36,590
+Hello.
+
+11
+00:00:36,780 --> 00:00:40,650
+And then the user name and even the address of the user.
+
+12
+00:00:40,650 --> 00:00:42,930
+We need to access the off object right.
+
+13
+00:00:43,020 --> 00:00:48,690
+So it is easier if we can put it in one single source of truth and we can just communicate with that
+
+14
+00:00:48,690 --> 00:00:51,850
+data like even review page we need the object as well.
+
+15
+00:00:51,870 --> 00:00:53,880
+And even profile we need to off object as well.
+
+16
+00:00:53,970 --> 00:00:57,960
+Why do we have to replicate it in every single page or every single component.
+
+17
+00:00:57,960 --> 00:01:01,090
+While we can put it in one single source of truth.
+
+18
+00:01:01,250 --> 00:01:06,600
+Just thing of state as giant big javascript object wherever you put it in the state.
+
+19
+00:01:06,600 --> 00:01:10,110
+It will go to log off and after this we're going to have cart.
+
+20
+00:01:10,110 --> 00:01:14,790
+So that is actually what is view x is just a giant javascript object.
+
+21
+00:01:14,940 --> 00:01:21,290
+So for our art to cut feature to our components and pages that will need to access to car object.
+
+22
+00:01:21,660 --> 00:01:27,630
+So we need to put a cart object in our state so as you can see first we have cart on the nav bar that
+
+23
+00:01:27,630 --> 00:01:31,250
+requires to communicate with the car object and then we have a another picture.
+
+24
+00:01:31,260 --> 00:01:36,270
+We're going to create a future where you can review your order you can check like estimated delivery
+
+25
+00:01:36,360 --> 00:01:39,470
+and b load estimate delivery will be the cart content.
+
+26
+00:01:39,480 --> 00:01:41,660
+So we need to communicate with the car object as well.
+
+27
+00:01:41,850 --> 00:01:47,180
+And then when we click Add to cart it has to communicate with the car object as well to increase the
+
+28
+00:01:47,190 --> 00:01:48,750
+number of products in the cart.
+
+29
+00:01:48,760 --> 00:01:55,080
+And finally we have the obviously the cart page which we just created in pass video where this will
+
+30
+00:01:55,080 --> 00:01:56,930
+be all of your products in the cart.
+
+31
+00:01:56,970 --> 00:02:01,880
+As you can see there are a lot of pages in components that need to communicate with the car objects.
+
+32
+00:02:01,890 --> 00:02:08,460
+Hence why we need to put this car object in a view x so that all the components or pages can communicate
+
+33
+00:02:08,460 --> 00:02:10,020
+with that object.
+
+34
+00:02:10,030 --> 00:02:16,140
+So this is the diagram of what is view X. There's actions mutations date and view components.
+
+35
+00:02:16,150 --> 00:02:17,530
+So let's go through one by one.
+
+36
+00:02:17,530 --> 00:02:22,900
+So actions are when you click a button like when you update or add a product that is considered an action
+
+37
+00:02:23,180 --> 00:02:24,310
+an axis mutation.
+
+38
+00:02:24,310 --> 00:02:27,340
+Mutations are when you want to change the state.
+
+39
+00:02:27,430 --> 00:02:33,270
+So in this case when you click a button it will increase the cart Lane from zero to 10.
+
+40
+00:02:33,280 --> 00:02:35,110
+Depends on how many products you add to the cart.
+
+41
+00:02:35,200 --> 00:02:36,600
+So there is a mutation.
+
+42
+00:02:36,610 --> 00:02:38,690
+We mutate the cart Lane.
+
+43
+00:02:38,800 --> 00:02:43,600
+So let me put it in a sentence when you click a button it will mutate the state and the view component
+
+44
+00:02:43,630 --> 00:02:46,010
+will re render the newly updated state.
+
+45
+00:02:46,060 --> 00:02:47,070
+Simple as that.
+
+46
+00:02:47,080 --> 00:02:53,470
+So here is add to cart and then this is the view X single source of truth as you can see there are states
+
+47
+00:02:53,470 --> 00:02:58,780
+like of cart and product quantity and then there are methods which you can add to cart.
+
+48
+00:02:58,780 --> 00:03:00,690
+It's not supposed to be methods supposed to be actions.
+
+49
+00:03:00,700 --> 00:03:01,670
+It's the same thing.
+
+50
+00:03:01,870 --> 00:03:07,150
+And as you can see this is the view x is just a huge javascript object.
+
+51
+00:03:07,190 --> 00:03:12,580
+Is off car and product quantity will be state actually method is actions to be honest.
+
+52
+00:03:12,580 --> 00:03:15,160
+We have a touch of you X when dealing with education.
+
+53
+00:03:15,160 --> 00:03:18,450
+We started off user object in a state.
+
+54
+00:03:18,480 --> 00:03:25,270
+This is off now and once we actually log in it will change to object and then as log and true strategy
+
+55
+00:03:25,440 --> 00:03:28,660
+and in the user object in the next few days we will implement our view x.
+
+56
+00:03:28,660 --> 00:03:31,360
+So we're going to create a state and then we're going to create an action.
+
+57
+00:03:31,360 --> 00:03:33,160
+So I'll see you guys in the next video.

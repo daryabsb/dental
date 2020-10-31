@@ -1,0 +1,159 @@
+1
+00:00:00,180 --> 00:00:04,890
+In this video we will import our product to car action in our product pitch.
+
+2
+00:00:04,890 --> 00:00:05,490
+Let's do that.
+
+3
+00:00:05,550 --> 00:00:11,240
+So go to our product pitch which is idea of you and you want to import the action.
+
+4
+00:00:11,280 --> 00:00:23,670
+So do import met actions from view X and I know you want to open up method type spread operator map
+
+5
+00:00:23,670 --> 00:00:30,080
+actions and then type at product to car map actions.
+
+6
+00:00:30,090 --> 00:00:36,060
+It's a function by view Act and its purpose is to map all the actions in our view x file which is index
+
+7
+00:00:36,060 --> 00:00:38,180
+or J s two methods.
+
+8
+00:00:38,280 --> 00:00:41,950
+This triple period is to get all the value in the array.
+
+9
+00:00:42,030 --> 00:00:48,480
+In our case all the actions but we only have one actions so you will map only one action to the method.
+
+10
+00:00:48,480 --> 00:00:53,660
+Now we can simply call the AT product cost function in our template so we can just copy this at product
+
+11
+00:00:53,670 --> 00:00:57,100
+cart and let's find our Add To Cart button you start.
+
+12
+00:00:57,300 --> 00:01:05,790
+Add to cart which is this part and you want to add it here click it goes to add to cart and then you
+
+13
+00:01:05,790 --> 00:01:13,170
+want to supply a product in here so that it will push the product to the cart state save us because
+
+14
+00:01:13,170 --> 00:01:16,340
+if you go to index or G S we supply the product in here.
+
+15
+00:01:16,410 --> 00:01:20,490
+So this is the product we're going to get from this specific parameter and I think we are ready to test
+
+16
+00:01:20,490 --> 00:01:20,780
+it out.
+
+17
+00:01:20,910 --> 00:01:22,410
+So let's go to our Chrome.
+
+18
+00:01:22,460 --> 00:01:29,520
+You want to go to the main page and click any of the products and open up your def to the view dev tools
+
+19
+00:01:31,140 --> 00:01:36,300
+opening up and you want a change to your state and then you want to click this green color button so
+
+20
+00:01:36,330 --> 00:01:38,280
+you can see changes in the state.
+
+21
+00:01:38,280 --> 00:01:43,220
+So now let's try to click Add to Cart button and see what's going to happen.
+
+22
+00:01:43,840 --> 00:01:47,330
+So it shows a push prior to cart and incremental cart length.
+
+23
+00:01:47,360 --> 00:01:49,450
+It calls these two mutations.
+
+24
+00:01:49,450 --> 00:01:49,780
+Why.
+
+25
+00:01:49,810 --> 00:01:53,440
+Because this is the first time we push a product to this cart.
+
+26
+00:01:53,440 --> 00:01:57,210
+I say like this specific product there are no products exist in our cart yet.
+
+27
+00:01:57,220 --> 00:01:59,300
+So this will be push prior to cart.
+
+28
+00:01:59,300 --> 00:02:04,780
+But if you click it again it will be incremental product quantity instead because the product already
+
+29
+00:02:04,780 --> 00:02:10,030
+existed in our cart and it will just add an incremental cart Lang will always be call.
+
+30
+00:02:10,030 --> 00:02:16,760
+So if you click this loop state and there is a cart here and there's only one product in a cart but
+
+31
+00:02:16,760 --> 00:02:18,100
+a quantity is two.
+
+32
+00:02:18,140 --> 00:02:26,450
+But what if you want to add another product let's go and click go truants and click Add to cart again
+
+33
+00:02:26,510 --> 00:02:28,690
+push it to cart because it's a new product.
+
+34
+00:02:28,880 --> 00:02:34,670
+And if we load the state again and close this and you can see there are two products in here and the
+
+35
+00:02:34,670 --> 00:02:40,810
+cart length is three because Kimo trains the quantity one while Harry Potter is two.
+
+36
+00:02:40,880 --> 00:02:47,700
+So let's try to increase one more and then let's load the stating in and a Lang will be four.
+
+37
+00:02:47,990 --> 00:02:53,420
+So now we can call this car object and we can map it to our cart view page.
+
+38
+00:02:53,420 --> 00:03:00,750
+So if you go to cart so now we can map all of this product to here and we can also change this zero
+
+39
+00:03:00,780 --> 00:03:01,950
+to the cart length.
+
+40
+00:03:02,010 --> 00:03:03,560
+I'll see you guys in the next video.

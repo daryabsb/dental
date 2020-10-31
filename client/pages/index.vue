@@ -166,6 +166,7 @@
                         >
                       </td>
                       <td>
+                        <tr>
                         {{ treat.description }} [<span
                           v-for="file in treat.files"
                           :key="file.id"
@@ -174,6 +175,10 @@
                             file.filename
                           }}</a> </span
                         >]
+                        </tr>
+                        <tr>
+                         <small class="text-danger">{{treat.appointment}}</small>
+                        </tr>
                       </td>
 
                       <td>{{ $moment(treat.created).format("DD-MM-yyyy") }}</td>

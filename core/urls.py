@@ -49,13 +49,13 @@ urlpatterns += (
     path('doctors/schedule/delete/<int:pk>', views.DoctorScheduleDeleteView.as_view(), name='doctors_schedule_delete'),
 )
 
-urlpatterns += (
-    # urls for Schedule
-    path('appointments/', views.AppointmentListView.as_view(), name='appointments_list'),
-    path('appointments/create', views.AppointmentCreateView.as_view(), name='appointments_create'),
-    path('appointments/update/<int:pk>', views.AppointmentUpdateView.as_view(), name='appointments_update'),
-    path('appointments/delete/<int:pk>', views.AppointmentDeleteView.as_view(), name='appointments_delete'),
-)
+# urlpatterns += (
+#     # urls for Schedule
+#     path('appointments/', views.AppointmentListView.as_view(), name='appointments_list'),
+#     path('appointments/create', views.AppointmentCreateView.as_view(), name='appointments_create'),
+#     path('appointments/update/<int:pk>', views.AppointmentUpdateView.as_view(), name='appointments_update'),
+#     path('appointments/delete/<int:pk>', views.AppointmentDeleteView.as_view(), name='appointments_delete'),
+# )
 
 urlpatterns += (
     # urls for Schedule

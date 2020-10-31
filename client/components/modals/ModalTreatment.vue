@@ -28,7 +28,7 @@
                                 <div class="input-group mb-3">
                                     <!-- VUE UPLOAD AGENT -->
                                 
-                                <Dropzone />
+                                <Dropzone :ID="patientID" />
                                 </div>
                                    
                     

@@ -9,10 +9,10 @@ import json
 
 from .models import (
     calculateAge,
-    User, Address, Doctor, Patient, Appointment, Schedule,
+    User, Address, Doctor, Patient, Schedule,
     Attachment, Treatment,)
 from .forms import (
-    DoctorForm, PatientForm, DoctorScheduleForm, AppointmentForm,
+    DoctorForm, PatientForm, DoctorScheduleForm,
     TreatmentForm,)
 
 from django.views.generic import View, ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -25,9 +25,7 @@ class Home(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(Home, self).get_context_data(*args, **kwargs)
         form = PatientForm()
-        apt_form = AppointmentForm()
         context['form'] = form
-        context['apt_form'] = apt_form
 
         return context
 
@@ -116,10 +114,8 @@ class PatientListView(ListView):
         context = super(PatientListView, self).get_context_data(
             *args, **kwargs)
         form = PatientForm()
-        apt_form = AppointmentForm()
         context['form'] = form
         context['qs_json'] = json.dumps(list(Patient.objects.values()), default=str)
-        context['apt_form'] = apt_form
         # print(context)
 
         return context
@@ -203,56 +199,6 @@ class DoctorScheduleUpdateView(UpdateView):
 
 class DoctorScheduleDeleteView(DeleteView):
     model = Schedule
-
-
-#  APPOINTMENT VIEWS
-
-class AppointmentListView(ListView):
-    title = 'Patients Appointments'
-    model = Appointment
-    template_name = 'appointments/appointment_list.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(AppointmentListView, self).get_context_data(*args, **kwargs)
-        form = PatientForm()
-        apt_form = AppointmentForm()
-        context['form'] = form
-        context['apt_form'] = apt_form
-
-        return context
-
-
-class AppointmentCreateView(CreateView):
-    model = Appointment
-    form_class = AppointmentForm
-    template_name = 'appointments/appointment_create.html'
-
-    def dispatch(self, *args, **kwargs):
-        return super(AppointmentCreateView, self).dispatch(*args, **kwargs)
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.user = self.request.user
-        obj.save()        
-        return  HttpResponseRedirect(self.get_success_url())
-    
-    def get_success_url(self):
-        return reverse('appointments_list')
-
-
-class AppointmentUpdateView(UpdateView):
-    model = Appointment
-    form_class = AppointmentForm
-    template_name = 'appointments/appointment_update.html'
-
-
-class AppointmentDeleteView(DeleteView):
-    model = Appointment
-    template_name = 'patients/appointment_list.html'
-    success_url = '/appointments/'
-
-    def get(self, *args, **kwargs):
-        return self.post(*args, **kwargs)
 
 
 class TreatmentListView(ListView):

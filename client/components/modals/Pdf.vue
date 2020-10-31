@@ -7,9 +7,9 @@
           <button @click="closeModal" type="button" class="close">×</button>
         </div>
         <div class="modal-body">
-         
+         <perfect-scrollbar>
           <div class="row"> 
-            <perfect-scrollbar>
+            
 <pdf-view
         class="pdf"
        
@@ -19,9 +19,9 @@
         :page="1"
       />
 
- </perfect-scrollbar>
+ 
           </div>
-         
+         </perfect-scrollbar>
         </div>
       </div>
     </div>

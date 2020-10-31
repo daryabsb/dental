@@ -56,9 +56,10 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     serializer_class = AttachmentSerializer
     lookup_field = 'id'
 
-    # def perform_create(self, serializer):
-    #     """Create a new attachment"""
-    #     serializer.save(user=self.request.user)
+    def perform_create(self, serializer):
+        """Create a new attachment"""
+        print(self.request.user)
+        serializer.save(user=self.request.user)
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database

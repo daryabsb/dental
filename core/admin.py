@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 
 from .models import (
-    User, Address, Doctor, Patient, Appointment, Timetable, Schedule,
+    User, Address, Doctor, Patient, Timetable, Schedule,
     Attachment, Treatment,ComingTreatment,)
 
 class UserAdmin(BaseUserAdmin):
@@ -31,7 +31,6 @@ admin.site.register(Doctor)
 admin.site.register(Timetable)
 admin.site.register(Schedule)
 admin.site.register(Patient)
-admin.site.register(Appointment)
 admin.site.register(Attachment)
 admin.site.register(Treatment)
 admin.site.register(ComingTreatment)

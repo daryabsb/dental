@@ -56,7 +56,7 @@
 import { store, mutations, actions } from "../../store/treatment";
 let uuid = require("uuid");
 export default {
-	//props: ['id']
+	props: ['ID'],
 	data() {
 		return {
 			selectedFile: null,
@@ -67,9 +67,14 @@ export default {
 
 	methods: {
 		async uploadFile() {
+			// console.log(this.ID);
+
 			let formData = new FormData();
+			formData.append("patient", this.ID);
 			formData.append("filename", this.fileName);
 			formData.append("file", this.selectedFile, this.fileName);
+
+
 
 			this.$store.dispatch("onUploadFile", formData);
 
