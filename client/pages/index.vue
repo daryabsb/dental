@@ -140,7 +140,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="table-responsive">
                 <!-- <pre>{{getTreatments}}</pre> -->
                 <table id="datatable" class="table">
@@ -189,7 +188,7 @@
                         <a href="../hospital/patient-edit.html" class="mr-2"
                           ><i class="fas fa-edit text-danger font-16"></i
                         ></a>
-                        <Pdf :url="url" :page="pdfPage" />
+                        <Pdf :url="url" />
                         <a @click="confirmDelete(`treatment for ${treat.patientName}`, treat.id)">
                           <i class="fas fa-trash-alt text-danger font-16"></i>
                             </a>
@@ -239,7 +238,7 @@ export default {
       link: "",
       searchQuery: "",
       url: "https://bitcoin.org/bitcoin.pdf",
-      pdfPage: 1,
+      // pdfPage: 1,
     };
   },
   methods: {
@@ -250,11 +249,11 @@ export default {
       return patient.name;
     },
 
-    openPdf(url, page = 1) {
+    openPdf(url) {
       // var page = url.substring(url.lastIndexOf('/') + 1);
-      let link = `../..${url.substring(url.indexOf("/", 10))}`;
-      console.log(link);
-      this.url = link;
+      // let link = `../..${url.substring(url.indexOf("/", 10))}`;
+      // console.log(link);
+      this.url = url;
       mutations.togglePdfModal();
     },
     confirmDelete(name, id) {

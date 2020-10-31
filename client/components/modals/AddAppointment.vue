@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="px-3">
                                     <div class="form-group">
-                                        <label for="username">Email</label>
+                                        <label for="username">Patient Name</label>
                                        
                                             
                                             <select v-model="appointment.patient" name="patient" class="form-control">
@@ -123,6 +123,11 @@ export default {
 
             /* DISPATCH ACTION @STORE */
             this.$store.dispatch('addAppointment', formData);
+
+            this.appointment.patient = '';
+            this.appointment.description = '';
+                // formData.append('password2', this.password2);
+            this.appointment.date = '';
           
             } else {
                 let data = {  

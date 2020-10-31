@@ -16,12 +16,12 @@
               <li class="breadcrumb-item">
                 <nuxt-link to="/">Home</nuxt-link>
               </li>
-              <li class="breadcrumb-item">Users</li>
+              <li class="breadcrumb-item">Appointments</li>
             </ol>
             <!--end breadcrumb-->
           </div>
           <!--end /div-->
-          <h4 class="page-title">All Users</h4>
+          <h4 class="page-title">All Appointments</h4>
         </div>
         <!--end page-title-box-->
       </div>
@@ -43,7 +43,7 @@
               data-animation="bounce"
               class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"
             >
-              <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New User
+              <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Appointment
             </button>
             <button
               type="button"

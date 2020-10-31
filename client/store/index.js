@@ -59,7 +59,13 @@ const mutations = {
         state.patients.unshift(payload);
     },
     ADD_NEW_APPOINTMENT(state, payload) {
-        state.appointments.unshift(payload);
+        let patient = state.patients.find(p => p.id === payload.patient);
+        let today = new Date();
+        payload.patientName = patient.name;
+        if(Date.parse(payload.date) >= Date.parse(today)) {
+            state.appointments.unshift(payload);
+        }
+        
     },
     EDIT_USER(state, payload) {
         // FIND ITEM AND PLACE IN STATE

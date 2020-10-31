@@ -43,7 +43,8 @@ export default {
         { src: '~/plugins/vue-datepicker', ssr: false }, // datepicker plugin here
         { src: "./plugins/axios.js", ssr: false },
         { src: "~/plugins/vue-pdf.js", ssr: false },
-        { src: "./plugins/vue-instant-pdf.js", ssr: false }
+        { src: "./plugins/vue-instant-pdf.js", ssr: false },
+        // { src: "./plugins/vue-vbar.js", ssr: false }
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
@@ -55,7 +56,7 @@ export default {
 
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
     buildModules: [
-        
+        // "@nuxtjs/style-resources"
     ],
 
     // Modules (https://go.nuxtjs.dev/config-modules)
@@ -63,6 +64,7 @@ export default {
         ["cookie-universal-nuxt", { alias: "cookiz", parseJSON: false }],
         // https://go.nuxtjs.dev/bootstrap
         //"bootstrap-vue/nuxt",
+        // "@nuxtjs/style-resources",
         '@nuxtjs/auth',
         '@nuxtjs/moment',
         // https://go.nuxtjs.dev/axios
@@ -73,7 +75,8 @@ export default {
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        //baseUrl: 'http://127.0.0.1:8000/api'
+        proxy: true,
+        baseUrl: 'http://127.0.0.1:8000/api'
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)

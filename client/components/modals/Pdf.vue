@@ -7,21 +7,31 @@
           <button @click="closeModal" type="button" class="close">×</button>
         </div>
         <div class="modal-body">
-         <perfect-scrollbar>
-          <div class="row"> 
-            
+   <v-bar
+      wrapper="wrapper"
+      vBar="verticalBarClass"
+      vBarInternal="verticalBarInternalClass"
+      hBar="horizontalBarClass"
+      hBarInternal="horizontalBarInternalClass"
+    > 
+ 
+        
+          <div class="row pdf-container"> 
+    <!-- :src="require('../../../media/upload_files/AXIS_-_Qirga_-_20-20_pzbG9eX.pdf')" -->
 <pdf-view
         class="pdf"
        
-        :src="require('../../../media/upload_files/AXIS_-_Qirga_-_20-20_pzbG9eX.pdf')"
+       
+        :src="url"
         
 
         :page="1"
       />
-
+ 
  
           </div>
-         </perfect-scrollbar>
+      </v-bar>   
+         
         </div>
       </div>
     </div>
@@ -31,26 +41,12 @@
 </template>
 
 <script>
-import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
-
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
   props: ["url", "page"],
-  components: {
-    PerfectScrollbar
-    },
-  data() {
-    return {
-      title: "",
-      description: "",
-    };
-  },
   methods: {
     closeModal() {
-      //console.log(this.name)
-      // this.$emit('toggle-show');
-      // store.isPdfOpen = false;
       mutations.togglePdfModal();
     },
   },
@@ -61,11 +57,15 @@ export default {
   },
 };
 </script>
-<style lang="css" scoped>
+<style>
 
 .pdf {
-  border: 1px solid red;
-  width: 1000px;
-  /* height: 100%; */
+  /* border: 1px solid red; */
+  width: 100%;
+  min-height: 500px;
 }
+.wrapper {
+  height: 45rem;
+  /* width: 100%; */
+    }
 </style>
