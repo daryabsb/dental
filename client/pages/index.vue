@@ -90,12 +90,16 @@
       <!--end row-->
 
       <div class="row">
+       
+        <v-gal  :images="images" :index="index" />
+       
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
                   <h4 class="header-title mt-0 mb-3">Hospital Survey</h4>
+                 
                 </div>
                 <div class="col-sm-9">
                   <!-- <span><h4 class="header-title mt-0 mb-3">Select Date</h4></span>
@@ -215,6 +219,10 @@
   <!-- container -->
   <div class="container-fluid" v-else>
     <h1>You have to login to view this page</h1>
+    <Dropit />
+    
+
+
   </div>
 </template>
 
@@ -226,18 +234,32 @@ import { mapGetters } from "vuex";
 
 export default {
   components: {
-    // PerfectScrollbar,
+    // VueGallery
     // PdfViewer
     // 'vue-pdf-viewer': VuePDFViewer
   },
   data() {
     return {
+      images: [
+          'https://dummyimage.com/800/ffffff/000000',
+          'https://dummyimage.com/1600/ffffff/000000',
+          'https://dummyimage.com/1280/000000/ffffff',
+          'https://dummyimage.com/400/000000/ffffff',
+        ],
+        index: null,
       nameDelete: "",
       idDelete: "",
       date_today: new Date(),
       link: "",
       searchQuery: "",
       url: "https://bitcoin.org/bitcoin.pdf",
+      images: [
+          'https://dummyimage.com/800/ffffff/000000',
+          'https://dummyimage.com/1600/ffffff/000000',
+          'https://dummyimage.com/1280/000000/ffffff',
+          'https://dummyimage.com/400/000000/ffffff',
+        ],
+        index: null
       // pdfPage: 1,
     };
   },

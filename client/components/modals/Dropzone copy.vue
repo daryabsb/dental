@@ -2,13 +2,6 @@
 	<div class="col-lg-12 mb-1">
 		<div class="form-group">
 			<label for="exampleInputPassword1">Attach</label>
-			
-			<Dropit  
-				module="$store.state.files"
-				moduleName="'attachments'"
-			/>
-
-			
 			<div class="input-group mb-3">
 				<div class="custom-file">
 					<input
@@ -31,10 +24,6 @@
 					</button>
 				</div>
 			</div>
-			
-			
-			
-			
 			<div class="form-group">
 				<div
 					class="alert icon-custom-alert alert-light fade show"

@@ -4,10 +4,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title mt-0" id="myModalLabel">Modal Heading</h5>
+          
           <button @click="closeModal" type="button" class="close">×</button>
         </div>
         <div class="modal-body">
           <div class="row">
+            
            <button @click="goPrevPage" type="button" class="close"><i class="fas fa-arrow-left"></i></button>
          <p>{{currentPage}} / {{pageCount}}</p>
          <button @click="goNextPage" type="button" class="close"><i class="fas fa-arrow-right"></i></button>
@@ -86,10 +88,10 @@ export default {
 .pdf {
   /* border: 1px solid red; */
   width: 100%;
-  min-height: 500px;
+  min-height: 50rem;
 }
 .wrapper {
-  height: 45rem;
+  height: 70rem;
   /* width: 100%; */
     }
 </style>

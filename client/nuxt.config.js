@@ -35,6 +35,7 @@ export default {
         "./assets/css/bootstrap.min.css",
         "./assets/css/icons.css",
         "./assets/css/metisMenu.min.css",
+        "./assets/css/viewer.css",
         "./assets/css/style.css"
     ],
 
@@ -44,8 +45,9 @@ export default {
         { src: "./plugins/axios.js", ssr: false },
         { src: "~/plugins/vue-pdf.js", ssr: false },
         { src: "./plugins/vue-instant-pdf.js", ssr: false },
-        // { src: "./plugins/vue-vbar.js", ssr: false }
-        // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
+        { src: './plugins/vue-gallery.client.js'},
+        
+                // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
 
