@@ -7,6 +7,11 @@
           <button @click="closeModal" type="button" class="close">×</button>
         </div>
         <div class="modal-body">
+          <div class="row">
+           <button @click="goPrevPage" type="button" class="close"><i class="fas fa-arrow-left"></i></button>
+         <p>{{currentPage}} / {{pageCount}}</p>
+         <button @click="goNextPage" type="button" class="close"><i class="fas fa-arrow-right"></i></button>
+          </div>
    <v-bar
       wrapper="wrapper"
       vBar="verticalBarClass"
@@ -18,19 +23,18 @@
         
           <div class="row pdf-container"> 
     <!-- :src="require('../../../media/upload_files/AXIS_-_Qirga_-_20-20_pzbG9eX.pdf')" -->
-<pdf-view
-        class="pdf"
-       
-       
-        :src="url"
-        
-
-        :page="1"
-      />
+  <!-- <canvas width="200" height="500"> -->
+ <pdf-view 
+  class="pdf" 
+  :src="url" 
+  :page="p"
+    @num-pages="pageCount = $event"
+    @page-loaded="currentPage = $event"
+  />
+  <!-- </canvas> -->
  
- 
-          </div>
-      </v-bar>   
+ </div>
+</v-bar>   
          
         </div>
       </div>
@@ -45,7 +49,27 @@ import { store, mutations } from "../../store/utils/conf";
 
 export default {
   props: ["url", "page"],
+  data() {
+    return {
+      currentPage: 0,
+      pageCount: 0,
+      p:1
+    }
+  },
   methods: {
+    goPrevPage() {
+      if(this.currentPage>1) {
+        this.currentPage-=1
+        this.p=this.currentPage 
+      }
+      
+    },
+    goNextPage() {
+      if(this.currentPage <this.pageCount) {
+        this.currentPage+=1
+        this.p=this.currentPage 
+      }
+    },
     closeModal() {
       mutations.togglePdfModal();
     },
