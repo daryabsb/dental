@@ -1,22 +1,18 @@
 <template>
 	<div class="col-lg-12 mb-1">
 		<div class="form-group">
-			<label for="exampleInputPassword1">Attach</label>
 			
-			<Dropit  
+			
+			<!-- <Dropit  
 				module="$store.state.files"
 				moduleName="'attachments'"
-			/>
-
-			
+			/> -->
+			<label for="exampleInputPassword1">Attach Your PDFs here</label>
 			<div class="input-group mb-3">
+				
 				<div class="custom-file">
-					<input
-						type="file"
-						class="custom-file-input"
-						id="inputGroupFile04"
-						@change="onFileSelected"
-					/>
+					<input type="file" accept="application/pdf" class="custom-file-input"
+					 id="inputGroupFile04" @change="onFileSelected('pdf')" />
 					<label class="custom-file-label" for="inputGroupFile04">{{
 						fileName
 					}}</label>
@@ -31,7 +27,26 @@
 					</button>
 				</div>
 			</div>
-			
+			<label for="exampleInputPassword1">Attach Your Pictures here</label>
+			<div class="input-group mb-3">
+				
+				<div class="custom-file">
+					<input type="file" accept=".jpg,.jpeg,.png,.bmp" class="custom-file-input"
+					 id="inputGroupFile04" @change="onFileSelected('image')" />
+					<label class="custom-file-label" for="inputGroupFile04">{{
+						fileName
+					}}</label>
+				</div>
+				<div class="input-group-append">
+					<button
+						@click="uploadFile"
+						class="btn btn-outline-light"
+						type="button"
+					>
+						Upload
+					</button>
+				</div>
+			</div>
 			
 			
 			
@@ -73,6 +88,7 @@ export default {
 			selectedFile: null,
 			fileId: "",
 			fileName: "",
+			fileType: "",
 		};
 	},
 
@@ -83,6 +99,7 @@ export default {
 			let formData = new FormData();
 			formData.append("patient", this.ID);
 			formData.append("filename", this.fileName);
+			formData.append("file_type", this.fileType);
 			formData.append("file", this.selectedFile, this.fileName);
 
 
@@ -92,11 +109,12 @@ export default {
 			this.fileName = "";
 			this.selectedFile = null;
 		},
-		onFileSelected(event) {
+		onFileSelected(fileType) {
 			this.selectedFile = event.target.files[0];
 			//   console.log(this.selectedFile);
 			this.fileName = event.target.files[0].name;
 			//   console.log(this.fileName);
+			this.fileType = fileType;
 		},
 		
         deleteAttached(id) {

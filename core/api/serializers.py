@@ -84,7 +84,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attachment
-        fields = ('id', 'patient', 'filename', 'file')
+        fields = ('id', 'patient', 'file_type', 'filename', 'file')
         read_only_Fields = ('id',)
 
     # def create(self, validated_data):

@@ -187,13 +187,16 @@ class Patient(models.Model):
 
     def get_delete_url(self):
         return reverse('patients_delete', args=(self.pk,))
-
+FILE_TYPE = (
+    ('pdf', 'PDF'),
+    ('image', 'IMAGE')
+)
 class Attachment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='attachments')
     filename = models.CharField(max_length=120)
     file = models.FileField(upload_to='upload_files')
-    # description = models.TextField(null=True, blank=True)
+    file_type = models.CharField(max_length=15,choices=FILE_TYPE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
