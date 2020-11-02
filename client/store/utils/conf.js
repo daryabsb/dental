@@ -1,6 +1,9 @@
 import Vue from "vue";
 
 export const store = Vue.observable({
+    // OTHER STATES
+    treatmentFiles: [],
+    // MODAL CONTROLLERS
     isEditModal: false,
     isUserNavOpen: false,
     isNotificationOpen: false,
@@ -10,7 +13,10 @@ export const store = Vue.observable({
     isTreatmentOpen: false,
     isPdfOpen: false,
     isUserModalOpen: false,
-    isAppointmentModalOpen: false
+    isAppointmentModalOpen: false,
+    isPdfTabOpen: false,
+    isImagesTabOpen: false,
+    isPatientHistoryTabOpen: false
 });
 
 // We call toggleNav anywhere we need it in our app
@@ -41,6 +47,17 @@ export const mutations = {
     },
     toggleAppointmentModal() {
         store.isAppointmentModalOpen = !store.isAppointmentModalOpen
+    },
+    togglePdfTab(files=[]) {
+        store.treatmentFiles = files;
+        store.isPdfTabOpen = !store.isPdfTabOpen
+    },
+    toggleImagesTab(files=[]) {
+        store.treatmentFiles = files;
+        store.isImagesTabOpen = !store.isImagesTabOpen
+    },
+    togglePatientHistoryTab() {
+        store.isPatientHistoryTabOpen = !store.isPatientHistoryTabOpen
     },
 
 };

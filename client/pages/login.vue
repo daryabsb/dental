@@ -97,7 +97,7 @@ export default {
   methods: {
     async onLogin() {
       try {
-          console.log(this.email, ' / ', this.password)
+        //   console.log(this.email, ' / ', this.password)
         let loginfo = this.$auth.loginWith('local', {
           data: {
             email: this.email,
@@ -105,8 +105,8 @@ export default {
           }
           
         });
-        console.log(Loginfo)
-        this.$router.push('/patients/')
+        // console.log(Loginfo)
+        this.$router.push('/')
       } catch (err) {
         console.log(err)
       }

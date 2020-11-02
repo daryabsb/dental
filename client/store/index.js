@@ -4,6 +4,7 @@ const state = () => ({
     patients: [],
     treatments: [],
     appointments: [],
+    attachments: [],
     curTreats: [],
     files: [],
     csrftoken: ""
@@ -23,6 +24,14 @@ const mutations = {
             treat.patientName = patient.name;
         });
         state.treatments = payload;
+    },
+    
+    GET_ATTACHMENTS(state, payload) {
+        payload.forEach(att => {
+            let patient = state.patients.find(p => p.id === att.patient);
+            att.patientName = patient.name;
+        });
+        state.attachments = payload;
     },
     GET_APPOINTMENTS(state, payload) {
         payload.forEach(appointment => {
@@ -127,23 +136,28 @@ const actions = {
                     //"X-CSRFToken": state.csrftoken
             }
         };
-        let url = "http://127.0.0.1:8000/api/patients/";
+
+        let patientUrl = "http://127.0.0.1:8000/api/patients/";
         let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
         let usersUrl = "http://127.0.0.1:8000/api/users/";
         let appointmentUrl = "http://127.0.0.1:8000/api/appointments/";
+        let attachmentsUrl = "http://127.0.0.1:8000/api/attachments/";
         // console.log(url);
 
         try {
-            const allPatients = await this.$axios.get(url);
+            const allPatients = await this.$axios.get(patientUrl);
             const allTreatments = await this.$axios.get(treatmentUrl);
             const allUsers = await this.$axios.get(usersUrl);
             const allAppointments = await this.$axios.get(appointmentUrl);
+            const allAttachments = await this.$axios.get(attachmentsUrl);
 
             commit("GET_PATIENTS", allPatients.data);
             commit("GET_USERS", allUsers.data);
             commit("GET_TREATMENTS", allTreatments.data);
             commit("GET_APPOINTMENTS", allAppointments.data);
+            commit("GET_ATTACHMENTS", allAttachments.data);
             //   console.log(allPatients.data)
+           
         } catch (err) {
             console.log(err);
         }

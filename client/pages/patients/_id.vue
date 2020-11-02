@@ -68,15 +68,53 @@
                    
                     <div class="row">
                          <!-- <pre>{{patient.id}}</pre> -->
-                        <PatientTreatment :patientID="patient.id" :treatments="patient.treatments" />
-                        <PatientHistory :patient="patient" />
+                         <div class="col-lg-6">
+                             <PatientTreatment :patientID="patient.id" :treatments="patient.treatments" />
+                         </div>
+                        <div class="col-lg-6">
+
+                             <div class="card">
+                                <div class="card-body">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-pills nav-justified" role="tablist">
+                                        <li class="nav-item waves-effect waves-light">
+                                            <a @click="togglePdf" class="nav-link" :class="{active: isPdfTabOpen}">PDFs</a>
+                                        </li>
+                                        <li class="nav-item waves-effect waves-light">
+                                            <a @click="toggleImages" class="nav-link" :class="{active: isImagesTabOpen}">Images</a>
+                                        </li>
+                                        <li class="nav-item waves-effect waves-light">
+                                            <a class="nav-link" data-toggle="tab" href="#settings-1" role="tab">Settings</a>
+                                        </li>
+                                    </ul>
+    
+                                    <!-- Tab panes -->
+                                    <!-- <pre>{{pdfUrls}}</pre> -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane p-3" id="home-1" role="tabpanel">
+                                            <pdf-tab  :urls="pdfUrls" />
+                                        </div>
+                                        <div class="tab-pane p-3" id="profile-1" role="tabpanel">
+                                            {{imageUrls}}
+                                             <v-gal  :images="imageUrls" :index="index = null" />
+                                        </div>
+                                        <div class="tab-pane p-3 active" id="settings-1" role="tabpanel">
+                                             <pdf-tab   :urls="pdfUrls" />
+                                        </div>
+                                    </div>    
+                                </div><!--end card-body-->
+                            </div>
+                         </div>
+                        
 
                         
                     </div><!--end row-->
+                   
 
                 </div>
 </template>
 <script>
+import { store, mutations } from '../../store/utils/conf';
 // import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
         async asyncData({ $axios, params }) {
@@ -85,13 +123,97 @@ export default {
 
         let singlePatient = $axios.$get(`http://127.0.0.1:8000/api/patients/${params.id}/`);
         const [patientResponse] = await Promise.all([singlePatient]);
-
+            // console.log(patientResponse);
             return {
                 patient: patientResponse
             }
         } catch (err) {
             console.log(err)
         }
+    },
+    methods: {
+        togglePdf(files) {
+            if(!this.isPdfTabOpen) {
+            mutations.togglePdfTab(files);
+            }
+            if(this.isImagesTabOpen) {
+            mutations.toggleImagesTab(files);
+            }
+        },
+        toggleImages(files) {
+            if(!this.isImagesTabOpen) {
+            mutations.toggleImagesTab(files);
+            }
+            if(this.isPdfTabOpen) {
+                 mutations.togglePdfTab(files);
+            }
+           
+        },
+        onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
+    },
+    computed: {
+        isPdfTabOpen() {
+            return store.isPdfTabOpen;
+        },
+        isImagesTabOpen() {
+            return store.isImagesTabOpen;
+        },
+        attachments() {
+
+            return this.$store.state.attachments
+        },
+        allPdfs() {
+            
+            let allFiles = [];
+            let treats = this.patient.treatments;
+            treats.forEach(treat => {
+                
+                treat.files.forEach(file=>{
+                    // console.log(file)
+                    allFiles.push(file)
+                })
+                    
+            });
+            var unique = allFiles.filter(this.onlyUnique);
+
+            return unique;
+        },
+        pdfUrls() {
+           let files = []; 
+           let pdfs = []; 
+        //    console.log(this.attachments)
+           this.allPdfs.forEach(id=> {
+               let file = this.attachments.find(item =>  item.id === id);
+            //    let attachment = this.attachments.find(att => console.log('1as'));
+            //    console.log(attachment)
+            
+               files.push(file)
+               });
+        pdfs = files.filter(file=> file.file_type === 'pdf');
+        let links = pdfs.map(f=>f.file)
+        console.log(links)
+       
+           return links;
+        },
+        imageUrls() {
+           let files = []; 
+           let images = []; 
+        //    console.log(this.attachments)
+           this.allPdfs.forEach(id=> {
+               let file = this.attachments.find(item =>  item.id === id);
+            //    let attachment = this.attachments.find(att => console.log('1as'));
+            //    console.log(attachment)
+            
+               files.push(file)
+               });
+        images = files.filter(file=> file.file_type == 'image');
+        let links = images.map(f=>f.file)
+        console.log(links)
+       
+           return links;
+        },
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-   <div class="col-lg-6">
+  
         <div class="card">                                       
             <div class="card-body"> 
                         <h4 class="header-title mt-0 mb-3">Patient's Health Conditions</h4>
@@ -62,12 +62,12 @@
                    
             </div>  <!--end card-body-->                                     
         </div><!--end card-->
-    </div><!--end col-->
+   
 </template>
 <script>
 import { store, mutations } from '../../store/utils/conf';
 export default {
-    props: ['patient'],
+    props: ['patientID'],
     
    
     methods: {
@@ -78,6 +78,14 @@ export default {
             mutations.toggleTreatment();
         }
     },
+    computed: {
+        patient() {
+            let patient = this.$store.state.patients.find(p=>p.id===this.patientID)
+            return patient;
+        
+        }
+    },
+    
     
     
     }

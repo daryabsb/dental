@@ -91,7 +91,7 @@
 
       <div class="row">
        
-        <v-gal  :pImages="images" :pIndex="index" />
+        <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
        
         <div class="col-lg-12">
           <div class="card">
