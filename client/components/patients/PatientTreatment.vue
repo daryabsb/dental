@@ -2,7 +2,7 @@
     <div>
         
                             <div class="card">                                       
-                                <div class="card-body"> 
+                                <div class="card-body full-height"> 
                                     <h4 class="header-title mt-0 mb-3">Treatments</h4>
                                    <button 
                                    @click="showModal()"
@@ -104,7 +104,7 @@
                                     </div><div class="slimScrollBar" style="background: rgb(230, 234, 245); width: 7px; position: absolute; top: 0px; opacity: 1; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 316.484px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div><!--end education-activity-->
                                 </div>  <!--end card-body-->                                     
                             </div><!--end card-->
-                            <PatientHistory :patientID="patientID" />
+                          
     </div><!--end col-->
 </template>
 
@@ -141,5 +141,7 @@ export default {
 .ps {
   height: 100%;
 }
-
+.full-height {
+    height: 100%;
+}
 </style>

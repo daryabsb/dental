@@ -1,15 +1,26 @@
 <template>
 <div class="tab-container"  v-if="isPdfTabOpen">
-          <div class="row">
-            <button @click="goPrevPage" type="button" class="close">
+         
+            <ul class="pagination justify-content-center">
+                                            <li class="page-item disabled">
+                                                <a class="page-link"@click="goPrevPage">Previous</a>
+                                            </li>
+                                            <li class="page-item"><span class="page-link">{{ currentPage }}</span></li>
+                                            <li class="page-item"><span class="page-link">of</span>
+                                            <li class="page-item"><span class="page-link">{{ pageCount }}</span></li>
+                                            <li class="page-item">
+                                                <a class="page-link" @click="goNextPage">Next</a>
+                                            </li>
+                                        </ul>
+            <!-- <button @click="goPrevPage" type="button" class="close">
               <i class="fas fa-arrow-left"></i>
             </button>
             <p>{{ currentPage }} / {{ pageCount }}</p>
             <button @click="goNextPage" type="button" class="close">
               <i class="fas fa-arrow-right"></i>
-            </button>
+            </button> -->
             <!-- <pre>{{urls}}</pre> -->
-          </div>
+         
           <v-bar
             wrapper="wrapper"
             vBar="verticalBarClass"

@@ -16,7 +16,7 @@ export const store = Vue.observable({
     isAppointmentModalOpen: false,
     isPdfTabOpen: false,
     isImagesTabOpen: false,
-    isPatientHistoryTabOpen: false
+    isPatientHistoryTabOpen: true
 });
 
 // We call toggleNav anywhere we need it in our app

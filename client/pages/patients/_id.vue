@@ -84,22 +84,22 @@
                                             <a @click="toggleImages" class="nav-link" :class="{active: isImagesTabOpen}">Images</a>
                                         </li>
                                         <li class="nav-item waves-effect waves-light">
-                                            <a class="nav-link" data-toggle="tab" href="#settings-1" role="tab">Settings</a>
+                                            <a @click="toggleHealthCondition" class="nav-link" :class="{active: isPatientHistoryTabOpen}">Condition</a>
                                         </li>
                                     </ul>
     
                                     <!-- Tab panes -->
                                     <!-- <pre>{{pdfUrls}}</pre> -->
                                     <div class="tab-content">
-                                        <div class="tab-pane p-3" id="home-1" role="tabpanel">
+                                        <div class="tab-pane p-3"  :class="{active: isPdfTabOpen}">
                                             <pdf-tab  :urls="pdfUrls" />
                                         </div>
-                                        <div class="tab-pane p-3" id="profile-1" role="tabpanel">
-                                            {{imageUrls}}
+                                        <div class="tab-pane p-3" :class="{active: isImagesTabOpen}">
+                                            <!-- {{imageUrls}} -->
                                              <v-gal  :images="imageUrls" :index="index = null" />
                                         </div>
-                                        <div class="tab-pane p-3 active" id="settings-1" role="tabpanel">
-                                             <pdf-tab   :urls="pdfUrls" />
+                                        <div class="tab-pane p-3" :class="{active: isPatientHistoryTabOpen}">
+                                              <PatientHistory :patientID="patient.id" />
                                         </div>
                                     </div>    
                                 </div><!--end card-body-->
@@ -139,6 +139,9 @@ export default {
             if(this.isImagesTabOpen) {
             mutations.toggleImagesTab(files);
             }
+             if(this.isPatientHistoryTabOpen) {
+            mutations.togglePatientHistoryTab();
+            }
         },
         toggleImages(files) {
             if(!this.isImagesTabOpen) {
@@ -147,8 +150,24 @@ export default {
             if(this.isPdfTabOpen) {
                  mutations.togglePdfTab(files);
             }
+             if(this.isPatientHistoryTabOpen) {
+            mutations.togglePatientHistoryTab();
+            }
            
         },
+        toggleHealthCondition() {
+            if(!this.isPatientHistoryTabOpen) {
+            mutations.togglePatientHistoryTab();
+            }
+            if(this.isPdfTabOpen) {
+                 mutations.togglePdfTab();
+            }
+            if(this.isImagesTabOpen) {
+            mutations.toggleImagesTab();
+            }
+           
+        },
+        
         onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
@@ -160,6 +179,10 @@ export default {
         isImagesTabOpen() {
             return store.isImagesTabOpen;
         },
+        isPatientHistoryTabOpen() {
+            return store.isPatientHistoryTabOpen;
+        },
+        
         attachments() {
 
             return this.$store.state.attachments
