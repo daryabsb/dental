@@ -56,6 +56,27 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     serializer_class = AttachmentSerializer
     lookup_field = 'id'
 
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        print(self.request.query_params)
+        queryset = Attachment.objects.all()
+        patient = self.request.query_params.get('p', None)
+        type = self.request.query_params.get('type', None)
+        
+
+        if patient is not None:
+            queryset = queryset.filter(patient=patient)
+        
+        if type is not None:
+            queryset = queryset.filter(file_type=type)
+
+       
+
+        return queryset
+
     def perform_create(self, serializer):
         """Create a new attachment"""
         print(self.request.user)

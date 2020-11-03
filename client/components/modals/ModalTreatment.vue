@@ -94,6 +94,10 @@ export default {
            
 
             this.$store.dispatch('addNewTreatment', data);
+
+            this.title = '';
+            this.description = '';
+
             this.closeModal()
         },
         closeModal() {

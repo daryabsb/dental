@@ -92,11 +92,11 @@
                                     <!-- <pre>{{pdfUrls}}</pre> -->
                                     <div class="tab-content">
                                         <div class="tab-pane p-3"  :class="{active: isPdfTabOpen}">
-                                            <pdf-tab  :urls="pdfUrls" />
+                                            <pdf-tab  :files="patientPDFs" />
                                         </div>
                                         <div class="tab-pane p-3" :class="{active: isImagesTabOpen}">
                                             <!-- {{imageUrls}} -->
-                                             <v-gal  :images="imageUrls" :index="index = null" />
+                                             <v-gal  :images="patientImages" :index="index = null" />
                                         </div>
                                         <div class="tab-pane p-3" :class="{active: isPatientHistoryTabOpen}">
                                               <PatientHistory :patientID="patient.id" />
@@ -122,10 +122,14 @@ export default {
         try {
 
         let singlePatient = $axios.$get(`http://127.0.0.1:8000/api/patients/${params.id}/`);
-        const [patientResponse] = await Promise.all([singlePatient]);
+        let singlePatientPdfs = $axios.$get(`http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=pdf`);
+        let singlePatientImages = $axios.$get(`http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=image`);
+        const [patientResponse, patientPdfFiles, patientImageFiles] = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
             // console.log(patientResponse);
             return {
-                patient: patientResponse
+                patient: patientResponse,
+                patientPDFs: patientPdfFiles,
+                patientImages: patientImageFiles
             }
         } catch (err) {
             console.log(err)
