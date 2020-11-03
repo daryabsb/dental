@@ -22,7 +22,7 @@
               <img :src="image.file" :alt="image.filename" class="file-box" >
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ image.filename }}</h5>
-                <p class="mb-2 text-muted">@SaraHopkins.com</p>
+                <p class="mb-2 text-muted">@{{patient}}</p>
                 <ul class="list-inline list-unstyled profile-socials mb-0">
                   <li class="list-inline-item">
                     <a href="#" class=""
@@ -63,7 +63,7 @@
   // import VueGallery from 'vue-gallery';
   
   export default {
-    props: ['images', 'index'],
+    props: ['images', 'index', 'patient'],
     data: function () {
       return {
         // images: [

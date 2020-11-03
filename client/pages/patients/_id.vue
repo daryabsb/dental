@@ -92,11 +92,11 @@
                                     <!-- <pre>{{pdfUrls}}</pre> -->
                                     <div class="tab-content">
                                         <div class="tab-pane p-3"  :class="{active: isPdfTabOpen}">
-                                            <pdf-tab  :files="patientPDFs" />
+                                            <pdf-tab :patient="patient.name" :files="patientPDFs" />
                                         </div>
                                         <div class="tab-pane p-3" :class="{active: isImagesTabOpen}">
                                             <!-- {{imageUrls}} -->
-                                             <v-gal  :images="patientImages" :index="index = null" />
+                                             <v-gal :patient="patient.name" :images="patientImages" :index="index = null" />
                                         </div>
                                         <div class="tab-pane p-3" :class="{active: isPatientHistoryTabOpen}">
                                               <PatientHistory :patientID="patient.id" />

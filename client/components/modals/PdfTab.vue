@@ -15,7 +15,7 @@
 
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ file.filename }}</h5>
-                <p class="mb-2 text-muted">@SaraHopkins.com</p>
+                <p class="mb-2 text-muted">@{{patient}}</p>
                 <ul class="list-inline list-unstyled profile-socials mb-0">
                   <li class="list-inline-item">
                     <a href="#" class=""
@@ -55,7 +55,7 @@
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
-  props: ["files", "page"],
+  props: ["files", "patient"],
   data() {
     return {
       currentPage: 0,
