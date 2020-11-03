@@ -45,9 +45,11 @@ export default {
         { src: "./plugins/axios.js", ssr: false },
         { src: "~/plugins/vue-pdf.js", ssr: false },
         { src: "./plugins/vue-instant-pdf.js", ssr: false },
-        { src: './plugins/vue-gallery.client.js'},
-        
-                // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
+        { src: './plugins/vue-gallery.client.js' },
+        { src: './plugins/vue-carousel.js', ssr: false },
+
+
+        // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
 
@@ -85,12 +87,10 @@ export default {
     build: {
         extend(config, ctx) {
             config.output.globalObject = 'this'
-            config.module.rules.push(
-              {
+            config.module.rules.push({
                 test: /\.pdf$/,
                 loader: 'url-loader'
-              }
-            )
+            })
         },
     },
     auth: {

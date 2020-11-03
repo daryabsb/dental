@@ -65,6 +65,12 @@
                         
                         
                     </div><!--end row-->
+                    <div class="row text-center mx-3 px-3">
+                        <div class="col-md-12">
+                            <Slider />
+                        </div>
+                        
+                    </div>
                    
                     <div class="row">
                          <!-- <pre>{{patient.id}}</pre> -->
