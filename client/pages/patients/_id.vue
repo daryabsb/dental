@@ -166,13 +166,14 @@ import { store, mutations } from "../../store/utils/conf";
 export default {
   async asyncData({ $axios, params }) {
     try {
-      let singlePatient = $axios.$get(
+      let singlePatient = await $axios.$get(
         `http://127.0.0.1:8000/api/patients/${params.id}/`
       );
-      let singlePatientPdfs = $axios.$get(
+      
+      let singlePatientPdfs = await $axios.$get(
         `http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=pdf`
       );
-      let singlePatientImages = $axios.$get(
+      let singlePatientImages = await $axios.$get(
         `http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=image`
       );
       const [

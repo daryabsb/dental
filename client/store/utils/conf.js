@@ -15,6 +15,7 @@ export const store = Vue.observable({
     isUserModalOpen: false,
     isAppointmentModalOpen: false,
     isPdfTabOpen: false,
+    isPdfTabModalOpen: false,
     isImagesTabOpen: false,
     isPatientHistoryTabOpen: true
 });
@@ -48,11 +49,14 @@ export const mutations = {
     toggleAppointmentModal() {
         store.isAppointmentModalOpen = !store.isAppointmentModalOpen
     },
-    togglePdfTab(files=[]) {
+    togglePdfTab(files = []) {
         store.treatmentFiles = files;
         store.isPdfTabOpen = !store.isPdfTabOpen
     },
-    toggleImagesTab(files=[]) {
+    togglePdfTabModal() {
+        store.isPdfTabModalOpen = !store.isPdfTabModalOpen
+    },
+    toggleImagesTab(files = []) {
         store.treatmentFiles = files;
         store.isImagesTabOpen = !store.isImagesTabOpen
     },

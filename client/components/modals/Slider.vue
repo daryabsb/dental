@@ -7,7 +7,7 @@
       :paginationColor="'#EFA291'"
       >
     <slide>
-      Slide 1 Content
+      slide 1
     </slide>
     <slide>
       Slide 2 Content
@@ -23,6 +23,7 @@
 
 <script>
   export default {
+    
     data() {
       return {
         data: [

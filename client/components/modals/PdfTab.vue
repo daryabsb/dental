@@ -1,5 +1,6 @@
 <template>
   <div class="tab-container" v-if="isPdfTabOpen">
+    
     <v-bar
       wrapper="wrapper"
       vBar="verticalBarClass"
@@ -8,14 +9,12 @@
       hBarInternal="horizontalBarInternalClass"
     >
       <div v-for="file in files" :key="file.id" class="file-box">
-        <div class="card profile-card">
+        <div class="card profile-card" @click="showPdf">
           <div class="card-body p-0">
             <div class="media p-3 align-items-center file-box-content">
               <pdf-view :src="file.file" class="file-box" />
-
-               <client-only>
-                <Slider />
-              </client-only>  
+              <pdf-tab-modal :PDFs="file" />
+               
 
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ file.filename }}</h5>
@@ -92,6 +91,9 @@ export default {
     },
     closeModal() {
       mutations.togglePdfModal();
+    },
+    showPdf() {
+      mutations.togglePdfTabModal()
     },
   },
   computed: {
