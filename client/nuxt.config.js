@@ -45,7 +45,7 @@ export default {
         { src: "./plugins/axios.js", ssr: false },
         { src: "~/plugins/vue-pdf.js", ssr: false },
         { src: "./plugins/vue-instant-pdf.js", ssr: false },
-        { src: './plugins/vue-gallery.client.js' },
+        { src: './plugins/vue-gallery.client.js', ssr: false  },
         { src: './plugins/vue-carousel.js', ssr: false },
 
 

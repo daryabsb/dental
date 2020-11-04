@@ -13,6 +13,10 @@
             <div class="media p-3 align-items-center file-box-content">
               <pdf-view :src="file.file" class="file-box" />
 
+               <client-only>
+                <Slider />
+              </client-only>  
+
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ file.filename }}</h5>
                 <p class="mb-2 text-muted">@{{patient}}</p>

@@ -169,7 +169,7 @@
                         >
                       </td>
                       <td>
-                        <tr>
+                        
                         {{ treat.description }} [<span
                           v-for="file in treat.files"
                           :key="file.id"
@@ -177,11 +177,8 @@
                           <a class="text-success" @click="openPdf(file.file)">{{
                             file.filename
                           }}</a> </span
-                        >]
-                        </tr>
-                        <tr>
-                         <small class="text-danger">{{treat.appointment}}</small>
-                        </tr>
+                        >
+                    
                       </td>
 
                       <td>{{ $moment(treat.created).format("DD-MM-yyyy") }}</td>
@@ -192,7 +189,7 @@
                         <a href="../hospital/patient-edit.html" class="mr-2"
                           ><i class="fas fa-edit text-danger font-16"></i
                         ></a>
-                        <Pdf :url="url" />
+                        
                         <a @click="confirmDelete(`treatment for ${treat.patientName}`, treat.id)">
                           <i class="fas fa-trash-alt text-danger font-16"></i>
                             </a>
@@ -204,6 +201,7 @@
                           :name="nameDelete"
                           :id="idDelete"
                         />
+                        <Pdf :url="url" />
                     </tr>
                     <!-- </perfect-scrollbar> -->
                   </tbody>
