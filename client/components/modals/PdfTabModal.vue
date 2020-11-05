@@ -1,13 +1,10 @@
 <template>
-    <div class="my-modal" v-if="isPdfTabModalOpen">
+    <div class="my-modal" v-show="isPdfTabModalOpen">
+    <!-- <button type="button" @click="alertIt()" class="close text-white m-4">×</button> -->
+   
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                 <div class="modal-header">
-                <h5 class="modal-title mt-0" >Add a New User</h5>
-                <button type="button" @click="closeTabModal()" class="close">×</button>
-            </div>
-         
-             <client-only>
+              <!-- {{pageCount}} -->
   <v-bar
       wrapper="wrapper"
       vBar="verticalBarClass"
@@ -16,18 +13,26 @@
       hBarInternal="horizontalBarInternalClass"
     >        
 
-    <pdf-view 
-    v-if="show" 
-    ref="pdf" 
-    :src="PDFs.file" 
-    :page="page" @num-pages="numPages = $event" 
-    @link-clicked="page = $event"></pdf-view>
+<!-- <div v-for="i in pageCount" :key="i" >
+                {{i}}
+                
+            </div> -->
+
+<pdf-view
+                
+            ref="thisPdf" 
+            :src="src" 
+            @num-pages="pageCount = $event"
+             ></pdf-view>
+
+  
 
   </v-bar>
-              </client-only> 
+             
 
         </div>
         </div>
+       
     </div>
 </template>
 <script>
@@ -39,25 +44,44 @@ export default {
     data() {
     return {
       currentPage: 0,
-      pageCount: 0,
-      show: true,
-      pdfList: this.PDFs,
-            src:'',
-            page: 1,
-            numPages: 0,
+      // pageCount: 0,
+      // pdfList: this.PDFs,
+      // src:'',
+      page: 1,
+      isMounted: false
       
     }
   },
   methods: {
-      closeTabModal() {
-      mutations.togglePdfTabModal();
+      closeTab() {
+        // store.isPdfTabModalOpen = false;
+      
+      // 
     },
+    alertIt() {
+      
+    // alert(this.numPages) 
+  // store.isPdfTabModalOpen = false;
+    },
+     
   },
   computed: {
       isPdfTabModalOpen() {
           return store.isPdfTabModalOpen
-      }
-  }
+      },
+      src() {
+        
+        return this.PDFs.file
+      },
+      // pageCount(){
+      //   let count = 0;
+      //   this.$refs.thisPdf.pdf.forEachPage(page=> this.count+=page);
+      //   return count;
+      // },
+  },
+  mounted() {
+    this.$refs.thisPdf.pdf.forEachPage(page=>console.log(page))
+  },
 
 }
 </script>

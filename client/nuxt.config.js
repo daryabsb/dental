@@ -41,12 +41,12 @@ export default {
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
-        { src: '~/plugins/vue-datepicker', ssr: false }, // datepicker plugin here
-        { src: "./plugins/axios.js", ssr: false },
-        { src: "~/plugins/vue-pdf.js", ssr: false },
-        { src: "./plugins/vue-instant-pdf.js", ssr: false },
-        { src: './plugins/vue-gallery.client.js', ssr: false  },
-        { src: './plugins/vue-carousel.js', ssr: false },
+        { src: '~/plugins/vue-datepicker', mode: 'client' }, // datepicker plugin here
+        { src: "./plugins/axios.js", mode: 'client' },
+        { src: "~/plugins/vue-pdf.js", mode: 'client' },
+        { src: "./plugins/vue-instant-pdf.js", mode: 'client' },
+        { src: './plugins/vue-gallery.client.js', mode: 'client' },
+        { src: './plugins/vue-carousel.js', mode: 'client' },
 
 
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },

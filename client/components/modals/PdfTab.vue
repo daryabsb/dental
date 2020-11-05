@@ -9,11 +9,14 @@
       hBarInternal="horizontalBarInternalClass"
     >
       <div v-for="file in files" :key="file.id" class="file-box">
-        <div class="card profile-card" @click="showPdf">
+        <div class="card profile-card" @click="showPdf(file)">
           <div class="card-body p-0">
             <div class="media p-3 align-items-center file-box-content">
-              <pdf-view :src="file.file" class="file-box" />
-              <pdf-tab-modal :PDFs="file" />
+              <pdf-view 
+                :src="file.file" 
+                class="file-box" 
+                />
+              <pdf-tab-modal :PDFs="src"  />
                
 
               <div class="media-body ml-3 align-self-center">
@@ -55,7 +58,7 @@
 </template>
 
 <script>
-import { store, mutations } from "../../store/utils/conf";
+import { store, mutations } from '../../store/utils/conf';
 
 export default {
   props: ["files", "patient"],
@@ -66,6 +69,7 @@ export default {
       p: 1,
       prevDisabled: false,
       nextDisabled: false,
+      src:[]
     };
   },
   methods: {
@@ -89,10 +93,9 @@ export default {
         this.nextDisabled = true;
       }
     },
-    closeModal() {
-      mutations.togglePdfModal();
-    },
-    showPdf() {
+    
+    showPdf(file) {
+      this.src = file
       mutations.togglePdfTabModal()
     },
   },
