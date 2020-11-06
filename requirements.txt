@@ -4,5 +4,6 @@ django-cors-headers==3.5.0
 django-multiselectfield==0.1.12
 django-widget-tweaks==1.4.8
 djangorestframework==3.12.1
+PyPDF2==1.26.0
 pytz==2020.1
 sqlparse==0.4.1

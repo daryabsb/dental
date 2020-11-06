@@ -8,17 +8,13 @@
       hBar="horizontalBarClass"
       hBarInternal="horizontalBarInternalClass"
     >
+    
       <div v-for="file in files" :key="file.id" class="file-box">
         <div class="card profile-card" @click="showPdf(file)">
           <div class="card-body p-0">
             <div class="media p-3 align-items-center file-box-content">
-              <pdf-view 
-                :src="file.file" 
-                class="file-box" 
-                />
-              <pdf-tab-modal :PDFs="src"  />
-               
-
+              <pdf-view :src="file.file" class="file-box" />
+              <pdf-tab-modal :pdf="src" />
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ file.filename }}</h5>
                 <p class="mb-2 text-muted">@{{patient}}</p>
@@ -64,36 +60,31 @@ export default {
   props: ["files", "patient"],
   data() {
     return {
-      currentPage: 0,
-      pageCount: 0,
-      p: 1,
-      prevDisabled: false,
-      nextDisabled: false,
       src:[]
     };
   },
   methods: {
-    goPrevPage() {
-      nextDisabled: false;
-      if (this.currentPage > 1) {
-        prevDisabled: false;
-        this.currentPage--;
-        this.p = this.currentPage;
-      } else {
-        this.prevDisabled = true;
-      }
-    },
-    goNextPage() {
-      prevDisabled: false;
-      if (this.currentPage < this.pageCount) {
-        nextDisabled: false;
-        this.currentPage++;
-        this.p = this.currentPage;
-      } else {
-        this.nextDisabled = true;
-      }
-    },
-    
+    // goPrevPage() {
+    //   nextDisabled: false;
+    //   if (this.currentPage > 1) {
+    //     prevDisabled: false;
+    //     this.currentPage--;
+    //     this.p = this.currentPage;
+    //   } else {
+    //     this.prevDisabled = true;
+    //   }
+    // },
+    // goNextPage() {
+    //   prevDisabled: false;
+    //   if (this.currentPage < this.pageCount) {
+    //     nextDisabled: false;
+    //     this.currentPage++;
+    //     this.p = this.currentPage;
+    //   } else {
+    //     this.nextDisabled = true;
+    //   }
+    // },
+   
     showPdf(file) {
       this.src = file
       mutations.togglePdfTabModal()

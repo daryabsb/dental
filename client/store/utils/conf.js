@@ -1,5 +1,6 @@
 import Vue from "vue";
 
+
 export const store = Vue.observable({
     // OTHER STATES
     treatmentFiles: [],

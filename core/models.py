@@ -6,11 +6,13 @@ import datetime
 from django.apps import apps
 from multiselectfield import MultiSelectField
 
+from PyPDF2 import PdfFileReader
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 
 from django.conf import settings
+from django.db.models.signals import post_save
 
 from django.db.models import Sum
 
@@ -21,7 +23,23 @@ def calculateAge(birthDate):
         (today.month, today.day) < (birthDate.month, birthDate.day)
         ) 
   
-    return age 
+    return age
+
+def save_pdf_pages_attachment(sender, instance, created, **kwargs):
+
+    if created:
+        instance.save()
+
+
+
+def pdf_page_count(link):
+    # Load the pdf to the PdfFileReader object with default settings
+    with open(link, "rb") as pdf_file:
+        pdf_reader = PdfFileReader(pdf_file)
+        num = pdf_reader.numPages
+        print(f"The total number of pages in the pdf document is {pdf_reader.numPages}")
+    return num
+    
 
 
 class UserManager(BaseUserManager):
@@ -196,6 +214,7 @@ class Attachment(models.Model):
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='attachments')
     filename = models.CharField(max_length=120)
     file = models.FileField(upload_to='upload_files')
+    page_count = models.PositiveIntegerField(null=True, blank=True)
     file_type = models.CharField(max_length=15,choices=FILE_TYPE, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -205,6 +224,16 @@ class Attachment(models.Model):
     
     def __str__(self):
         return self.file.url
+
+    def save(self, *args, **kwargs):
+        if not self.pk is None and self.file_type == 'pdf':
+            pdf = f'{settings.BASE_DIR}{self.file.url}'
+            self.page_count = pdf_page_count(pdf)
+        else:
+            self.page_count = 1
+        super(Attachment, self).save(*args, **kwargs)
+
+post_save.connect(save_pdf_pages_attachment, Attachment)
 
 class Treatment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

@@ -1,38 +1,25 @@
 <template>
     <div class="my-modal" v-show="isPdfTabModalOpen">
-    <!-- <button type="button" @click="alertIt()" class="close text-white m-4">×</button> -->
-   
+        <!-- <button type="button" @click="alertIt()" class="close text-white m-4">×</button> -->
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-              <!-- {{pageCount}} -->
-  <v-bar
-      wrapper="wrapper"
-      vBar="verticalBarClass"
-      vBarInternal="verticalBarInternalClass"
-      hBar="horizontalBarClass"
-      hBarInternal="horizontalBarInternalClass"
-    >        
-
-<!-- <div v-for="i in pageCount" :key="i" >
-                {{i}}
-                
-            </div> -->
-
-<pdf-view
-                
-            ref="thisPdf" 
-            :src="src" 
-            @num-pages="pageCount = $event"
-             ></pdf-view>
-
-  
-
-  </v-bar>
-             
-
-        </div>
-        </div>
-       
+                <div class="card">
+                    <div class="card-body">
+                    <v-bar
+                        wrapper="wrapper"
+                        vBar="verticalBarClass"
+                        vBarInternal="verticalBarInternalClass"
+                        hBar="horizontalBarClass"
+                        hBarInternal="horizontalBarInternalClass"
+                    >
+                        <div v-for="i in pageCount" :key="i" >
+                            <pdf-view :src="src" :page="i"></pdf-view>
+                        </div> 
+                    </v-bar>
+                    </div>
+                </div>  
+            </div>
+        </div>       
     </div>
 </template>
 <script>
@@ -40,48 +27,21 @@
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
-    props: ['PDFs'],
-    data() {
-    return {
-      currentPage: 0,
-      // pageCount: 0,
-      // pdfList: this.PDFs,
-      // src:'',
-      page: 1,
-      isMounted: false
-      
-    }
-  },
-  methods: {
-      closeTab() {
-        // store.isPdfTabModalOpen = false;
-      
-      // 
-    },
-    alertIt() {
-      
-    // alert(this.numPages) 
-  // store.isPdfTabModalOpen = false;
-    },
-     
+    props: ['pdf'],
+    methods: {
+    alertIt() {},
   },
   computed: {
       isPdfTabModalOpen() {
           return store.isPdfTabModalOpen
       },
       src() {
-        
-        return this.PDFs.file
+        return this.pdf.file
       },
-      // pageCount(){
-      //   let count = 0;
-      //   this.$refs.thisPdf.pdf.forEachPage(page=> this.count+=page);
-      //   return count;
-      // },
+      pageCount(){
+          console.log(this.pdf.page_count)
+        return this.pdf.page_count
+      },
   },
-  mounted() {
-    this.$refs.thisPdf.pdf.forEachPage(page=>console.log(page))
-  },
-
 }
 </script>
