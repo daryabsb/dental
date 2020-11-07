@@ -165,17 +165,15 @@ import { store, mutations } from "../../store/utils/conf";
 // import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   async asyncData({ $axios, params }) {
+    let patientsURL = '/patients'
+    let attachmentsURL = '/attachments'
+
+    let id = params.id;
     try {
-      let singlePatient = await $axios.$get(
-        `http://127.0.0.1:8000/api/patients/${params.id}/`
-      );
-      
-      let singlePatientPdfs = await $axios.$get(
-        `http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=pdf`
-      );
-      let singlePatientImages = await $axios.$get(
-        `http://127.0.0.1:8000/api/attachments/?p=${params.id}&type=image`
-      );
+      let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
+      let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
+      let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
+
       const [
         patientResponse,
         patientPdfFiles,
@@ -185,7 +183,7 @@ export default {
         singlePatientPdfs,
         singlePatientImages,
       ]);
-      console.log(patientResponse);
+      // console.log(patientResponse);
       return {
         patient: patientResponse,
         patientPDFs: patientPdfFiles,

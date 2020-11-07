@@ -224,21 +224,21 @@ import { store, mutations } from "../store/utils/conf";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  async asyncData({app, store}) {
+  async asyncData({$axios, app, store}) {
 
-let patientUrl = "http://127.0.0.1:8000/api/patients/";
-        let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
-        let usersUrl = "http://127.0.0.1:8000/api/users/";
-        let appointmentUrl = "http://127.0.0.1:8000/api/appointments/";
-        let attachmentsUrl = "http://127.0.0.1:8000/api/attachments/";
+    let patientUrl = "/patients/";
+    let treatmentUrl = "/treatments/";
+    let usersUrl = "/users/";
+    let appointmentUrl = "/appointments/";
+    let attachmentsUrl = "/attachments/";
         // console.log(url);
 
         try {
-            const allPatients = await app.$axios.get(patientUrl);
-            const allTreatments = await app.$axios.get(treatmentUrl);
-            const allUsers = await app.$axios.get(usersUrl);
-            const allAppointments = await app.$axios.get(appointmentUrl);
-            const allAttachments = await app.$axios.get(attachmentsUrl);
+            const allPatients = await $axios.get(patientUrl);
+            const allTreatments = await $axios.get(treatmentUrl);
+            const allUsers = await $axios.get(usersUrl);
+            const allAppointments = await $axios.get(appointmentUrl);
+            const allAttachments = await $axios.get(attachmentsUrl);
 
             store.commit("GET_PATIENTS", allPatients.data);
             store.commit("GET_USERS", allUsers.data);
