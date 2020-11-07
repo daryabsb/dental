@@ -1,7 +1,5 @@
-import Viewer from 'v-viewer'
-import Vue from 'vue'
-Vue.use(Viewer, {
-  defaultOptions: {
-    zIndex: 9999
-  }
-})
+// import Viewer from 'v-viewer'
+import Vue from 'vue';
+import pdfvuer from 'pdfvuer'
+
+Vue.component('viewer', pdfvuer)

@@ -85,7 +85,7 @@
 
 <script>
 export default {
-    middleware: 'auth',
+    // middleware: 'auth',
     auth: 'guest',
     layout: 'auth',
   data() {
@@ -106,7 +106,7 @@ export default {
           
         });
         // console.log(Loginfo)
-        this.$router.push('/')
+        // this.$router.push('/')
       } catch (err) {
         console.log(err)
       }
@@ -114,3 +114,4 @@ export default {
   }
 }
 </script>
+

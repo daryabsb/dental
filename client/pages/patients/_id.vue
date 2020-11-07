@@ -185,7 +185,7 @@ export default {
         singlePatientPdfs,
         singlePatientImages,
       ]);
-      // console.log(patientResponse);
+      console.log(patientResponse);
       return {
         patient: patientResponse,
         patientPDFs: patientPdfFiles,
@@ -244,13 +244,19 @@ export default {
     isPatientHistoryTabOpen() {
       return store.isPatientHistoryTabOpen;
     },
-
+    
     attachments() {
       return this.$store.state.attachments;
     },
     images() {
       return this.patientImages
-    }
+    },
+    pdfList() {
+      return store.treatmentPdfFiles;
+    },
+    pdfList() {
+      return store.treatmentPdfFiles;
+    },
   },
 };
 </script>

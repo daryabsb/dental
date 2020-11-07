@@ -6,6 +6,8 @@ const state = () => ({
     appointments: [],
     attachments: [],
     curTreats: [],
+    patientPdfFiles: [],
+    patientImageFiles: [],
     files: [],
     csrftoken: ""
 });
@@ -122,13 +124,27 @@ const mutations = {
         state.treatments[0].files = state.files;
         state.files = [];
         // console.log(payload)
-    }
+    },
+    PATIENT_PDF_FILES(state, payload) {
+        state.patientPdfFiles = payload;
+    },
+    PATIENT_IMAGE_FILES(state, payload) {
+        state.patientImageFiles = payload;
+    },
 };
 
 const actions = {
-    async nuxtServerInit({ state, commit }, { app }) {
+
+async nuxtServerInit({state, commit}, {req}) {
+
+    console.log('Wait a second')
+},
+
+
+
+    async loadData({ state, commit }, payload) {
         //state.csrftoken = app.$cookiz.get('csrftoken');
-        //console.log('OnLoad:', state.csrftoken);
+        console.log('OnLoad: this will run regardless of login with 0, ', payload);
 
         const options = {
             headers: {

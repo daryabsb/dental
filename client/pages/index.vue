@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="isAuthenticated">
+  <div class="container-fluid">
       <!-- Page-Title -->
       <div class="row">
         <div class="col-sm-12">
@@ -90,7 +90,6 @@
       <!--end row-->
 
       <div class="row">
-       
         <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
        
         <div class="col-lg-12">
@@ -215,26 +214,20 @@
       </div>
   </div>
   <!-- container -->
-  <div class="container-fluid" v-else>
-    <h1>You have to login to view this page</h1>
-    <Dropit />
-    
-
-
-  </div>
 </template>
 
 <script>
+
 // import { PerfectScrollbar } from "vue2-perfect-scrollbar";
 import { store, mutations } from "../store/utils/conf";
 // import PdfViewer from "vue-pdf-app";
 import { mapGetters } from "vuex";
 
 export default {
-  components: {
-    // VueGallery
-    // PdfViewer
-    // 'vue-pdf-viewer': VuePDFViewer
+  asyncData() {
+    
+    this.$store.dispatch('loadData', 'DONE');
+
   },
   data() {
     return {

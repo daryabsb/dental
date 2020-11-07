@@ -4,6 +4,8 @@ import Vue from "vue";
 export const store = Vue.observable({
     // OTHER STATES
     treatmentFiles: [],
+    treatmentPdfFiles: [],
+    treatmentImageFiles: [],
     // MODAL CONTROLLERS
     isEditModal: false,
     isUserNavOpen: false,

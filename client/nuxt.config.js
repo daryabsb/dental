@@ -47,6 +47,7 @@ export default {
         { src: "./plugins/vue-instant-pdf.js", mode: 'client' },
         { src: './plugins/vue-gallery.client.js', mode: 'client' },
         { src: './plugins/vue-carousel.js', mode: 'client' },
+        // { src: './plugins/vue-vuer.js', mode: 'client' },
         { src: './plugins/vuescroll.js', mode: 'client' },
 
 
@@ -80,8 +81,7 @@ export default {
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        proxy: true,
-        // baseUrl: 'http://127.0.0.1:8000/api'
+        // baseURL: 'http://localhost:8000'
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -101,7 +101,8 @@ export default {
                     login: {
                         url: "http://127.0.0.1:8000/api/user/token/",
                         method: "POST",
-                        propertyName: "token"
+                        propertyName: "token",
+                        altProperty: 'refresh'
                     },
                     logout: true,
                     user: {
@@ -112,7 +113,16 @@ export default {
                 },
                 tokenType: "Token "
             }
-        }
+        },
+        redirect: {
+            login: '/login',
+            logout: '/login',
+            callback: '/login',
+            home: '/'
+        },
+    },
+    router: {
+        middleware: ['auth']
     },
     server: {
         port: 8080 // default: 3000

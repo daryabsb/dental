@@ -18,9 +18,17 @@
                                         <perfect-scrollbar> 
                                             <div class="activity">
                                                 <!-- <pre>{{treats}}</pre> -->
-                                                <div v-for="treat in treats" :key="treat.id">
+                                                <div 
+                                                v-for="treat in treats" 
+                                                :key="treat.id"
+                                                 :class="{tactive:treat.id == selected}" 
+                                                 @click="selected = (treat.id == selected ? undefined : treat.id)"
+                                                 >
                                             <i class="mdi mdi-school icon-success"></i>
-                                            <div class="time-item">
+                                            <div 
+                                            class="time-item p-3 m-2" 
+                                           
+                                            @click="onFilterFiles(treat)">
                                                 <div class="item-info">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h6 class="m-0 text-pink">{{treat.title}}</h6>
@@ -118,10 +126,36 @@ export default {
     components: {
         PerfectScrollbar
     },
-   
+   data() {
+       return {
+           selected: undefined,
+           allPdfs: [],
+           allImages: [],
+           
+       }
+   },
     methods: {
 
         //getTreatments() {}
+
+        onFilterFiles(treat) {
+
+            this.allPdfs = store.treatmentPdfFiles
+            this.allImages = store.treatmentImageFiles
+
+            console.log(this.$store.state.patientPdfFiles)
+
+            if(!this.selected === treat.id) {
+                
+                store.treatmentPdfFiles = treat.files.filter(file=>file.file_type==='pdf');
+                store.treatmentImageFiles = treat.files.filter(file=>file.file_type==='image');
+
+            } else {
+                store.treatmentPdfFiles  = this.allPdfs
+                store.treatmentImageFiles = this.allImages
+            }
+            
+        },
         
         showModal() {
             mutations.toggleTreatment();
@@ -143,5 +177,9 @@ export default {
 }
 .full-height {
     height: 100%;
+}
+
+.tactive {
+    background-color: #EAECEE;
 }
 </style>

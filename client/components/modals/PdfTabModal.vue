@@ -27,6 +27,7 @@ import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
+    scrollToTop: true,
     props: ['pdf'],
     components: {
         PerfectScrollbar
