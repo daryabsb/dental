@@ -221,12 +221,46 @@
 // import { PerfectScrollbar } from "vue2-perfect-scrollbar";
 import { store, mutations } from "../store/utils/conf";
 // import PdfViewer from "vue-pdf-app";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  asyncData() {
+  async asyncData({app, store}) {
+
+let patientUrl = "http://127.0.0.1:8000/api/patients/";
+        let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
+        let usersUrl = "http://127.0.0.1:8000/api/users/";
+        let appointmentUrl = "http://127.0.0.1:8000/api/appointments/";
+        let attachmentsUrl = "http://127.0.0.1:8000/api/attachments/";
+        // console.log(url);
+
+        try {
+            const allPatients = await app.$axios.get(patientUrl);
+            const allTreatments = await app.$axios.get(treatmentUrl);
+            const allUsers = await app.$axios.get(usersUrl);
+            const allAppointments = await app.$axios.get(appointmentUrl);
+            const allAttachments = await app.$axios.get(attachmentsUrl);
+
+            store.commit("GET_PATIENTS", allPatients.data);
+            store.commit("GET_USERS", allUsers.data);
+            store.commit("GET_TREATMENTS", allTreatments.data);
+            store.commit("GET_APPOINTMENTS", allAppointments.data);
+            store.commit("GET_ATTACHMENTS", allAttachments.data);
+            //   console.log(allPatients.data)
+           
+        } catch (err) {
+            console.log(err);
+        }
+
+
+
+
+
+
+
+
+
     
-    this.$store.dispatch('loadData', 'DONE');
+  // this.$store.dispatch('loadData', 'DONE');
 
   },
   data() {
