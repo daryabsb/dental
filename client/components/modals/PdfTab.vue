@@ -1,13 +1,8 @@
 <template>
   <div class="tab-container" v-if="isPdfTabOpen">
     
-    <v-bar
-      wrapper="wrapper"
-      vBar="verticalBarClass"
-      vBarInternal="verticalBarInternalClass"
-      hBar="horizontalBarClass"
-      hBarInternal="horizontalBarInternalClass"
-    >
+    <!-- <vue-scroll :ops="ops" class="ps"> -->
+      <perfect-scrollbar>
     
       <div v-for="file in files" :key="file.id" class="file-box">
         <div class="card profile-card" @click="showPdf(file)">
@@ -49,44 +44,39 @@
           <!--end card-body-->
         </div>
       </div>
-    </v-bar>
+    </perfect-scrollbar>
   </div>
 </template>
 
 <script>
+import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from '../../store/utils/conf';
-
 export default {
   props: ["files", "patient"],
+  components: {
+        PerfectScrollbar
+    },
   data() {
     return {
-      src:[]
+      src:[],
+      ops: {
+        bar: {
+          background: 'rgb(24, 144, 255)'
+        },
+        rail: {
+          border: '1px solid #cecece',
+          size: '20px'
+        },
+        scrollButton: {
+          enable: true,
+          background: '#cecece'
+        }
+      }
     };
   },
   methods: {
-    // goPrevPage() {
-    //   nextDisabled: false;
-    //   if (this.currentPage > 1) {
-    //     prevDisabled: false;
-    //     this.currentPage--;
-    //     this.p = this.currentPage;
-    //   } else {
-    //     this.prevDisabled = true;
-    //   }
-    // },
-    // goNextPage() {
-    //   prevDisabled: false;
-    //   if (this.currentPage < this.pageCount) {
-    //     nextDisabled: false;
-    //     this.currentPage++;
-    //     this.p = this.currentPage;
-    //   } else {
-    //     this.nextDisabled = true;
-    //   }
-    // },
-   
     showPdf(file) {
-      this.src = file
+      this.src = file;
       mutations.togglePdfTabModal()
     },
   },
@@ -97,9 +87,8 @@ export default {
   },
 };
 </script>
-<style scoped>
-.wrapper {
-  height: 40rem;
-  /* width: 100%; */
+<style>
+.ps {
+  height: 42rem;
 }
 </style>

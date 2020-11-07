@@ -4,18 +4,18 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="card">
-                    <div class="card-body">
-                    <v-bar
-                        wrapper="wrapper"
-                        vBar="verticalBarClass"
-                        vBarInternal="verticalBarInternalClass"
-                        hBar="horizontalBarClass"
-                        hBarInternal="horizontalBarInternalClass"
-                    >
-                        <div v-for="i in pageCount" :key="i" >
-                            <pdf-view :src="src" :page="i"></pdf-view>
-                        </div> 
-                    </v-bar>
+                    <div class="card-body ps">
+                        <client-only>
+                   <perfect-scrollbar>
+                            <pdf-view
+                            
+                            v-for="i in pageCount" 
+                            :key="i"
+                            :src="src" 
+                            :page="i"
+                             />
+                   </perfect-scrollbar>
+                    </client-only>
                     </div>
                 </div>  
             </div>
@@ -23,11 +23,14 @@
     </div>
 </template>
 <script>
-
+import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
     props: ['pdf'],
+    components: {
+        PerfectScrollbar
+    },
     methods: {
     alertIt() {},
   },
@@ -45,3 +48,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.ps {
+  height: 90vh;
+}
+</style>
