@@ -135,7 +135,7 @@
            
             <div class="tab-content">
               <div class="tab-pane p-3" :class="{ active: isPdfTabOpen }">
-                <pdf-tab :patient="patient.name" :files="patientPDFs" />
+                <pdf-tab :patient="patient.name" :files="pdfList" />
               </div>
               <div class="tab-pane p-3" :class="{ active: isImagesTabOpen }">
                
@@ -162,36 +162,15 @@
 </template>
 <script>
 import { store, mutations } from "../../store/utils/conf";
-// import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  async asyncData({ $axios, params }) {
-    let patientsURL = '/patients'
-    let attachmentsURL = '/attachments'
-
+  asyncData({ store, params }) {
+    
     let id = params.id;
-    try {
-      let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
-      let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
-      let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
 
-      const [
-        patientResponse,
-        patientPdfFiles,
-        patientImageFiles,
-      ] = await Promise.all([
-        singlePatient,
-        singlePatientPdfs,
-        singlePatientImages,
-      ]);
-      // console.log(patientResponse);
-      return {
-        patient: patientResponse,
-        patientPDFs: patientPdfFiles,
-        patientImages: patientImageFiles,
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    store.dispatch('loadPatientData', id);
+    
+    
   },
   methods: {
     togglePdf(files) {
@@ -247,14 +226,18 @@ export default {
       return this.$store.state.attachments;
     },
     images() {
-      return this.patientImages
+      console.log(this.patientImages);
+      return this.patientImages[0];
     },
     pdfList() {
-      return store.treatmentPdfFiles;
+     
+      return this.getPatientPDFs[0];
     },
-    pdfList() {
-      return store.treatmentPdfFiles;
+    patient() {
+      return this.getPatient;
     },
+    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages'])
   },
+
 };
 </script>

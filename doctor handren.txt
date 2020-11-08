@@ -1,0 +1,10 @@
+Doctor Handren Notes:
+    - More details on the patient [Teeth conditions, ]
+    - For treatment, no attachment required + BAD REQUEST for server!!
+    - Date filter to appointments
+    - Profile pictures for patients
+
+Errors related to programming:
+    - Treatment to loaded on patient select
+    - new files to be added after adding the treatment.
+    

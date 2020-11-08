@@ -2,6 +2,7 @@
 const state = () => ({
     users: [],
     patients: [],
+    patient: [],
     treatments: [],
     appointments: [],
     attachments: [],
@@ -16,6 +17,19 @@ const mutations = {
     GET_PATIENTS(state, payload) {
         state.patients = payload;
     },
+    SET_PATIENT_DATA(state, payload) {
+
+        state.patient = payload.patient[0];
+        state.patientPdfFiles = payload.patientPDFs[0];
+        state.patientImageFiles = payload.patientImages[0];
+
+        // let list = []
+        // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
+
+        console.log(state.patientPdfFiles);
+
+        // console.log(state.patient);
+    },
     GET_USERS(state, payload) {
         // console.log(payload)
         state.users = payload;
@@ -27,7 +41,7 @@ const mutations = {
         });
         state.treatments = payload;
     },
-    
+
     GET_ATTACHMENTS(state, payload) {
         payload.forEach(att => {
             let patient = state.patients.find(p => p.id === att.patient);
@@ -73,10 +87,10 @@ const mutations = {
         let patient = state.patients.find(p => p.id === payload.patient);
         let today = new Date();
         payload.patientName = patient.name;
-        if(Date.parse(payload.date) >= Date.parse(today)) {
+        if (Date.parse(payload.date) >= Date.parse(today)) {
             state.appointments.unshift(payload);
         }
-        
+
     },
     EDIT_USER(state, payload) {
         // FIND ITEM AND PLACE IN STATE
@@ -135,10 +149,10 @@ const mutations = {
 
 const actions = {
 
-async nuxtServerInit({state, commit}, {req}) {
+    // async nuxtServerInit({ state, commit }, { req }) {
 
-    console.log('Wait a second')
-},
+    //     console.log('Wait a second')
+    // },
 
 
 
@@ -173,10 +187,45 @@ async nuxtServerInit({state, commit}, {req}) {
             commit("GET_APPOINTMENTS", allAppointments.data);
             commit("GET_ATTACHMENTS", allAttachments.data);
             //   console.log(allPatients.data)
-           
+
         } catch (err) {
             console.log(err);
         }
+    },
+    async loadPatientData({ state, commit }, id) {
+
+        console.log('Function is loaded and the ID is: ', id);
+        let patientsURL = '/patients'
+        let attachmentsURL = '/attachments'
+
+
+        try {
+            let singlePatient = await this.$axios.$get(`${patientsURL}/${id}/`);
+            let singlePatientPdfs = await this.$axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
+            let singlePatientImages = await this.$axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
+
+            let thisPatient = {}
+                // console.log(singlePatient.data);
+                // await Promise.all([
+                //     singlePatient,
+                //     singlePatientPdfs,
+                //     singlePatientImages,
+                //   ]);
+
+            thisPatient.patient = await Promise.all([singlePatient]);
+            thisPatient.patientPDFs = await Promise.all([singlePatientPdfs]);
+            thisPatient.patientImages = await Promise.all([singlePatientImages]);
+
+            commit('SET_PATIENT_DATA', thisPatient);
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
+
+
     },
     async addUser({ state, commit }, payload) {
         // console.log('Payload: ', payload)
@@ -186,7 +235,7 @@ async nuxtServerInit({state, commit}, {req}) {
                     // "X-CSRFToken": state.csrftoken
             }
         };
-        let url = "http://127.0.0.1:8000/api/user/create/";
+        let url = "/user/create/";
         // console.log(url);
 
         try {
@@ -203,7 +252,7 @@ async nuxtServerInit({state, commit}, {req}) {
 
         // console.log(payload.id)
 
-        let url = `http://127.0.0.1:8000/api/users/${id}/`;
+        let url = `/users/${id}/`;
         // console.log(url);
 
         try {
@@ -222,7 +271,7 @@ async nuxtServerInit({state, commit}, {req}) {
         //     "Content-Type": "multipart/form-data"
         //   }
         // };
-        let url = "http://127.0.0.1:8000/api/patients/";
+        let url = "/patients/";
 
         try {
             const newPatient = await this.$axios.post(url, payload);
@@ -234,7 +283,7 @@ async nuxtServerInit({state, commit}, {req}) {
     async editPatient({ state, commit }, payload) {
         const id = payload.id;
 
-        let url = `http://127.0.0.1:8000/api/patients/${id}/`;
+        let url = `/patients/${id}/`;
         // console.log(url);
 
         try {
@@ -252,7 +301,7 @@ async nuxtServerInit({state, commit}, {req}) {
 
         try {
             await this.$axios.delete(
-                `http://127.0.0.1:8000/api/${payload.moduleName}/${payload.id}/`
+                `/${payload.moduleName}/${payload.id}/`
             );
             commit("DELETE_ITEM", payload);
         } catch (error) {
@@ -261,7 +310,7 @@ async nuxtServerInit({state, commit}, {req}) {
     },
     async onDeleteUser({ state, commit }, id) {
         try {
-            await this.$axios.delete(`http://127.0.0.1:8000/api/patients/${id}/`);
+            await this.$axios.delete(`/patients/${id}/`);
             commit("DELETE_PATIENT", id);
         } catch (error) {
             console.log(error);
@@ -270,7 +319,7 @@ async nuxtServerInit({state, commit}, {req}) {
 
     async onDeletePatient({ state, commit }, id) {
         try {
-            await this.$axios.delete(`http://127.0.0.1:8000/api/patients/${id}/`);
+            await this.$axios.delete(`/patients/${id}/`);
             commit("DELETE_PATIENT", id);
         } catch (error) {
             console.log(error);
@@ -278,7 +327,7 @@ async nuxtServerInit({state, commit}, {req}) {
     },
     async onUploadFile({ state, commit }, payload) {
         try {
-            let url = "http://127.0.0.1:8000/api/attachments/";
+            let url = "/attachments/";
 
             let res = await this.$axios.post(url, payload);
             // console.log(res.data)
@@ -288,7 +337,7 @@ async nuxtServerInit({state, commit}, {req}) {
         }
     },
     async deleteAttached({ state, commit }, id) {
-        let url = `http://127.0.0.1:8000/api/attachments/${id}/`;
+        let url = `/attachments/${id}/`;
         // console.log(url);
         try {
             await this.$axios.delete(url);
@@ -299,7 +348,7 @@ async nuxtServerInit({state, commit}, {req}) {
         }
     },
     async addNewTreatment({ state, commit }, payload) {
-        let url = "http://127.0.0.1:8000/api/treatments/";
+        let url = "/treatments/";
 
         try {
             // console.log(Array.from(payload));
@@ -311,7 +360,7 @@ async nuxtServerInit({state, commit}, {req}) {
     },
     async addAppointment({ state, commit }, payload) {
 
-        let url = "http://127.0.0.1:8000/api/appointments/";
+        let url = "/appointments/";
 
         try {
             // console.log(Array.from(payload));
@@ -340,7 +389,17 @@ const getters = {
     },
     getTreatments(state) {
         return state.treatments;
-    }
+    },
+    // GET PATIENT RELATED DATA
+    getPatient(state) {
+        return state.patient;
+    },
+    getPatientPDFs(state) {
+        return state.patientPdfFiles;
+    },
+    getPatientImages(state) {
+        return state.patientImageFiles;
+    },
 };
 
 export default {
