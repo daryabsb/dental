@@ -1,6 +1,8 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from datetime import datetime
+
 from rest_framework import generics, authentication, permissions
 
 
@@ -79,11 +81,48 @@ class AttachmentViewSet(viewsets.ModelViewSet):
         print(self.request.user)
         serializer.save(user=self.request.user)
 
+
+def get_date_range(date_query):
+
+    today = datetime.now()
+
+    
+
+    start
+
+    return {
+        'start': start,
+        'endDate': end
+    }
+
+
 class AppointmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = ComingTreatment.objects.all()
     serializer_class = AppointmentSerializer
     lookup_field = 'id'
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        # print(self.request.query_params)
+        queryset = ComingTreatment.objects.all()
+        custome_date = self.request.query_params.get('d', None)
+
+
+
+
+        type = self.request.query_params.get('type', None)
+        
+        if patient is not None:
+            queryset = queryset.filter(patient=patient)
+        
+        if type is not None:
+            queryset = queryset.filter(file_type=type)
+
+        return queryset
 
     def perform_create(self, serializer):
         """Create a new appointment"""

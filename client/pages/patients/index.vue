@@ -331,6 +331,13 @@ import { mapActions, mapGetters } from "vuex";
 import { store, mutations } from "../../store/utils/conf";
 
 export default {
+ async asyncData({ $axios, app, store }) {
+    
+    await store.dispatch('loadData');
+    
+    // this.$store.dispatch('loadData', 'DONE');
+  
+  },
   data() {
     return {
       patientNameDelete: "",
@@ -393,15 +400,16 @@ export default {
     },
   },
   computed: {
-    patients() {
-      return this.$store.state.patients;
-    },
+    // patients() {
+    //   return this.getPatients;
+    // },
     isAddPatientModalOpen() {
       return store.isAddPatientModalOpen;
     },
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
+    ...mapGetters(['patients'])
   },
 };
 </script>

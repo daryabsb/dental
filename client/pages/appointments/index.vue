@@ -288,6 +288,13 @@ import { store, mutations } from "../../store/utils/conf";
 
 
 export default {
+  async asyncData({ $axios, app, store }) {
+    
+    await store.dispatch('loadData');
+    
+    // this.$store.dispatch('loadData', 'DONE');
+  
+  },
   data() {
     return {
       nameDelete: "",
@@ -331,7 +338,7 @@ export default {
   },
   computed: {
     appointments() {
-      return this.$store.state.appointments;
+      return this.getAppointments;
     },
     isAppointmentModalOpen() {
       return store.isAppointmentModalOpen;
@@ -339,6 +346,7 @@ export default {
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
+    ...mapGetters(['getAppointments'])
   },
 };
 </script>

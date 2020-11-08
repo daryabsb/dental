@@ -1,290 +1,252 @@
 <template>
   <div class="container-fluid">
-      <!-- Page-Title -->
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="page-title-box">
-            <div class="float-right">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Dashboard</li>
-              </ol>
-              <!--end breadcrumb-->
-            </div>
-            <!--end /div-->
-            <h4 class="page-title">Dashboard</h4>
+    <!-- Page-Title -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page-title-box">
+          <div class="float-right">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <!--end breadcrumb-->
           </div>
-          <!--end page-title-box-->
+          <!--end /div-->
+          <h4 class="page-title">Dashboard</h4>
         </div>
-        <!--end col-->
+        <!--end page-title-box-->
       </div>
-      <!--end row-->
-      <!-- end page title end breadcrumb -->
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card hospital-info">
-                <div class="card-body">
-                  <h4 class="header-title mt-0 mb-3">Users</h4>
-                  <div class="media">
-                    <div class="data-icon align-self-center">
-                      <i class="fas fa-user rounded-circle text-success"></i>
-                    </div>
-                    <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">{{numUsers}}</h3>
-                      <p class="text-muted mb-0 text-nowrap">Yesterday 32 App.</p>
-                    </div>
-                    <!--end media body-->
+      <!--end col-->
+    </div>
+    <!--end row-->
+    <!-- end page title end breadcrumb -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card hospital-info">
+              <div class="card-body">
+                <h4 class="header-title mt-0 mb-3">Users</h4>
+                <div class="media">
+                  <div class="data-icon align-self-center">
+                    <i class="fas fa-user rounded-circle text-success"></i>
                   </div>
-                </div>
-                <!--end card-body-->
-              </div>
-              <!--end card-->
-            </div>
-            <!-- end col-->
-            <div class="col-lg-4">
-              <div class="card hospital-info">
-                <div class="card-body">
-                  <h4 class="header-title mt-0 mb-3">Patients</h4>
-                  <div class="media">
-                    <div class="data-icon align-self-center">
-                      <i class="fas fa-bed rounded-circle text-warning"></i>
-                    </div>
-                    <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">{{numPatients}}</h3>
-                      <p class="text-muted mb-0 text-nowrap">Yesterday 22 Add.</p>
-                    </div>
-                    <!--end media body-->
+                  <div class="media-body ml-3 align-self-center text-right">
+                    <h3 class="mt-0">{{ numUsers }}</h3>
+                    <p class="text-muted mb-0 text-nowrap">Yesterday 32 App.</p>
                   </div>
+                  <!--end media body-->
                 </div>
-                <!--end card-body-->
               </div>
-              <!--end card-->
+              <!--end card-body-->
             </div>
-            <!-- end col-->
-            <div class="col-lg-4">
-              <div class="card hospital-info">
-                <div class="card-body">
-                  <h4 class="header-title mt-0 mb-3">Operations</h4>
-                  <div class="media">
-                    <div class="data-icon align-self-center">
-                      <i class="fas fa-briefcase-medical rounded-circle text-success"></i>
-                    </div>
-                    <div class="media-body ml-3 align-self-center text-right">
-                      <h3 class="mt-0">{{numTreatments}}</h3>
-                      <p class="text-muted mb-0 text-nowrap">Yesterday 12 Ope.</p>
-                    </div>
-                    <!--end media body-->
-                  </div>
-                </div>
-                <!--end card-body-->
-              </div>
-              <!--end card-->
-            </div>
-            <!-- end col-->
+            <!--end card-->
           </div>
-          <!--end row-->
-        </div>
-        <!--end col-->
-      </div>
-      <!--end row-->
-
-      <div class="row">
-        <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
-       
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h4 class="header-title mt-0 mb-3">Hospital Survey</h4>
-                 
+          <!-- end col-->
+          <div class="col-lg-4">
+            <div class="card hospital-info">
+              <div class="card-body">
+                <h4 class="header-title mt-0 mb-3">Patients</h4>
+                <div class="media">
+                  <div class="data-icon align-self-center">
+                    <i class="fas fa-bed rounded-circle text-warning"></i>
+                  </div>
+                  <div class="media-body ml-3 align-self-center text-right">
+                    <h3 class="mt-0">{{ numPatients }}</h3>
+                    <p class="text-muted mb-0 text-nowrap">Yesterday 22 Add.</p>
+                  </div>
+                  <!--end media body-->
                 </div>
-                <div class="col-sm-9">
-                  <!-- <span><h4 class="header-title mt-0 mb-3">Select Date</h4></span>
-                                <span>
+              </div>
+              <!--end card-body-->
+            </div>
+            <!--end card-->
+          </div>
+          <!-- end col-->
+          <div class="col-lg-4">
+            <div class="card hospital-info">
+              <div class="card-body">
+                <h4 class="header-title mt-0 mb-3">Operations</h4>
+                <div class="media">
+                  <div class="data-icon align-self-center">
+                    <i
+                      class="fas fa-briefcase-medical rounded-circle text-success"
+                    ></i>
+                  </div>
+                  <div class="media-body ml-3 align-self-center text-right">
+                    <h3 class="mt-0">{{ numTreatments }}</h3>
+                    <p class="text-muted mb-0 text-nowrap">Yesterday 12 Ope.</p>
+                  </div>
+                  <!--end media body-->
+                </div>
+              </div>
+              <!--end card-body-->
+            </div>
+            <!--end card-->
+          </div>
+          <!-- end col-->
+        </div>
+        <!--end row-->
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
 
-                                    <client-only>
-                                                <date-picker
-                                                class="form-control"
-                                                    placeholder="Select a date"
-                                                    format="MM/dd/yyyy"
-                                                    v-model="date_today" />
-                                            </client-only>
-                                </span> -->
-                  <div class="form-group row">
-                    <label
-                      for="example-search-input"
-                      class="header-title col-sm-2 col-form-label text-right"
-                    >
-                      Search
-                    </label>
-                    <div class="col-sm-5 mr-0">
-                      <input
-                        class="form-control"
-                        type="search"
-                        placeholder="Search for a treatment by patient"
-                        v-model="searchQuery"
-                      />
-                    </div>
+    <div class="row">
+      <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
 
-                    <label
-                      for="example-date-input mr-0"
-                      class="col-sm-2 col-form-label text-right"
-                      >Date</label
-                    >
-                    <div class="col-sm-3">
-                      <input
-                        v-model="date_today"
-                        class="form-control"
-                        type="date"
-                      />
-                    </div>
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <h4 class="header-title mt-0 mb-3">Hospital Survey</h4>
+              </div>
+              <div class="form-group col-12 row">
+                <div class="col-6 row">
+                  <label
+                    for="example-search-input"
+                    class="col-4 col-form-label text-right"
+                    >Search</label
+                  >
+
+                  <div class="col-8">
+                    <input
+                      class="form-control"
+                      type="search"
+                      placeholder="Search for a treatment by patient"
+                      v-model="searchQuery"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-6 row">
+                  <label
+                    for="example-search-input"
+                    class="col-4 col-form-label text-right"
+                    >Filter by Date</label
+                  >
+                  <div class="col-4">
+                    <select class="form-control" v-model="dateSelect">
+                      <option value="" v-if="dateSelect !== ''">Clear Filter</option>
+                      <option selected value="today">Today</option>
+                      <option value="tomorrow">Tomorrow</option>
+                      <option value="thisWeek">This Week</option>
+                      <option value="nextWeek">Next Week</option>
+                      <option value="custom">Select a date</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <input
+                      v-model="date_today"
+                      class="form-control"
+                      type="date"
+                      v-if="dateSelect == 'custom'"
+                    />
                   </div>
                 </div>
               </div>
-              <div class="table-responsive">
-                <!-- <pre>{{getTreatments}}</pre> -->
-                <table id="datatable" class="table">
-                  <thead class="thead-light">
-                    <tr>
-                      <th>Patient Name</th>
-                      <th>Treatment</th>
-                      <th>Last Visit</th>
-                      <th>Diseases</th>
-                      <th class="text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- <perfect-scrollbar> -->
-                    <tr v-for="treat in searchTreatments" :key="treat.id">
-                      <td>
-                        <nuxt-link :to="`/patients/${treat.patient}`"
-                          ><img
-                            src="~assets/images/users/user-10.jpg"
-                            alt=""
-                            class="thumb-sm rounded-circle mr-2"
-                          />{{ treat.patientName }}</nuxt-link
-                        >
-                      </td>
-                      <td>
-                        
-                        {{ treat.description }} [<span
-                          v-for="file in treat.files"
-                          :key="file.id"
-                        >
-                          <a class="text-success" @click="openPdf(file.file)">{{
-                            file.filename
-                          }}</a> </span
-                        >
-                    
-                      </td>
-
-                      <td>{{ $moment(treat.created).format("DD-MM-yyyy") }}</td>
-                      <td>
-                        <span class="badge badge-soft-danger">Cancer</span>
-                      </td>
-                      <td class="text-right">
-                        <a href="../hospital/patient-edit.html" class="mr-2"
-                          ><i class="fas fa-edit text-danger font-16"></i
-                        ></a>
-                        
-                        <a @click="confirmDelete(`treatment for ${treat.patientName}`, treat.id)">
-                          <i class="fas fa-trash-alt text-danger font-16"></i>
-                            </a>
-                      </td>
-                      <ModalConfirm
-                          :title="'Confirm Delete'"
-                          :module="$store.state.treatments"
-                          :moduleName="'treatments'"
-                          :name="nameDelete"
-                          :id="idDelete"
-                        />
-                        <Pdf :url="url" />
-                    </tr>
-                    <!-- </perfect-scrollbar> -->
-                  </tbody>
-                </table>
-              </div>
             </div>
-            <!--end card-body-->
+            <div class="table-responsive">
+              <!-- <pre>{{getTreatments}}</pre> -->
+              <table id="datatable" class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Description</th>
+                    <th>Date to vist</th>
+                    <th>Diseases</th>
+                    <th class="text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <perfect-scrollbar> -->
+                  <tr
+                    v-for="appointment in searchAppointments"
+                    :key="appointment.id"
+                  >
+                    <td>
+                      <nuxt-link :to="`/patients/${appointment.patient}`"
+                        ><img
+                          src="~assets/images/users/user-10.jpg"
+                          alt=""
+                          class="thumb-sm rounded-circle mr-2"
+                        />{{ appointment.patientName }}</nuxt-link
+                      >
+                    </td>
+                    <td>
+                      {{ appointment.description }}
+                    </td>
+
+                    <td>
+                      {{ $moment(appointment.date).format("DD-MM-yyyy") }}
+                    </td>
+                    <td>
+                      <span class="badge badge-soft-danger">Cancer</span>
+                    </td>
+                    <td class="text-right">
+                      <a href="../hospital/patient-edit.html" class="mr-2"
+                        ><i class="fas fa-edit text-danger font-16"></i
+                      ></a>
+
+                      <a
+                        @click="
+                          confirmDelete(
+                            `treatment for ${treat.patientName}`,
+                            treat.id
+                          )
+                        "
+                      >
+                        <i class="fas fa-trash-alt text-danger font-16"></i>
+                      </a>
+                    </td>
+                    <ModalConfirm
+                      :title="'Confirm Delete'"
+                      :module="$store.state.treatments"
+                      :moduleName="'treatments'"
+                      :name="nameDelete"
+                      :id="idDelete"
+                    />
+                    <Pdf :url="url" />
+                  </tr>
+                  <!-- </perfect-scrollbar> -->
+                </tbody>
+              </table>
+            </div>
           </div>
-          <!--end card-->
+          <!--end card-body-->
         </div>
+        <!--end card-->
       </div>
+    </div>
   </div>
   <!-- container -->
 </template>
 
 <script>
-
 // import { PerfectScrollbar } from "vue2-perfect-scrollbar";
 import { store, mutations } from "../store/utils/conf";
 // import PdfViewer from "vue-pdf-app";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  async asyncData({$axios, app, store}) {
-
-    let patientUrl = "/patients/";
-    let treatmentUrl = "/treatments/";
-    let usersUrl = "/users/";
-    let appointmentUrl = "/appointments/";
-    let attachmentsUrl = "/attachments/";
-        // console.log(url);
-
-        try {
-            const allPatients = await $axios.get(patientUrl);
-            const allTreatments = await $axios.get(treatmentUrl);
-            const allUsers = await $axios.get(usersUrl);
-            const allAppointments = await $axios.get(appointmentUrl);
-            const allAttachments = await $axios.get(attachmentsUrl);
-
-            store.commit("GET_PATIENTS", allPatients.data);
-            store.commit("GET_USERS", allUsers.data);
-            store.commit("GET_TREATMENTS", allTreatments.data);
-            store.commit("GET_APPOINTMENTS", allAppointments.data);
-            store.commit("GET_ATTACHMENTS", allAttachments.data);
-            //   console.log(allPatients.data)
-           
-        } catch (err) {
-            console.log(err);
-        }
-
-
-
-
-
-
-
-
-
+  async asyncData({ $axios, app, store }) {
     
-  // this.$store.dispatch('loadData', 'DONE');
-
+    await store.dispatch('loadData');
+    
+    // this.$store.dispatch('loadData', 'DONE');
+  
   },
   data() {
     return {
-      images: [
-          'https://dummyimage.com/800/ffffff/000000',
-          'https://dummyimage.com/1600/ffffff/000000',
-          'https://dummyimage.com/1280/000000/ffffff',
-          'https://dummyimage.com/400/000000/ffffff',
-        ],
-        index: null,
       nameDelete: "",
       idDelete: "",
       date_today: new Date(),
       link: "",
       searchQuery: "",
-      url: "https://bitcoin.org/bitcoin.pdf",
-      images: [
-          'https://dummyimage.com/800/ffffff/000000',
-          'https://dummyimage.com/1600/ffffff/000000',
-          'https://dummyimage.com/1280/000000/ffffff',
-          'https://dummyimage.com/400/000000/ffffff',
-        ],
-        index: null
+      url: "",
+      
+      
+      dateSelect: "today",
       // pdfPage: 1,
     };
   },
@@ -310,34 +272,54 @@ export default {
     },
   },
   computed: {
-    searchTreatments() {
-      return this.getTreatments.filter((treat) => {
+    searchAppointments() {
+      return this.getAppointments.filter((appt) => {
         return (
-          treat.patientName
+          appt.patientName
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase()) ||
-          treat.description
+          appt.description
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase())
         );
+        searchDate() {
+          
+        }
       });
     },
+
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
     numUsers() {
       return this.$store.state.users.length;
-    
     },
     numTreatments() {
       return this.$store.state.treatments.length;
-    
     },
     numPatients() {
       return this.$store.state.patients.length;
-    
     },
-    ...mapGetters(["isAuthenticated", "loggedInUser", "getTreatments"]),
+    ...mapGetters([
+      "isAuthenticated",
+      "loggedInUser",
+      "getTreatments",
+      "getAppointments",
+    ]),
   },
 };
+
+// searchTreatments() {
+//       return this.getTreatments.filter((treat) => {
+//         return (
+//           treat.patientName
+//             .toLowerCase()
+//             .includes(this.searchQuery.toLowerCase()) ||
+//           treat.description
+//             .toLowerCase()
+//             .includes(this.searchQuery.toLowerCase())
+//         );
+//       });
+//     },
 </script>
+ 

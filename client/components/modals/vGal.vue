@@ -80,6 +80,7 @@ export default {
   },
   computed: {
     imageUrls() {
+      console.log(this.images)
       return this.images.map((image) => image.file);
     },
   },

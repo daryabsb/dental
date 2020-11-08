@@ -47,7 +47,7 @@ export default {
         { src: "./plugins/vue-instant-pdf.js", mode: 'client' },
         { src: './plugins/vue-gallery.client.js', mode: 'client' },
         { src: './plugins/vue-carousel.js', mode: 'client' },
-        // { src: './plugins/vue-vuer.js', mode: 'client' },
+        // { src: "~/plugins/localStorage.js", ssr: false },
         { src: './plugins/vuescroll.js', mode: 'client' },
 
 
@@ -93,6 +93,12 @@ export default {
                 loader: 'url-loader'
             })
         },
+        extend(config, { isClient }) {
+          // Extend only webpack config for client-bundle
+          if (isClient) {
+            config.devtool = 'source-map'
+          }
+        }
     },
     auth: {
         strategies: {

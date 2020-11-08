@@ -128,12 +128,12 @@
                         <!--end has-submenu-->
 
                         <li class="has-submenu">
-                            <nuxt-link to="/"><i class="dripicons-clipboard"></i>Treatments</nuxt-link>
+                            <nuxt-link to="/treatments"><i class="dripicons-clipboard"></i>Treatments</nuxt-link>
                             <ul class="submenu">
 
-                                <li><nuxt-link to="/"><i class="dripicons-meter"></i>All Treatments</nuxt-link></li>
+                                <li><nuxt-link to="/treatments"><i class="dripicons-meter"></i>All Treatments</nuxt-link></li>
                                 <li>
-                                    <a data-toggle="modal" data-animation="bounce" data-target=".appointment_create">
+                                    <a @click="showTreatmentModal">
                                         <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment</a>
                                 </li>
                             </ul>
@@ -195,6 +195,9 @@ export default {
     showModal() {
             mutations.toggleAddPatientModal();
         
+      },
+      showTreatmentModal() {
+          mutations.toggleSelectPatientModal();
       },
       showMenu() {
           mutations.toggleUserNav();

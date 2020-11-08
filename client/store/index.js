@@ -19,14 +19,16 @@ const mutations = {
     },
     SET_PATIENT_DATA(state, payload) {
 
-        state.patient = payload.patient[0];
-        state.patientPdfFiles = payload.patientPDFs[0];
-        state.patientImageFiles = payload.patientImages[0];
+        console.log(payload[2]);
+
+        state.patient = payload[0];
+        state.patientPdfFiles = payload[1];
+        state.patientImageFiles = payload[2];
 
         // let list = []
         // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
 
-        console.log(state.patientPdfFiles);
+        
 
         // console.log(state.patient);
     },
@@ -132,6 +134,8 @@ const mutations = {
         let indexOfFile = state.files.indexOf(fileToFind);
         state.files.splice(indexOfFile, 1);
     },
+
+    /* CHECK THE CODE BELOW*/
     ADD_NEW_TREATMENT(state, payload) {
         state.treatments.unshift(payload);
         state.treatments[0].files = [];
@@ -156,22 +160,15 @@ const actions = {
 
 
 
-    async loadData({ state, commit }, payload) {
+    async loadData({ state, commit }) {
         //state.csrftoken = app.$cookiz.get('csrftoken');
-        console.log('OnLoad: this will run regardless of login with 0, ', payload);
+        // console.log('OnLoad: this will run regardless of login with 0, ', payload);
 
-        const options = {
-            headers: {
-                "Content-Type": "multipart/form-data"
-                    //"X-CSRFToken": state.csrftoken
-            }
-        };
-
-        let patientUrl = "http://127.0.0.1:8000/api/patients/";
-        let treatmentUrl = "http://127.0.0.1:8000/api/treatments/";
-        let usersUrl = "http://127.0.0.1:8000/api/users/";
-        let appointmentUrl = "http://127.0.0.1:8000/api/appointments/";
-        let attachmentsUrl = "http://127.0.0.1:8000/api/attachments/";
+        let patientUrl = "/patients/";
+        let treatmentUrl = "/treatments/";
+        let usersUrl = "/users/";
+        let appointmentUrl = "/appointments/";
+        let attachmentsUrl = "/attachments/";
         // console.log(url);
 
         try {
@@ -204,18 +201,11 @@ const actions = {
             let singlePatientPdfs = await this.$axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
             let singlePatientImages = await this.$axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
 
-            let thisPatient = {}
-                // console.log(singlePatient.data);
-                // await Promise.all([
-                //     singlePatient,
-                //     singlePatientPdfs,
-                //     singlePatientImages,
-                //   ]);
-
-            thisPatient.patient = await Promise.all([singlePatient]);
-            thisPatient.patientPDFs = await Promise.all([singlePatientPdfs]);
-            thisPatient.patientImages = await Promise.all([singlePatientImages]);
-
+            // let thisPatient = {}
+            let thisPatient = []
+            
+            thisPatient = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
+            
             commit('SET_PATIENT_DATA', thisPatient);
 
 
@@ -399,6 +389,9 @@ const getters = {
     },
     getPatientImages(state) {
         return state.patientImageFiles;
+    },
+    getAppointments(state) {
+        return state.appointments;
     },
 };
 

@@ -20,7 +20,8 @@ export const store = Vue.observable({
     isPdfTabOpen: false,
     isPdfTabModalOpen: false,
     isImagesTabOpen: false,
-    isPatientHistoryTabOpen: true
+    isPatientHistoryTabOpen: true,
+    isSelectPatientModalOpen: false,
 });
 
 // We call toggleNav anywhere we need it in our app
@@ -65,6 +66,9 @@ export const mutations = {
     },
     togglePatientHistoryTab() {
         store.isPatientHistoryTabOpen = !store.isPatientHistoryTabOpen
+    },
+    toggleSelectPatientModal() {
+        store.isSelectPatientModalOpen = !store.isSelectPatientModalOpen
     },
 
 };

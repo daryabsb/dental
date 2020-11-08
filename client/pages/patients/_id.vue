@@ -226,12 +226,12 @@ export default {
       return this.$store.state.attachments;
     },
     images() {
-      console.log(this.patientImages);
-      return this.patientImages[0];
+      console.log(this.getPatientImages);
+      return this.getPatientImages;
     },
     pdfList() {
      
-      return this.getPatientPDFs[0];
+      return this.getPatientPDFs;
     },
     patient() {
       return this.getPatient;

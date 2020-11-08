@@ -1,11 +1,8 @@
 <template>
   <div class="container-fluid">
-    <AddUser
-      :editId="editId"
-      :editName="editName"
-      :editEmail="editEmail"
-      :editIsStaff="editIsStaff"
-    />
+    
+    <ModalSelectPatient  @selectPatient="selectPatient($event)"/>
+    <modal-treatment :patientID="editPatient" />
 
     <!-- Page-Title -->
     <div class="row">
@@ -16,12 +13,12 @@
               <li class="breadcrumb-item">
                 <nuxt-link to="/">Home</nuxt-link>
               </li>
-              <li class="breadcrumb-item">Users</li>
+              <li class="breadcrumb-item">Appointments</li>
             </ol>
             <!--end breadcrumb-->
           </div>
           <!--end /div-->
-          <h4 class="page-title">All Users</h4>
+          <h4 class="page-title">All Treatments</h4>
         </div>
         <!--end page-title-box-->
       </div>
@@ -36,14 +33,15 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body card-body__modal">
+            <!-- @click="showModal(false)" -->
             <button
               type="button"
-              @click="showModal(false)"
+              @click="selectPatientModal"
               data-toggle="modal"
               data-animation="bounce"
               class="btn btn-primary btn-outline-white px-4 mt-0 mb-3"
             >
-              <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New User
+              <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
             </button>
             <button
               type="button"
@@ -111,19 +109,15 @@
                             aria-label="User Name: activate to sort column descending"
                             style="width: 201px"
                           >
-                            User Name
+                            Patient Name
                           </th>
                          
                           <th
                             class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
                             rowspan="1"
                             colspan="1"
-                            aria-label="ID: activate to sort column ascending"
-                            style="width: 54px"
                           >
-                            ID
+                            Title
                           </th>
                           <th
                             class="sorting"
@@ -134,7 +128,7 @@
                             aria-label="Address: activate to sort column ascending"
                             style="width: 207px"
                           >
-                            Email
+                            Description
                           </th>
                           
                           <th
@@ -146,19 +140,9 @@
                             aria-label="Last Visit: activate to sort column ascending"
                             style="width: 100px"
                           >
-                            Created At
+                            Date
                           </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Status: activate to sort column ascending"
-                            style="width: 78px"
-                          >
-                            Is Admin
-                          </th>
+                          
                           <th
                             class="text-right sorting"
                             tabindex="0"
@@ -178,32 +162,26 @@
                         <tr
                           role="row"
                           class="odd"
-                          v-for="user in users"
-                          :key="user.id"
+                          v-for="treat in treatments"
+                          :key="treat.id"
                         >
                         
                           <td class="sorting_1">
                             <nuxt-link
-                              :to="`/users/${user.id}`"
+                              :to="`/treatments/${treat.id}`"
                               class="a-link-normal"
                             >
                               <img
                                 src="~assets/images/users/user-10.jpg"
                                 alt=""
                                 class="thumb-sm rounded-circle mr-2"
-                              />{{ user.name }}
+                              />{{ treat.patientName }}
                             </nuxt-link>
                           </td>
-                          <td>#{{ user.id }}</td>
-                          <td>{{ user.email }}</td>
-                          <td>{{ $moment(user.created).format("DD-MM-yyyy") }}</td>
-                          <td>
-                            <span 
-                            class="badge"
-                            :class="{ 'badge-soft-success': user.is_staff, 'badge-soft-danger': !user.is_staff }"
-                              >{{user.is_staff}}</span
-                            >
-                          </td>
+                          <td>#{{ treat.title }}</td>
+                          <td>{{ treat.description }}</td>
+                          <td>{{ $moment(treat.created).format("DD-MM-yyyy") }}</td>
+                         
                           <td class="text-right">
                             <a
                               @click="showModal(true, user)"
@@ -302,6 +280,7 @@
 import { mapActions, mapGetters } from "vuex";
 import { store, mutations } from "../../store/utils/conf";
 
+
 export default {
   async asyncData({ $axios, app, store }) {
     
@@ -316,34 +295,44 @@ export default {
       idDelete: "",
     //   editUser: [],
       editId: "",
-      editName: "",
-      editEmail: "",
-      editIsStaff: false,
+      editPatient: "",
+      editDescription: "",
+      editDate: '',
     };
   },
   components: {},
   methods: {
+
+    // showModal(modalState, data = {}) {
+      selectPatient(id) {
+        console.log(id)
+        this.editPatient = id;
+        mutations.toggleTreatment();
+      },
     showModal(modalState, data = {}) {
       if (!modalState) {
         this.editId = "";
-        this.editName = "";
-        this.editEmail = "";
-        this.editIsStaff = false;
+        // this.editPatient = "";
+        this.editDescription = "";
+        this.editDate = '';
         //this.$store.conf.actions.dispatch('showAddUserModal');
         store.isEditModal = false;
-        mutations.toggleUserModal();
+        mutations.toggleAppointmentModal();
 
         //this.addUserModal = !this.addUserModal;
       } else {
         this.editId = data.id;
-        this.editName = data.name;
-        this.editEmail = data.email;
-        this.editIsStaff = data.is_staff;
+        this.editPatient = data.patient;
+        this.editDescription = data.description;
+        this.editDate = data.date;
 
         //this.addUserModal = !this.addUserModal;
         store.isEditModal = true;
-        mutations.toggleUserModal();
+        mutations.toggleAppointmentModal();
       }
+    },
+    selectPatientModal() {
+      mutations.toggleSelectPatientModal()
     },
     confirmDelete(name, id) {
       (this.nameDelete = name),
@@ -352,15 +341,16 @@ export default {
     },
   },
   computed: {
-    users() {
-      return this.$store.state.users;
+    treatments() {
+      return this.getTreatments;
     },
-    isUserModalOpen() {
-      return store.isUserModalOpen;
+    isAppointmentModalOpen() {
+      return store.isAppointmentModalOpen;
     },
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
+    ...mapGetters(['getTreatments'])
   },
 };
 </script>
