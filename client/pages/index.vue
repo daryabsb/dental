@@ -282,12 +282,12 @@ export default {
             .toLowerCase()
             .includes(this.searchQuery.toLowerCase())
         );
-        searchDate() {
-          
-        }
+        
       });
     },
-
+    searchDate() {
+          
+    },
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },

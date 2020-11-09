@@ -1,7 +1,8 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from datetime import datetime
+from datetime import datetime, timedelta
+from .filters import datefilter, get_date_range as delta
 
 from rest_framework import generics, authentication, permissions
 
@@ -82,20 +83,6 @@ class AttachmentViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-def get_date_range(date_query):
-
-    today = datetime.now()
-
-    
-
-    start
-
-    return {
-        'start': start,
-        'endDate': end
-    }
-
-
 class AppointmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = ComingTreatment.objects.all()
@@ -107,20 +94,31 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
+        today = datetime.now()
         # print(self.request.query_params)
         queryset = ComingTreatment.objects.all()
-        custome_date = self.request.query_params.get('d', None)
+        date_query = self.request.query_params.get('dq', None)
 
-
-
-
-        type = self.request.query_params.get('type', None)
         
-        if patient is not None:
-            queryset = queryset.filter(patient=patient)
+        query = delta(date_query)
+
+        # print('===date is====')
+        # print(query)
+
+        # filter = datefilter(today, query)
+
+        date_str = self.request.query_params.get('date', None)
+        if date_str is not None:
+            date = datetime.strptime(f'{date_str}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
+            end_date = datetime.strptime(f'{date_str}T23:59:00Z', '%Y-%m-%dT%H:%M:%SZ')
+
+        # print(type(date))
+
+        if query is not None:
+            queryset = queryset.filter(date__gt=today, date__lt=query)
         
-        if type is not None:
-            queryset = queryset.filter(file_type=type)
+        if date_query == 'custom' and date is not None:
+            queryset = queryset.filter(date__gt=date, date__lt=end_date)
 
         return queryset
 

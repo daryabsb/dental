@@ -28,7 +28,7 @@ const mutations = {
         // let list = []
         // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
 
-        
+
 
         // console.log(state.patient);
     },
@@ -203,9 +203,9 @@ const actions = {
 
             // let thisPatient = {}
             let thisPatient = []
-            
+
             thisPatient = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
-            
+
             commit('SET_PATIENT_DATA', thisPatient);
 
 
@@ -351,6 +351,20 @@ const actions = {
     async addAppointment({ state, commit }, payload) {
 
         let url = "/appointments/";
+
+        try {
+            // console.log(Array.from(payload));
+            const newTreatment = await this.$axios.post(url, payload);
+            commit("ADD_NEW_APPOINTMENT", newTreatment.data);
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+    async filterAppointments({ state, commit }, payload) {
+
+        let url = "/appointments/";
+        let query = '';
 
         try {
             // console.log(Array.from(payload));
