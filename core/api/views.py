@@ -1,7 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date as dt
 from .filters import datefilter, get_date_range as delta
 
 from rest_framework import generics, authentication, permissions
@@ -101,21 +101,24 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
         
         query = delta(date_query)
-
-        # print('===date is====')
-        # print(query)
-
-        # filter = datefilter(today, query)
+        todays_date = dt.today()
+        todays_query = datetime.strptime(f'{todays_date}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
+        tomorrows_query = datetime.strptime(f'{todays_date}T23:59:59Z', '%Y-%m-%dT%H:%M:%SZ')
 
         date_str = self.request.query_params.get('date', None)
         if date_str is not None:
+            
             date = datetime.strptime(f'{date_str}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
             end_date = datetime.strptime(f'{date_str}T23:59:00Z', '%Y-%m-%dT%H:%M:%SZ')
 
-        # print(type(date))
 
-        if query is not None:
-            queryset = queryset.filter(date__gt=today, date__lt=query)
+        if date_query == 'tomorrow':
+            queryset = queryset.filter(date__gt=tomorrows_query, date__lt=query)
+
+        elif query is not None:
+            queryset = queryset.filter(date__gt=todays_query, date__lt=query)
+        
+        
         
         if date_query == 'custom' and date is not None:
             queryset = queryset.filter(date__gt=date, date__lt=end_date)

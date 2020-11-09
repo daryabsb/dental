@@ -62,8 +62,11 @@ const mutations = {
             appointment.patientName = patient.name;
         });
         let today = new Date();
-
+        
+        today.setHours(0,0,0,0);
+       
         state.appointments = payload.filter(appointment => {
+            
             return Date.parse(appointment.date) >= Date.parse(today);
         });
 
@@ -366,10 +369,22 @@ const actions = {
         let url = "/appointments/";
         let query = '';
 
+        if (payload.dq === 'none') {
+            query='';
+        } else if ( payload.dq === 'custom' && payload.date != '') {
+            query = `?dq=${payload.dq}&date=${payload.date}`
+        } else if (!payload.dq != '' || payload.dq != 'custom') {
+           query = `?dq=${payload.dq}` 
+        } else {
+           return 
+        }
+
+        let filterUrl = `${url}${query}`
+
         try {
             // console.log(Array.from(payload));
-            const newTreatment = await this.$axios.post(url, payload);
-            commit("ADD_NEW_APPOINTMENT", newTreatment.data);
+            const allAppointments = await this.$axios.get(filterUrl);
+            commit("GET_APPOINTMENTS", allAppointments.data);
         } catch (err) {
             console.log(err);
         }

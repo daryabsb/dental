@@ -126,12 +126,12 @@
                     >Filter by Date</label
                   >
                   <div class="col-4">
-                    <select class="form-control" v-model="dateSelect">
-                      <option value="" v-if="dateSelect !== ''">Clear Filter</option>
+                    <select class="form-control"  @change="searchDate" v-model="dateSelect">
+                      <option value="none" v-if="dateSelect !== 'none'">Clear Filter</option>
                       <option selected value="today">Today</option>
                       <option value="tomorrow">Tomorrow</option>
-                      <option value="thisWeek">This Week</option>
-                      <option value="nextWeek">Next Week</option>
+                      <option value="week">This Week</option>
+                      <option value="month">Next Month</option>
                       <option value="custom">Select a date</option>
                     </select>
                   </div>
@@ -140,6 +140,7 @@
                       v-model="date_today"
                       class="form-control"
                       type="date"
+                      @change="searchDate"
                       v-if="dateSelect == 'custom'"
                     />
                   </div>
@@ -240,7 +241,8 @@ export default {
     return {
       nameDelete: "",
       idDelete: "",
-      date_today: new Date(),
+      // date_today: new Date(),
+      date_today: '',
       link: "",
       searchQuery: "",
       url: "",
@@ -257,7 +259,25 @@ export default {
       );
       return patient.name;
     },
+     searchDate() {
 
+      let query = {}
+
+        if (query.dq !== '') {
+          query.dq = this.dateSelect;
+        } else {
+          query.dq = ''
+        }
+        
+        if (query.dq === 'custom' && this.date_today != '') {
+          query.date = this.$moment(this.date_today).format("yyyy-MM-DD")
+        } else {
+          query.date = ''
+        }
+
+         this.$store.dispatch('filterAppointments', query)
+         this.date_today = '';
+    },
     openPdf(url) {
       // var page = url.substring(url.lastIndexOf('/') + 1);
       // let link = `../..${url.substring(url.indexOf("/", 10))}`;
@@ -285,9 +305,7 @@ export default {
         
       });
     },
-    searchDate() {
-          
-    },
+   
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },

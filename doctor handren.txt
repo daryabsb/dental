@@ -7,4 +7,5 @@ Doctor Handren Notes:
 Errors related to programming:
     - Treatment to loaded on patient select
     - new files to be added after adding the treatment.
+    - notifications get filtered when filter page!!
     
