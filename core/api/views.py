@@ -1,6 +1,8 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from django.db.models import Q
+
 from datetime import datetime, timedelta, date as dt
 from .filters import datefilter, get_date_range as delta
 
@@ -90,38 +92,52 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     lookup_field = 'id'
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
+        
+        queryset = ComingTreatment.objects.all()
+        
+        # PERFORM FILTER BY SEARCH INPUT
+        conditions = Q()
+        keywords = self.request.query_params.get('input', None)
+        # print(keywords)
+        if keywords:
+            
+            keywords_list = keywords.split(' ')
+
+            print(keywords_list)
+            for word in keywords_list:
+                conditions |= Q(patient__name__icontains=word) | Q(description__icontains=word)
+
+            
+            if conditions:
+                # print(type(conditions))
+                queryset = ComingTreatment.objects.filter(conditions)
+
+        # PERFORM FILTER BY DATE
         today = datetime.now()
         # print(self.request.query_params)
-        queryset = ComingTreatment.objects.all()
         date_query = self.request.query_params.get('dq', None)
 
         
         query = delta(date_query)
+
         todays_date = dt.today()
         todays_query = datetime.strptime(f'{todays_date}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
-        tomorrows_query = datetime.strptime(f'{todays_date}T23:59:59Z', '%Y-%m-%dT%H:%M:%SZ')
 
         date_str = self.request.query_params.get('date', None)
+
         if date_str is not None:
             
             date = datetime.strptime(f'{date_str}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
             end_date = datetime.strptime(f'{date_str}T23:59:00Z', '%Y-%m-%dT%H:%M:%SZ')
 
 
-        if date_query == 'tomorrow':
-            queryset = queryset.filter(date__gt=tomorrows_query, date__lt=query)
-
-        elif query is not None:
-            queryset = queryset.filter(date__gt=todays_query, date__lt=query)
+        if query is not None:
+            queryset = queryset.filter(date__gte=todays_query, date__lte=query)
         
         
         
         if date_query == 'custom' and date is not None:
-            queryset = queryset.filter(date__gt=date, date__lt=end_date)
+            queryset = queryset.filter(date__gte=date, date__lte=end_date)
 
         return queryset
 
@@ -134,6 +150,56 @@ class TreatmentViewSet(viewsets.ModelViewSet):
     queryset = Treatment.objects.all()
     serializer_class = TreatmentSerializer
     lookup_field = 'id'
+
+    def get_queryset(self):
+        
+        queryset = Treatment.objects.all()
+        
+        # PERFORM FILTER BY SEARCH INPUT
+        conditions = Q()
+        keywords = self.request.query_params.get('input', None)
+        # print(keywords)
+        if keywords:
+            
+            keywords_list = keywords.split(' ')
+            
+            print(keywords_list)
+            for word in keywords_list:
+                conditions |= Q(patient__name__icontains=word) | Q(description__icontains=word)
+
+            
+            if conditions:
+                # print(type(conditions))
+                queryset = Treatment.objects.filter(conditions)
+
+        # PERFORM FILTER BY DATE
+        today = datetime.now()
+        # print(self.request.query_params)
+        date_query = self.request.query_params.get('dq', None)
+
+        
+        query = delta(date_query)
+
+        todays_date = dt.today()
+        todays_query = datetime.strptime(f'{todays_date}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
+
+        date_str = self.request.query_params.get('date', None)
+
+        if date_str is not None:
+            
+            date = datetime.strptime(f'{date_str}T00:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
+            end_date = datetime.strptime(f'{date_str}T23:59:00Z', '%Y-%m-%dT%H:%M:%SZ')
+
+
+        if query is not None:
+            queryset = queryset.filter(created__gte=todays_query, created__lte=query)
+        
+        
+        
+        if date_query == 'custom' and date is not None:
+            queryset = queryset.filter(created__gte=date, created__lte=end_date)
+
+        return queryset
 
     def perform_create(self, serializer):
         print(self.request.user)
@@ -154,3 +220,34 @@ class PatientViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         print(self.request.user)
         serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        # print(self.request.query_params)
+        queryset = Patient.objects.all()
+        
+        # PERFORM FILTER BY SEARCH INPUT
+        conditions = Q()
+        keywords = self.request.query_params.get('input', None)
+        # print(keywords)
+        if keywords:
+            
+            keywords_list = keywords.split(' ') 
+            print(keywords_list)
+            for word in keywords_list:
+                conditions |= Q(name__icontains=word) | Q(email__icontains=word)
+
+            
+            if conditions:
+                # print(type(conditions))
+                queryset = Patient.objects.filter(conditions)
+
+        # PERFORM FILTER BY DATE
+        # PATIENT OBJECT DOESNT HAVE DATE
+
+
+
+        return queryset

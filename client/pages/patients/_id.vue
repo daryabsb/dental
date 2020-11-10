@@ -135,15 +135,26 @@
            
             <div class="tab-content">
               <div class="tab-pane p-3" :class="{ active: isPdfTabOpen }">
-                <pdf-tab :patient="patient.name" :files="pdfList" />
+                <div v-if="hasPDF">
+                  <pdf-tab :patient="patient.name" :files="getPatientPDFs" />
+                </div>
+                <div v-else>
+                  <h3>This patient doesn't have any files!</h3>
+                </div>
+                
               </div>
               <div class="tab-pane p-3" :class="{ active: isImagesTabOpen }">
                
+               <div v-if="hasIMAGES">
                 <v-gal
                   :patient="patient.name"
-                  :images="images"
+                  :images="getPatientImages"
                   
                 />
+                 </div>
+                <div v-else>
+                  <h3>This patient doesn't have any images!</h3>
+                </div>
               </div>
               <div
                 class="tab-pane p-3"
@@ -169,8 +180,16 @@ export default {
     let id = params.id;
 
     store.dispatch('loadPatientData', id);
+    return {
+      pdfArrived: true,
+     
+    }
     
-    
+  },
+  data () {
+    return {
+      
+      }
   },
   methods: {
     togglePdf(files) {
@@ -226,18 +245,18 @@ export default {
       return this.$store.state.attachments;
     },
     images() {
-      console.log(this.getPatientImages);
       return this.getPatientImages;
     },
     pdfList() {
-     
-      return this.getPatientPDFs;
+      let loaded = {}
+      loaded = this.getPatientPDFs ? this.hasPDF : {}
+     return this.getPatientPDFs;
     },
     patient() {
       return this.getPatient;
     },
-    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages'])
+    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES'])
   },
-
+  
 };
 </script>

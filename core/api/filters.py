@@ -14,7 +14,7 @@ def get_date_range(date_query):
     # print(aday)
 
     return {
-        'today': lambda: now,
+        'today': lambda: today,
         'tomorrow': lambda: tomorrow,
         'week': lambda: today + week,
         'month': lambda: today + month

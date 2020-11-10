@@ -106,6 +106,8 @@ class AttachmentSerializer(serializers.ModelSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
 
+    patient = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = ComingTreatment
         fields = ('id', 'patient', 'description', 'date')

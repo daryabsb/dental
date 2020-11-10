@@ -67,7 +67,16 @@
                 id="datatable_wrapper"
                 class="dataTables_wrapper dt-bootstrap4 no-footer"
               >
-               <search-comp></search-comp>
+
+              <!-- SEARCH COMPONENT -->
+               <search-comp
+                :input="true"
+                :date="false"
+                :pagination="false"
+                url="/patients/"
+                moduleState="PATIENTS" 
+               ></search-comp>
+
                 <div class="row">
                   <div class="col-sm-12">
                     <table

@@ -8,6 +8,8 @@ const state = () => ({
     attachments: [],
     curTreats: [],
     patientPdfFiles: [],
+    hasPDF: false,
+    hasIMAGES: false,
     patientImageFiles: [],
     files: [],
     csrftoken: ""
@@ -19,12 +21,23 @@ const mutations = {
     },
     SET_PATIENT_DATA(state, payload) {
 
-        console.log(payload[2]);
+        // console.log(payload[2]);
+        state.patientPdfFiles = [];
+        state.hasPDF = false;
+        state.hasIMAGES = false;
+        state.patientImageFiles = [];
 
         state.patient = payload[0];
-        state.patientPdfFiles = payload[1];
+        if (payload[1].length != 0) {
+            state.hasPDF = true;
+            
+            state.patientPdfFiles = payload[1];
+        }
+        if (payload[2].length != 0) {
+            state.hasIMAGES = true;
         state.patientImageFiles = payload[2];
 
+        }
         // let list = []
         // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
 
@@ -208,7 +221,7 @@ const actions = {
             let thisPatient = []
 
             thisPatient = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
-
+            console.log(thisPatient)
             commit('SET_PATIENT_DATA', thisPatient);
 
 
@@ -364,6 +377,44 @@ const actions = {
         }
 
     },
+    async onFilter({ state, commit }, payload) {
+
+        let url = payload.url;
+        let query = '';
+
+        
+
+        if (payload.date.dq === 'none') {
+            
+            query = `?input=${payload.searchInput}`;
+
+        } else if ( payload.date.dq === 'custom' && payload.date.date != '') {
+
+            query = `?input=${payload.searchInput}&dq=${payload.date.dq}&date=${payload.date.date}`;
+
+        } else if (payload.date.dq != '' || payload.date.dq != 'custom') {
+
+           query = `?input=${payload.searchInput}&dq=${payload.date.dq}`
+
+        } else {
+
+           return 
+
+        }
+
+        let filterUrl = `${url}${query}`
+
+        // console.log(filterUrl)
+
+        try {
+            // console.log(Array.from(payload));
+            const filterData = await this.$axios.get(filterUrl);
+            commit(`GET_${payload.module}`, filterData.data);
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
     async filterAppointments({ state, commit }, payload) {
 
         let url = "/appointments/";
@@ -421,6 +472,12 @@ const getters = {
     },
     getAppointments(state) {
         return state.appointments;
+    },
+    hasPDF(state) {
+        return state.hasPDF;
+    },
+    hasIMAGES(state) {
+        return state.hasIMAGES;
     },
 };
 
