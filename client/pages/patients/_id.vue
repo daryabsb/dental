@@ -180,10 +180,7 @@ export default {
     let id = params.id;
 
     store.dispatch('loadPatientData', id);
-    return {
-      pdfArrived: true,
-     
-    }
+    mutations.togglePatientHistoryTab();
     
   },
   data () {
