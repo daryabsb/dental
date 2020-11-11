@@ -29,7 +29,7 @@ export default {
 
         "./assets/plugins/datatables/dataTables.bootstrap4.min.css",
         "./assets/plugins/datatables/buttons.bootstrap4.min.css",
-
+        "./assets/plugins/dropify/css/dropify.min.css",
         "./assets/plugins/datatables/responsive.bootstrap4.min.css",
 
         "./assets/css/bootstrap.min.css",

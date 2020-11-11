@@ -38,7 +38,17 @@
                     alt="user"
                     class="img-thumbnail mr-3"
                     style="width: 20rem;"
+                     v-show="patientHasImage"
                   />
+                  <img 
+                  src="~assets/images/users/patient-pro.png" 
+                  alt="patint" 
+                  v-show="!patientHasImage"
+                  >
+                  <!-- <input type="file" class="dropify" 
+                  data-default-file="~assets/images/users/patient-pro.png"
+                  v-else
+                  /> -->
                     <!-- </div>  -->
                   
                   <div class="media-body align-self-center">
@@ -256,7 +266,7 @@ export default {
     patient() {
       return this.getPatient;
     },
-    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES'])
+    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES', 'patientHasImage'])
   },
   
 };

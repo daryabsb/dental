@@ -37,7 +37,7 @@
     <!-- end page title end breadcrumb -->
     <div>
       <client-only>
-      <upload-image :show="show" :id="pid"></upload-image>
+      <upload-image :id="pid"></upload-image>
       </client-only>
     </div>
     <div class="row">
@@ -346,7 +346,9 @@ export default {
   methods: {
     onUploadImage(id) {
       this.pid = id;
-      this.show = true;
+      // this.$store.conf.dispatch('conf/toggleImageUploadOpen')
+      this.$store.dispatch('toggleImageUploadOpen')
+      // this.show = true;
     },
     showModal(modalState, data = {}) {
       if (!modalState) {

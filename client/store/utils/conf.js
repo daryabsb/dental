@@ -20,8 +20,11 @@ export const store = Vue.observable({
     isPdfTabOpen: false,
     isPdfTabModalOpen: false,
     isImagesTabOpen: false,
+    isImageUploadOpen: false,
     isPatientHistoryTabOpen: true,
     isSelectPatientModalOpen: false,
+    imageUploadRes: undefined,
+    
 });
 
 // We call toggleNav anywhere we need it in our app
@@ -70,5 +73,8 @@ export const mutations = {
     toggleSelectPatientModal() {
         store.isSelectPatientModalOpen = !store.isSelectPatientModalOpen
     },
-
+    toggleImageUploadShow() {
+        store.isImageUploadOpen = !store.isImageUploadOpen
+    },
+    
 };

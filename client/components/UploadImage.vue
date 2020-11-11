@@ -6,22 +6,24 @@
         @crop-success="cropSuccess"
         @crop-upload-success="cropUploadSuccess"
         @crop-upload-fail="cropUploadFail"
-        v-model="show"
+        
         langType="en"
 		:width="300"
 		:height="300"
-		:url="`http://127.0.0.1:8000/api/patients/${id}/image/`"
-		
+		:url="`/patients/${id}/image/`"
 		
 		img-format="png"></my-upload>
-	<img :src="imgDataUrl">
+		<!-- v-model="show" -->
+	<!-- <img :src="imgDataUrl"> -->
     <!-- :params="params" -->
 </div>
 </template>
 
 <script>
+import {store, mutations} from '../store/utils/conf';
+import {mapGetters} from 'vuex'
 export default {
-    props: ['id', 'show'],
+    props: ['id'],
     data() {
             return {
                 
@@ -30,9 +32,7 @@ export default {
 			// 	token: '123456798',
 			// 	name: 'avatar'
 			// },
-			headers: {
-				smail: '*_~'
-			},
+			
             imgDataUrl: '' // the datebase64 url of created image
             
             
@@ -43,7 +43,7 @@ export default {
 		// },
 		methods: {
 			toggleShow() {
-				this.show = !this.show;
+				this.$store.conf.dispatch('toggleImageUploadOpen')
 			},
             /**
 			 * crop success
@@ -77,7 +77,13 @@ export default {
 				console.log(status);
 				console.log('field: ' + field);
 			}
-		}    
+		},
+		computed: {
+			// show() {
+			// 	return this.$store.state.isImageUploadOpen
+			// }
+			
+		},  
 
 
 }

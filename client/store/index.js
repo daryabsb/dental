@@ -1,4 +1,5 @@
 // import axios from '@nuxtjs/axios';
+// import conf from './conf';
 const state = () => ({
     users: [],
     patients: [],
@@ -12,8 +13,16 @@ const state = () => ({
     hasIMAGES: false,
     patientImageFiles: [],
     files: [],
-    csrftoken: ""
+    csrftoken: "",
+    progress: 0,
+    isImageUploadOpen: false,
+    patientHasImage: false,
+    
 });
+
+// const modules = {
+//     conf
+// }
 
 const mutations = {
     GET_PATIENTS(state, payload) {
@@ -28,6 +37,12 @@ const mutations = {
         state.patientImageFiles = [];
 
         state.patient = payload[0];
+
+        if (payload[0].image != '') {
+            state.patientHasImage = true;
+            
+        }
+
         if (payload[1].length != 0) {
             state.hasPDF = true;
             
@@ -165,7 +180,24 @@ const mutations = {
     PATIENT_IMAGE_FILES(state, payload) {
         state.patientImageFiles = payload;
     },
+    PUSH_IMAGE(state, payload) {
+
+        // console.log(payload);
+        let patient = state.patients.find(p=> p.id === payload.id)
+            patient.image = payload.image;
+        let indexOfPatient = state.patients.indexOf(patient)
+        console.log(state.patient[indexOfPatient])
+        // state.patients.splice(indexOfPatient, 1, patient)
+    },
+    updateUploadProgress(state, payload) {
+        state.progress = payload; 
+    },
+    toggleImageUploadOpen(state) {
+        state.isImageUploadOpen = !state.isImageUploadOpen
+    },
 };
+
+
 
 const actions = {
 
@@ -377,6 +409,18 @@ const actions = {
         }
 
     },
+    async uploadImage({state, commit}, payload) {
+        // console.log(payload)
+        let id = payload.id;
+        let frmData = payload.frmData;
+        let url = payload.url;
+
+        const imageResponse = await this.$axios.put(url, frmData);
+
+        // console.log(imageResponse.data)
+        
+        commit('PUSH_IMAGE', imageResponse.data)
+    },
     async onFilter({ state, commit }, payload) {
 
         let url = payload.url;
@@ -443,6 +487,9 @@ const actions = {
     },
     getPatientTreats({ state, commit }, id) {
         commit("GET_PATIENT_TREATMENTS", id);
+    },
+    toggleImageUploadOpen({commit}) {
+        commit('toggleImageUploadOpen');
     }
 };
 
@@ -479,6 +526,15 @@ const getters = {
     hasIMAGES(state) {
         return state.hasIMAGES;
     },
+    progress(state) {
+        return state.progress;
+    },
+    show(state) {
+        return state.isImageUploadOpen;
+    },
+    patientHasImage(state) {
+        return state.patientHasImage
+    }
 };
 
 export default {
