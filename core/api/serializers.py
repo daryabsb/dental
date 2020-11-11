@@ -160,8 +160,15 @@ class PatientSerializer(serializers.ModelSerializer):
         model = Patient
         fields = [
             'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'treatments', 'appointments', 'attachments', 'status'
+            'email', 'image', 'treatments', 'appointments', 'attachments', 'status'
          
         ]
+        read_only_Fields = ('id',)
+
+class PatientPictureSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Patient
+        fields = ("id", "image",)
         read_only_Fields = ('id',)
 

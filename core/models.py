@@ -1,4 +1,6 @@
 from datetime import date
+import uuid
+import os
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -29,6 +31,13 @@ def save_pdf_pages_attachment(sender, instance, created, **kwargs):
 
     if created:
         instance.save()
+
+def product_image_file_path(instance, filename):
+    # Generate file path for new recipe image
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/product/', filename)
 
 
 
@@ -180,6 +189,7 @@ class Patient(models.Model):
     doctor = models.ForeignKey(
         'Doctor', on_delete=models.SET_NULL, 
         null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to=product_image_file_path)
 
     class Meta:
         ordering = ('-created',)

@@ -35,8 +35,10 @@
     </div>
     <!--end row-->
     <!-- end page title end breadcrumb -->
-    <div class="">
-     
+    <div>
+      <client-only>
+      <upload-image :show="show" :id="pid"></upload-image>
+      </client-only>
     </div>
     <div class="row">
       <div class="col-12">
@@ -189,15 +191,17 @@
                         >
                         
                           <td class="sorting_1">
+                            <img
+                                :src="patient.image"
+                                @click="onUploadImage(patient.id)"
+                                alt=""
+                                class="thumb-sm rounded-circle mr-2"
+                              />
                             <nuxt-link
                               :to="`/patients/${patient.id}`"
                               class="a-link-normal"
                             >
-                              <img
-                                src="~assets/images/users/user-10.jpg"
-                                alt=""
-                                class="thumb-sm rounded-circle mr-2"
-                              />{{ patient.name }}
+                              {{ patient.name }}
                             </nuxt-link>
                           </td>
                           <td>{{ patient.age }}</td>
@@ -318,6 +322,8 @@ export default {
   },
   data() {
     return {
+      show: false,
+      pid: '',
       patientNameDelete: "",
       patientIdDelete: "",
       editPatient: [],
@@ -338,6 +344,10 @@ export default {
   },
   components: {},
   methods: {
+    onUploadImage(id) {
+      this.pid = id;
+      this.show = true;
+    },
     showModal(modalState, data = {}) {
       if (!modalState) {
         this.editUser = this.$auth.user.id;

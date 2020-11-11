@@ -30,13 +30,17 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6 align-self-center">
+              <div class="col-md-8 align-self-center">
                 <div class="media">
-                  <img
-                    src="~assets/images/users/user-8.jpg"
+                  <!-- <div class="bd-example bd-example-images"> -->
+                    <img
+                    :src="patient.image"
                     alt="user"
-                    class="rounded-circle thumb-xl mr-3 align-self-center"
+                    class="img-thumbnail mr-3"
+                    style="width: 20rem;"
                   />
+                    <!-- </div>  -->
+                  
                   <div class="media-body align-self-center">
                     <h4 class="mt-0">{{ patient.name }}</h4>
                     <p class="mb-0 text-muted">

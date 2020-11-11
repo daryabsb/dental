@@ -49,6 +49,7 @@ export default {
         { src: './plugins/vue-carousel.js', mode: 'client' },
         // { src: "~/plugins/localStorage.js", ssr: false },
         { src: './plugins/vuescroll.js', mode: 'client' },
+        { src: './plugins/vue-myupload.js', mode: 'client' },
 
 
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
@@ -94,10 +95,10 @@ export default {
             })
         },
         extend(config, { isClient }) {
-          // Extend only webpack config for client-bundle
-          if (isClient) {
-            config.devtool = 'source-map'
-          }
+            // Extend only webpack config for client-bundle
+            if (isClient) {
+                config.devtool = 'source-map'
+            }
         }
     },
     auth: {

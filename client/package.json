@@ -28,6 +28,7 @@
         "vue-cookies": "^1.7.4",
         "vue-file-agent": "^1.7.3",
         "vue-gallery": "^2.0.1",
+        "vue-image-crop-upload": "^2.5.0",
         "vue-instant-pdf-viewer": "^1.0.2",
         "vue-pdf": "^4.2.0",
         "vue-pdf-app": "^0.2.2",

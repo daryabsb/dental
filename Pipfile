@@ -16,6 +16,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 flake8 = "*"
 pypdf2 = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

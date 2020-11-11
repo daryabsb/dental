@@ -25,7 +25,8 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 from core.models import User, Patient, Attachment, Treatment, ComingTreatment
 from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
-    PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,)
+    PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,
+    PatientPictureSerializer,)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -251,3 +252,93 @@ class PatientViewSet(viewsets.ModelViewSet):
 
 
         return queryset
+
+class ImageUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = PatientPictureSerializer
+    # permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+
+    
+    
+    def get_object(self):
+        kwarg_id = self.kwargs.get("id")
+        obj = Patient.objects.get(id=kwarg_id)
+        return obj
+    # def get_object(self):
+    #     """
+    #     Returns the object the view is displaying.
+
+    #     You may want to override this if you need to provide non-standard
+    #     queryset lookups.  Eg if objects are referenced using multiple
+    #     keyword arguments in the url conf.
+    #     """
+        # print('REACHED HERE')
+    #     # Determine the base queryset to use.
+        # if queryset is None:
+        #     queryset = self.filter_queryset(self.get_queryset())
+        # else:
+        #     pass  # Deprecation warning
+        # print(queryset)
+    #     # Perform the lookup filtering.
+    #     # Note that `pk` and `slug` are deprecated styles of lookup filtering.
+        # lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        # print(lookup_url_kwarg)
+    #     lookup = self.kwargs.get(lookup_url_kwarg, None)
+        # pk = self.kwargs.get(self.pk_url_kwarg, None)
+    #     # slug = self.kwargs.get(self.slug_url_kwarg, None)
+
+    #     if lookup is not None:
+    #         filter_kwargs = {self.lookup_field: lookup}
+    #     elif pk is not None and self.lookup_field == 'pk':
+    #         warnings.warn(
+    #             'The `pk_url_kwarg` attribute is due to be deprecated. '
+    #             'Use the `lookup_field` attribute instead',
+    #             PendingDeprecationWarning
+    #         )
+    #         filter_kwargs = {'pk': pk}
+    #     # elif slug is not None and self.lookup_field == 'pk':
+    #     #     warnings.warn(
+    #     #         'The `slug_url_kwarg` attribute is due to be deprecated. '
+    #     #         'Use the `lookup_field` attribute instead',
+    #     #         PendingDeprecationWarning
+    #     #     )
+    #     #     filter_kwargs = {self.slug_field: slug}
+    #     else:
+    #         raise ImproperlyConfigured(
+    #             'Expected view %s to be called with a URL keyword argument '
+    #             'named "%s". Fix your URL conf, or set the `.lookup_field` '
+    #             'attribute on the view correctly.' %
+    #             (self.__class__.__name__, self.lookup_field)
+    #         )
+
+    #     print('PASSED')
+        
+
+    #     obj = get_object_or_404(queryset, **filter_kwargs)
+
+    #     # May raise a permission denied
+    #     # self.check_object_permissions(self.request, obj)
+
+        # return obj
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # def get_object(self):
+    #     print(self.kwargs)
+    #     id = self.kwargs['pk']
+    #     patient_object = self.get_object(id=id)
+    #     return  patient_object

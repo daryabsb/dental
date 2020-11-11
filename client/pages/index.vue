@@ -91,6 +91,8 @@
     </div>
     <!--end row-->
 
+    
+
     <div class="row">
       <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
 
@@ -242,6 +244,7 @@ export default {
   },
   data() {
     return {
+      
       nameDelete: "",
       idDelete: "",
       // date_today: new Date(),
@@ -256,6 +259,7 @@ export default {
     };
   },
   methods: {
+    
     patientName(id) {
       let patient = this.$store.state.patients.find(
         (patient) => patient.id === id
