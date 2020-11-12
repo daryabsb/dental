@@ -32,19 +32,24 @@
             <div class="row">
               <div class="col-md-8 align-self-center">
                 <div class="media">
-                  <!-- <div class="bd-example bd-example-images"> -->
+                  <div class="profile-image">
+                    
+                    <span class="profile-image__badge text-right mr-3">
+                      <i class="mdi mdi-plus-circle-outline mr-2 profile-image__badge-icon"></i>
+                    </span>
                     <img
                     :src="patient.image"
                     alt="user"
-                    class="img-thumbnail mr-3"
+                    class="img-thumbnail mr-3 profile-image__image"
                     style="width: 20rem;"
                      v-show="patientHasImage"
                   />
-                  <img 
+                  </div>
+                  <!-- <img 
                   src="~assets/images/users/patient-pro.png" 
                   alt="patint" 
                   v-show="!patientHasImage"
-                  >
+                  > -->
                   <!-- <input type="file" class="dropify" 
                   data-default-file="~assets/images/users/patient-pro.png"
                   v-else
@@ -149,26 +154,23 @@
            
             <div class="tab-content">
               <div class="tab-pane p-3" :class="{ active: isPdfTabOpen }">
-                <div v-if="hasPDF">
-                  <pdf-tab :patient="patient.name" :files="getPatientPDFs" />
-                </div>
-                <div v-else>
-                  <h3>This patient doesn't have any files!</h3>
-                </div>
+               
+                  <pdf-tab :patient="patient.name" :id="patient.id"  />
+                  <!-- :files="getPatientPDFs" -->
+                
+               
                 
               </div>
               <div class="tab-pane p-3" :class="{ active: isImagesTabOpen }">
                
-               <div v-if="hasIMAGES">
-                <v-gal
+             
+                <!-- <v-gal
                   :patient="patient.name"
                   :images="getPatientImages"
                   
-                />
-                 </div>
-                <div v-else>
-                  <h3>This patient doesn't have any images!</h3>
-                </div>
+                /> -->
+                
+               
               </div>
               <div
                 class="tab-pane p-3"
@@ -252,17 +254,15 @@ export default {
       return store.isPatientHistoryTabOpen;
     },
     
-    attachments() {
-      return this.$store.state.attachments;
-    },
-    images() {
-      return this.getPatientImages;
-    },
-    pdfList() {
-      let loaded = {}
-      loaded = this.getPatientPDFs ? this.hasPDF : {}
-     return this.getPatientPDFs;
-    },
+  
+    // images() {
+    //   return this.getPatientImages;
+    // },
+    // pdfList() {
+    //   let loaded = {}
+    //   loaded = this.getPatientPDFs ? this.hasPDF : {}
+    //  return this.getPatientPDFs;
+    // },
     patient() {
       return this.getPatient;
     },
@@ -271,3 +271,38 @@ export default {
   
 };
 </script>
+
+<style>
+
+.profile-image {
+position: relative;
+}
+.profile-image__badge {
+position: absolute;
+top: 50%;
+left: 50%;
+/* width: 4rem; */
+/* height: 4rem; */
+transform: translate(-50%,-50%);
+width: 100%;
+height: 100%;
+background-color: rgb(0, 0, 0, 0.2);
+z-index: 10;
+
+opacity: 0;
+/* display: none; */
+}
+.profile-image__badge-icon {
+color: white;
+font-size: 5rem;
+/* align-self: center; */
+}
+.profile-image .profile-image__badge:hover {
+
+opacity: 1;
+}
+.profile-image__image {
+
+}
+
+</style>

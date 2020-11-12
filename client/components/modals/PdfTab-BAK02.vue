@@ -2,19 +2,14 @@
   <div class="tab-container" v-if="isPdfTabOpen">
     
     <!-- <vue-scroll :ops="ops" class="ps"> -->
-      
       <perfect-scrollbar>
     
-      <div v-for="file in getPatientPDFs" :key="file.id" class="file-box">
+      <div v-for="file in files" :key="file.id" class="file-box">
         <div class="card profile-card" @click="showPdf(file)">
           <div class="card-body p-0">
             <div class="media p-3 align-items-center file-box-content">
-            
               <pdf-view :src="file.file" class="file-box" />
-       
-       
               <pdf-tab-modal :pdf="src" />
-       >
               <div class="media-body ml-3 align-self-center">
                 <h5 class="pro-title">{{ file.filename }}</h5>
                 <p class="mb-2 text-muted">@{{patient}}</p>
@@ -50,24 +45,19 @@
         </div>
       </div>
     </perfect-scrollbar>
-    
   </div>
 </template>
 
 <script>
 import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from '../../store/utils/conf';
-import {mapGetters} from 'vuex';
 export default {
-   props: ["patient", 'id'],
-  //  "files", 
-  
+  props: ["files", "patient"],
   components: {
-        PerfectScrollbar,
+        PerfectScrollbar
     },
   data() {
     return {
-      files: [],
       src:[],
       ops: {
         bar: {
@@ -94,14 +84,8 @@ export default {
     isPdfTabOpen() {
       return store.isPdfTabOpen;
     },
-    ...mapGetters(['getPatientPDFs'])
   },
-  mounted() {
-   this.$store.dispatch('loadPatientPdfs');
-   console.log(this.$store.state.patientPdfFiles)
-  }
-
-}
+};
 </script>
 <style>
 .ps {

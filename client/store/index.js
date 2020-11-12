@@ -17,7 +17,8 @@ const state = () => ({
     progress: 0,
     isImageUploadOpen: false,
     patientHasImage: false,
-    
+    pid: 0,
+
 });
 
 // const modules = {
@@ -40,25 +41,28 @@ const mutations = {
 
         if (payload[0].image != '') {
             state.patientHasImage = true;
-            
-        }
-
-        if (payload[1].length != 0) {
-            state.hasPDF = true;
-            
-            state.patientPdfFiles = payload[1];
-        }
-        if (payload[2].length != 0) {
-            state.hasIMAGES = true;
-        state.patientImageFiles = payload[2];
 
         }
-        // let list = []
+
+        // if (payload[1].length != 0) {
+        //     state.hasPDF = true;
+
+        //     state.patientPdfFiles = payload[1];
+        // }
+        // if (payload[2].length != 0) {
+        //     state.hasIMAGES = true;
+        //     state.patientImageFiles = payload[2];
+
+        // }
+        // // let list = []
         // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
 
 
 
         // console.log(state.patient);
+    },
+    'SET_PATIENT_PDFS' (state, payload) {
+        state.patientPdfFiles = payload;
     },
     GET_USERS(state, payload) {
         // console.log(payload)
@@ -90,11 +94,11 @@ const mutations = {
             appointment.patientName = patient.name;
         });
         let today = new Date();
-        
-        today.setHours(0,0,0,0);
-       
+
+        today.setHours(0, 0, 0, 0);
+
         state.appointments = payload.filter(appointment => {
-            
+
             return Date.parse(appointment.date) >= Date.parse(today);
         });
 
@@ -180,17 +184,20 @@ const mutations = {
     PATIENT_IMAGE_FILES(state, payload) {
         state.patientImageFiles = payload;
     },
+    'SET_PATIENT_ID' (state, payload) {
+        state.pid = payload;
+    },
     PUSH_IMAGE(state, payload) {
 
         // console.log(payload);
-        let patient = state.patients.find(p=> p.id === payload.id)
-            patient.image = payload.image;
+        let patient = state.patients.find(p => p.id === payload.id)
+        patient.image = payload.image;
         let indexOfPatient = state.patients.indexOf(patient)
         console.log(state.patient[indexOfPatient])
-        // state.patients.splice(indexOfPatient, 1, patient)
+            // state.patients.splice(indexOfPatient, 1, patient)
     },
     updateUploadProgress(state, payload) {
-        state.progress = payload; 
+        state.progress = payload;
     },
     toggleImageUploadOpen(state) {
         state.isImageUploadOpen = !state.isImageUploadOpen
@@ -240,6 +247,7 @@ const actions = {
     async loadPatientData({ state, commit }, id) {
 
         console.log('Function is loaded and the ID is: ', id);
+        commit('SET_PATIENT_ID', id)
         let patientsURL = '/patients'
         let attachmentsURL = '/attachments'
 
@@ -253,8 +261,29 @@ const actions = {
             let thisPatient = []
 
             thisPatient = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
-            console.log(thisPatient)
+            // console.log(thisPatient)
             commit('SET_PATIENT_DATA', thisPatient);
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
+
+
+    },
+    async loadPatientPdfs({ state, commit }) {
+
+        let id = state.pid;
+        let attachmentsURL = '/attachments'
+
+
+        try {
+
+            let singlePatientPdfs = await this.$axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
+
+            commit('SET_PATIENT_PDFS', singlePatientPdfs.data);
 
 
         } catch (err) {
@@ -409,7 +438,7 @@ const actions = {
         }
 
     },
-    async uploadImage({state, commit}, payload) {
+    async uploadImage({ state, commit }, payload) {
         // console.log(payload)
         let id = payload.id;
         let frmData = payload.frmData;
@@ -418,7 +447,7 @@ const actions = {
         const imageResponse = await this.$axios.put(url, frmData);
 
         // console.log(imageResponse.data)
-        
+
         commit('PUSH_IMAGE', imageResponse.data)
     },
     async onFilter({ state, commit }, payload) {
@@ -426,23 +455,23 @@ const actions = {
         let url = payload.url;
         let query = '';
 
-        
+
 
         if (payload.date.dq === 'none') {
-            
+
             query = `?input=${payload.searchInput}`;
 
-        } else if ( payload.date.dq === 'custom' && payload.date.date != '') {
+        } else if (payload.date.dq === 'custom' && payload.date.date != '') {
 
             query = `?input=${payload.searchInput}&dq=${payload.date.dq}&date=${payload.date.date}`;
 
         } else if (payload.date.dq != '' || payload.date.dq != 'custom') {
 
-           query = `?input=${payload.searchInput}&dq=${payload.date.dq}`
+            query = `?input=${payload.searchInput}&dq=${payload.date.dq}`
 
         } else {
 
-           return 
+            return
 
         }
 
@@ -465,13 +494,13 @@ const actions = {
         let query = '';
 
         if (payload.dq === 'none') {
-            query='';
-        } else if ( payload.dq === 'custom' && payload.date != '') {
+            query = '';
+        } else if (payload.dq === 'custom' && payload.date != '') {
             query = `?dq=${payload.dq}&date=${payload.date}`
         } else if (!payload.dq != '' || payload.dq != 'custom') {
-           query = `?dq=${payload.dq}` 
+            query = `?dq=${payload.dq}`
         } else {
-           return 
+            return
         }
 
         let filterUrl = `${url}${query}`
@@ -488,7 +517,7 @@ const actions = {
     getPatientTreats({ state, commit }, id) {
         commit("GET_PATIENT_TREATMENTS", id);
     },
-    toggleImageUploadOpen({commit}) {
+    toggleImageUploadOpen({ commit }) {
         commit('toggleImageUploadOpen');
     }
 };
