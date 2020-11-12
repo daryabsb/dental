@@ -199,6 +199,7 @@
                               />
                             <nuxt-link
                               :to="`/patients/${patient.id}`"
+                              
                               class="a-link-normal"
                             >
                               {{ patient.name }}
@@ -385,6 +386,7 @@ export default {
         mutations.toggleAddPatientModal();
       }
     },
+   
     confirmDelete(name, id) {
       (this.patientNameDelete = name),
         (this.patientIdDelete = id),

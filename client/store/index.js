@@ -18,6 +18,10 @@ const state = () => ({
     isImageUploadOpen: false,
     patientHasImage: false,
     pid: 0,
+    /* 
+    TEMPORARILY HOLDS 
+    CURRENT PATIENT's IMAGE*/
+    pimage: '',
 
 });
 
@@ -185,14 +189,17 @@ const mutations = {
     'SET_PATIENT_ID' (state, payload) {
         state.pid = payload;
     },
+    'SET_PIMAGE' (state, image) {
+        state.pimage = image;
+    },
     PUSH_IMAGE(state, payload) {
 
         // console.log(payload);
         let patient = state.patients.find(p => p.id === payload.id)
-        patient.image = payload.image;
-        let indexOfPatient = state.patients.indexOf(patient)
-        console.log(state.patient[indexOfPatient])
-            // state.patients.splice(indexOfPatient, 1, patient)
+        state.pimage = payload.image;
+        // let indexOfPatient = state.patients.indexOf(patient)
+        // console.log(state.patient[indexOfPatient])
+        // state.patients.splice(indexOfPatient, 1, patient)
     },
     updateUploadProgress(state, payload) {
         state.progress = payload;
@@ -517,7 +524,10 @@ const actions = {
     },
     toggleImageUploadOpen({ commit }) {
         commit('toggleImageUploadOpen');
-    }
+    },
+    setPimage({ commit }, image) {
+        commit('SET_PIMAGE', image);
+    },
 };
 
 const getters = {
@@ -561,7 +571,10 @@ const getters = {
     },
     patientHasImage(state) {
         return state.patientHasImage
-    }
+    },
+    pimage(state) {
+        return state.pimage;
+    },
 };
 
 export default {

@@ -175,6 +175,7 @@ class Patient(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='patients')
     name = models.CharField(max_length=60)
     dob = models.DateField()
+    date_bonding = models.DateField(null=True, blank=True)
     age = models.PositiveIntegerField(null=True, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER)
     address = models.ForeignKey(
@@ -186,6 +187,7 @@ class Patient(models.Model):
     status = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
     doctor = models.ForeignKey(
         'Doctor', on_delete=models.SET_NULL, 
         null=True, blank=True)
@@ -291,5 +293,143 @@ class ComingTreatment(models.Model):
     def __str__(self):
         return f'{self.patient.name} - {self.date}'
 
+class ClinicalExamination(models.Model):
 
+    CLASS_CHOICES= (
+        ('class1', 'CLASS I'),
+        ('class2', 'CLASS II'),
+        ('class3', 'CLASS III'),
+    )
+
+    NASOLABIAL_ANGLE= (
+        ('normal', 'NORMAL'),
+        ('acute', 'ACUTE'),
+        ('obtuse', 'OBTUCE'),
+    )
+
+    NASOLABIAL_SULCUS= (
+            ('normal', 'NORMAL'),
+            ('deep', 'DEEP'),
+        )
+
+    LIP_COMPETENCY= (
+            ('competent', 'COMPETENT'),
+            ('incompetent', 'INCOMPETENT'),
+            ('partially_competent', 'PARTIALLY_COMPETENT'),
+        )
+
+    FACE_FORM= (
+        ('dolichocephalic', 'DOLICHOCEPHALIC'),
+        ('mesocephalic', 'MESOCEPHALIC'),
+        ('brachycephalic', 'BRACHYCEPHALIC'),
+    )
+
+    MIDLINE_CHOICES= (
+        ('coincidence', 'COINIDENCE'),
+        ('deviated_to_left', 'DEVIATED TO LEFT'),
+        ('deviated_to_right', 'DEVIATED TO RIGHT'),
+    )
+
+    ORAL_HYGIENE = (
+        ('good', 'GOOD'),
+        ('fair', 'FAIR'),
+        ('bad', 'BAD'),
+    )
+
+    TREATED_ARCH = (
+        ('max', 'MAX'),
+        ('mand', 'MAND'),
+    )
+
+    patient = models.ForeignKey(
+        'Patient', 
+        on_delete=models.CASCADE, 
+        related_name='examinations'
+        )
+
+    skeletal_class=models.CharField(
+        max_length=200, 
+        choices=CLASS_CHOICES, 
+        default='class1'
+        )
+
+    nasolabial_angle=models.CharField(
+            max_length=200, 
+            choices=NASOLABIAL_ANGLE, 
+            default='class1'
+            )
+
+    nasolabial_sulcus=models.CharField(
+            max_length=200, 
+            choices=NASOLABIAL_SULCUS, 
+            default='normal'
+            )
+
+    lip_competency=models.CharField(
+            max_length=200, 
+            choices=LIP_COMPETENCY, 
+            default='competent'
+            )
+
+    face_form=models.CharField(
+            max_length=200, 
+            choices=FACE_FORM, 
+            default='dolichocephalic'
+            )
+
+    molar_class_left=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='class1'
+            )
+
+    molar_class_right=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='coincidence'
+            )
+
+    midline_upper=models.CharField(
+            max_length=200, 
+            choices=MIDLINE_CHOICES, 
+            default='coincidence'
+            )
+
+    midline_lower=models.CharField(
+            max_length=200, 
+            choices=MIDLINE_CHOICES, 
+            default='coincidence'
+            )
+
+    overjet = models.CharField(max_length=60)
+    Habit = models.CharField(max_length=60)
+    tongue_size = models.CharField(max_length=60)
+
+    oral_hygiene=models.CharField(
+            max_length=200, 
+            choices=ORAL_HYGIENE, 
+            default='good'
+            )
+
+    treatment_plan=models.TextField(null=True, blank=True)
+
+    treated_arch=models.CharField(
+            max_length=200, 
+            choices=TREATED_ARCH, 
+            default='max'
+            )
+
+    bracket_system=models.CharField(max_length=60)
+    slot=models.CharField(max_length=60)
+    extraction_upper=models.CharField(max_length=60)
+    extraction_lower=models.CharField(max_length=60)
+    anchorage_upper=models.CharField(max_length=60)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
+
+    def __str__(self):
+        return f'{self.patient.name} - {self.created}'
 

@@ -1,398 +1,372 @@
 <template>
-  <div class="container-fluid">
-    <!-- Page-Title -->
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="page-title-box">
-          <div class="float-right">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <nuxt-link to="/">Home</nuxt-link>
-              </li>
-              <li class="breadcrumb-item">
-                <nuxt-link to="/patients">Patients</nuxt-link>
-              </li>
-              <li class="breadcrumb-item active">{{ patient.name }}</li>
-            </ol>
-            <!--end breadcrumb-->
-          </div>
-          <!--end /div-->
-          <h4 class="page-title">Patient Profile</h4>
-        </div>
-        <!--end page-title-box-->
-      </div>
-      <!--end col-->
-    </div>
-    <!--end row-->
-    <!-- end page title end breadcrumb -->
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-8 align-self-center">
-                <div class="media">
-                  <div class="profile-image">
-                    
-                    
-                    <img
-                    :src="patient.image"
-                    alt="user"
-                    class="img-thumbnail mr-3 profile-image__image"
-                    style="width: 20rem;"
-                  />
-                  <span class="fro-profile_main-pic-change">
-                                                            <i class="fas fa-camera"></i>
-                                                        </span>
-                  </div>
-                  <!-- <img 
-                  src="~assets/images/users/patient-pro.png" 
-                  alt="patint" 
-                  v-show="!patientHasImage"
-                  > -->
-                  <!-- <input type="file" class="dropify" 
-                  data-default-file="~assets/images/users/patient-pro.png"
-                  v-else
-                  /> -->
-                    <!-- </div>  -->
-                  
-                  <div class="media-body align-self-center">
-                    <h4 class="mt-0">{{ patient.name }}</h4>
-                    <p class="mb-0 text-muted">
-                      Contrary to popular belief, Lorem Ipsum is not simply
-                      random text. It has roots in a piece of classical Latin
-                      literature from 45 BC, making it over 2000 years old.
-                      Richard McClintock, a Latin professor at Hampden-Sydney
-                      College in Virginia, looked up one of the more obscure
-                      Latin words, consectetur, from a Lorem Ipsum passage, and
-                      going through the cites of the word in classical
-                      literature, discovered the undoubtable source.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <!--end col-->
-              <div class="col-lg-4 ml-auto">
-                <p>
-                  <span class="personal-detail-title">Name</span>
-                  <span class="personal-detail-info">{{ patient.name }}</span>
-                </p>
-                <p>
-                  <span class="personal-detail-title">Birth Date</span>
-                  <span class="personal-detail-info">{{ patient.dob }}</span>
-                </p>
-                <p>
-                  <span class="personal-detail-title">Phone No</span>
-                  <span class="personal-detail-info">{{ patient.phone }}</span>
-                </p>
-                <p>
-                  <span class="personal-detail-title">Email</span>
-                  <span class="personal-detail-info">{{ patient.email }}</span>
-                </p>
-                <p>
-                  <span class="personal-detail-title">Doctor Name</span>
-                  <span class="personal-detail-info"
-                    >Dr.{{ patient.doctor }} (MS Orthopaedic)</span
-                  >
-                </p>
-              </div>
-              <!--end col-->
-            </div>
-            <!--end row-->
-          </div>
-          <!--end card-body-->
-        </div>
-        <!--end card-->
-      </div>
-      <!--end col-->
-    </div>
-    <!--end row-->
-    <div class="text-center mx-3 px-3">
-      <div class="col-md-12">
-       <!-- <pdftest /> -->
-      </div>
-    </div>
+	<div class="container-fluid">
+		<!-- Page-Title -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="page-title-box">
+					<div class="float-right">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<nuxt-link to="/">Home</nuxt-link>
+							</li>
+							<li class="breadcrumb-item">
+								<nuxt-link to="/patients">Patients</nuxt-link>
+							</li>
+							<li class="breadcrumb-item active">
+								{{ patient.name }}
+							</li>
+						</ol>
+						<!--end breadcrumb-->
+					</div>
+					<!--end /div-->
+					<h4 class="page-title">Patient's Profile</h4>
+				</div>
+				<!--end page-title-box-->
+			</div>
+			<!--end col-->
+		</div>
+		<!--end row-->
+		<!-- end page title end breadcrumb -->
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body met-pro-bg">
+						<div class="met-profile">
+							<div class="row">
+								<div
+									class="col-lg-4 align-self-center mb-3 mb-lg-0"
+								>
+									<div class="met-profile-main">
+										<div class="met-profile-main-pic">
+											<img
+												:src="pimage"
+												alt="patient"
+												style="width: 95%"
+												class="rounded-circle"
+											/>
+											<span
+												@click="
+													onUploadImage(patient.id)
+												"
+												class="fro-profile_main-pic-change"
+											>
+												<i class="fas fa-camera"></i>
+											</span>
+										</div>
+										<div class="met-profile_user-detail">
+											<h5 class="met-user-name">
+												{{ patient.name }}
+											</h5>
+											<p class="mb-0 met-user-name-post">
+												UI/UX Designer
+											</p>
+										</div>
+									</div>
+								</div>
+								<!--end col-->
+								<div class="col-lg-4 ml-auto">
+									<ul class="list-unstyled personal-detail">
+										<li class="">
+											<i
+												class="dripicons-phone mr-2 text-info font-18"
+											></i>
+											<b> Phone </b> : {{ patient.phone }}
+										</li>
+										<li class="mt-2">
+											<i
+												class="dripicons-mail text-info font-18 mt-2 mr-2"
+											></i>
+											<b> Email </b> : {{ patient.email }}
+										</li>
+										<li class="mt-2">
+											<i
+												class="dripicons-location text-info font-18 mt-2 mr-2"
+											></i>
+											<b>Birthday</b> :
+											{{
+												$moment(patient.dob).format(
+													"DD/MM/yyyy"
+												)
+											}}
+										</li>
+									</ul>
+									<client-only>
+										<upload-image :id="pid"></upload-image>
+									</client-only>
+									<div class="button-list btn-social-icon">
+										<button
+											type="button"
+											class="btn btn-blue btn-round"
+										>
+											<i class="fab fa-facebook-f"></i>
+										</button>
 
-    <div class="row">
-      <!-- <pre>{{patient.id}}</pre> -->
-      <div class="col-lg-6">
-        <PatientTreatment
-          :patientID="patient.id"
-          :treatments="patient.treatments"
-        />
-      </div>
-      <div class="col-lg-6">
-        <div class="card">
-          <div class="card-body">
-            <ul class="nav nav-pills nav-justified" role="tablist">
-              <li class="nav-item waves-effect waves-light">
-                <a
-                  @click="onLoadPDFs(patient.id)"
-                  class="nav-link"
-                  :class="{ active: isPdfTabOpen }"
-                  >PDFs</a
-                >
-              </li>
-              <li class="nav-item waves-effect waves-light">
-                <a
-                  @click="onLoadImages(patient.id)"
-                  class="nav-link"
-                  :class="{ active: isImagesTabOpen }"
-                  >Images</a
-                >
-              </li>
-              <li class="nav-item waves-effect waves-light">
-                <a
-                  @click="toggleHealthCondition"
-                  class="nav-link"
-                  :class="{ active: isPatientHistoryTabOpen }"
-                  >Condition</a
-                >
-              </li>
-            </ul>
+										<button
+											type="button"
+											class="btn btn-secondary btn-round ml-2"
+										>
+											<i class="fab fa-twitter"></i>
+										</button>
 
-           <!--  -->
-            <div class="tab-content">
-              <div class="tab-pane p-3" :class="{ active: isPdfTabOpen }">
-               
-                  <!-- <pdf-tab :patient="patient.name" :files="pdfs"  /> -->
-                  <!-- :files="getPatientPDFs" -->
-                
-               
-                
-              </div>
-              <!--  -->
-              <div class="tab-pane p-3" :class="{ active: isImagesTabOpen }">
-               
-             
-                <!-- <v-gal
-                  :patient="patient.name"
-                  :images="images"
-                  
-                /> -->
-                
-               
-              </div>
-               <!--  -->
-              <div
-                class="tab-pane p-3"
-               :class="{ active: isPatientHistoryTabOpen }"
-              >
-                <PatientHistory :patientID="patient.id" />
-              </div>
-            </div>
-          </div>
-          <!--end card-body-->
-        </div>
-      </div>
-    </div>
-    <!--end row-->
-  </div>
+										<button
+											type="button"
+											class="btn btn-pink btn-round ml-2"
+										>
+											<i class="fab fa-dribbble"></i>
+										</button>
+									</div>
+								</div>
+								<!--end col-->
+							</div>
+							<!--end row-->
+						</div>
+						<!--end f_profile-->
+					</div>
+					<!--end card-body-->
+					<div class="card-body">
+						<ul
+							class="nav nav-pills mb-0"
+							id="pills-tab"
+							role="tablist"
+						>
+							<li
+								class="nav-item"
+								v-for="tab in tabs"
+								:key="tab.name"
+							>
+								<a
+									@click="setActiveTabName(tab.name)"
+                                    href="javascript: void(0);"
+									class="nav-link"
+									id="general_detail_tab"
+									data-toggle="pill"
+									:class="{
+										active: tab.name === activeTabName,
+									}"
+									>{{ tab.displayName }}</a
+								>
+							</li>
+						</ul>
+					</div>
+					<!--end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!--end col-->
+		</div>
+		<!--end row-->
+		<div class="row">
+			<div class="col-12">
+				<div class="tab-content detail-list">
+					<tab-general
+						v-if="displayContents('tabGeneral')"
+					></tab-general>
+					<tab-treatment
+						v-if="displayContents('tabTreatment')"
+					></tab-treatment>
+
+					<tab-files v-if="displayContents('tabFiles')"></tab-files>
+
+					<tab-appointments
+						v-if="displayContents('tabAppointments')"
+					></tab-appointments>
+				</div>
+				<!--end tab-content-->
+			</div>
+			<!--end col-->
+		</div>
+		<!--end row-->
+	</div>
+	<!-- container -->
 </template>
+
 <script>
 import { store, mutations } from "../../store/utils/conf";
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
-  async asyncData({ $axios, store, params }) {
-    
-        let id = params.id;
-        console.log('Page Loaded: ', id)
-        // store.dispatch('loadPatientData', id);
-        // mutations.togglePatientHistoryTab();
-        console.log('Function is loaded and the ID is: ', id);
+	async asyncData({ $axios, store, params }) {
+		let id = params.id;
+		console.log("Page Loaded: ", id);
+		// store.dispatch('loadPatientData', id);
+		// mutations.togglePatientHistoryTab();
+		console.log("Function is loaded and the ID is: ", id);
 
-        let patientsURL = '/patients'
-        // let attachmentsURL = '/attachments'
+		let patientsURL = "/patients";
+		// let attachmentsURL = '/attachments'
 
-
-        try {
+		try {
             let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
-            // let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
-            // let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
-
-            // let thisPatient = {}
             
-
-            // const [patientData, patientFiles, patientImages] = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
-             const [patientLoaded] = await Promise.all([singlePatient]);
-            // console.log(patientData)
-            // return {
-            //   this.patient = patientData,
-            //   // pdfs: patientFiles,
-            //   // images: patientImages
-            // }
-           return {
-             patient: patientLoaded
-           }
-
-
-        } catch (err) {
-            console.log(err);
-        }
-
-    
-  },
-  data () {
-    return {
-      pdfs: null,
-      images: null,
-      patient: null,
-      }
-  },
-  methods: {
-    async onLoadPDFs(patientID) {
-
-      // Load pdfs of the patient
-
-let id = patientID;
-       
-
-        let attachmentsURL = '/attachments'
-
-
-        try {
+			const [patientLoaded] = await Promise.all([singlePatient]);
+            // store.state.pimage = patientLoaded.image;
             
-            let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
-          
+            // this.img = patientLoaded.image;
+			return {
+				patient: patientLoaded,
+            };
 
             
-
-            this.pdfs = singlePatientPdfs.data;
-            // console.log(patientData)
             
-              // this.pdfs = patientFiles
-          
+		} catch (err) {
+			console.log(err);
+		}
+	},
+	data() {
+		return {
+			tabs: [
+				{
+					name: "tabGeneral",
+					displayName: "General",
+				},
+				{
+					name: "tabTreatment",
+					displayName: "Treatments",
+				},
+				{
+					name: "tabFiles",
+					displayName: "Files",
+				},
+				{
+					name: "tabAppointments",
+					displayName: "Appointments",
+				},
+			],
+			activeTabName: null,
+            pid: 0,
+		};
+	},
+	methods: {
+		setActiveTabName(name) {
+			this.activeTabName = name;
+		},
+		displayContents(name) {
+			return this.activeTabName === name;
+		},
+		async onUploadImage(id) {
+			this.pid = id;
+			
+			await this.$store.dispatch("toggleImageUploadOpen");
 
-          } catch (err) {
-            console.log(err)
-          }
-
-
-
-      // console.log('ID: ', patientID)
-      // console.log('has pdf: ', this.hasPDF)
-      this.togglePdf();
-    },
-    async onLoadImages(patientID) {
-     
-     let id = patientID;
-       
-
-        let attachmentsURL = '/attachments'
-
-
-        try {
+			// change photo of the current patient;
+            // await this.updateCurrentImage();
+			
             
-            let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
-          
-
+        },
+        updateCurrentImage() {
             
+            this.patient.image = this.$store.state.pimage;
+        },
+		async onLoadPDFs(patientID) {
+			// Load pdfs of the patient
 
-             this.images =  singlePatientImages.data;
-            // console.log(patientData)
-           
-              // this.images = patientImages;
-            
+			let id = patientID;
 
-          } catch (err) {
-            console.log(err)
-          }
+			let attachmentsURL = "/attachments";
 
+			try {
+				let singlePatientPdfs = await $axios.$get(
+					`${attachmentsURL}/?p=${id}&type=pdf`
+				);
 
+				this.pdfs = singlePatientPdfs.data;
+				// console.log(patientData)
 
+				// this.pdfs = patientFiles
+			} catch (err) {
+				console.log(err);
+			}
 
-      this.toggleImages();
-    },
-    togglePdf() {
-      if (!this.isPdfTabOpen) {
-        mutations.togglePdfTab();
-      }
-      if (this.isImagesTabOpen) {
-        mutations.toggleImagesTab();
-      }
-      if (this.isPatientHistoryTabOpen) {
-        mutations.togglePatientHistoryTab();
-      }
-    },
-    
-    toggleImages() {
-      if (!this.isImagesTabOpen) {
-        mutations.toggleImagesTab();
-      }
-      if (this.isPdfTabOpen) {
-        mutations.togglePdfTab();
-      }
-      if (this.isPatientHistoryTabOpen) {
-        mutations.togglePatientHistoryTab();
-      }
-    },
-    toggleHealthCondition() {
-      if (!this.isPatientHistoryTabOpen) {
-        mutations.togglePatientHistoryTab();
-      }
-      if (this.isPdfTabOpen) {
-        mutations.togglePdfTab();
-      }
-      if (this.isImagesTabOpen) {
-        mutations.toggleImagesTab();
-      }
-    },
+			// console.log('ID: ', patientID)
+			// console.log('has pdf: ', this.hasPDF)
+			this.togglePdf();
+		},
+		async onLoadImages(patientID) {
+			let id = patientID;
 
-    onlyUnique(value, index, self) {
-      return self.indexOf(value) === index;
+			let attachmentsURL = "/attachments";
+
+			try {
+				let singlePatientImages = await $axios.$get(
+					`${attachmentsURL}/?p=${id}&type=image`
+				);
+
+				this.images = singlePatientImages.data;
+				// console.log(patientData)
+
+				// this.images = patientImages;
+			} catch (err) {
+				console.log(err);
+			}
+
+			this.toggleImages();
+		},
+		togglePdf() {
+			if (!this.isPdfTabOpen) {
+				mutations.togglePdfTab();
+			}
+			if (this.isImagesTabOpen) {
+				mutations.toggleImagesTab();
+			}
+			if (this.isPatientHistoryTabOpen) {
+				mutations.togglePatientHistoryTab();
+			}
+		},
+
+		toggleImages() {
+			if (!this.isImagesTabOpen) {
+				mutations.toggleImagesTab();
+			}
+			if (this.isPdfTabOpen) {
+				mutations.togglePdfTab();
+			}
+			if (this.isPatientHistoryTabOpen) {
+				mutations.togglePatientHistoryTab();
+			}
+		},
+		toggleHealthCondition() {
+			if (!this.isPatientHistoryTabOpen) {
+				mutations.togglePatientHistoryTab();
+			}
+			if (this.isPdfTabOpen) {
+				mutations.togglePdfTab();
+			}
+			if (this.isImagesTabOpen) {
+				mutations.toggleImagesTab();
+			}
+		},
+
+		onlyUnique(value, index, self) {
+			return self.indexOf(value) === index;
+		},
     },
-  },
-  computed: {
-    isPdfTabOpen() {
-      return store.isPdfTabOpen;
-    },
-    isImagesTabOpen() {
-      return store.isImagesTabOpen;
-    },
-    isPatientHistoryTabOpen() {
-      return store.isPatientHistoryTabOpen;
-    },
-    
-    // patient() {
-    //   return this.getPatient;
-    // },
-    ...mapGetters(['getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES', 'patientHasImage'])
-  },
-  
+	computed: {
+        
+		isPdfTabOpen() {
+			return store.isPdfTabOpen;
+		},
+		isImagesTabOpen() {
+			return store.isImagesTabOpen;
+		},
+		isPatientHistoryTabOpen() {
+			return store.isPatientHistoryTabOpen;
+		},
+
+		// patient() {
+		//   return this.getPatient;
+		// },
+		...mapGetters([
+			"getPatientPDFs",
+			"getPatientImages",
+			"hasPDF",
+			"hasIMAGES",
+            "patientHasImage",
+            "pimage",
+		]),
+	},
+	mounted() {
+		// The currently active tab, init as the 1st item in the tabs array
+        this.activeTabName = this.tabs[0].name;
+        this.$store.dispatch('setPimage', this.patient.image);
+	},
 };
 </script>
-
-<style>
-
-.profile-image {
-position: relative;
-}
-.profile-image__badge {
-position: absolute;
-top: 50%;
-left: 50%;
-/* width: 4rem; */
-/* height: 4rem; */
-transform: translate(-50%,-50%);
-width: 100%;
-height: 100%;
-background-color: rgb(0, 0, 0, 0.2);
-z-index: 10;
-
-opacity: 0;
-/* display: none; */
-}
-.profile-image__badge-icon {
-color: white;
-font-size: 5rem;
-/* align-self: center; */
-}
-.profile-image .profile-image__badge:hover {
-
-opacity: 1;
-}
-.profile-image__image {
-
-}
-
-</style>

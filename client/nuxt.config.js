@@ -47,7 +47,7 @@ export default {
         { src: "./plugins/vue-instant-pdf.js", mode: 'client' },
         { src: './plugins/vue-gallery.client.js', mode: 'client' },
         { src: './plugins/vue-carousel.js', mode: 'client' },
-        // { src: "~/plugins/localStorage.js", ssr: false },
+        { src: "~/plugins/localStorage.js", ssr: false },
         { src: './plugins/vuescroll.js', mode: 'client' },
         { src: './plugins/vue-myupload.js', mode: 'client' },
 
