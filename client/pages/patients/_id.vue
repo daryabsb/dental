@@ -34,16 +34,16 @@
                 <div class="media">
                   <div class="profile-image">
                     
-                    <span class="profile-image__badge text-right mr-3">
-                      <i class="mdi mdi-plus-circle-outline mr-2 profile-image__badge-icon"></i>
-                    </span>
+                    
                     <img
                     :src="patient.image"
                     alt="user"
                     class="img-thumbnail mr-3 profile-image__image"
                     style="width: 20rem;"
-                     v-show="patientHasImage"
                   />
+                  <span class="fro-profile_main-pic-change">
+                                                            <i class="fas fa-camera"></i>
+                                                        </span>
                   </div>
                   <!-- <img 
                   src="~assets/images/users/patient-pro.png" 
@@ -127,7 +127,7 @@
             <ul class="nav nav-pills nav-justified" role="tablist">
               <li class="nav-item waves-effect waves-light">
                 <a
-                  @click="togglePdf"
+                  @click="onLoadPDFs(patient.id)"
                   class="nav-link"
                   :class="{ active: isPdfTabOpen }"
                   >PDFs</a
@@ -135,7 +135,7 @@
               </li>
               <li class="nav-item waves-effect waves-light">
                 <a
-                  @click="toggleImages"
+                  @click="onLoadImages(patient.id)"
                   class="nav-link"
                   :class="{ active: isImagesTabOpen }"
                   >Images</a
@@ -151,30 +151,32 @@
               </li>
             </ul>
 
-           
+           <!--  -->
             <div class="tab-content">
               <div class="tab-pane p-3" :class="{ active: isPdfTabOpen }">
                
-                  <pdf-tab :patient="patient.name" :id="patient.id"  />
+                  <!-- <pdf-tab :patient="patient.name" :files="pdfs"  /> -->
                   <!-- :files="getPatientPDFs" -->
                 
                
                 
               </div>
+              <!--  -->
               <div class="tab-pane p-3" :class="{ active: isImagesTabOpen }">
                
              
                 <!-- <v-gal
                   :patient="patient.name"
-                  :images="getPatientImages"
+                  :images="images"
                   
                 /> -->
                 
                
               </div>
+               <!--  -->
               <div
                 class="tab-pane p-3"
-                :class="{ active: isPatientHistoryTabOpen }"
+               :class="{ active: isPatientHistoryTabOpen }"
               >
                 <PatientHistory :patientID="patient.id" />
               </div>
@@ -191,37 +193,134 @@
 import { store, mutations } from "../../store/utils/conf";
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  asyncData({ store, params }) {
+  async asyncData({ $axios, store, params }) {
     
-    let id = params.id;
+        let id = params.id;
+        console.log('Page Loaded: ', id)
+        // store.dispatch('loadPatientData', id);
+        // mutations.togglePatientHistoryTab();
+        console.log('Function is loaded and the ID is: ', id);
 
-    store.dispatch('loadPatientData', id);
-    mutations.togglePatientHistoryTab();
+        let patientsURL = '/patients'
+        // let attachmentsURL = '/attachments'
+
+
+        try {
+            let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
+            // let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
+            // let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
+
+            // let thisPatient = {}
+            
+
+            // const [patientData, patientFiles, patientImages] = await Promise.all([singlePatient, singlePatientPdfs, singlePatientImages]);
+             const [patientLoaded] = await Promise.all([singlePatient]);
+            // console.log(patientData)
+            // return {
+            //   this.patient = patientData,
+            //   // pdfs: patientFiles,
+            //   // images: patientImages
+            // }
+           return {
+             patient: patientLoaded
+           }
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
     
   },
   data () {
     return {
-      
+      pdfs: null,
+      images: null,
+      patient: null,
       }
   },
   methods: {
-    togglePdf(files) {
+    async onLoadPDFs(patientID) {
+
+      // Load pdfs of the patient
+
+let id = patientID;
+       
+
+        let attachmentsURL = '/attachments'
+
+
+        try {
+            
+            let singlePatientPdfs = await $axios.$get(`${attachmentsURL}/?p=${id}&type=pdf`);
+          
+
+            
+
+            this.pdfs = singlePatientPdfs.data;
+            // console.log(patientData)
+            
+              // this.pdfs = patientFiles
+          
+
+          } catch (err) {
+            console.log(err)
+          }
+
+
+
+      // console.log('ID: ', patientID)
+      // console.log('has pdf: ', this.hasPDF)
+      this.togglePdf();
+    },
+    async onLoadImages(patientID) {
+     
+     let id = patientID;
+       
+
+        let attachmentsURL = '/attachments'
+
+
+        try {
+            
+            let singlePatientImages = await $axios.$get(`${attachmentsURL}/?p=${id}&type=image`);
+          
+
+            
+
+             this.images =  singlePatientImages.data;
+            // console.log(patientData)
+           
+              // this.images = patientImages;
+            
+
+          } catch (err) {
+            console.log(err)
+          }
+
+
+
+
+      this.toggleImages();
+    },
+    togglePdf() {
       if (!this.isPdfTabOpen) {
-        mutations.togglePdfTab(files);
+        mutations.togglePdfTab();
       }
       if (this.isImagesTabOpen) {
-        mutations.toggleImagesTab(files);
+        mutations.toggleImagesTab();
       }
       if (this.isPatientHistoryTabOpen) {
         mutations.togglePatientHistoryTab();
       }
     },
-    toggleImages(files) {
+    
+    toggleImages() {
       if (!this.isImagesTabOpen) {
-        mutations.toggleImagesTab(files);
+        mutations.toggleImagesTab();
       }
       if (this.isPdfTabOpen) {
-        mutations.togglePdfTab(files);
+        mutations.togglePdfTab();
       }
       if (this.isPatientHistoryTabOpen) {
         mutations.togglePatientHistoryTab();
@@ -254,19 +353,10 @@ export default {
       return store.isPatientHistoryTabOpen;
     },
     
-  
-    // images() {
-    //   return this.getPatientImages;
+    // patient() {
+    //   return this.getPatient;
     // },
-    // pdfList() {
-    //   let loaded = {}
-    //   loaded = this.getPatientPDFs ? this.hasPDF : {}
-    //  return this.getPatientPDFs;
-    // },
-    patient() {
-      return this.getPatient;
-    },
-    ...mapGetters(['getPatient', 'getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES', 'patientHasImage'])
+    ...mapGetters(['getPatientPDFs', 'getPatientImages', 'hasPDF', 'hasIMAGES', 'patientHasImage'])
   },
   
 };

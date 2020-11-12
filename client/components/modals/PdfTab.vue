@@ -5,7 +5,7 @@
       
       <perfect-scrollbar>
     
-      <div v-for="file in getPatientPDFs" :key="file.id" class="file-box">
+      <div v-for="file in files" :key="file.id" class="file-box">
         <div class="card profile-card" @click="showPdf(file)">
           <div class="card-body p-0">
             <div class="media p-3 align-items-center file-box-content">
@@ -59,7 +59,7 @@ import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
 import { store, mutations } from '../../store/utils/conf';
 import {mapGetters} from 'vuex';
 export default {
-   props: ["patient", 'id'],
+   props: ["patient", 'files'],
   //  "files", 
   
   components: {
@@ -67,7 +67,6 @@ export default {
     },
   data() {
     return {
-      files: [],
       src:[],
       ops: {
         bar: {

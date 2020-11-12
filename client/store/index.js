@@ -44,16 +44,14 @@ const mutations = {
 
         }
 
-        // if (payload[1].length != 0) {
-        //     state.hasPDF = true;
+        if (payload[1].length != 0) {
+            state.hasPDF = true;
+        }
+        if (payload[2].length != 0) {
+            state.hasIMAGES = true;
+            // state.patientImageFiles = payload[2];
 
-        //     state.patientPdfFiles = payload[1];
-        // }
-        // if (payload[2].length != 0) {
-        //     state.hasIMAGES = true;
-        //     state.patientImageFiles = payload[2];
-
-        // }
+        }
         // // let list = []
         // this.patientImageFiles.forEach(pdf => console.log(pdf) /*list.push(pdf)*/ );
 
