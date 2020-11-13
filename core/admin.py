@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 from .models import (
     User, Address, Doctor, Patient, Timetable, Schedule,
-    Attachment, Treatment,ComingTreatment,)
+    Attachment, Treatment,ComingTreatment, ClinicalExamination,)
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -34,3 +34,4 @@ admin.site.register(Patient)
 admin.site.register(Attachment)
 admin.site.register(Treatment)
 admin.site.register(ComingTreatment)
+admin.site.register(ClinicalExamination)
