@@ -36,7 +36,8 @@ export default {
         "./assets/css/icons.css",
         "./assets/css/metisMenu.min.css",
         "./assets/css/viewer.css",
-        "./assets/css/style.css"
+        "./assets/css/style.css",
+        "./assets/css/vue-form-wizard.css"
     ],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -82,16 +83,17 @@ export default {
         "@nuxtjs/pwa"
     ],
     bootstrapVue: {
-        componentPlugins: [
-            //   'LayoutPlugin',
-            //   'FormPlugin',
-            //   'FormCheckboxPlugin',
-            //   'FormInputPlugin',
-            //   'FormRadioPlugin',
-            //   'ToastPlugin',
-            'ModalPlugin'
-        ],
-        directivePlugins: ['VBPopoverPlugin', 'VBTooltipPlugin', 'VBScrollspyPlugin']
+        // componentPlugins: [
+        //     //   'LayoutPlugin',
+        //     //   'FormPlugin',
+        //     //   'FormCheckboxPlugin',
+        //     //   'FormInputPlugin',
+        //     //   'FormRadioPlugin',
+        //     //   'ToastPlugin',
+        //     'ButtonPlugin',
+        //     'ModalPlugin'
+        // ],
+        // directivePlugins: ['VBPopoverPlugin', 'VBTooltipPlugin', 'VBScrollspyPlugin']
     },
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -113,7 +115,10 @@ export default {
             if (isClient) {
                 config.devtool = 'source-map'
             }
-        }
+        },
+        transpile: ['vue-form-wizard.js'],
+        // transpile: ['vue-form-generator.js'],
+        
     },
     auth: {
         strategies: {
