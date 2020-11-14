@@ -1,8 +1,8 @@
 <template>
 <div>
     
- <b-button id="show-btn" @click="showModal">Open Modal</b-button>
-    <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
+ <b-button id="show-btn" size="sm" @click="showModal">Open Modal</b-button>
+    <b-button id="toggle-btn" size="sm" @click="toggleModal">Toggle Modal</b-button>
 
     <b-modal size="lg" ref="my-modal" hide-footer title="Using Component Methods">
         <client-only>
