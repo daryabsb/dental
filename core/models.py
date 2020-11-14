@@ -341,7 +341,7 @@ class ClinicalExamination(models.Model):
         ('mand', 'MAND'),
     )
 
-    patient = models.ForeignKey(
+    patient = models.OneToOneField(
         'Patient', 
         on_delete=models.CASCADE, 
         related_name='examinations'

@@ -50,7 +50,8 @@ export default {
         { src: "~/plugins/localStorage.js", ssr: false },
         { src: './plugins/vuescroll.js', mode: 'client' },
         { src: './plugins/vue-myupload.js', mode: 'client' },
-
+        { src: './plugins/vue-form-wizard.js', mode: 'client' },
+        { src: './plugins/vue-form-generator.js', mode: 'client' },
 
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
@@ -71,6 +72,7 @@ export default {
         ["cookie-universal-nuxt", { alias: "cookiz", parseJSON: false }],
         // https://go.nuxtjs.dev/bootstrap
         //"bootstrap-vue/nuxt",
+        'bootstrap-vue/nuxt',
         // "@nuxtjs/style-resources",
         '@nuxtjs/auth',
         '@nuxtjs/moment',
@@ -79,6 +81,18 @@ export default {
         // https://go.nuxtjs.dev/pwa
         "@nuxtjs/pwa"
     ],
+    bootstrapVue: {
+        componentPlugins: [
+            //   'LayoutPlugin',
+            //   'FormPlugin',
+            //   'FormCheckboxPlugin',
+            //   'FormInputPlugin',
+            //   'FormRadioPlugin',
+            //   'ToastPlugin',
+            'ModalPlugin'
+        ],
+        directivePlugins: ['VBPopoverPlugin', 'VBTooltipPlugin', 'VBScrollspyPlugin']
+    },
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {

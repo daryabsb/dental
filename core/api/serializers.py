@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from core.models import Patient, Attachment, Doctor, Treatment, ComingTreatment
+from core.models import Patient, Attachment, Doctor, Treatment, ComingTreatment, ClinicalExamination
 
 class UserListSerializer(serializers.ModelSerializer):
 
@@ -147,20 +147,32 @@ class TreatmentListSerializer(serializers.ModelSerializer):
             'id', 'patient', 'title', 'description', 'files', 'created'         
         ]
         read_only_Fields = ('id','created',)
-    
 
+class ClinicalExaminationSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = ClinicalExamination
+        fields = [
+            'id', 'patient','skeletal_class', 'nasolabial_angle','nasolabial_sulcus',
+            'lip_competency','face_form','molar_class_left', 'molar_class_right','midline_upper',
+            'midline_lower','overjet','oral_hygiene','treatment_plan','slot','treated_arch', 'bracket_system',
+            'extraction_upper','extraction_lower','anchorage_upper','created'
+        ]
+        read_only_Fields = ('id','created',)
 
 class PatientSerializer(serializers.ModelSerializer):
    
     treatments = TreatmentSerializer(many=True, required=False)
     appointments = AppointmentSerializer(many=True, required=False)
     attachments = AttachmentSerializer(many=True, required=False)
+    examinations = ClinicalExaminationSerializer(many=False)
 
     class Meta:
         model = Patient
         fields = [
-            'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone',
-            'email', 'image', 'treatments', 'appointments', 'attachments', 'status'
+            'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone', 
+            'email', 'image', 'treatments', 'appointments', 'attachments', 'examinations', 'status'
          
         ]
         read_only_Fields = ('id',)

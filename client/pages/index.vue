@@ -90,7 +90,10 @@
       <!--end col-->
     </div>
     <!--end row-->
-
+<div class="row">
+  <test-comp></test-comp>
+  
+</div>
     
 
     <div class="row">
