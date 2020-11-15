@@ -159,14 +159,20 @@
 			<div class="col-12">
 				<div class="tab-content detail-list">
 					<tab-general
-						:patient="patient"
+						:examinations="patient.examinations"
 						v-if="displayContents('tabGeneral')"
 					></tab-general>
 					<tab-treatment
 						v-if="displayContents('tabTreatment')"
 					></tab-treatment>
 
-					<tab-files v-if="displayContents('tabFiles')"></tab-files>
+					<tab-files
+					
+					v-if="displayContents('tabFiles')"
+					:files="pdfs"
+					:images="images"
+					:patient="patient"
+					></tab-files>
 
 					<tab-appointments
 						v-if="displayContents('tabAppointments')"
@@ -233,12 +239,20 @@ export default {
 				},
 			],
 			activeTabName: null,
-            pid: 0,
+			pid: 0,
+			pdfs: null,
+      		images: null,
 		};
 	},
 	methods: {
 		setActiveTabName(name) {
 			this.activeTabName = name;
+			if (name === 'tabFiles') {
+				console.log('TAB FILES')
+				this.onLoadPDFs(this.patient.id);
+				this.onLoadImages(this.patient.id)
+			}
+			
 		},
 		displayContents(name) {
 			return this.activeTabName === name;
@@ -265,11 +279,11 @@ export default {
 			let attachmentsURL = "/attachments";
 
 			try {
-				let singlePatientPdfs = await $axios.$get(
+				let singlePatientPdfs = await this.$axios.$get(
 					`${attachmentsURL}/?p=${id}&type=pdf`
 				);
 
-				this.pdfs = singlePatientPdfs.data;
+				this.pdfs = singlePatientPdfs;
 				// console.log(patientData)
 
 				// this.pdfs = patientFiles
@@ -285,14 +299,11 @@ export default {
 			let id = patientID;
 
 			let attachmentsURL = "/attachments";
+			let url = `${attachmentsURL}/?p=${id}&type=image`
 
 			try {
-				let singlePatientImages = await $axios.$get(
-					`${attachmentsURL}/?p=${id}&type=image`
-				);
-
-				this.images = singlePatientImages.data;
-				// console.log(patientData)
+				let singlePatientImages = await this.$axios.$get(url);
+				this.images = singlePatientImages;
 
 				// this.images = patientImages;
 			} catch (err) {

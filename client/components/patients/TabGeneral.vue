@@ -1,136 +1,208 @@
 <template>
     <div>
                                     <div class="row">
-                                        <div class="col-12">                                            
+                                        <!-- <pre>{{examinations}}</pre> -->
+                                        <div class="col-12 px-0">                                            
                                             
                                                    <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / 400</span>
-                                            <h1 class="font-54 font-weight-normal mt-0 mb-4">Aa</h1>
-                                            <h4 class="mb-0 font-weight-normal">Metrica</h4>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                                
-                                <div class="col-lg-6">
-                                    <div class="card ">
-                                        <div class="card-body">
-                                            <span class="float-right text-muted font-weight-bold">Bold / 700</span>
-                                            <h1 class="font-54 font-weight-bold mt-0 mb-4">Aa</h1>
-                                            <h5 class="mb-0 font-weight-bold">Metrica</h5>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-                            </div><!--end row-->
-                                        
-                            <div class="card">
+                                <div class="col-lg-12">
+                                     <div class="card">
                                 <div class="card-body">
-                                    <h4 class="header-title mt-0">Heading </h4> 
-                                    <p class="text-muted mb-4">All HTML headings, 
-                                        <code class="highlighter-rouge">&lt;h1&gt;</code> through 
-                                        <code class="highlighter-rouge">&lt;h6&gt;</code>, are available.
-                                    </p>   
-                                    <h1>h1. Bootstrap heading</h1>
-                                    <h2>h2. Bootstrap heading</h2>
-                                    <h3>h3. Bootstrap heading</h3>
-                                    <h4>h4. Bootstrap heading</h4>
-                                    <h5>h5. Bootstrap heading</h5>
-                                    <h6>h6. Bootstrap heading</h6>
-                                </div><!--end card-body-->
-                            </div><!--end card-->
-
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="header-title mt-0">Lead</h4> 
-                                    <p class="text-muted mb-4">Make a paragraph stand out by adding <code class="highlighter-rouge">.lead</code>.</p>
-                                    <p class="lead mb-0">
+                                    <span class="float-right text-muted font-weight-normal">These examinations were updated on: {{$moment(examinations.updated).format('DD/MM/yyyy')}}</span>
+                                    <h2 class="text-pink text-uppercase mt-0">Clinical Examinations</h2> 
+                                    <!-- <p class="text-muted mb-4">Make a paragraph stand out by adding <code class="highlighter-rouge">.lead</code>.</p> -->
+                                    <p class="text-info lead mb-0">
                                         Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
                                     </p>
                                 </div><!--end card-body-->
                             </div><!--end card-->
+                                </div>
+                                 <!-- TREATMENT PLAN -->
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Treatment Plan</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.treatment_plan}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end treatment plan-->
+                                
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Skeletal Class</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.skeletal_class}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                 <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Nasolabial Angle</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.nasolabial_angle}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Nasolabial Sulcus</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.nasolabial_sulcus}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Lip Competency</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.lip_competency}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Face Form</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.face_form}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Molar Class Left</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.molar_class_left}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Molar Class Left</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.molar_class_right}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Midline Upper</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.midline_upper}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Midline Lower</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.midline_lower}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Overjet</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.overjet}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Oral Hygiene</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.oral_hygiene}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Treated Arch</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.treated_arch}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Treated Arch</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.treated_arch}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Slot</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.slot}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Bracket System</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.bracket_system}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Extraction Upper</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.extraction_upper}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Extraction Lower</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.extraction_lower}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <h3 class="font-weight-normal mt-0 mb-4">Anchorage Upper</h3>
+                                            <h5 class="mb-0 font-weight-normal text-success">{{examinations.anchorage_upper}}</h5>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                               
+                            </div><!--end row-->
                         </div><!--end col-->
-                        
-                        <div class="col-lg-6">
-                            <div class="card bg-topbar">
-                                <div class="card-body">
-                                    <div class="font-18">                                                
-                                        <code>@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');</code><br>
-                                        <code>font-family : 'Roboto', sans-serif ; </code>
-                                    </div>
-                                </div><!--end card-body-->
-                            </div><!--end card-->
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="header-title mt-0">Display Headings</h4>
-                                    <p class="text-muted mb-4">Traditional heading elements are designed to work best in the meat of your page content. </p>
-                                    <h1 class="display-1">Display 1</h1>
-                                    <h1 class="display-2">Display 2</h1>
-                                    <h1 class="display-3">Display 3</h1>
-                                    <h1 class="display-4">Display 4</h1>
-                                </div><!--end card-body-->
-                            </div><!--end card-->
-                        </div><!--end col-->
-                    </div><!--end row-->        
-                                                
-                                        </div><!--end col-->
-                                    </div><!--end row-->                                             
-                                </div><!--end general detail-->
+                    </div><!--end row-->                         
+                </div><!--end col-->
+            </div><!--end row-->                                             
+        </div><!--end general detail-->
 </template>
+
+<script>
+export default {
+    props: ['examinations']
+}
+</script>

@@ -5,51 +5,37 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <ul class="col container-filter categories-filter mb-0" id="filter">
+                                                        <!-- <ul class="col container-filter categories-filter mb-0" id="filter">
+                                                            <li><a class="categories active" data-filter="*">All</a></li>
+                                                            <li><a class="categories" data-filter=".branding">Branding</a></li>
+                                                            <li><a class="categories" data-filter=".design">Design</a></li>
+                                                            <li><a class="categories" data-filter=".photo">Photo</a></li>
+                                                            <li><a class="categories" data-filter=".coffee">coffee</a></li>
+                                                        </ul> -->
+                                                         <b-tabs content-class="mt-3" align="center">
+                                                             
+                                                            <b-tab title="First" active><p>I'm the first tab</p></b-tab>
+                                                            <b-tab title="Second"><p>I'm the second tab</p></b-tab>
+                                                            <b-tab title="Disabled"><p>I'm a disabled tab!</p></b-tab>
+                                                    </b-tabs>
 
-                                                        <li
-                                                            
-                                                            v-for="tab in tabs"
-                                                            :key="tab.name"
-                                                        >
-                                                            <a
-                                                                @click="setActiveTabName(tab.name)"
-                                                                href="javascript: void(0);"
-                                                                class="categories"
-                                                                id="general_detail_tab"
-                                                                data-toggle="pill"
-                                                                :class="{
-                                                                    active: tab.name === activeTabName,
-                                                                }"
-                                                                >{{ tab.displayName }}</a
-                                                            >
-                                                        </li>
-                                                            
-                                                            <!-- <li><a class="categories active" data-filter="*">All</a></li> -->
-                                                           
-                                                        </ul>
-                                                        
+
+
+
+
+
 
                                                     </div><!-- End portfolio  -->
                                                 </div><!--end card-body-->
                                             </div><!--end card-->
-                                            <!-- <h1>Darya</h1><pre>{{ images }}</pre> -->
+                                            
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row container-grid nf-col-3  projects-wrapper">
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design coffee spacing" v-for="file in files" :key="file.id">
-                                                            <div class="item-box p-3">
-                                                                <a 
-                                                                class="cbox-gallary1 mfp-image p-3" 
-                                                                href="javascript: void(0);" 
-                                                                title="Consequat massa quis"
-                                                                
-                                                                >
-                                                               
-                                                                    <pdf-view :src="file.file" class="item-container" />
-                                                              
-                                                                    <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
-
+                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design coffee spacing">
+                                                            <div class="item-box">
+                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-1.jpg" title="Consequat massa quis">
+                                                                    <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" />
                                                                     <div class="item-mask">
                                                                         <div class="item-caption">
                                                                             <h5 class="text-white">Consequat massa quis</h5>
@@ -197,41 +183,3 @@
                                 
  
 </template>
-
-<script>
-export default {
-    props: ['files', 'images', 'patient'],
-    data() {
-        return {
-            tabs: [
-				{
-					name: "tabFiles",
-					displayName: "Files",
-				},
-				{
-					name: "tabImages",
-					displayName: "Images",
-				},
-				{
-					name: "tabOthers",
-					displayName: "Others",
-				},
-				// {
-				// 	name: "tabAppointments",
-				// 	displayName: "Appointments",
-				// },
-			],
-			activeTabName: null,
-        }
-        
-    },
-    methods: {
-        setActiveTabName(name) {
-			this.activeTabName = name;
-		},
-		displayContents(name) {
-			return this.activeTabName === name;
-		},
-    },
-}
-</script>

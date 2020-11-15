@@ -78,6 +78,24 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
 
+# GET CHOICES WITH DISPLAY
+class ChoiceField(serializers.ChoiceField):
+    
+    def to_representation(self, obj):
+        if obj == '' and self.allow_blank:
+            return obj
+        return self._choices[obj]
+
+    def to_internal_value(self, data):
+        # To support inserts with the value
+        if data == '' and self.allow_blank:
+            return ''
+
+        for key, val in self._choices.items():
+            if val == data:
+                return key
+        self.fail('invalid_choice', input=data)
+
 
 class AttachmentSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes
@@ -150,6 +168,19 @@ class TreatmentListSerializer(serializers.ModelSerializer):
 
 class ClinicalExaminationSerializer(serializers.ModelSerializer):
 
+    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    nasolabial_angle = ChoiceField(ClinicalExamination.NASOLABIAL_ANGLE)
+    nasolabial_sulcus = ChoiceField(ClinicalExamination.NASOLABIAL_SULCUS)
+    lip_competency = ChoiceField(ClinicalExamination.LIP_COMPETENCY)
+    face_form = ChoiceField(ClinicalExamination.FACE_FORM)
+    molar_class_left = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    molar_class_right = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    midline_upper = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
+    midline_lower = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
+    oral_hygiene = ChoiceField(ClinicalExamination.ORAL_HYGIENE)
+    treated_arch = ChoiceField(ClinicalExamination.TREATED_ARCH)
+    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
 
     class Meta:
         model = ClinicalExamination
@@ -157,9 +188,9 @@ class ClinicalExaminationSerializer(serializers.ModelSerializer):
             'id', 'patient','skeletal_class', 'nasolabial_angle','nasolabial_sulcus',
             'lip_competency','face_form','molar_class_left', 'molar_class_right','midline_upper',
             'midline_lower','overjet','oral_hygiene','treatment_plan','slot','treated_arch', 'bracket_system',
-            'extraction_upper','extraction_lower','anchorage_upper','created'
+            'extraction_upper','extraction_lower','anchorage_upper','created', 'updated'
         ]
-        read_only_Fields = ('id','created',)
+        read_only_Fields = ('id','created','updated',)
 
 class PatientSerializer(serializers.ModelSerializer):
    
