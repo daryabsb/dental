@@ -1,15 +1,26 @@
 <template>
 <div>
-    
- <b-button id="show-btn" size="sm" @click="showModal">Open Modal</b-button>
-    <b-button id="toggle-btn" size="sm" @click="toggleModal">Toggle Modal</b-button>
+    <!-- <select id="sel2" class="form-control">
+        <option
+        v-for="d in allData.CLASS_CHOICES"
+        :key="d.value"
+        :value="d.value">{{d.display}}</option>
+      </select>
+  -->
+ 
+ <b-button  variant="primary" id="show-btn" size="sm" @click="showModal">Open Modal</b-button>
+    <!-- <b-button id="toggle-btn" size="sm" @click="toggleModal">Toggle Modal</b-button> -->
 
-    <b-modal size="lg" ref="my-modal" hide-footer title="Using Component Methods">
+    <b-modal variant="primary" size="lg" ref="my-modal" hide-footer title="Using Component Methods">
+      
+      <!-- <pre>{{classChoices}}</pre> -->
+      
+      
         <client-only>
    <form-wizard 
           shape="square" 
           @on-complete="onComplete" 
-          ref="wizard" color="#4ac7ec"
+          ref="wizard" color="#4d79f6"
           >
       <tab-content title="Personal details" icon="ti-user">
         
@@ -222,12 +233,11 @@
 <script>
 // import VueFormGenerator from 'vue-form-generator'
 // import 'vue-form-generator/dist/vfg.css'
-
+import {examinations} from '../../static/data/choices';
 export default {
     props: ['patientID'],
     data(){
       return {
-       
        form: {
           email: '',
           name: '',
@@ -240,6 +250,14 @@ export default {
   
       }
    
+ },
+ computed: {
+   allData() {
+     return examinations;
+   },
+   classChoices() {
+     return examinations.CLASS_CHOICES;
+   },
  },
  methods: {
   onComplete: function(){

@@ -91,7 +91,7 @@
     </div>
     <!--end row-->
 <div class="row">
-  <test-comp></test-comp>
+  
   <!-- <test-form></test-form> -->
   <!-- <test-wizard></test-wizard> -->
   

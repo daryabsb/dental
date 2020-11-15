@@ -159,6 +159,7 @@
 			<div class="col-12">
 				<div class="tab-content detail-list">
 					<tab-general
+						:patient="patient"
 						v-if="displayContents('tabGeneral')"
 					></tab-general>
 					<tab-treatment
