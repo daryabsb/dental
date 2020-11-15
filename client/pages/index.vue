@@ -92,7 +92,7 @@
     <!--end row-->
 <div class="row">
  <div class="col-lg-12">
-    <test-tabs></test-tabs>
+    <!-- <test-tabs></test-tabs> -->
  </div>
      
     

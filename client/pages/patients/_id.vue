@@ -304,6 +304,7 @@ export default {
 			try {
 				let singlePatientImages = await this.$axios.$get(url);
 				this.images = singlePatientImages;
+				// console.log(this.images)
 
 				// this.images = patientImages;
 			} catch (err) {

@@ -37,19 +37,18 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row container-grid nf-col-3  projects-wrapper">
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design coffee spacing" v-for="file in files" :key="file.id">
+                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design coffee spacing" 
+                                                        v-for="file in files" :key="file.id"
+                                                        v-if="displayContents('tabFiles')"
+                                                        >
                                                             <div class="item-box p-3">
                                                                 <a 
                                                                 class="cbox-gallary1 mfp-image p-3" 
                                                                 href="javascript: void(0);" 
                                                                 title="Consequat massa quis"
-                                                                
                                                                 >
-                                                               
                                                                     <pdf-view :src="file.file" class="item-container" />
-                                                              
                                                                     <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
-
                                                                     <div class="item-mask">
                                                                         <div class="item-caption">
                                                                             <h5 class="text-white">Consequat massa quis</h5>
@@ -59,76 +58,35 @@
                                                                 </a>
                                                             </div><!--end item-box-->
                                                         </div><!--end col-->
-                                        
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item photo spacing">
-                                                            <div class="item-box">
-                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-2.jpg" title="Vivamus elementum semper">
-                                                                    <img class="item-container mfp-fade" src="~assets/images/small/img-2.jpg" alt="2" />
+                                                        <!-- <pre>{{imageUrls}}</pre> -->
+                                                        <div class="col-lg-4 d-flex align-items-center col-md-6 p-0 nf-item branding design coffee spacing" 
+                                                        v-for="(image, imageIndex) in images" :key="image.id"
+                                                        v-if="displayContents('tabImages')"
+                                                        >
+                                                            <div class="item-box p-3">
+                                                                <a 
+                                                                class="cbox-gallary1 mfp-image p-3" 
+                                                                
+                                                                @click="index = imageIndex" 
+                                                                title="Consequat massa quis"
+                                                                >
+                                                                
+                                                                    <!-- <pdf-view :src="file.file" class="item-container" /> -->
+                                                                    <img class="item-container " :src="image.file" alt="7" />
                                                                     <div class="item-mask">
                                                                         <div class="item-caption">
-                                                                            <h5 class="text-light">Vivamus elementum semper</h5>
-                                                                            <p class="text-light">Photo</p>
+                                                                            <h5 class="text-white">Consequat massa quis</h5>
+                                                                            <p class="text-white">Branding, Design, Coffee</p>
                                                                         </div>
                                                                     </div>
                                                                 </a>
+                                                                
                                                             </div><!--end item-box-->
                                                         </div><!--end col-->
+                                                        <!-- OTHER THINGIES -->
+                                                        
                                         
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding coffee spacing">
-                                                            <div class="item-box">
-                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-3.jpg" title="Quisque rutrum">
-                                                                    <img class="item-container" src="~assets/images/small/img-3.jpg" alt="4" />
-                                                                    <div class="item-mask">
-                                                                        <div class="item-caption">
-                                                                            <h5 class="text-light">Quisque rutrum</h5>
-                                                                            <p class="text-light">Branding, Design, Coffee</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div><!--end item-box-->
-                                                        </div><!--end col-->
-                                        
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design spacing">
-                                                            <div class="item-box">
-                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-4.jpg" title="Tellus eget condimentum">
-                                                                    <img class="item-container" src="~assets/images/small/img-4.jpg" alt="5" />
-                                                                    <div class="item-mask">
-                                                                        <div class="item-caption">
-                                                                            <h5 class="text-light">Tellus eget condimentum</h5>
-                                                                            <p class="text-light">Design</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div><!--end item-box-->
-                                                        </div><!--end col-->
-                                        
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item branding design spacing">
-                                                            <div class="item-box">
-                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-5.jpg" title="Nullam quis ant">
-                                                                    <img class="item-container" src="~assets/images/small/img-5.jpg" alt="6" />
-                                                                    <div class="item-mask">
-                                                                        <div class="item-caption">
-                                                                            <h5 class="text-light">Nullam quis ant</h5>
-                                                                            <p class="text-light">Branding, Design</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div><!--end item-box-->
-                                                        </div><!--end col-->
-                                        
-                                                        <div class="col-lg-4 col-md-6 p-0 nf-item photo spacing">
-                                                            <div class="item-box">
-                                                                <a class="cbox-gallary1 mfp-image" href="~assets/images/small/img-6.jpg" title="Sed fringilla mauris">
-                                                                    <img class="item-container" src="~assets/images/small/img-6.jpg" alt="1" />
-                                                                    <div class="item-mask">
-                                                                        <div class="item-caption">
-                                                                            <h5 class="text-light">Sed fringilla mauris</h5>
-                                                                            <p class="text-light">Photo</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div><!--end item-box-->
-                                                        </div><!--end col-->
+            
                                                     </div><!--end row-->
                                                 </div><!--end card-body-->
                                             </div><!--end card-->
@@ -165,9 +123,9 @@
                                                                         making it over 2000 years  popular belief,old.
                                                                     </p>
                                                                     <div class="">
-                                                                        <img src="~assets/images/users/user-4.jpg" alt="" class="rounded-circle  thumb-lg mb-2">
-                                                                        <p class="mb-0 text-primary"><b>- Michael C. Rios</b></p>
-                                                                        <small class="text-muted">CEO Facebook</small>
+                                                                        <img :src="patient.image" alt="" class="rounded-circle  thumb-lg mb-2">
+                                                                        <p class="mb-0 text-primary"><b>- {{patient.name}}</b></p>
+                                                                        <small class="text-muted">{{patient.status}}</small>
                                                                     </div>                                                            
                                                                 </div>
                                                             </div>
@@ -193,6 +151,9 @@
                                             </div>
                                         </div>
                                     </div><!--end row-->
+                                    <client-only>
+                                    <gallery :images="imageUrls" :index="index" @close="index = null" />
+                                    </client-only>
                                 </div><!--end portfolio detail-->
                                 
  
@@ -221,7 +182,8 @@ export default {
 				// 	displayName: "Appointments",
 				// },
 			],
-			activeTabName: null,
+            activeTabName: null,
+            index: null,
         }
         
     },
@@ -233,5 +195,15 @@ export default {
 			return this.activeTabName === name;
 		},
     },
+    computed: {
+    imageUrls() {
+      console.log(this.images)
+      return this.images.map((image) => image.file);
+    },
+  },
+  mounted() {
+		// The currently active tab, init as the 1st item in the tabs array
+        this.activeTabName = this.tabs[0].name;
+	},
 }
 </script>
