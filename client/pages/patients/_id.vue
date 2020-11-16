@@ -171,6 +171,7 @@
 					v-if="displayContents('tabFiles')"
 					:files="pdfs"
 					:images="images"
+					:imagesURL="imagesURL"
 					:patient="patient"
 					></tab-files>
 
@@ -242,6 +243,7 @@ export default {
 			pid: 0,
 			pdfs: null,
       		images: null,
+      		imagesURL: null,
 		};
 	},
 	methods: {
@@ -304,6 +306,7 @@ export default {
 			try {
 				let singlePatientImages = await this.$axios.$get(url);
 				this.images = singlePatientImages;
+				this.imagesURL = singlePatientImages.map(image=>image.file);
 				// console.log(this.images)
 
 				// this.images = patientImages;

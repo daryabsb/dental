@@ -47,6 +47,7 @@
                                                                 href="javascript: void(0);" 
                                                                 title="Consequat massa quis"
                                                                 >
+
                                                                     <pdf-view :src="file.file" class="item-container" />
                                                                     <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
                                                                     <div class="item-mask">
@@ -152,7 +153,7 @@
                                         </div>
                                     </div><!--end row-->
                                     <client-only>
-                                    <gallery :images="imageUrls" :index="index" @close="index = null" />
+                                    <gallery :images="imagesURL" :index="index" @close="index = null" />
                                     </client-only>
                                 </div><!--end portfolio detail-->
                                 
@@ -161,7 +162,7 @@
 
 <script>
 export default {
-    props: ['files', 'images', 'patient'],
+    props: ['files', 'images','imagesURL', 'patient'],
     data() {
         return {
             tabs: [
@@ -196,10 +197,10 @@ export default {
 		},
     },
     computed: {
-    imageUrls() {
-      console.log(this.images)
-      return this.images.map((image) => image.file);
-    },
+    // imageUrls() {
+    //   console.log(this.images)
+    //   return this.images.map((image) => image.file);
+    // },
   },
   mounted() {
 		// The currently active tab, init as the 1st item in the tabs array

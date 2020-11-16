@@ -53,7 +53,8 @@ export default {
         { src: './plugins/vue-myupload.js', mode: 'client' },
         { src: './plugins/vue-form-wizard.js', mode: 'client' },
         { src: './plugins/vue-form-generator.js', mode: 'client' },
-
+        // { src: './plugins/vue-pdf-preview.js', mode: 'client' },
+        // vue - pdf - preview.js
         // { src: "~assets/js/bootstrap.bundle.min.js", ssr: false },
         // { src: "~assets/js/metisMenu.min.js", ssr: false },
         // { src: "~assets/js/waves.min.js", ssr: false }
@@ -117,8 +118,8 @@ export default {
             }
         },
         transpile: ['vue-form-wizard.js'],
-        // transpile: ['vue-form-generator.js'],
-        
+        // transpile: ['vue-pdf-preview.js'],
+
     },
     auth: {
         strategies: {

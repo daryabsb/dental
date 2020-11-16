@@ -93,6 +93,9 @@
 <div class="row">
  <div class="col-lg-12">
     <!-- <test-tabs></test-tabs> -->
+    <!-- <client-only> -->
+    <!-- <pdf-viewer pdf="http://www.africau.edu/images/default/sample.pdf"></pdf-viewer> -->
+  <!-- </client-only> -->
  </div>
      
     
