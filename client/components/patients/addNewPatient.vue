@@ -24,13 +24,15 @@
       size="lg"
       ref="my-modal"
       hide-footer
-      title="Using Component Methods"
+      title="Add a new patient"
     >
       <!-- <pre>{{classChoices}}</pre> -->
 
       <client-only>
         <form-wizard
-          shape="square"
+          shape="tab"
+		  title=""
+		  subtitle=""
           @on-complete="onComplete"
           ref="wizard"
           color="#4d79f6"
@@ -38,7 +40,7 @@
           <tab-content title="Personal details" icon="ti-user">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show" row>
               <b-row>
-                <b-col cols="5">
+                <b-col cols="4">
                   <b-form-group
                     class="form-group py-0"
                     id="input-group-1"
@@ -57,47 +59,34 @@
                 </b-col>
                 <b-col cols="4">
                   <b-form-group
-                    class="form-group py-0"
-                    id="input-group-1"
-                    label="Doctor:"
-                    label-for="input-doctor"
-                    description="Doctor Handren is selected by default."
-                    cols="3"
+                    id="input-group-2"
+                    label="Phone Number:"
+                    label-for="input-2"
                   >
-                    <b-form-select
-                      id="input-doctor"
-                      class="form-control py-0"
-                      v-model="doctor"
-                      size="sm"
-                      :options="ops.DOCTOR_CHOICES"
-                      required
-                    ></b-form-select>
+                    <b-form-input
+                      id="input-2"
+                      v-model="phone"
+                      placeholder="Ex: 0770 XXX XXXX"
+                    ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="4">
                   <b-form-group
-                    class="form-group py-0"
-                    id="input-group-1"
-                    label="DOB:"
-                    size="sm"
-                    label-for="input-dob"
-                    cols="3"
+                    id="input-group-2"
+                    label="Email:"
+                    label-for="input-2"
                   >
-                    <b-form-datepicker
-                      v-model="dob"
-                      right
-                      locale="en-US"
-                      :date-format-options="{
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      }"
-                    ></b-form-datepicker>
+                    <b-form-input
+                      id="input-2"
+                      v-model="email"
+					  type="email"
+                      placeholder="foo@gmail.com"
+                    ></b-form-input>
                   </b-form-group>
                 </b-col>
               </b-row>
 			  <b-row>
-				   <b-col cols="6">
+				   <b-col cols="4">
                   <b-form-group
                     class="form-group py-0"
                     id="input-group-1"
@@ -112,11 +101,10 @@
                       v-model="doctor"
                       size="sm"
                       :options="ops.DOCTOR_CHOICES"
-                      required
                     ></b-form-select>
                   </b-form-group>
                 </b-col>
-				 <b-col cols="6">
+				 <b-col cols="4">
                   <b-form-group
                     class="form-group py-0"
                     id="input-group-1"
@@ -132,127 +120,332 @@
                     ></b-form-select>
                   </b-form-group>
                 </b-col>
+				<b-col cols="4">
+					<b-form-group
+                    class="form-group py-0"
+                    id="input-group-1"
+                    label="DOB:"
+                    size="sm"
+                    label-for="input-dob"
+                    cols="3"
+                  >
+                    <b-form-datepicker
+                      v-model="dob"
+                      class="py-2"
+                     
+                      :date-format-options="{
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      }"
+                    ></b-form-datepicker>
+                  </b-form-group>
+				</b-col>
 			  </b-row>
               <b-row>
-                <b-col cols="3">
+				<b-col cols="12">
                   <b-form-group
                     id="input-group-2"
-                    label="Your Name:"
+                    label="Description:"
                     label-for="input-2"
                   >
-                    <b-form-input
+                    <b-form-textarea
                       id="input-2"
-                      v-model="name"
-                      required
-                      placeholder="Enter name"
-                    ></b-form-input>
+                      v-model="description"
+                      placeholder="Describe your patient"
+                    ></b-form-textarea rows="3">
                   </b-form-group>
                 </b-col>
               </b-row>
-
-              <b-form-group
-                id="input-group-3"
-                label="Food:"
-                label-for="input-3"
-              >
-                <!-- :options="foods" -->
-                <b-form-select
-                  id="input-3"
-                  v-model="name"
-                  required
-                ></b-form-select>
-              </b-form-group>
 
               <b-form-group id="input-group-4">
                 <b-form-checkbox-group id="checkboxes-4">
                   <b-form-checkbox v-model="status"
                     >Check me out</b-form-checkbox
                   >
-                  <b-form-checkbox value="that">Check that out</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
 
               <!-- <b-button type="submit" variant="primary">Submit</b-button> -->
-              <b-button type="reset" variant="outline-danger">Reset</b-button>
+              <!-- <b-button type="reset" variant="outline-danger">Reset</b-button> -->
             </b-form>
             <!-- :style="{opacity: 0, display: 'none'}" -->
-            <b-card class="mt-3" header="Form Data Result">
-              <pre class="m-0"></pre>
-            </b-card>
+
           </tab-content>
-          <tab-content title="Additional Info" icon="ti-heart">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="PatientName">Patient Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="PatientName_select" class="mr-2"
-                    >Doctor Name</label
+          <tab-content title="Clinical Examinations" icon="ti-heart">
+			  <!-- FIRST FORM ROW -->
+			  <b-form-row>
+				 <!-- first -->
+				  <b-col cols="2" class="mr-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Skeletal:"
+                    label-for="input-skeletal"
                   >
-                  <select class="form-control"></select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="PatientName">DOB</label>
-                  <input type="date" name="dob" class="form-control" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="gender">Gender</label>
-                  <select name="gender" class="custom-select">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
-                    type="text"
-                    name="email"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="note">Note</label>
-                  <textarea
-                    name="note"
-                    rows="5"
-                    class="form-control"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
+                    <b-form-select
+                      id="input-skeletal"
+                      class="form-control"
+                      v-model="examinations.skeletal_class"
+                      size="sm"
+                      :options="ops.CLASS_CHOICES"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+			  
+			  <!-- second -->
+			   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Angle:"
+                    label-for="input-nasolabial"
+                  >
+                    <b-form-select
+                      id="input-nasolabial"
+                      class="form-control"
+                      v-model="examinations.nasolabial_angle"
+                      :options="ops.NASOLABIAL_ANGLE"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- third -->
+				   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Sulcus:"
+                    label-for="input-sulcus"
+                  >
+                    <b-form-select
+                      id="input-sulcus"
+                      class="form-control"
+                      v-model="examinations.nasolabial_sulcus"
+                      :options="ops.NASOLABIAL_SULCUS"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- fourth -->
+				   <b-col class="ml-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Overjet:"
+                    label-for="input-overjet"
+                  >
+                    <b-form-textarea
+					id="input-overjet"
+                      class="form-control"
+                      v-model="examinations.overjet"
+                    ></b-form-textarea>
+                  </b-form-group>
+				  </b-col>
+            </b-form-row>
+			<!-- SECOND FORM ROW -->
+			<b-form-row>
+				 <!-- first -->
+				  <b-col cols="2" class="mr-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="O-Hygiene:"
+                    label-for="input-ohygiene"
+                  >
+                    <b-form-select
+                      id="input-ohygiene"
+                      class="form-control"
+                      v-model="examinations.oral_hygiene"
+                      size="sm"
+                      :options="ops.ORAL_HYGIENE"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+			  
+			  <!-- second -->
+			   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Angle:"
+                    label-for="input-nasolabial"
+                  >
+                    <b-form-select
+                      id="input-nasolabial"
+                      class="form-control"
+                      v-model="examinations.nasolabial_angle"
+                      :options="ops.NASOLABIAL_ANGLE"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- third -->
+				   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Sulcus:"
+                    label-for="input-sulcus"
+                  >
+                    <b-form-select
+                      id="input-sulcus"
+                      class="form-control"
+                      v-model="examinations.nasolabial_sulcus"
+                      :options="ops.NASOLABIAL_SULCUS"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- fourth -->
+				   <b-col class="ml-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Overjet:"
+                    label-for="input-overjet"
+                  >
+                    <b-form-textarea
+					id="input-overjet"
+                      class="form-control"
+                      v-model="examinations.overjet"
+                    ></b-form-textarea>
+                  </b-form-group>
+				  </b-col>
+            </b-form-row>
+			<!-- THIRD FORM ROW -->
+			<b-form-row>
+				   <!-- first -->
+				  <b-col cols="2" class="mr-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Treated Arch:"
+                    label-for="input-tarch"
+                  >
+                    <b-form-select
+                      id="input-tarch"
+                      class="form-control"
+                      v-model="examinations.treated_arch"
+                      size="sm"
+                      :options="ops.TREATED_ARCH"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+			  
+			  <!-- second -->
+			   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Angle:"
+                    label-for="input-nasolabial"
+                  >
+                    <b-form-select
+                      id="input-nasolabial"
+                      class="form-control"
+                      v-model="examinations.nasolabial_angle"
+                      :options="ops.NASOLABIAL_ANGLE"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- third -->
+				   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Sulcus:"
+                    label-for="input-sulcus"
+                  >
+                    <b-form-select
+                      id="input-sulcus"
+                      class="form-control"
+                      v-model="examinations.nasolabial_sulcus"
+                      :options="ops.NASOLABIAL_SULCUS"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- fourth -->
+				   <b-col class="ml-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Overjet:"
+                    label-for="input-overjet"
+                  >
+                    <b-form-textarea
+					id="input-overjet"
+                      class="form-control"
+                      v-model="examinations.overjet"
+                    ></b-form-textarea>
+                  </b-form-group>
+				  </b-col>
+            </b-form-row>
+			<!-- FOURTH FORM ROW -->
+			<b-form-row>
+				   <!-- first -->
+				  <b-col cols="2" class="mr-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Skeletal:"
+                    label-for="input-skeletal"
+                  >
+                    <b-form-select
+                      id="input-skeletal"
+                      class="form-control"
+                      v-model="examinations.skeletal_class"
+                      size="sm"
+                      :options="ops.CLASS_CHOICES"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+			  
+			  <!-- second -->
+			   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Angle:"
+                    label-for="input-nasolabial"
+                  >
+                    <b-form-select
+                      id="input-nasolabial"
+                      class="form-control"
+                      v-model="examinations.nasolabial_angle"
+                      :options="ops.NASOLABIAL_ANGLE"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- third -->
+				   <b-col cols="3" class="mx-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Nasolabial Sulcus:"
+                    label-for="input-sulcus"
+                  >
+                    <b-form-select
+                      id="input-sulcus"
+                      class="form-control"
+                      v-model="examinations.nasolabial_sulcus"
+                      :options="ops.NASOLABIAL_SULCUS"
+                    ></b-form-select>
+                  </b-form-group>
+				  </b-col>
+				  <!-- fourth -->
+				   <b-col class="ml-1">
+					  <b-form-group
+                    class="form-group"
+                    id="input-group-1"
+                    label="Overjet:"
+                    label-for="input-overjet"
+                  >
+                    <b-form-textarea
+					id="input-overjet"
+                      class="form-control"
+                      v-model="examinations.overjet"
+                    ></b-form-textarea>
+                  </b-form-group>
+				  </b-col>
+            </b-form-row>
+            
           </tab-content>
           <tab-content title="Additional Info" icon="ti-heart">
             <h2>MEDICAL EXAMINATIONS</h2>
@@ -318,17 +511,17 @@ export default {
 
       examinations: {
         patient: null,
-        skeletal_class: "class1",
-        nasolabial_angle: "normal",
-        nasolabial_sulcus: "normal",
-        lip_competency: "competent",
-        face_form: "dolichocephalic",
-        molar_class_left: "class1",
-        molar_class_right: "class1",
-        midline_upper: "coincidence",
-        midline_lower: "coincidence",
-        overjet: "Diskjet",
-        oral_hygiene: "good",
+        skeletal_class: null,
+        nasolabial_angle: null,
+        nasolabial_sulcus: null,
+        lip_competency: null,
+        face_form: null,
+        molar_class_left: null,
+        molar_class_right: null,
+        midline_upper: null,
+        midline_lower: null,
+        overjet: "",
+        oral_hygiene: null,
         treatment_plan: "",
         slot: "normal",
         treated_arch: "max",
