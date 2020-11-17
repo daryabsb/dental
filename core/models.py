@@ -171,6 +171,20 @@ class Schedule(models.Model):
     def get_delete_url(self):
         return reverse('doctors_schedule_delete', args=(self.pk,))
 
+# class PatientManager(BaseUserManager):
+    
+#     def create(self, examinations, **extra_fields):
+#         # Creates and save a new user
+        
+#         patient = self.model(**extra_fields)
+#         patient.save(using=self._db)
+        
+#         clinical_examinations = ClinicalExamination(
+#             patient=patient, **examinations
+#         )
+#         clinical_examinations.save()
+#         return patient
+
 class Patient(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='patients')
     name = models.CharField(max_length=60)
@@ -195,7 +209,6 @@ class Patient(models.Model):
 
     class Meta:
         ordering = ('-created',)
-
 
     def __str__(self):
         return self.name
@@ -350,13 +363,13 @@ class ClinicalExamination(models.Model):
     skeletal_class=models.CharField(
         max_length=200, 
         choices=CLASS_CHOICES, 
-        default='class1'
+        default="class1"
         )
 
     nasolabial_angle=models.CharField(
             max_length=200, 
             choices=NASOLABIAL_ANGLE, 
-            default='class1'
+            default='normal'
             )
 
     nasolabial_sulcus=models.CharField(
@@ -386,7 +399,7 @@ class ClinicalExamination(models.Model):
     molar_class_right=models.CharField(
             max_length=200, 
             choices=CLASS_CHOICES, 
-            default='coincidence'
+            default='class1'
             )
 
     midline_upper=models.CharField(
@@ -401,9 +414,9 @@ class ClinicalExamination(models.Model):
             default='coincidence'
             )
 
-    overjet = models.CharField(max_length=60)
-    Habit = models.CharField(max_length=60)
-    tongue_size = models.CharField(max_length=60)
+    overjet = models.CharField(max_length=60, default='Diskjet')
+    Habit = models.CharField(max_length=60, default='Naughty')
+    tongue_size = models.CharField(max_length=60, default='Long')
 
     oral_hygiene=models.CharField(
             max_length=200, 
@@ -419,11 +432,11 @@ class ClinicalExamination(models.Model):
             default='max'
             )
 
-    bracket_system=models.CharField(max_length=60)
-    slot=models.CharField(max_length=60)
-    extraction_upper=models.CharField(max_length=60)
-    extraction_lower=models.CharField(max_length=60)
-    anchorage_upper=models.CharField(max_length=60)
+    bracket_system=models.CharField(max_length=60, default='steel')
+    slot=models.CharField(max_length=60, default='normal')
+    extraction_upper=models.CharField(max_length=60, default='normal')
+    extraction_lower=models.CharField(max_length=60, default='normal')
+    anchorage_upper=models.CharField(max_length=60, default='normal')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

@@ -207,22 +207,39 @@ export default {
 	props: ["patientID"],
 	data() {
 		return {
-			form: {
-                name: '',
-                email: "",
-				phone: "",
-				food: null,
-				checked: [],
-			},
-			foods: [
-				{ text: "Select One", value: null },
-				"Carrots",
-				"Beans",
-				"Tomatoes",
-				"Corn",
-			],
-			show: true,
-		};
+		name: "Sumaya Tahir",
+        doctor: 1,
+        dob: "1942-03-22",
+        gender: "female",
+        description: "Just an anonymous",
+        phone: "07701570615",
+        email: "suma.tala@imperialknight.com",
+        
+        examinations: {
+			patient: null,
+            skeletal_class: "class1",
+            nasolabial_angle: "normal",
+            nasolabial_sulcus: "normal",
+            lip_competency: "competent",
+            face_form: "dolichocephalic",
+            molar_class_left: "class1",
+            molar_class_right: "class1",
+            midline_upper: "coincidence",
+            midline_lower: "coincidence",
+            overjet: "Diskjet",
+            oral_hygiene: "good",
+            treatment_plan: "",
+            slot: "normal",
+            treated_arch: "max",
+            bracket_system: "steel",
+            extraction_upper: "normal",
+            extraction_lower: "normal",
+            anchorage_upper: "normal",
+			
+			
+		},
+		show: true,
+		}
 	},
 	computed: {
 		allData() {

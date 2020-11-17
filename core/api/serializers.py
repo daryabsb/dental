@@ -168,19 +168,20 @@ class TreatmentListSerializer(serializers.ModelSerializer):
 
 class ClinicalExaminationSerializer(serializers.ModelSerializer):
 
-    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
-    nasolabial_angle = ChoiceField(ClinicalExamination.NASOLABIAL_ANGLE)
-    nasolabial_sulcus = ChoiceField(ClinicalExamination.NASOLABIAL_SULCUS)
-    lip_competency = ChoiceField(ClinicalExamination.LIP_COMPETENCY)
-    face_form = ChoiceField(ClinicalExamination.FACE_FORM)
-    molar_class_left = ChoiceField(ClinicalExamination.CLASS_CHOICES)
-    molar_class_right = ChoiceField(ClinicalExamination.CLASS_CHOICES)
-    midline_upper = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
-    midline_lower = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
-    oral_hygiene = ChoiceField(ClinicalExamination.ORAL_HYGIENE)
-    treated_arch = ChoiceField(ClinicalExamination.TREATED_ARCH)
-    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
-    skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # nasolabial_angle = ChoiceField(ClinicalExamination.NASOLABIAL_ANGLE)
+    # nasolabial_sulcus = ChoiceField(ClinicalExamination.NASOLABIAL_SULCUS)
+    # lip_competency = ChoiceField(ClinicalExamination.LIP_COMPETENCY)
+    # face_form = ChoiceField(ClinicalExamination.FACE_FORM)
+    # molar_class_left = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # molar_class_right = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # midline_upper = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
+    # midline_lower = ChoiceField(ClinicalExamination.MIDLINE_CHOICES)
+    # oral_hygiene = ChoiceField(ClinicalExamination.ORAL_HYGIENE)
+    # treated_arch = ChoiceField(ClinicalExamination.TREATED_ARCH)
+    # skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
+    # patient = serializers.PrimaryKeyRelatedField(read_only=False, required=False)
 
     class Meta:
         model = ClinicalExamination
@@ -192,12 +193,14 @@ class ClinicalExaminationSerializer(serializers.ModelSerializer):
         ]
         read_only_Fields = ('id','created','updated',)
 
+
 class PatientSerializer(serializers.ModelSerializer):
    
     treatments = TreatmentSerializer(many=True, required=False)
     appointments = AppointmentSerializer(many=True, required=False)
     attachments = AttachmentSerializer(many=True, required=False)
-    examinations = ClinicalExaminationSerializer(many=False)
+    # examinations = ClinicalExaminationSerializer(many=False, allow_null=True)
+    examinations = serializers.SerializerMetaclass()
 
     class Meta:
         model = Patient
@@ -207,6 +210,17 @@ class PatientSerializer(serializers.ModelSerializer):
          
         ]
         read_only_Fields = ('id',)
+
+    def create(self, validated_data):
+        # print(validated_data)
+        examinations_data = validated_data.pop('examinations')
+        patient = Patient.objects.create(**validated_data)
+        examinations_data['patient'] = patient
+        print(patient)
+        print('========')
+        print(examinations_data)
+        ClinicalExamination.objects.create(patient=patient.id, **examinations_data)
+        return patient
 
 class PatientPictureSerializer(serializers.ModelSerializer):
     
