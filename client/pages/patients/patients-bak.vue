@@ -1,6 +1,17 @@
 <template>
 	<div class="container-fluid">
-	
+		<AddPatient
+			:editId="editId"
+			:editUser="editUser ? editUser : 1"
+			:editName="editName"
+			:editDoctor="editDoctor"
+			:editDob="editDob"
+			:editGender="editGender"
+			:editPhone="editPhone"
+			:editEmail="editEmail"
+			:editDescription="editDescription"
+			:editStatus="editStatus"
+		/>
 
 		<!-- Page-Title -->
 		<div class="row">
@@ -148,7 +159,7 @@
 														aria-controls="datatable"
 														rowspan="1"
 														colspan="1"
-														
+														aria-label="Status: activate to sort column ascending"
 														style="width: 78px"
 													>
 														Status
@@ -175,11 +186,14 @@
 													v-for="patient in patients"
 													:key="patient.id"
 												>
-														<!-- @click="onUploadImage(patient.id)" -->
 													<td class="sorting_1">
 														<img
 															:src="patient.image"
-															
+															@click="
+																onUploadImage(
+																	patient.id
+																)
+															"
 															alt=""
 															class="thumb-sm rounded-circle mr-2"
 														/>
@@ -245,7 +259,7 @@
 										<div
 											class="dataTables_info"
 											id="datatable_info"
-											
+											role="status"
 											aria-live="polite"
 										>
 											Showing 1 to 6 of 6 entries
@@ -325,10 +339,21 @@ export default {
 	data() {
 		return {
 			// show: false,
-			// pid: "",
+			pid: "",
 			patientNameDelete: "",
 			patientIdDelete: "",
-		
+			editPatient: [],
+			addUserModal: false,
+			editId: "",
+			editUser: "",
+			editName: "",
+			editDoctor: 1,
+			editDob: "",
+			editGender: "",
+			editPhone: "",
+			editEmail: "",
+			editDescription: "",
+			editStatus: true,
 			searchInput: "",
 			searchDate: "",
 		};
@@ -341,8 +366,43 @@ export default {
 			this.$store.dispatch("toggleImageUploadOpen");
 			// this.show = true;
 		},
-    
+    /*
+    showModal(modalState, data = {}) {
+			if (!modalState) {
+				this.editUser = this.$auth.user.id;
+				this.editId = "";
+				this.editName = "";
+				this.editDoctor = 1;
+				this.editDob = "";
+				this.editGender = "";
+				this.editPhone = "";
+				this.editEmail = "";
+				this.editDescription = "";
+				this.editStatus = true;
+				store.isEditModal;
+				//this.$store.conf.actions.dispatch('showAddUserModal');
+				store.isEditModal = false;
+				mutations.toggleAddPatientModal();
 
+				//this.addUserModal = !this.addUserModal;
+			} else {
+				this.editUser = data.user;
+				this.editId = data.id;
+				this.editName = data.name;
+				this.editDoctor = data.doctor;
+				this.editDob = data.dob;
+				this.editGender = data.gender;
+				this.editPhone = data.phone;
+				this.editEmail = data.email;
+				this.editDescription = data.description;
+				this.editStatus = data.status;
+
+				//this.addUserModal = !this.addUserModal;
+				store.isEditModal = true;
+				mutations.toggleAddPatientModal();
+			}
+		},
+*/
 		confirmDelete(name, id) {
 			(this.patientNameDelete = name),
 				(this.patientIdDelete = id),
@@ -359,7 +419,7 @@ export default {
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;
 		},
-		...mapGetters(["patients", 'pid']),
+		...mapGetters(["patients"]),
 	},
 };
 </script>

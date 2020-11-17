@@ -575,6 +575,9 @@ const getters = {
     pimage(state) {
         return state.pimage;
     },
+    pid(state) {
+        return state.pid;
+    },
 };
 
 export default {
