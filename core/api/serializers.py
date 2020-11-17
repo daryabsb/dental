@@ -218,6 +218,54 @@ class PatientSerializer(serializers.ModelSerializer):
         ClinicalExamination.objects.create(patient=patient, **examinations_data)
         return patient
 
+    def update(self, instance, validated_data):
+       
+        examinations_data = validated_data.pop('examinations')
+        # Unless the application properly enforces that this field is
+        # always set, the following could raise a `DoesNotExist`, which
+        # would need to be handled.
+        print(validated_data)
+
+        
+        examinations, created = ClinicalExamination.objects.get_or_create(patient=instance)
+
+        examinations.name = validated_data.get('name', instance.name)
+        # instance.doctor = validated_data.get('doctor', instance.doctor)
+        examinations.dob = validated_data.get('dob', instance.dob)
+        examinations.gender = validated_data.get('gender', instance.gender)
+        examinations.description = validated_data.get('description', instance.description)
+        examinations.phone = validated_data.get('phone', instance.email)
+        examinations.email = validated_data.get('email', instance.email)
+        examinations.status = validated_data.get('status', instance.status)
+        print('=== instance.examinations ===')
+        print(instance.examinations)
+        print('=== instance.examinations ===')
+
+        instance.save()
+
+        examinations.skeletal_class     = examinations_data.get('skeletal_class', examinations.skeletal_class) 
+        examinations.nasolabial_angle   = examinations_data.get('nasolabial_angle', examinations.nasolabial_angle)
+        examinations.nasolabial_sulcus  = examinations_data.get('nasolabial_sulcus', examinations.nasolabial_sulcus)
+        examinations.lip_competency     = examinations_data.get('lip_competency', examinations.lip_competency)
+        examinations.face_form          = examinations_data.get('face_form', examinations.face_form)
+        examinations.molar_class_left   = examinations_data.get('molar_class_left', examinations.molar_class_left)
+        examinations.molar_class_right  = examinations_data.get('molar_class_right', examinations.molar_class_right)
+        examinations.midline_upper      = examinations_data.get('midline_upper', examinations.midline_upper)
+        examinations.midline_lower      = examinations_data.get('midline_lower', examinations.midline_lower)
+        examinations.overjet            = examinations_data.get('overjet', examinations.overjet)
+        examinations.oral_hygiene       = examinations_data.get('oral_hygiene', examinations.oral_hygiene)
+        examinations.treatment_plan     = examinations_data.get('treatment_plan', examinations.treatment_plan)
+        examinations.slot               = examinations_data.get('slot', examinations.slot)
+        examinations.treated_arch       = examinations_data.get('treated_arch', examinations.treated_arch) 
+        examinations.bracket_system     = examinations_data.get('bracket_system', examinations.bracket_system)
+        examinations.extraction_upper   = examinations_data.get('extraction_upper', examinations.extraction_upper)
+        examinations.extraction_lower   = examinations_data.get('extraction_lower', examinations.extraction_lower)
+        examinations.anchorage_upper    = examinations_data.get('anchorage_upper', examinations.anchorage_upper)
+
+        examinations.save()
+
+        return instance
+
 class PatientPictureSerializer(serializers.ModelSerializer):
     
     class Meta:

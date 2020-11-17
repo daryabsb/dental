@@ -1,3 +1,19 @@
+export const patientOptions = {
+    DOCTOR_CHOICES: [{
+        value: "1",
+        name: 'Handren Ameer Kurda'
+    }],
+    GENDER: [{
+        value: 'male',
+        display: 'MALE'
+        },
+        {
+        value: 'female',
+        display: 'FEMALE'
+        }
+]
+};
+
 export const examinations = {
 
     CLASS_CHOICES: [{

@@ -28,7 +28,7 @@
 							>
 								<b-form-input
 									id="input-1"
-									v-model="form.email"
+									v-model="email"
 									type="email"
 									required
 									placeholder="Enter email"
@@ -36,15 +36,16 @@
 							</b-form-group>
 
 							<b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-								<b-form-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-form-input>
+								<b-form-input id="input-2" v-model="name" required placeholder="Enter name"></b-form-input>
 							</b-form-group>
 
 							<b-form-group id="input-group-3" label="Food:" label-for="input-3">
-								<b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
+								<!-- :options="foods" -->
+								<b-form-select id="input-3" v-model="name"  required></b-form-select>
 							</b-form-group>
 
 							<b-form-group id="input-group-4">
-								<b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
+								<b-form-checkbox-group v-model="status" id="checkboxes-4">
 									<b-form-checkbox value="me">Check me out</b-form-checkbox>
 									<b-form-checkbox value="that">Check that out</b-form-checkbox>
 								</b-form-checkbox-group>
@@ -53,8 +54,9 @@
 							<!-- <b-button type="submit" variant="primary">Submit</b-button> -->
 							<b-button type="reset" variant="outline-danger">Reset</b-button>
 						</b-form>
-						<b-card class="mt-3" :style="{opacity: 0, display: 'none'}" header="Form Data Result">
-							<pre class="m-0">{{ form }}</pre>
+						<!-- :style="{opacity: 0, display: 'none'}" -->
+						<b-card class="mt-3"  header="Form Data Result">
+							<pre class="m-0"></pre>
 						</b-card>
 					</tab-content>
 					<tab-content title="Additional Info" icon="ti-heart">
@@ -202,18 +204,18 @@
 <script>
 // import VueFormGenerator from 'vue-form-generator'
 // import 'vue-form-generator/dist/vfg.css'
-import { examinations } from "../../static/data/choices";
+import { patientOptions, examinations } from "../../static/data/choices";
 export default {
 	props: ["patientID"],
 	data() {
 		return {
-		name: "Sumaya Tahir",
-        doctor: 1,
-        dob: "1942-03-22",
+		name: "",
+        doctor: null,
+        dob: "",
         gender: "female",
-        description: "Just an anonymous",
-        phone: "07701570615",
-        email: "suma.tala@imperialknight.com",
+        description: "",
+        phone: "",
+        email: "",
         
         examinations: {
 			patient: null,
