@@ -1,110 +1,32 @@
-var examinations = [
-
-
-
-    "CLASS_CHOICES": [{
-            "value": "class1",
-            "display": "CLASS I"
-        },
-        {
-            "value": "class2",
-            "display": "CLASS II"
-        },
-        {
-            "value": "class3",
-            "display": "CLASS III"
-        }
-    ],
-
-    "NASOLABIAL_ANGLE": [{
-            "value": "normal",
-            "display": "NORMAL"
-        },
-        {
-            "value": "acute",
-            "display": "ACUTE"
-        },
-        {
-            "value": "obtuse",
-            "display": "OBTUCE"
-        }
-    ],
-
-
-    "NASOLABIAL_SULCUS": [{
-            "value": "normal",
-            "display": "NORMAL"
-        },
-        {
-            "value": "deep",
-            "display": "DEEP"
-        }
-    ],
-
-    "LIP_COMPETENCY": [{
-            "value": "competent",
-            "display": "COMPETENT"
-        },
-        {
-            "value": "incompetent",
-            "display": "INCOMPETENT"
-        },
-        {
-            "value": "partially_competent",
-            "display": "PARTIALLY COMPETENT"
-        }
-    ],
-
-    "FACE_FORM": [{
-            "value": "dolichocephalic",
-            "display": "DOLICHOCEPHALIC"
-        },
-        {
-            "value": "mesocephalic",
-            "display": "MESOCEPHALIC"
-        },
-        {
-            "value": "brachycephalic",
-            "display": "BRACHYCEPHALIC"
-        }
-    ],
-
-    "MIDLINE_CHOICES": [{
-            "value": "coincidence",
-            "display": "COINIDENCE"
-        },
-        {
-            "value": "deviated_to_left",
-            "display": "DEVIATED TO LEFT"
-        },
-        {
-            "value": "deviated_to_right",
-            "display": "DEVIATED TO RIGHT"
-        }
-    ],
-    "ORAL_HYGIENE": [{
-            "value": "good",
-            "display": "GOOD"
-        },
-        {
-            "value": "fair",
-            "display": "FAIR"
-        },
-        {
-            "value": "bad",
-            "display": "BAD
-        }
-    ],
-
-    "TREATED_ARCH": [{
-            "value": "max",
-            "display": "MAX"
-        },
-        {
-            "value": "mand",
-            "display": "MAND
-        }
-    ]
-
-
-]
+{
+    
+    "name": "Hama Karim Khan",
+    "doctor": 1,
+    "dob": "1937-03-22",
+    "gender": "male",
+    "description": "Just an aunt",
+    "phone": "07701570615",
+    "email": "ilo.shako@imperialknight.com",
+    
+    "examinations": {
+        "skeletal_class": "class1",
+        "nasolabial_angle": "normal",
+        "nasolabial_sulcus": "normal",
+        "lip_competency": "competent",
+        "face_form": "dolichocephalic",
+        "molar_class_left": "class1",
+        "molar_class_right": "class1",
+        "midline_upper": "coincidence",
+        "midline_lower": "coincidence",
+        "overjet": "Diskjet",
+        "oral_hygiene": "good",
+        "treatment_plan": "",
+        "slot": "normal",
+        "treated_arch": "max",
+        "bracket_system": "steel",
+        "extraction_upper": "normal",
+        "extraction_lower": "normal",
+        "anchorage_upper": "normal"
+    },
+    "status": true
+}

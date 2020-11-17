@@ -181,7 +181,7 @@ class ClinicalExaminationSerializer(serializers.ModelSerializer):
     # treated_arch = ChoiceField(ClinicalExamination.TREATED_ARCH)
     # skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
     # skeletal_class = ChoiceField(ClinicalExamination.CLASS_CHOICES)
-    # patient = serializers.PrimaryKeyRelatedField(read_only=False, required=False)
+    patient = serializers.PrimaryKeyRelatedField(queryset=Patient.objects.all(), required=False)
 
     class Meta:
         model = ClinicalExamination
@@ -199,8 +199,8 @@ class PatientSerializer(serializers.ModelSerializer):
     treatments = TreatmentSerializer(many=True, required=False)
     appointments = AppointmentSerializer(many=True, required=False)
     attachments = AttachmentSerializer(many=True, required=False)
-    # examinations = ClinicalExaminationSerializer(many=False, allow_null=True)
-    examinations = serializers.SerializerMetaclass()
+    examinations = ClinicalExaminationSerializer()
+    # examinations = serializers.SerializerMetaclass()
 
     class Meta:
         model = Patient
@@ -211,15 +211,11 @@ class PatientSerializer(serializers.ModelSerializer):
         ]
         read_only_Fields = ('id',)
 
+    
     def create(self, validated_data):
-        # print(validated_data)
         examinations_data = validated_data.pop('examinations')
         patient = Patient.objects.create(**validated_data)
-        examinations_data['patient'] = patient
-        print(patient)
-        print('========')
-        print(examinations_data)
-        ClinicalExamination.objects.create(patient=patient.id, **examinations_data)
+        ClinicalExamination.objects.create(patient=patient, **examinations_data)
         return patient
 
 class PatientPictureSerializer(serializers.ModelSerializer):
