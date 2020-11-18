@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from core.models import Patient, Attachment, Doctor, Treatment, ComingTreatment, ClinicalExamination
+from core.models import (
+    Patient, Attachment, Doctor, Treatment, ComingTreatment, 
+    ClinicalExamination, MedicalExamination,
+    )
 
 class UserListSerializer(serializers.ModelSerializer):
 
@@ -188,8 +191,26 @@ class ClinicalExaminationSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'patient','skeletal_class', 'nasolabial_angle','nasolabial_sulcus',
             'lip_competency','face_form','molar_class_left', 'molar_class_right','midline_upper',
-            'midline_lower','overjet','oral_hygiene','treatment_plan','slot','treated_arch', 'bracket_system',
+            'midline_lower','overjet','oral_hygiene', 'tongue_size', 'habit','treatment_plan','slot','treated_arch', 'bracket_system',
             'extraction_upper','extraction_lower','anchorage_upper','created', 'updated'
+        ]
+        read_only_Fields = ('id','created','updated',)
+
+
+
+class MedicalExaminationSerializer(serializers.ModelSerializer):
+    
+
+    patient = serializers.PrimaryKeyRelatedField(
+        queryset=Patient.objects.all(), 
+        required=False
+        )
+
+    class Meta:
+        model = MedicalExamination
+        fields = [
+            'id', 'patient','physical_restrictions','sinus_infections','diabetes','heart_problem',
+            'kidney_illness','emotional_difficulties','other_diseasses','created','updated'
         ]
         read_only_Fields = ('id','created','updated',)
 
@@ -200,27 +221,32 @@ class PatientSerializer(serializers.ModelSerializer):
     appointments = AppointmentSerializer(many=True, required=False)
     attachments = AttachmentSerializer(many=True, required=False)
     examinations = ClinicalExaminationSerializer()
-    # examinations = serializers.SerializerMetaclass()
+    medicals = MedicalExaminationSerializer()
 
     class Meta:
         model = Patient
         fields = [
             'id', 'name', 'doctor', 'dob', 'gender', 'description', 'phone', 
-            'email', 'image', 'treatments', 'appointments', 'attachments', 'examinations', 'status'
+            'email', 'image', 'treatments', 'appointments', 'attachments', 
+            'examinations','medicals', 'status'
          
         ]
         read_only_Fields = ('id',)
 
     
     def create(self, validated_data):
+        print(validated_data)
         examinations_data = validated_data.pop('examinations')
+        medicals_data = validated_data.pop('examinations')
         patient = Patient.objects.create(**validated_data)
         ClinicalExamination.objects.create(patient=patient, **examinations_data)
+        MedicalExamination.objects.create(patient=patient, **medicals_data)
         return patient
 
     def update(self, instance, validated_data):
        
         examinations_data = validated_data.pop('examinations')
+        # examinations_data = validated_data.pop('examinations')
         # Unless the application properly enforces that this field is
         # always set, the following could raise a `DoesNotExist`, which
         # would need to be handled.

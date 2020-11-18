@@ -69,7 +69,12 @@ export const choices = Vue.observable({
         }
     ],
 
-    LIP_COMPETENCY: [{
+    LIP_COMPETENCY: [
+        {
+            value: null,
+            text: 'Select...'
+        },
+        {
             value: "competent",
             text: "COMPETENT"
         },
@@ -83,7 +88,12 @@ export const choices = Vue.observable({
         }
     ],
 
-    FACE_FORM: [{
+    FACE_FORM: [
+        {
+            value: null,
+            text: 'Select...'
+        },
+        {
             value: "dolichocephalic",
             text: "DOLICHOCEPHALIC"
         },
@@ -97,7 +107,12 @@ export const choices = Vue.observable({
         }
     ],
 
-    IDLINE_CHOICES: [{
+    MIDLINE_CHOICES: [
+        {
+            value: null,
+            text: 'Select...'
+        },
+        {
             value: "coincidence",
             text: "COINIDENCE"
         },
@@ -110,7 +125,12 @@ export const choices = Vue.observable({
             text: "DEVIATED TO RIGHT"
         }
     ],
-    ORAL_HYGIENE: [{
+    ORAL_HYGIENE: [
+        {
+            value: null,
+            text: 'Select...'
+        },
+        {
             value: "good",
             text: "GOOD"
         },
@@ -136,5 +156,31 @@ export const choices = Vue.observable({
             value: "mand",
             text: "MAND"
         }
-    ]
+    ],
+    MEDICALS: [
+        {
+            value: null,
+            text: 'Select...'
+        },
+        {
+            value: "95",
+            text: "EXCELENT"
+        },
+        {
+            value: "75",
+            text: "GOOD"
+        },
+        {
+            value: "50",
+            text: "FAIR"
+        },
+        {
+            value: "25",
+            text: "BAD"
+        },
+        {
+            value: "10",
+            text: "WORST"
+        },
+    ],
 });

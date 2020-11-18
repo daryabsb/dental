@@ -360,12 +360,14 @@ class ClinicalExamination(models.Model):
         related_name='examinations'
         )
 
+    
+# ROW NUMBER 1
     skeletal_class=models.CharField(
         max_length=200, 
         choices=CLASS_CHOICES, 
         default="class1"
         )
-
+    
     nasolabial_angle=models.CharField(
             max_length=200, 
             choices=NASOLABIAL_ANGLE, 
@@ -377,7 +379,15 @@ class ClinicalExamination(models.Model):
             choices=NASOLABIAL_SULCUS, 
             default='normal'
             )
+    overjet = models.CharField(max_length=60, default='Diskjet')
 
+# ROW NUMBER 2
+    oral_hygiene=models.CharField(
+            max_length=200, 
+            choices=ORAL_HYGIENE, 
+            default='good'
+            )
+    
     lip_competency=models.CharField(
             max_length=200, 
             choices=LIP_COMPETENCY, 
@@ -389,7 +399,14 @@ class ClinicalExamination(models.Model):
             choices=FACE_FORM, 
             default='dolichocephalic'
             )
-
+    habit = models.CharField(max_length=60, default='Naughty')
+# ROW NUMBER 3
+    treated_arch=models.CharField(
+            max_length=200, 
+            choices=TREATED_ARCH, 
+            default='max'
+            )
+    
     molar_class_left=models.CharField(
             max_length=200, 
             choices=CLASS_CHOICES, 
@@ -401,7 +418,16 @@ class ClinicalExamination(models.Model):
             choices=CLASS_CHOICES, 
             default='class1'
             )
+    tongue_size = models.CharField(max_length=60, default='Long')
 
+# ============
+# ROW NUMBER 4
+    bracket_system=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='class1'
+            )
+    
     midline_upper=models.CharField(
             max_length=200, 
             choices=MIDLINE_CHOICES, 
@@ -413,36 +439,80 @@ class ClinicalExamination(models.Model):
             choices=MIDLINE_CHOICES, 
             default='coincidence'
             )
-
-    overjet = models.CharField(max_length=60, default='Diskjet')
-    Habit = models.CharField(max_length=60, default='Naughty')
-    tongue_size = models.CharField(max_length=60, default='Long')
-
-    oral_hygiene=models.CharField(
-            max_length=200, 
-            choices=ORAL_HYGIENE, 
-            default='good'
-            )
-
-    treatment_plan=models.TextField(null=True, blank=True)
-
-    treated_arch=models.CharField(
-            max_length=200, 
-            choices=TREATED_ARCH, 
-            default='max'
-            )
-
-    bracket_system=models.CharField(max_length=60, default='steel')
     slot=models.CharField(max_length=60, default='normal')
-    extraction_upper=models.CharField(max_length=60, default='normal')
-    extraction_lower=models.CharField(max_length=60, default='normal')
-    anchorage_upper=models.CharField(max_length=60, default='normal')
+
+# ROW NUMBER 5
+    extraction_upper=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='class1'
+            )
+    extraction_lower=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='class1'
+            )
+    anchorage_upper=models.CharField(
+            max_length=200, 
+            choices=CLASS_CHOICES, 
+            default='class1'
+            )
+    treatment_plan=models.TextField(null=True, blank=True)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.patient.name} - {self.created}'
+
+class MedicalExamination(models.Model):
+    MEDICALS_CONDITIONS = (
+        ('95', "EXCELENT"),
+        ('75', "GOOD"),
+        ('50', "FAIR"),
+        ('25', "BAD"),
+        ('10', "WORST"),
+    )
+    patient = models.OneToOneField(
+        'Patient', 
+        on_delete=models.CASCADE, 
+        related_name='medicals'
+        )
+    physical_restrictions=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            # default=75
+            )
+    sinus_infections=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            # default=75
+            )
+    diabetes=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            # default=75
+            )
+    heart_problem=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            # default=75
+            )
+    kidney_illness=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            # default=75
+            )
+    emotional_difficulties=models.CharField(
+            max_length=200, 
+            choices=MEDICALS_CONDITIONS, 
+            default='75'
+            )
+    other_diseasses=models.TextField(blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 
-
     def __str__(self):
         return f'{self.patient.name} - {self.created}'
-
