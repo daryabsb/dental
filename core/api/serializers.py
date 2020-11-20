@@ -237,7 +237,7 @@ class PatientSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(validated_data)
         examinations_data = validated_data.pop('examinations')
-        medicals_data = validated_data.pop('examinations')
+        medicals_data = validated_data.pop('medicals')
         patient = Patient.objects.create(**validated_data)
         ClinicalExamination.objects.create(patient=patient, **examinations_data)
         MedicalExamination.objects.create(patient=patient, **medicals_data)

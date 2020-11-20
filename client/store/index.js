@@ -121,6 +121,8 @@ const mutations = {
     },
     ADD_PATIENT(state, payload) {
         state.patients.unshift(payload);
+        console.log('From Payload: ', payload);
+        console.log('From state: ', state.patients);
     },
     ADD_NEW_APPOINTMENT(state, payload) {
         let patient = state.patients.find(p => p.id === payload.patient);

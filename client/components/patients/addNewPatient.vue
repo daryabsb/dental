@@ -67,6 +67,7 @@
                       id="input-2"
                       v-model="phone"
                       placeholder="Ex: 0770 XXX XXXX"
+                      type="text"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -79,7 +80,7 @@
                     <b-form-input
                       id="input-2"
                       v-model="email"
-					  type="email"
+					            type="email"
                       placeholder="foo@gmail.com"
                     ></b-form-input>
                   </b-form-group>
@@ -159,11 +160,9 @@
               </b-row>
 
               <b-form-group id="input-group-4">
-                <b-form-checkbox-group id="checkboxes-4">
                   <b-form-checkbox v-model="status"
-                    >Check me out</b-form-checkbox
+                    >Activate</b-form-checkbox
                   >
-                </b-form-checkbox-group>
               </b-form-group>
 
               <!-- <b-button type="submit" variant="primary">Submit</b-button> -->
@@ -234,7 +233,7 @@
                     label-for="input-overjet"
                   >
                     <b-form-textarea
-					id="input-overjet"
+					            id="input-overjet"
                       class="form-control"
                       v-model="examinations.overjet"
                     ></b-form-textarea>
@@ -692,7 +691,6 @@ export default {
       status: true,
 
       examinations: {
-        patient: null,
         skeletal_class: null,
         nasolabial_angle: null,
         nasolabial_sulcus: null,
@@ -712,7 +710,7 @@ export default {
         extraction_lower: null,
         anchorage_upper:null,
         tongue_size: '',
-        habit: '',
+        habit: ''
       },
       medicals: {
             physical_restrictions: "75",
@@ -764,52 +762,21 @@ export default {
       formData.append('email', this.email);
       formData.append('examinations', this.examinations);
       formData.append('medicals', this.medicals);
-      formData.append('status',true);
+      formData.append('status',this.status);
 
       // --------------------
         let data = {
         
-        "name": "Michael B. Jordan",
-        "doctor": 1,
-        "dob": "1978-03-22",
-        "gender": "male",
-        "description": "Just another artist",
-        "phone": "07701570615",
-        "email": "m.b@gmail.com",        
-        "examinations": {
-          
-            "skeletal_class": "class1",
-            "nasolabial_angle": "normal",
-            "nasolabial_sulcus": "normal",
-            "lip_competency": "competent",
-            "face_form": "dolichocephalic",
-            "molar_class_left": "class1",
-            "molar_class_right": "class1",
-            "midline_upper": "coincidence",
-            "midline_lower": "coincidence",
-            "overjet": "Diskjet",
-            "oral_hygiene": "good",
-            "tongue_size": "Long",
-            "habit": "Naughty",
-            "treatment_plan": "",
-            "slot": "normal",
-            "treated_arch": "max",
-            "bracket_system": "steel",
-            "extraction_upper": "normal",
-            "extraction_lower": "normal",
-            "anchorage_upper": "normal",
-        },
-        "medicals": {
-            "physical_restrictions": "75",
-            "sinus_infections": "75",
-            "diabetes": "50",
-            "heart_problem": "75",
-            "kidney_illness": "95",
-            "emotional_difficulties": "95",
-            "other_diseasses": "",
-           
-        },
-        "status": true
+        "name": this.name,
+        "doctor": this.doctor,
+        "dob": this.dob,
+        "gender": this.gender,
+        "description": this.description,
+        "phone": this.phone,
+        "email": this.email,        
+        "examinations": this.examinations,
+        "medicals": this.medicals,
+        "status": this.status
     }
 
 
