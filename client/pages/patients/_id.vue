@@ -163,7 +163,7 @@
 						v-if="displayContents('tabGeneral')"
 					></tab-general>
 					<tab-treatment
-						v-if="displayContents('tabTreatment')"
+						:patient="patient" v-if="displayContents('tabTreatment')"
 					></tab-treatment>
 
 					<tab-files
