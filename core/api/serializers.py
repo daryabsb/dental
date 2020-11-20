@@ -246,14 +246,14 @@ class PatientSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
        
         examinations_data = validated_data.pop('examinations')
-        # examinations_data = validated_data.pop('examinations')
-        # Unless the application properly enforces that this field is
-        # always set, the following could raise a `DoesNotExist`, which
-        # would need to be handled.
-        print(validated_data)
-
+        medicals_data = validated_data.pop('medicals')
+        # appointments = validated_data.pop('appointments')
+        # treatments = validated_data.pop('treatments')
+        # attachments = validated_data.pop('attachments')
         
+        # CREATE OR UPDATE EXAMINATIONS AND MEDICALS WITH PATIENT DATA
         examinations, created = ClinicalExamination.objects.get_or_create(patient=instance)
+        medicals, created = MedicalExamination.objects.get_or_create(patient=instance)
 
         instance.name = validated_data.get('name', instance.name)
         # instance.doctor = validated_data.get('doctor', instance.doctor)
@@ -289,6 +289,17 @@ class PatientSerializer(serializers.ModelSerializer):
         examinations.anchorage_upper    = examinations_data.get('anchorage_upper', examinations.anchorage_upper)
 
         examinations.save()
+
+
+        medicals.physical_restrictions  = medicals_data.get('physical_restrictions', medicals.physical_restrictions)
+        medicals.sinus_infections               = medicals_data.get('sinus_infections', medicals.sinus_infections)
+        medicals.diabetes               = medicals_data.get('diabetes', medicals.diabetes) 
+        medicals.heart_problem          = medicals_data.get('heart_problem', medicals.heart_problem)
+        medicals.kidney_illness         = medicals_data.get('kidney_illness', medicals.kidney_illness)
+        medicals.emotional_difficulties = medicals_data.get('emotional_difficulties', medicals.emotional_difficulties)
+        medicals.other_diseasses        = medicals_data.get('other_diseasses', medicals.other_diseasses)
+
+        medicals.save()
 
         return instance
 

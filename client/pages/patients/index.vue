@@ -35,8 +35,24 @@
 				<div class="card">
 					<div class="card-body card-body__modal">
             
-          
-              	<add-new-patient></add-new-patient>
+          <b-button
+      variant="primary"
+      id="show-btn"
+      size="md"
+      class="mb-3"
+      @click="showModal(false, patient={})"
+    >
+	<i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient
+    </b-button>
+	<b-modal
+      variant="primary"
+      size="lg"
+      ref="my-modal"
+      hide-footer
+      title="Add a new patient"
+    >
+              	<add-new-patient @hideModal="hideModal" :edit="edit" :editPatient="testPatient"></add-new-patient>
+	 </b-modal>
           
 						<!-- <button
 							type="button"
@@ -315,6 +331,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { store, mutations } from "../../store/utils/conf";
+import { choices } from "../../store/utils/choices";
 
 export default {
 	async asyncData({ $axios, app, store }) {
@@ -324,29 +341,69 @@ export default {
 	},
 	data() {
 		return {
-			// show: false,
+			show: true,
 			// pid: "",
 			patientNameDelete: "",
 			patientIdDelete: "",
-		
+			editPatient: null,
+			edit: true,
 			searchInput: "",
 			searchDate: "",
+			testPatient: {
+				type: Object,
+				default: null
+			}
 		};
 	},
 	components: {},
 	methods: {
+		hideModal() {
+      		this.$refs["my-modal"].hide();
+    	},
+		showModal(status, patient) {
+			
+			this.edit = status;
+
+			if(status) {
+				// console.log('Patient before send to edit: ', patient)
+
+				this.stripPayload(patient)
+				
+				this.$store.dispatch('updateCurrentPatientState', patient);
+				
+				this.$refs["my-modal"].show();
+			}else {
+				
+				this.$refs["my-modal"].show();
+			}      		
+    	},
 		onUploadImage(id) {
 			this.pid = id;
 			// this.$store.conf.dispatch('conf/toggleImageUploadOpen')
 			this.$store.dispatch("toggleImageUploadOpen");
 			// this.show = true;
 		},
-    
-
+		onEditPatient(patient) {
+			this.editPatient = patient;
+		},
 		confirmDelete(name, id) {
 			(this.patientNameDelete = name),
 				(this.patientIdDelete = id),
 				mutations.toggleConfirmDelete();
+		},
+		stripPayload(patient){
+			delete patient["attachments"];
+			delete patient["appointments"];
+			delete patient["treatments"];
+			delete patient["image"];
+			delete patient.examinations["patient"];
+			delete patient.examinations["created"];
+			delete patient.examinations["updated"];
+			delete patient.medicals["patient"];
+			delete patient.medicals["created"];
+			delete patient.medicals["updated"];
+
+			return patient;
 		},
 	},
 	computed: {
@@ -358,6 +415,11 @@ export default {
 		},
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;
+		},
+		allPatients() {
+			const all = [];
+			this.patients.forEach(p=> all.push(p));
+			return all;
 		},
 		...mapGetters(["patients", 'pid']),
 	},

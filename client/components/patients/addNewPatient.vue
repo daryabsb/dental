@@ -8,24 +8,11 @@
       </select>
 		-->
 
-    <b-button
-      variant="primary"
-      id="show-btn"
-      size="md"
-      class="mb-3"
-      @click="showModal"
-    >
-      <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Patient
-    </b-button>
+    
+      
     <!-- <b-button id="toggle-btn" size="sm" @click="toggleModal">Toggle Modal</b-button> -->
 
-    <b-modal
-      variant="primary"
-      size="lg"
-      ref="my-modal"
-      hide-footer
-      title="Add a new patient"
-    >
+    
       <!-- <pre>{{classChoices}}</pre> -->
 
       <client-only>
@@ -45,13 +32,13 @@
                     class="form-group py-0"
                     id="input-group-1"
                     label="Patient's name:"
-                    label-for="input-1"
+                    label-for="input-name"
                     cols="3"
                   >
                     <b-form-input
                       class="form-control py-0"
-                      id="input-1"
-                      v-model="name"
+                      id="input-name"
+                      v-model="patient.name"
                       type="text"
                       placeholder="Enter patient's name"
                     ></b-form-input>
@@ -59,13 +46,13 @@
                 </b-col>
                 <b-col cols="4">
                   <b-form-group
-                    id="input-group-2"
+                    id="input-group-phone"
                     label="Phone Number:"
-                    label-for="input-2"
+                    label-for="input-phone"
                   >
                     <b-form-input
-                      id="input-2"
-                      v-model="phone"
+                      id="input-phone"
+                      v-model="patient.phone"
                       placeholder="Ex: 0770 XXX XXXX"
                       type="text"
                     ></b-form-input>
@@ -73,13 +60,13 @@
                 </b-col>
                 <b-col cols="4">
                   <b-form-group
-                    id="input-group-2"
+                    id="input-group-email"
                     label="Email:"
-                    label-for="input-2"
+                    label-for="input-email"
                   >
                     <b-form-input
-                      id="input-2"
-                      v-model="email"
+                      id="input-email"
+                      v-model="patient.email"
 					            type="email"
                       placeholder="foo@gmail.com"
                     ></b-form-input>
@@ -90,7 +77,7 @@
 				   <b-col cols="4">
                   <b-form-group
                     class="form-group py-0"
-                    id="input-group-1"
+                    id="input-group-doctor"
                     label="Doctor:"
                     label-for="input-doctor"
                     description="Doctor Handren is selected by default."
@@ -99,7 +86,7 @@
                     <b-form-select
                       id="input-doctor"
                       class="form-control py-0"
-                      v-model="doctor"
+                      v-model="patient.doctor"
                       size="sm"
                       :options="ops.DOCTOR_CHOICES"
                     ></b-form-select>
@@ -115,7 +102,7 @@
                     <b-form-select
                       id="input-gender"
                       class="form-control py-0"
-                      v-model="gender"
+                      v-model="patient.gender"
                       size="sm"
                       :options="ops.GENDER"
                     ></b-form-select>
@@ -131,7 +118,7 @@
                     cols="3"
                   >
                     <b-form-datepicker
-                      v-model="dob"
+                      v-model="patient.dob"
                       class="py-2"
                      
                       :date-format-options="{
@@ -152,7 +139,7 @@
                   >
                     <b-form-textarea
                       id="input-2"
-                      v-model="description"
+                      v-model="patient.description"
                       placeholder="Describe your patient"
                     ></b-form-textarea rows="3">
                   </b-form-group>
@@ -160,7 +147,7 @@
               </b-row>
 
               <b-form-group id="input-group-4">
-                  <b-form-checkbox v-model="status"
+                  <b-form-checkbox v-model="patient.status"
                     >Activate</b-form-checkbox
                   >
               </b-form-group>
@@ -185,7 +172,7 @@
                     <b-form-select
                       id="input-skeletal"
                       class="form-control"
-                      v-model="examinations.skeletal_class"
+                      v-model="patient.examinations.skeletal_class"
                       size="sm"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
@@ -203,7 +190,7 @@
                     <b-form-select
                       id="input-nasolabial"
                       class="form-control"
-                      v-model="examinations.nasolabial_angle"
+                      v-model="patient.examinations.nasolabial_angle"
                       :options="ops.NASOLABIAL_ANGLE"
                     ></b-form-select>
                   </b-form-group>
@@ -219,7 +206,7 @@
                     <b-form-select
                       id="input-sulcus"
                       class="form-control"
-                      v-model="examinations.nasolabial_sulcus"
+                      v-model="patient.examinations.nasolabial_sulcus"
                       :options="ops.NASOLABIAL_SULCUS"
                     ></b-form-select>
                   </b-form-group>
@@ -235,7 +222,7 @@
                     <b-form-textarea
 					            id="input-overjet"
                       class="form-control"
-                      v-model="examinations.overjet"
+                      v-model="patient.examinations.overjet"
                     ></b-form-textarea>
                   </b-form-group>
 				  </b-col>
@@ -253,7 +240,7 @@
                     <b-form-select
                       id="input-ohygiene"
                       class="form-control"
-                      v-model="examinations.oral_hygiene"
+                      v-model="patient.examinations.oral_hygiene"
                       size="sm"
                       :options="ops.ORAL_HYGIENE"
                     ></b-form-select>
@@ -271,7 +258,7 @@
                     <b-form-select
                       id="input-lip"
                       class="form-control"
-                      v-model="examinations.lip_competency"
+                      v-model="patient.examinations.lip_competency"
                       :options="ops.LIP_COMPETENCY"
                     ></b-form-select>
                   </b-form-group>
@@ -287,7 +274,7 @@
                     <b-form-select
                       id="input-face"
                       class="form-control"
-                      v-model="examinations.face_form"
+                      v-model="patient.examinations.face_form"
                       :options="ops.FACE_FORM"
                     ></b-form-select>
                   </b-form-group>
@@ -303,7 +290,7 @@
                     <b-form-textarea
 					            id="input-habit"
                       class="form-control"
-                      v-model="examinations.habit"
+                      v-model="patient.examinations.habit"
                     ></b-form-textarea>
                   </b-form-group>
 				  </b-col>
@@ -321,7 +308,7 @@
                     <b-form-select
                       id="input-tarch"
                       class="form-control"
-                      v-model="examinations.treated_arch"
+                      v-model="patient.examinations.treated_arch"
                       size="sm"
                       :options="ops.TREATED_ARCH"
                     ></b-form-select>
@@ -339,7 +326,7 @@
                     <b-form-select
                       id="input-mocleft"
                       class="form-control"
-                      v-model="examinations.molar_class_left"
+                      v-model="patient.examinations.molar_class_left"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -355,7 +342,7 @@
                     <b-form-select
                       id="input-mocright"
                       class="form-control"
-                      v-model="examinations.molar_class_right"
+                      v-model="patient.examinations.molar_class_right"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -371,7 +358,7 @@
                     <b-form-textarea
 					id="input-overjet"
                       class="form-tongue"
-                      v-model="examinations.tongue_size"
+                      v-model="patient.examinations.tongue_size"
                     ></b-form-textarea>
                   </b-form-group>
 				  </b-col>
@@ -389,7 +376,7 @@
                     <b-form-select
                       id="input-brastem"
                       class="form-control"
-                      v-model="examinations.bracket_system"
+                      v-model="patient.examinations.bracket_system"
                       size="sm"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
@@ -407,7 +394,7 @@
                     <b-form-select
                       id="input-mupper"
                       class="form-control"
-                      v-model="examinations.midline_upper"
+                      v-model="patient.examinations.midline_upper"
                       :options="ops.MIDLINE_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -423,7 +410,7 @@
                     <b-form-select
                       id="input-mower"
                       class="form-control"
-                      v-model="examinations.midline_lower"
+                      v-model="patient.examinations.midline_lower"
                       :options="ops.MIDLINE_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -439,7 +426,7 @@
                     <b-form-textarea
 					            id="input-slot"
                       class="form-control"
-                      v-model="examinations.slot"
+                      v-model="patient.examinations.slot"
                     ></b-form-textarea>
                   </b-form-group>
 				  </b-col>
@@ -458,7 +445,7 @@
                     <b-form-select
                       id="input-extupper"
                       class="form-control"
-                      v-model="examinations.extraction_upper"
+                      v-model="patient.examinations.extraction_upper"
                       size="sm"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
@@ -476,7 +463,7 @@
                     <b-form-select
                       id="input-extower"
                       class="form-control"
-                      v-model="examinations.extraction_lower"
+                      v-model="patient.examinations.extraction_lower"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -492,7 +479,7 @@
                     <b-form-select
                       id="input-anchoper"
                       class="form-control"
-                      v-model="examinations.anchorage_upper"
+                      v-model="patient.examinations.anchorage_upper"
                       :options="ops.CLASS_CHOICES"
                     ></b-form-select>
                   </b-form-group>
@@ -508,7 +495,7 @@
                     <b-form-textarea
 					            id="input-treaplan"
                       class="form-control"
-                      v-model="examinations.treatment_plan"
+                      v-model="patient.examinations.treatment_plan"
                     ></b-form-textarea>
                   </b-form-group>
 				  </b-col>
@@ -527,7 +514,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.physical_restrictions"
+                      v-model="patient.medicals.physical_restrictions"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -542,7 +529,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.sinus_infections"
+                      v-model="patient.medicals.sinus_infections"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -557,7 +544,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.diabetes"
+                      v-model="patient.medicals.diabetes"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -575,7 +562,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.heart_problem"
+                      v-model="patient.medicals.heart_problem"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -590,7 +577,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.kidney_illness"
+                      v-model="patient.medicals.kidney_illness"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -605,7 +592,7 @@
                     <b-form-select
 					            id="input-physical"
                       class="form-control"
-                      v-model="medicals.emotional_difficulties"
+                      v-model="patient.medicals.emotional_difficulties"
                       :options="ops.MEDICALS"
                     ></b-form-select>
                   </b-form-group>
@@ -621,7 +608,7 @@
                     <b-form-textarea
 					            id="input-otherDs"
                       class="form-control"
-                      v-model="medicals.other_diseasses"
+                      v-model="patient.medicals.other_diseasses"
                       rows="3"
                     ></b-form-textarea>
                   </b-form-group>
@@ -669,61 +656,35 @@
 
       <!-- <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button> -->
       <!-- <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button> -->
-    </b-modal>
+   
   </div>
 </template>
 <script>
 // import VueFormGenerator from 'vue-form-generator'
 // import 'vue-form-generator/dist/vfg.css'
 // import { patientOptions, examinations } from "../../static/data/choices";
-import { choices } from "../../store/utils/choices";
+import { choices, mutateChoices } from "../../store/utils/choices";
 export default {
-  props: ["patientID"],
+  props: ["editPatient", "edit"],
+  created() {
+    // console.log('CREATED ', this.patient)
+    if (this.edit) {
+       this.patient = Object.assign({}, this.$store.state.currentPatient);
+    this.patient.examinations = Object.assign({}, this.$store.state.currentPatient.examinations);
+    this.patient.medicals = Object.assign({}, this.$store.state.currentPatient.medicals);
+    } else {
+      this.patient = choices.patient;
+    }
+   
+    // console.log('Left ', this.patient)
+
+  },
   data() {
     return {
-      name: "",
-      doctor: 1,
-      dob: "",
-      gender: null,
-      description: "",
-      phone: "",
-      email: "",
-      status: true,
-
-      examinations: {
-        skeletal_class: null,
-        nasolabial_angle: null,
-        nasolabial_sulcus: null,
-        lip_competency: null,
-        face_form: null,
-        molar_class_left: null,
-        molar_class_right: null,
-        midline_upper: null,
-        midline_lower: null,
-        overjet: "",
-        oral_hygiene: null,
-        treatment_plan: "",
-        slot: "",
-        treated_arch: null,
-        bracket_system: null,
-        extraction_upper: null,
-        extraction_lower: null,
-        anchorage_upper:null,
-        tongue_size: '',
-        habit: ''
-      },
-      medicals: {
-            physical_restrictions: "75",
-            sinus_infections: "75",
-            diabetes: "75",
-            heart_problem: "75",
-            kidney_illness: "75",
-            emotional_difficulties: "75",
-            other_diseasses: ""
-      },
       show: true,
       formatted: "",
-    };
+      patient: {},
+    }
   },
   methods: {
     onComplete: function () {
@@ -784,13 +745,26 @@ export default {
 
       // --------------------
 
-      console.log(data)
+      // console.log(this.patient)
 
       /* DISPATCH ACTION @STORE */
-      this.$store.dispatch('addPatient', data);
+      if(this.patient.id === undefined) {
+        console.log('ADD PATIENT')
+        this.$store.dispatch('addPatient', this.patient);
+        
+      } else {
+        console.log('EDIT PATIENT')
+        
+        this.$store.dispatch('editPatient', this.patient);
+      }
+      
+      this.hide();
+      
 
-      this.hideModal();
-
+    },
+    hide() {
+      this.show = !this.show
+      this.$emit('hideModal');
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -814,9 +788,18 @@ export default {
     ops() {
       return choices;
     },
-    doctorList() {
-      return choices.DOCTOR_CHOICES;
+    patiented() {
+      // get() {
+        return this.editPatient
+      // return this.$store.state.currentPatient;
+      // },
+      // set (value) {
+      // console.log(value);
+      // this.$store.dispatch('updateCurrentPatientState', value);
+    
+      
     },
+    
   },
 };
 </script>

@@ -69,8 +69,7 @@ export const choices = Vue.observable({
         }
     ],
 
-    LIP_COMPETENCY: [
-        {
+    LIP_COMPETENCY: [{
             value: null,
             text: 'Select...'
         },
@@ -88,8 +87,7 @@ export const choices = Vue.observable({
         }
     ],
 
-    FACE_FORM: [
-        {
+    FACE_FORM: [{
             value: null,
             text: 'Select...'
         },
@@ -107,8 +105,7 @@ export const choices = Vue.observable({
         }
     ],
 
-    MIDLINE_CHOICES: [
-        {
+    MIDLINE_CHOICES: [{
             value: null,
             text: 'Select...'
         },
@@ -125,8 +122,7 @@ export const choices = Vue.observable({
             text: "DEVIATED TO RIGHT"
         }
     ],
-    ORAL_HYGIENE: [
-        {
+    ORAL_HYGIENE: [{
             value: null,
             text: 'Select...'
         },
@@ -157,8 +153,7 @@ export const choices = Vue.observable({
             text: "MAND"
         }
     ],
-    MEDICALS: [
-        {
+    MEDICALS: [{
             value: null,
             text: 'Select...'
         },
@@ -183,4 +178,53 @@ export const choices = Vue.observable({
             text: "WORST"
         },
     ],
+    patient: {
+        name: '',
+        doctor: 1,
+        dob: "",
+        gender: null,
+        description: "",
+        phone: "",
+        email: "",
+        status: true,
+
+        examinations: {
+            skeletal_class: null,
+            nasolabial_angle: null,
+            nasolabial_sulcus: null,
+            lip_competency: null,
+            face_form: null,
+            molar_class_left: null,
+            molar_class_right: null,
+            midline_upper: null,
+            midline_lower: null,
+            overjet: "",
+            oral_hygiene: null,
+            treatment_plan: "",
+            slot: "",
+            treated_arch: null,
+            bracket_system: null,
+            extraction_upper: null,
+            extraction_lower: null,
+            anchorage_upper: null,
+            tongue_size: '',
+            habit: ''
+        },
+        medicals: {
+            physical_restrictions: "75",
+            sinus_infections: "75",
+            diabetes: "75",
+            heart_problem: "75",
+            kidney_illness: "75",
+            emotional_difficulties: "75",
+            other_diseasses: ""
+        }
+    }
 });
+
+export const mutateChoices = {
+    updateName(value) {
+        console.log(value)
+        choices.patient.name = value
+    }
+}

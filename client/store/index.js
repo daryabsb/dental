@@ -22,6 +22,48 @@ const state = () => ({
     TEMPORARILY HOLDS 
     CURRENT PATIENT's IMAGE*/
     pimage: '',
+    currentPatient: {
+        name: 'darya',
+        doctor: 1,
+        dob: "",
+        gender: null,
+        description: "",
+        phone: "",
+        email: "",
+        status: true,
+
+        examinations: {
+            skeletal_class: null,
+            nasolabial_angle: null,
+            nasolabial_sulcus: null,
+            lip_competency: null,
+            face_form: null,
+            molar_class_left: null,
+            molar_class_right: null,
+            midline_upper: null,
+            midline_lower: null,
+            overjet: "",
+            oral_hygiene: null,
+            treatment_plan: "",
+            slot: "",
+            treated_arch: null,
+            bracket_system: null,
+            extraction_upper: null,
+            extraction_lower: null,
+            anchorage_upper: null,
+            tongue_size: '',
+            habit: ''
+        },
+        medicals: {
+            physical_restrictions: "75",
+            sinus_infections: "75",
+            diabetes: "75",
+            heart_problem: "75",
+            kidney_illness: "75",
+            emotional_difficulties: "75",
+            other_diseasses: ""
+        }
+    },
 
 });
 
@@ -121,8 +163,8 @@ const mutations = {
     },
     ADD_PATIENT(state, payload) {
         state.patients.unshift(payload);
-        console.log('From Payload: ', payload);
-        console.log('From state: ', state.patients);
+        // console.log('From Payload: ', payload);
+        // console.log('From state: ', state.patients);
     },
     ADD_NEW_APPOINTMENT(state, payload) {
         let patient = state.patients.find(p => p.id === payload.patient);
@@ -209,6 +251,9 @@ const mutations = {
     toggleImageUploadOpen(state) {
         state.isImageUploadOpen = !state.isImageUploadOpen
     },
+    updateCurrentPatient(state, payload) {
+        state.currentPatient = payload;
+    }
 };
 
 
@@ -359,7 +404,7 @@ const actions = {
 
         let url = `/patients/${id}/`;
         // console.log(url);
-
+        console.log('From edit patient payload: ', payload);
         try {
             const newPatient = await this.$axios.put(url, payload);
 
@@ -367,6 +412,9 @@ const actions = {
         } catch (err) {
             console.log(err);
         }
+    },
+    updateCurrentPatientState({ state, commit }, payload) {
+        commit('updateCurrentPatient', payload)
     },
     async onDelete({ state, commit }, payload) {
         // console.log('moduleName: ', payload.moduleName)
