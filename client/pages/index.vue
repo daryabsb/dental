@@ -182,10 +182,10 @@
                     <td>
                       <nuxt-link :to="`/patients/${appointment.patient}`"
                         ><img
-                          src="~assets/images/users/user-10.jpg"
+                          :src="patient(appointment).image"
                           alt=""
                           class="thumb-sm rounded-circle mr-2"
-                        />{{ appointment.patientName }}</nuxt-link
+                        />{{ patient(appointment).name }}</nuxt-link
                       >
                     </td>
                     <td>
@@ -310,6 +310,10 @@ export default {
         (this.idDelete = id),
         mutations.toggleConfirmDelete();
     },
+     patient(appointment) {
+      const patient = this.patients.find(p=>p.id === appointment.patient);
+      return patient;
+    },
   },
   computed: {
     searchAppointments() {
@@ -343,6 +347,7 @@ export default {
       "loggedInUser",
       "getTreatments",
       "getAppointments",
+      'patients',
     ]),
   },
 };

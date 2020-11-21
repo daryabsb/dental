@@ -34,6 +34,74 @@
         <div class="card">
           <div class="card-body card-body__modal">
             <!-- @click="showModal(false)" -->
+            
+<button 
+                                                    @click="showSelectPatientModal()"
+                                                    type="button" 
+                                                    class="btn btn-primary btn-outline-white px-4 mt-0 mb-3">
+                                                        <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
+                                                    </button>
+                                                    <b-modal
+                                                        variant="primary"
+                                                        size="lg"
+                                                        ref="p-select-patient-modal"
+                                                        hide-footer
+                                                        title="Select Your Patient">
+
+                                                        <b-form-select
+      v-model="selectedID"
+      :options="patients"
+      class="my-3"
+      value-field="id"
+      text-field="name"
+      disabled-field="notEnabled"
+    ></b-form-select>
+
+                                                        <button 
+                                                    @click="showPatientTreatmentModal()"
+                                                    type="button" 
+                                                    class="btn btn-primary btn-outline-white px-4 mt-0 mb-3 float-right">
+                                                        <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
+                                                    </button>
+                                                       
+                                                      </b-modal>
+
+
+
+
+
+
+                                                   
+                                                    <b-modal
+                                                        variant="primary"
+                                                        size="lg"
+                                                        ref="p-treatment-modal"
+                                                        hide-footer
+                                                        title="Add a new treatment">
+                                                        <add-new-treatment 
+                                                        @hidePatientTreatmentModal="hidePatientTreatmentModal" 
+                                                        :patientID="selectedID"
+                                                        ></add-new-treatment>
+                                                      </b-modal>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <button
               type="button"
               @click="selectPatientModal"
@@ -147,14 +215,14 @@
                         
                           <td class="sorting_1">
                             <nuxt-link
-                              :to="`/treatments/${treat.id}`"
+                              :to="`/patients/${treat.patient}`"
                               class="a-link-normal"
                             >
                               <img
-                                src="~assets/images/users/user-10.jpg"
+                                :src="patient(treat).image"
                                 alt=""
                                 class="thumb-sm rounded-circle mr-2"
-                              />{{ treat.patientName }}
+                              />{{ patient(treat).name }}
                             </nuxt-link>
                           </td>
                           <td>#{{ treat.title }}</td>
@@ -277,6 +345,7 @@ export default {
       editPatient: "",
       editDescription: "",
       editDate: '',
+      selectedID: '',
     };
   },
   components: {},
@@ -318,7 +387,26 @@ export default {
         (this.idDelete = id),
         mutations.toggleConfirmDelete();
     },
-  },
+    showPatientTreatmentModal() {
+      this.hideSelectPatientModal()
+      this.$refs['p-treatment-modal'].show()
+      // this.selectedID = '';
+    },
+    hidePatientTreatmentModal() {
+        this.$refs['p-treatment-modal'].hide()
+    },
+    showSelectPatientModal() {
+      this.$refs['p-select-patient-modal'].show()
+    },
+    hideSelectPatientModal() {
+        this.$refs['p-select-patient-modal'].hide()
+    },
+    patient(treat) {
+      const patient = this.patients.find(p=>p.id === treat.patient);
+      return patient;
+    },
+
+},
   computed: {
     treatments() {
       return this.getTreatments;
@@ -329,7 +417,7 @@ export default {
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
-    ...mapGetters(['getTreatments'])
+    ...mapGetters(['getTreatments', 'patients'])
   },
 };
 </script>

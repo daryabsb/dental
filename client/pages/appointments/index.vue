@@ -152,14 +152,14 @@
                         
                           <td class="sorting_1">
                             <nuxt-link
-                              :to="`/appointments/${appointment.id}`"
+                              :to="`/patients/${appointment.patient}`"
                               class="a-link-normal"
                             >
                               <img
-                                src="~assets/images/users/user-10.jpg"
+                                :src="patient(appointment).image"
                                 alt=""
                                 class="thumb-sm rounded-circle mr-2"
-                              />{{ appointment.patientName }}
+                              />{{ patient(appointment).name }}
                             </nuxt-link>
                           </td>
                           <td>#{{ appointment.id }}</td>
@@ -313,6 +313,10 @@ export default {
         (this.idDelete = id),
         mutations.toggleConfirmDelete();
     },
+    patient(appointment) {
+      const patient = this.patients.find(p=>p.id === appointment.patient);
+      return patient;
+    },
   },
   computed: {
     appointments() {
@@ -324,7 +328,7 @@ export default {
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
-    ...mapGetters(['getAppointments'])
+    ...mapGetters(['getAppointments', 'patients'])
   },
 };
 </script>

@@ -98,7 +98,7 @@ export default {
         description: this.description,
         files: files,
       };
-      console.log(data)
+      // console.log(data)
 
       this.$store.dispatch("addNewTreatment", data);
 
