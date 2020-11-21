@@ -119,7 +119,7 @@ export default {
                 {
         }
 
-                // console.log(Array.from(formData))
+                console.log(Array.from(formData))
 
             /* DISPATCH ACTION @STORE */
             this.$store.dispatch('addAppointment', formData);

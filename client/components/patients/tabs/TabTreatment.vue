@@ -5,66 +5,49 @@
                                             <div class="card">                                       
                                                 <div class="card-body"> 
                                                     <h4 class="header-title mt-0 mb-3">Education</h4>
+                                                    <button 
+                                                    @click="showPatientTreatmentModal()"
+                                                    type="button" 
+                                                    class="btn btn-primary btn-outline-white px-4 mt-0 mb-3">
+                                                        <i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Treatment
+                                                    </button>
+                                                    <b-modal
+                                                        variant="primary"
+                                                        size="lg"
+                                                        ref="p-treatment-modal"
+                                                        hide-footer
+                                                        title="Add a new treatment"
+    >
+              	                                        <add-new-treatment @hidePatientTreatmentModal="hidePatientTreatmentModal" :patientID="patient.id"></add-new-treatment>
+	                                                </b-modal>
+                                                        <!-- <modal-treatment  :patientID="patient.id" /> -->
+
                                                     <div class="slimscroll education-activity">
                                                         <div class="activity">
-                                                            <i class="mdi mdi-school icon-success"></i>
+                                                            <!-- <pre>{{ patient.treatments }}</pre> -->
+                                                            <template>
+                                                                <div v-for="treat in patient.treatments" :key="treat.id">
+                                                                  <i class="mdi mdi-ambulance icon-success"></i>
                                                             <div class="time-item">
                                                                 <div class="item-info">
                                                                     <div class="d-flex justify-content-between align-items-center">
-                                                                        <h6 class="m-0">Oxford University</h6>
-                                                                        <span class="text-muted">Oct-2009 to Oct-2011</span>
+                                                                        <h6 class="m-0">{{treat.title}}</h6>
+                                                                        <span class="text-muted">{{$moment(treat.created).format('DD/MM/yyy')}}</span>
                                                                     </div>
-                                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
+                                                                    <p class="text-muted mt-3">{{treat.description}}
                                                                         <a href="#" class="text-info">[more info]</a>
                                                                     </p>
                                                                     <div>
-                                                                        <span class="badge badge-soft-secondary">Design</span>
+                                                                        <!-- <span class="badge badge-soft-secondary">Design</span>
                                                                         <span class="badge badge-soft-secondary">HTML</span>                                                    
-                                                                        <span class="badge badge-soft-secondary">Css</span>
+                                                                        <span class="badge badge-soft-secondary">Css</span> -->
                                                                         
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <i class="mdi mdi-medal icon-pink"></i>                                                                                                           
-                                                            <div class="time-item">
-                                                                <div class="item-info">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <h6 class="m-0">Apollo Hospital</h6>
-                                                                        <span class="text-muted">Oct-2006 to Oct-209</span>
-                                                                    </div>
-                                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                                        <a href="#" class="text-info">[more info]</a>
-                                                                    </p>
-                                                                    <div>
-                                                                        <span class="badge badge-soft-secondary">Python</span>
-                                                                        <span class="badge badge-soft-secondary">Django</span>
-                                                                    </div>
-                                                                </div>                                            
-                                                            </div>
-                                                            <i class="mdi mdi-book-open-page-variant icon-purple"></i> 
-                                                            <div class="time-item">
-                                                                <div class="item-info">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <h6 class="m-0">Stanford Hospitals</h6>
-                                                                        <span class="text-muted">Oct-2003 to Oct-2006</span>
-                                                                    </div>
-                                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                                        <a href="#" class="text-info">[more info]</a>
-                                                                    </p>
+                                                            </div>  
                                                                 </div>
-                                                            </div>                                         
-                                                            <i class="mdi mdi-lead-pencil icon-warning"></i>
-                                                            <div class="time-item">
-                                                                <div class="item-info">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <h6 class="m-0">Karolinska Hospital</h6>
-                                                                        <span class="text-muted">Oct-1996 to Oct-2003</span>
-                                                                    </div>
-                                                                    <p class="text-muted mt-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.
-                                                                        <a href="#" class="text-info">[more info]</a>
-                                                                    </p>                                                
-                                                                </div>
-                                                            </div>                                                                                                                                                                                                        
+                                                            </template>
+                                                                                                                                                                                                                                                                    
                                                         </div><!--end activity-->
                                                     </div><!--end education-activity-->
                                                 </div>  <!--end card-body-->                                     
@@ -158,6 +141,14 @@
 
 <script>
 export default {
-    props: ['patient']
+    props: ['patient'],
+    methods: {
+        showPatientTreatmentModal() {
+            this.$refs['p-treatment-modal'].show()
+        },
+        hidePatientTreatmentModal() {
+            this.$refs['p-treatment-modal'].hide()
+        },
+        }
 }
 </script>

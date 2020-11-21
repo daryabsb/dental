@@ -90,19 +90,22 @@
                          
                           <th
                             class="sorting"
-                            rowspan="1"
-                            colspan="1"
-                          >
-                            Title
-                          </th>
-                          <th
-                            class="sorting"
                             tabindex="0"
                             aria-controls="datatable"
                             rowspan="1"
                             colspan="1"
                             aria-label="Address: activate to sort column ascending"
                             style="width: 207px"
+
+
+                            
+                          >
+                            Title
+                          </th>
+                          <th
+                            class="sorting"
+                            rowspan="1"
+                            colspan="1"
                           >
                             Description
                           </th>
@@ -155,7 +158,7 @@
                             </nuxt-link>
                           </td>
                           <td>#{{ treat.title }}</td>
-                          <td>{{ treat.description }}</td>
+                          <td>{{ treat.description.substring(1, 100) + '...'  }}</td>
                           <td>{{ $moment(treat.created).format("DD-MM-yyyy") }}</td>
                          
                           <td class="text-right">

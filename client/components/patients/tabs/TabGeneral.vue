@@ -33,7 +33,13 @@
                                 <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <img 
+                                            style="width: 7rem;"
+                                            class="float-right" src="~assets/images/ex/skeletal.svg" alt="">
+                                            <!-- <span class="float-right text-muted font-weight-normal">
+                                            
+                                            
+                                            </span> -->
                                             <h4 class="font-weight-normal mt-0 mb-4">Skeletal Class</h4>
                                             <h5 class="mb-0 font-weight-normal text-success">{{examinations.skeletal_class}}</h5>
                                         </div><!--end card-body-->
@@ -42,7 +48,13 @@
                                  <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <img 
+                                            style="width: 7rem;"
+                                            class="float-right" src="~assets/images/ex/nasolabial-angle.svg" alt="">
+                                            <!-- <span class="float-right text-muted font-weight-normal">
+                                            
+                                            
+                                            </span> -->
                                             <h4 class="font-weight-normal mt-0 mb-4">Nasolabial Angle</h4>
                                             <h5 class="mb-0 font-weight-normal text-success">{{examinations.nasolabial_angle}}</h5>
                                         </div><!--end card-body-->

@@ -471,7 +471,7 @@ const actions = {
     },
     async addNewTreatment({ state, commit }, payload) {
         let url = "/treatments/";
-
+        console.log(payload)
         try {
             // console.log(Array.from(payload));
             const newTreatment = await this.$axios.post(url, payload);

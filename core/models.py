@@ -264,7 +264,8 @@ class Treatment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='treatments')
     title = models.CharField(max_length=90, default='Treatment')
-    description = models.CharField(max_length=200)
+    # description = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
     files = models.ManyToManyField('Attachment', related_name='treatments', blank=True)
     has_appointment = models.BooleanField(default=False)
     appointment = models.ForeignKey(

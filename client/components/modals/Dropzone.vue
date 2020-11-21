@@ -5,55 +5,19 @@
 				module="$store.state.files"
 				moduleName="'attachments'"
 			/> -->
-      <label for="exampleInputPassword1">Attach Your PDFs here</label>
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input
-            type="file"
-            accept="application/pdf"
-            class="custom-file-input"
-            id="inputGroupFile04"
-            @change="onFileSelected('pdf')"
-          />
-          <label class="custom-file-label" for="inputGroupFile04">{{
-            fileName
-          }}</label>
-        </div>
-        <div class="input-group-append">
-          <button
-            @click="uploadFile"
-            class="btn btn-outline-light"
-            type="button"
-          >
-            Upload
-          </button>
-        </div>
-      </div>
-      <label for="exampleInputPassword1">Attach Your Pictures here</label>
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png,.bmp"
-            class="custom-file-input"
-            id="inputGroupFile04"
-            @change="onFileSelected('image')"
-          />
-          <label class="custom-file-label" for="inputGroupFile04">{{
-            fileName
-          }}</label>
-        </div>
-        <div class="input-group-append">
-          <button
-            @click="uploadFile"
-            class="btn btn-outline-light"
-            type="button"
-          >
-            Upload
-          </button>
-        </div>
-      </div>
+      <b-input-group label="Attach you PDFs here" class="mt-3">
+        <b-form-file size="lg" :file-name-formatter="formatPdfNames" @change="onFileSelected('pdf')" accept="application/pdf"></b-form-file>
+        <b-input-group-append>
+          <b-button size="sm" variant="outline-success" @click="uploadFile">Upload</b-button>
+        </b-input-group-append>
+      </b-input-group>
 
+      <b-input-group label="Attach you PDFs here" class="mt-3">
+        <b-form-file size="lg" :file-name-formatter="formatImageNames" @change="onFileSelected('image')" accept=".jpg,.jpeg,.png,.bmp"></b-form-file>
+        <b-input-group-append>
+          <b-button size="sm" variant="outline-success" @click="uploadFile">Upload</b-button>
+        </b-input-group-append>
+      </b-input-group>
       <div class="form-group">
         <div
           class="alert icon-custom-alert alert-light fade show"
@@ -93,6 +57,8 @@ export default {
       fileId: "",
       fileName: "",
       fileType: "",
+      pdfName: '',
+      imageName: '',
     };
   },
 
@@ -109,11 +75,18 @@ export default {
       this.$store.dispatch("onUploadFile", formData);
 
       this.fileName = "";
+      this.pdfName = '';
+      this.imageName = '';
       this.selectedFile = null;
     },
     onFileSelected(fileType) {
       this.selectedFile = event.target.files[0];
       //   console.log(this.selectedFile);
+      if (fileType === 'pdf') {
+        this.pdfName = event.target.files[0].name;
+      } else {
+        this.imageName = event.target.files[0].name;
+      }
       this.fileName = event.target.files[0].name;
       //   console.log(this.fileName);
       this.fileType = fileType;
@@ -122,6 +95,12 @@ export default {
     deleteAttached(id) {
       this.$store.dispatch("deleteAttached", id);
     },
+    formatPdfNames(files) {
+        return files.length === 1 ? this.pdfName : "No file selected!";
+      },
+      formatImageNames(files) {
+        return files.length === 1 ? this.imageName : "No file selected!";
+      },
   },
   computed: {
     files() {
