@@ -140,6 +140,13 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         if date_query == 'custom' and date is not None:
             queryset = queryset.filter(date__gte=date, date__lte=end_date)
 
+        patient_query = self.request.query_params.get('p', None)
+
+        if patient_query is not None:
+            queryset = ComingTreatment.objects.filter(patient=patient_query)
+
+
+
         return queryset
 
     def perform_create(self, serializer):

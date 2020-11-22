@@ -109,7 +109,58 @@
     <div class="row">
       <!-- <v-gal  :pImages="images" :pIndex="index" /> -->
 
-      <div class="col-lg-12">
+      <div class="col-lg-4">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <h4 class="header-title mt-0 mb-3">Hospital Survey</h4>
+              </div>
+              <div class="form-group col-12 row">
+
+<pre>{{ colPatients }}</pre>
+<!-- <pre>{{ patients }}</pre> -->
+
+
+        <b-table :items="items" :fields="fields" striped responsive="sm">
+      <template #cell(show_details)="row">
+        <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+          {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
+        </b-button>
+
+        <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
+        <!-- <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+          Details via check
+        </b-form-checkbox> -->
+      </template>
+
+      <template #row-details="row">
+        <b-card>
+          <b-row class="mb-2">
+            <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
+            <b-col>{{ row.item.age }}</b-col>
+          </b-row>
+
+          <b-row class="mb-2">
+            <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
+            <b-col>{{ row.item.isActive }}</b-col>
+          </b-row>
+
+          <!-- <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button> -->
+        </b-card>
+      </template>
+    </b-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      <div class="col-lg-8">
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -257,6 +308,23 @@ export default {
   },
   data() {
     return {
+
+      // LEFT TABLE DATA 
+      fields: ['name', 'show_details'],
+        items: [
+          { isActive: true, age: 40, name: 'Dickerson Macdonald' },
+          { isActive: false, age: 21, name: 'Larsen Shaw' },
+          {
+            isActive: false,
+            age: 89,
+            first_name: 'Geneva',
+            last_name: 'Wilson',
+            _showDetails: true
+          },
+          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ],
+
+      
       
       nameDelete: "",
       idDelete: "",
@@ -341,6 +409,13 @@ export default {
     },
     numPatients() {
       return this.$store.state.patients.length;
+    },
+    colPatients() {
+      const object = this.patient;
+      const picked = (
+        ({ id, name, appointments, treatments }) => ({ id, name, appointments, treatments }))(object);
+      console.log(picked)
+    return picked;
     },
     ...mapGetters([
       "isAuthenticated",

@@ -177,6 +177,7 @@
 
 					<tab-appointments
 						v-if="displayContents('tabAppointments')"
+						:appointments="appointments"
 					></tab-appointments>
 				</div>
 				<!--end tab-content-->
@@ -243,7 +244,8 @@ export default {
 			pid: 0,
 			pdfs: null,
       		images: null,
-      		imagesURL: null,
+			imagesURL: null,
+			appointments: null,
 		};
 	},
 	methods: {
@@ -253,6 +255,9 @@ export default {
 				console.log('TAB FILES')
 				this.onLoadPDFs(this.patient.id);
 				this.onLoadImages(this.patient.id)
+
+			} else if (name === 'tabAppointments') {
+				this.onLoadAppointments(this.patient.id);
 			}
 			
 		},
@@ -296,6 +301,29 @@ export default {
 			// console.log('ID: ', patientID)
 			// console.log('has pdf: ', this.hasPDF)
 			this.togglePdf();
+		},
+		async onLoadAppointments(patientID) {
+			// Load pdfs of the patient
+
+			let id = patientID;
+
+			let appointmentsURL = "/appointments";
+
+			try {
+				let singlePatientAppointments = await this.$axios.$get(
+					`${appointmentsURL}/?p=${id}`
+				);
+
+				this.appointments = singlePatientAppointments;
+				// console.log(patientData)
+
+				// this.pdfs = patientFiles
+			} catch (err) {
+				console.log(err);
+			}
+
+			// console.log('ID: ', patientID)
+			// console.log('has pdf: ', this.hasPDF)
 		},
 		async onLoadImages(patientID) {
 			let id = patientID;
