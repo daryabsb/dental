@@ -119,11 +119,11 @@
               </div>
               <div class="form-group col-12 row">
 
-<pre>{{ colPatients }}</pre>
+<!-- <pre>{{ colPatients }}</pre> -->
 <!-- <pre>{{ patients }}</pre> -->
 
 
-        <b-table :items="items" :fields="fields" striped responsive="sm">
+        <b-table :apiUrl="`/appointments`" :items="items" :fields="fields" striped responsive="sm">
       <template #cell(show_details)="row">
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
           {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
@@ -138,13 +138,13 @@
       <template #row-details="row">
         <b-card>
           <b-row class="mb-2">
-            <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-            <b-col>{{ row.item.age }}</b-col>
+            <b-col sm="3" class="text-sm-right"><b>Appointments:</b></b-col>
+            <b-col>{{ row.item.appointments.description }}</b-col>
           </b-row>
 
           <b-row class="mb-2">
-            <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
-            <b-col>{{ row.item.isActive }}</b-col>
+            <b-col sm="3" class="text-sm-right"><b>Treatments:</b></b-col>
+            <b-col>{{ row.item.treatments.title }}</b-col>
           </b-row>
 
           <!-- <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button> -->
@@ -311,18 +311,20 @@ export default {
 
       // LEFT TABLE DATA 
       fields: ['name', 'show_details'],
-        items: [
-          { isActive: true, age: 40, name: 'Dickerson Macdonald' },
-          { isActive: false, age: 21, name: 'Larsen Shaw' },
-          {
-            isActive: false,
-            age: 89,
-            first_name: 'Geneva',
-            last_name: 'Wilson',
-            _showDetails: true
-          },
-          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-        ],
+        items: this.colPatients, 
+        // [
+        //   { isActive: true, age: 40, name: 'Dickerson Macdonald' },
+        //   { isActive: false, age: 21, name: 'Larsen Shaw' },
+        //   {
+        //     isActive: false,
+        //     age: 89,
+        //     first_name: 'Geneva',
+        //     last_name: 'Wilson',
+        //     _showDetails: true
+        //   },
+        //   { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+        // ],
+        
 
       
       
@@ -382,6 +384,9 @@ export default {
       const patient = this.patients.find(p=>p.id === appointment.patient);
       return patient;
     },
+    lastObject(arr) {
+      return arr[arr.length - 1]
+    },
   },
   computed: {
     searchAppointments() {
@@ -411,10 +416,20 @@ export default {
       return this.$store.state.patients.length;
     },
     colPatients() {
-      const object = this.patient;
-      const picked = (
-        ({ id, name, appointments, treatments }) => ({ id, name, appointments, treatments }))(object);
-      console.log(picked)
+      const picked = [];
+      this.patients.forEach(patient=>{
+        patient = (({ id, name, appointments, treatments }) => ({ id, name, appointments, treatments }))(patient);
+       patient.treatments = this.lastObject(patient.treatments)
+       patient.appointments = this.lastObject(patient.appointments);
+      //  patient.showDetails = true;
+       picked.push(patient);
+
+      });
+      // console.log(picked);
+      // const object = this.patient;
+      // const picked = (
+      //   ({ id, name, appointments, treatments }) => ({ id, name, appointments, treatments }))(object);
+      // console.log(picked)
     return picked;
     },
     ...mapGetters([
