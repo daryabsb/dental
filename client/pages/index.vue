@@ -140,12 +140,12 @@
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Appointments:</b></b-col>
             <b-col>{{ 
-              row.item.appointments ? 'True' : 'False' }}</b-col>
+              row.item.appointments ? row.item.appointments.description : '' }}</b-col>
           </b-row>
 
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Treatments:</b></b-col>
-            <b-col>{{ row.item.treatments ? 'True' : 'False' }}</b-col>
+            <b-col>{{ row.item.treatments ? row.item.treatments.title : '' }}</b-col>
           </b-row>
 
           <!-- <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button> -->
