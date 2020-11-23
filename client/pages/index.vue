@@ -123,7 +123,7 @@
 <!-- <pre>{{ patients }}</pre> -->
 
 
-        <b-table :apiUrl="`/appointments`" :items="items" :fields="fields" striped responsive="sm">
+    <b-table :apiUrl="`/appointments`" :items="colPatients" :fields="fields" striped sticky-header responsive="sm">
       <template #cell(show_details)="row">
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
           {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
@@ -139,12 +139,13 @@
         <b-card>
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Appointments:</b></b-col>
-            <b-col>{{ row.item.appointments.description }}</b-col>
+            <b-col>{{ 
+              row.item.appointments ? 'True' : 'False' }}</b-col>
           </b-row>
 
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Treatments:</b></b-col>
-            <b-col>{{ row.item.treatments.title }}</b-col>
+            <b-col>{{ row.item.treatments ? 'True' : 'False' }}</b-col>
           </b-row>
 
           <!-- <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button> -->
@@ -311,19 +312,14 @@ export default {
 
       // LEFT TABLE DATA 
       fields: ['name', 'show_details'],
-        items: this.colPatients, 
-        // [
-        //   { isActive: true, age: 40, name: 'Dickerson Macdonald' },
-        //   { isActive: false, age: 21, name: 'Larsen Shaw' },
-        //   {
-        //     isActive: false,
-        //     age: 89,
-        //     first_name: 'Geneva',
-        //     last_name: 'Wilson',
-        //     _showDetails: true
-        //   },
-        //   { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-        // ],
+        // items: this.colPatients, 
+        // items: this.patients,
+        items:
+        [
+          { status: true, age: 40, description: '', name: 'Dickerson Macdonald' },
+          { status: false, age: 21, description: '', name: 'Larsen Shaw' },
+          { status: true, age: 38, description: '', name: 'Carney' }
+        ],
         
 
       
