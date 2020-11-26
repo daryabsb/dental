@@ -45,22 +45,88 @@
 							<add-new-patient @hideModal="hideModal" :edit="edit" :editPatient="testPatient"></add-new-patient>
 						</b-modal>
 
-						
+						<div class="table-responsive">
+							<div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 								<!-- SEARCH COMPONENT -->
-								
-								<!-- <pre>{{ patients }}</pre> -->
-								<b-row>
-									<b-col class="mb-3" md="6" align="center">
-										<search-comp
+								<search-comp
 									:input="true"
 									:date="false"
 									:pagination="false"
 									url="/patients/"
 									moduleState="PATIENTS"
 								></search-comp>
-									</b-col>
-								</b-row>
-								
+								<!-- <pre>{{ patients }}</pre> -->
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="patient-table" class="table dataTable no-footer">
+											<thead class="thead-light">
+												<tr role="row">
+													<th class="sorting_asc" style="width: 201px">Patient Name</th>
+													<th class="sorting" style="width: 54px">Age</th>
+													<th class="sorting" style="width: 54px">ID</th>
+													<th class="sorting" style="width: 207px">Address</th>
+													<th class="sorting" style="width: 109px">Mobile No</th>
+													<th class="sorting" style="width: 100px">Last Visit</th>
+													<th class="sorting" style="width: 78px">Status</th>
+													<th class="text-right sorting" style="width: 78px">Action</th>
+												</tr>
+												<!--end tr-->
+											</thead>
+
+											<tbody>
+												<tr role="row" class="odd" v-for="patient in patients" :key="patient.id">
+													<!-- @click="onUploadImage(patient.id)" -->
+													<td class="sorting_1">
+														<img :src="patient.image" alt class="thumb-sm rounded-circle mr-2" />
+														<nuxt-link :to="`/patients/${patient.id}`" class="a-link-normal">{{ patient.name }}</nuxt-link>
+													</td>
+													<td>{{ patient.age }}</td>
+													<td>#{{ patient.id }}</td>
+													<td>{{ patient.email }}</td>
+													<td>{{ patient.phone }}</td>
+													<td>18/07/2019</td>
+													<td>
+														<span
+															:class="patient.status ? 'badge  badge-soft-success' : 'badge  badge-soft-danger'"
+														>{{patient.status ? 'Active' : 'Inactive'}}</span>
+													</td>
+													<td class="text-right">
+														<a
+															@click="
+																showModal(
+																	true,
+																	patient
+																)
+															"
+															class="mr-2"
+														>
+															<i class="fas fa-edit text-info font-16"></i>
+														</a>
+														<a
+															@click="
+																confirmDelete(
+																	patient.name,
+																	patient.id
+																)
+															"
+														>
+															<i class="fas fa-trash-alt text-danger font-16"></i>
+														</a>
+													</td>
+												</tr>
+												<ModalConfirm
+													:title="'Confirm Delete'"
+													:module="
+														$store.state.patients
+													"
+													:moduleName="'patients'"
+													:name="patientNameDelete"
+													:id="patientIdDelete"
+												/>
+											</tbody>
+										</table>
+									</div>
+								</div>
 
 								<b-row>
 									<b-col>
@@ -107,7 +173,8 @@
 										></b-pagination>
 									</b-col>
 								</b-row>
-						
+							</div>
+						</div>
 					</div>
 					<!--end card-body-->
 				</div>

@@ -190,63 +190,22 @@
                     </table>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12 col-md-5">
-                    <div
-                      class="dataTables_info"
-                      id="datatable_info"
-                      role="status"
-                      aria-live="polite"
-                    >
-                      Showing 1 to 6 of 6 entries
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-7">
-                    <div
-                      class="dataTables_paginate paging_simple_numbers"
-                      id="datatable_paginate"
-                    >
-                      <ul class="pagination">
-                        <li
-                          class="paginate_button page-item previous disabled"
-                          id="datatable_previous"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="0"
-                            tabindex="0"
-                            class="page-link"
-                            >Previous</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item active">
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="1"
-                            tabindex="0"
-                            class="page-link"
-                            >1</a
-                          >
-                        </li>
-                        <li
-                          class="paginate_button page-item next disabled"
-                          id="datatable_next"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="2"
-                            tabindex="0"
-                            class="page-link"
-                            >Next</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <b-row>
+                  <b-col md="6">
+                    
+                      Showing {{currentPage}} of {{numPages}} entries
+                      </span>
+                      </b-col>
+                      <b-col md="6">
+                         <b-pagination
+                      v-model="currentPage"
+                      @input="retreiveDataForPage(currentPage)"
+                      :total-rows="getAppointments.count"
+                      per-page="10"
+                    ></b-pagination>
+                  </b-col>
+                </b-row>
+                
               </div>
             </div>
           </div>
@@ -267,10 +226,11 @@ import { store, mutations } from "../../store/utils/conf";
 
 export default {
   async asyncData({ $axios, app, store }) {
-    
-    await store.dispatch('loadData');
-    
-    // this.$store.dispatch('loadData', 'DONE');
+   
+
+      await store.dispatch('loadAppointments');
+   
+   
   
   },
   data() {
@@ -282,6 +242,7 @@ export default {
       editPatient: "",
       editDescription: "",
       editDate: '',
+       currentPage: 1,
     };
   },
   components: {},
@@ -317,10 +278,22 @@ export default {
       const patient = this.patients.find(p=>p.id === appointment.patient);
       return patient;
     },
+    calculatePagesCount(pageSize, totalCount) {
+  // we suppose that if we have 0 items we want 1 empty page
+  return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
+},
+    retreiveDataForPage(page) {
+      this.currentPage = page;
+      let data = {
+        param: `?page=${page}`,
+        module: 'APPOINTMENTS'
+      } 
+      this.$store.dispatch('onChangePagination', data);
+    },
   },
   computed: {
     appointments() {
-      return this.getAppointments;
+      return this.getAppointments.results;
     },
     isAppointmentModalOpen() {
       return store.isAppointmentModalOpen;
@@ -328,7 +301,15 @@ export default {
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
-    ...mapGetters(['getAppointments', 'patients'])
+    patients() {
+      return this.patientsData.results;
+    },
+    numPages() {
+      let count = this.getAppointments.count;
+      let pages = this.calculatePagesCount(10, count);
+      return pages;
+    },
+    ...mapGetters(['getAppointments', 'patientsData'])
   },
 };
 </script>

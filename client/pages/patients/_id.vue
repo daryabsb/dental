@@ -290,8 +290,8 @@ export default {
 					`${attachmentsURL}/?p=${id}&type=pdf`
 				);
 
-				this.pdfs = singlePatientPdfs;
-				// console.log(patientData)
+				this.pdfs = singlePatientPdfs.results;
+				console.log(this.pdfs)
 
 				// this.pdfs = patientFiles
 			} catch (err) {
@@ -314,7 +314,7 @@ export default {
 					`${appointmentsURL}/?p=${id}`
 				);
 
-				this.appointments = singlePatientAppointments;
+				this.appointments = singlePatientAppointments.results;
 				// console.log(patientData)
 
 				// this.pdfs = patientFiles
@@ -333,9 +333,9 @@ export default {
 
 			try {
 				let singlePatientImages = await this.$axios.$get(url);
-				this.images = singlePatientImages;
-				this.imagesURL = singlePatientImages.map(image=>image.file);
-				// console.log(this.images)
+				this.images = singlePatientImages.results;
+				this.imagesURL = singlePatientImages.results.map(image=>image.file);
+				console.log(this.images)
 
 				// this.images = patientImages;
 			} catch (err) {

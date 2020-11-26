@@ -27,6 +27,7 @@ from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
     PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,
     PatientPictureSerializer,)
+from .pagination import PatientPagination
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -223,6 +224,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
+    pagination_class = PatientPagination
     lookup_field = 'id'
 
     def perform_create(self, serializer):

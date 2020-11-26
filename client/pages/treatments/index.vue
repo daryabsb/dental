@@ -253,63 +253,21 @@
                     </table>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-12 col-md-5">
-                    <div
-                      class="dataTables_info"
-                      id="datatable_info"
-                      role="status"
-                      aria-live="polite"
-                    >
-                      Showing 1 to 6 of 6 entries
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-7">
-                    <div
-                      class="dataTables_paginate paging_simple_numbers"
-                      id="datatable_paginate"
-                    >
-                      <ul class="pagination">
-                        <li
-                          class="paginate_button page-item previous disabled"
-                          id="datatable_previous"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="0"
-                            tabindex="0"
-                            class="page-link"
-                            >Previous</a
-                          >
-                        </li>
-                        <li class="paginate_button page-item active">
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="1"
-                            tabindex="0"
-                            class="page-link"
-                            >1</a
-                          >
-                        </li>
-                        <li
-                          class="paginate_button page-item next disabled"
-                          id="datatable_next"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="datatable"
-                            data-dt-idx="2"
-                            tabindex="0"
-                            class="page-link"
-                            >Next</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <b-row>
+                  <b-col md="6">
+                    
+                      Showing {{currentPage}} of {{numPages}} entries
+                      </span>
+                      </b-col>
+                      <b-col md="6">
+                         <b-pagination
+                      v-model="currentPage"
+                      @input="retreiveDataForPage(currentPage)"
+                      :total-rows="getTreatments.count"
+                      per-page="10"
+                    ></b-pagination>
+                  </b-col>
+                </b-row>
               </div>
             </div>
           </div>
@@ -346,6 +304,7 @@ export default {
       editDescription: "",
       editDate: '',
       selectedID: '',
+      currentPage: 1,
     };
   },
   components: {},
@@ -401,15 +360,40 @@ export default {
     hideSelectPatientModal() {
         this.$refs['p-select-patient-modal'].hide()
     },
+    calculatePagesCount(pageSize, totalCount) {
+  // we suppose that if we have 0 items we want 1 empty page
+  return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
+},
+    retreiveDataForPage(page) {
+      this.currentPage = page;
+      let data = {
+        param: `?page=${page}`,
+        module: 'TREATMENTS'
+      } 
+      this.$store.dispatch('onChangePagination', data);
+    },
     patient(treat) {
+    //  console.log(treat)
+    //  treat.patient ? console.log(treat.patient) : console.log('not found');
       const patient = this.patients.find(p=>p.id === treat.patient);
+      // console.log(this.patients)
       return patient;
     },
 
 },
   computed: {
     treatments() {
-      return this.getTreatments;
+      console.log(this.getTreatments.results);
+      return this.getTreatments.results;
+    },
+  
+    numPages() {
+      let count = this.getTreatments.count;
+      let pages = this.calculatePagesCount(10, count);
+      return pages;
+    },
+    patients() {
+      return this.patientsData.results;
     },
     isAppointmentModalOpen() {
       return store.isAppointmentModalOpen;
@@ -417,7 +401,7 @@ export default {
     isConfirmDeleteOpen() {
       return store.isConfirmDeleteOpen;
     },
-    ...mapGetters(['getTreatments', 'patients'])
+    ...mapGetters(['getTreatments', 'patientsData'])
   },
 };
 </script>

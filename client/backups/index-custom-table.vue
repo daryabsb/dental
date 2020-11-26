@@ -4,18 +4,22 @@
 			<div class="col-lg-12">
 				<div class="row">
 					<div class="col-lg-4">
-						<div class="card py-3">
+						<div class="card hospital-info">
 							<div class="card-body">
-								<h3 class="mt-2 mb-3">All Patients</h3>
+								<h4 class="header-title mt-0 mb-3">All Patients</h4>
 								<div class="media">
+									
+										
+                    <!-- SEARCH COMPONENT -->
 
-                    <b-input-group  size="lg" class="my-3">
-                        <b-input-group-prepend is-text>
-                          <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
-                          <i class="fas fa-search"></i>
-                        </b-input-group-prepend>
-                        <b-form-input v-model="searchQuery" aria-label="Text input with checkbox"></b-form-input>
-                      </b-input-group> 
+<b-input-group
+    size="lg"
+    class="mb-3 py-3"
+    prepend="Search"
+  >
+    <b-form-input></b-form-input>
+  </b-input-group>
+
 									<!--end media body-->
 								</div>
 							</div>
@@ -26,66 +30,18 @@
 					<!-- end col-->
 					<div class="col-lg-8">
 						<div class="card hospital-info">
-							<div class="card-body row">
-                <div class="col-12">
-                  <!-- <b-form-select v-model="searchQuery" :options="dateSearchOptions" size="sm" class="mt-3"></b-form-select> -->
-                <h5>Appointments</h5>
-                <search-comp
-                :input="true"
-                :date="true"
-                :pagination="false"
-                  url="/appointments/"
-                  moduleState="APPOINTMENTS" 
-               ></search-comp>
-                <!-- <b-container fluid>
-
-                  <b-row class="my-3">
-      
-      <b-col sm="12">
-        <b-form-input size="lg" placeholder="Search Keywords" type="search" v-model="searchQuery"></b-form-input>
-      </b-col>
-    </b-row>
-    <b-row class="my-1">
-      <b-col sm="2">
-        <label>Date Select</code>:</label>
-      </b-col>
-      <b-col sm="5">
-        <b-form-select 
-       
-        v-model="dateSelect" 
-        :options="dateSearchOptions"
-         @change="searchDate" 
-        ></b-form-select>
-      </b-col>
-      <b-col sm="5">
-
-        <b-form-datepicker 
-        :date-format-options="{
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      }"
-       
-        
-          
-        v-model="date_today" 
-        @context="searchDate"
-        size="lg"
-       
-        v-if="dateSelect == 'custom'">
-        
-        </b-form-datepicker>
-      </b-col>
-    </b-row>
-    {{date_today}}
-  </b-container> -->
-                
-                
-                
-                
-                
-                
-                </div>
+							<div class="card-body">
+								<h4 class="header-title mt-0 mb-3">Appointments</h4>
+								<div class="media">
+									<div class="data-icon align-self-center">
+										<i class="fas fa-bed rounded-circle text-warning"></i>
+									</div>
+									<div class="media-body ml-3 align-self-center text-right">
+										<h3 class="mt-0">{{ numPatients }}</h3>
+										<p class="text-muted mb-0 text-nowrap">{{ $moment(new Date()).format('hh:mm A - DD/MM/yyyy')}}</p>
+									</div>
+									<!--end media body-->
+								</div>
 							</div>
 							<!--end card-body-->
 						</div>
@@ -104,7 +60,7 @@
 			<!-- <v-gal  :pImages="images" :pIndex="index" /> -->
 
 			<div class="col-lg-4">
-				<div class="card" style="min-height: 59rem;">
+				<div class="card" style="height: 100%;">
 					<div class="card-body">
 						<div class="row">
 							<div class="form-group col-12 row">
@@ -116,23 +72,39 @@
 									:items="colPatients"
 									:fields="fields"
 									striped
-									sticky-header="54.5rem"
+									sticky-header
 									responsive="sm"
-									head-variant="light"
 								>
-                <!-- :variant="row.item.status ? 'success' : 'danger'" -->
-                <template #cell(name)="row">
-        <!-- `data.value` is the value after formatted by the Formatter -->
-        <nuxt-link :to="`/patients/${row.item.id}`">{{ row.item.name }}</nuxt-link>
-      </template>
-									<template #cell(status)="row"
-                  
-                  variant="danger"
-                  >
-{{ row.item.status ? 'Active' : 'Inactive'}} 
+									<template #cell(show_details)="row">
+										<b-button
+											size="sm"
+											@click="row.toggleDetails"
+											class="mr-2"
+										>{{ row.detailsShowing ? 'Hide' : 'Show'}} Details</b-button>
 									</template>
 
-									
+									<template #row-details="row">
+										<b-card>
+											<b-row class="mb-2">
+												<b-col sm="3" class="text-sm-right">
+													<b>Appointments:</b>
+												</b-col>
+												<b-col>
+													{{
+													row.item.appointments ? row.item.appointments.description : '' }}
+												</b-col>
+											</b-row>
+
+											<b-row class="mb-2">
+												<b-col sm="3" class="text-sm-right">
+													<b>Treatments:</b>
+												</b-col>
+												<b-col>{{ row.item.treatments ? row.item.treatments.title : '' }}</b-col>
+											</b-row>
+
+											<!-- <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button> -->
+										</b-card>
+									</template>
 								</b-table>
 							</div>
 						</div>
@@ -141,9 +113,9 @@
 			</div>
 
 			<div class="col-lg-8">
-				<div class="card" style="min-height: 59rem;">
+				<div class="card">
 					<div class="card-body">
-						<!-- <div class="row">
+						<div class="row">
 							<div class="col-sm-12 mb-3">
 								<h4 class="header-title mt-0 mb-3">Hospital Survey</h4>
 							</div>
@@ -181,13 +153,11 @@
 											@change="searchDate"
 											v-if="dateSelect == 'custom'"
 										/>
-                     
 									</div>
 								</div>
 							</div>
 						</div>
-            {{date_today}} -->
-						<div >
+						<div class="table-responsive">
 							<table id="datatable" class="table">
 								<thead class="thead-light">
 									<tr>
@@ -200,7 +170,7 @@
 								</thead>
 								<tbody>
 									<!-- <perfect-scrollbar> -->
-									<tr v-for="appointment in appointments" :key="appointment.id">
+									<tr v-for="appointment in searchAppointments" :key="appointment.id">
 										<td>
 											<nuxt-link :to="`/patients/${appointment.patient}`">
 												<img :src="patient(appointment).image" alt class="thumb-sm rounded-circle mr-2" />
@@ -269,15 +239,35 @@ export default {
 	data() {
 		return {
 			// LEFT TABLE DATA
-			fields: ["name", "status"],
+			fields: ["name", "show_details"],
+			// items: this.colPatients,
+			// items: this.patients,
+			items: [
+				{
+					status: true,
+					age: 40,
+					description: "",
+					name: "Dickerson Macdonald",
+				},
+				{
+					status: false,
+					age: 21,
+					description: "",
+					name: "Larsen Shaw",
+				},
+				{ status: true, age: 38, description: "", name: "Carney" },
+			],
+
 			nameDelete: "",
 			idDelete: "",
 			// date_today: new Date(),
-			
+			date_today: "",
 			link: "",
 			searchQuery: "",
-      url: "",
+			url: "",
 
+			dateSelect: "",
+			// pdfPage: 1,
 		};
 	},
 	methods: {
@@ -287,7 +277,24 @@ export default {
 			);
 			return patient.name;
 		},
-		
+		searchDate() {
+			let query = {};
+
+			if (query.dq !== "") {
+				query.dq = this.dateSelect;
+			} else {
+				query.dq = "";
+			}
+
+			if (query.dq === "custom" && this.date_today != "") {
+				query.date = this.$moment(this.date_today).format("yyyy-MM-DD");
+			} else {
+				query.date = "";
+			}
+
+			this.$store.dispatch("filterAppointments", query);
+			this.date_today = "";
+		},
 		openPdf(url) {
 			// var page = url.substring(url.lastIndexOf('/') + 1);
 			// let link = `../..${url.substring(url.indexOf("/", 10))}`;
@@ -301,11 +308,9 @@ export default {
 				mutations.toggleConfirmDelete();
 		},
 		patient(appointment) {
-			console.log(this.patients);
-			let patient = this.patients.find(
+			const patient = this.patients.find(
 				(p) => p.id === appointment.patient
 			);
-			
 			return patient;
 		},
 		lastObject(arr) {
@@ -324,8 +329,7 @@ export default {
 						.includes(this.searchQuery.toLowerCase())
 				);
 			});
-    },
-    
+		},
 
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;
@@ -339,29 +343,33 @@ export default {
 		numPatients() {
 			return this.$store.state.patients.length;
 		},
-		patients() {
-			return this.patientsData.results;
-		},
-		appointments(){
-			return this.getAppointments.results;
-		},
 		colPatients() {
-      
-      return this.patients.filter((patient) => {
-				return (
-					patient.name
-						.toLowerCase()
-						.includes(this.searchQuery.toLowerCase())
-				);
+			const picked = [];
+			this.patients.forEach((patient) => {
+				patient = (({ id, name, appointments, treatments }) => ({
+					id,
+					name,
+					appointments,
+					treatments,
+				}))(patient);
+				patient.treatments = this.lastObject(patient.treatments);
+				patient.appointments = this.lastObject(patient.appointments);
+				//  patient.showDetails = true;
+				picked.push(patient);
 			});
-			// return picked;
+			// console.log(picked);
+			// const object = this.patient;
+			// const picked = (
+			//   ({ id, name, appointments, treatments }) => ({ id, name, appointments, treatments }))(object);
+			// console.log(picked)
+			return picked;
 		},
 		...mapGetters([
 			"isAuthenticated",
 			"loggedInUser",
-			// "getTreatments",
+			"getTreatments",
 			"getAppointments",
-			"patientsData",
+			"patients",
 		]),
 	},
 };

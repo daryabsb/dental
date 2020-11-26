@@ -113,39 +113,15 @@ const mutations = {
         state.users = payload;
     },
     GET_TREATMENTS(state, payload) {
-        payload.forEach(treat => {
-            let patient = state.patients.find(p => p.id === treat.patient);
-            treat.patientName = patient.name;
-        });
         state.treatments = payload;
     },
 
     GET_ATTACHMENTS(state, payload) {
-        payload.forEach(att => {
-            let patient = state.patients.find(p => p.id === att.patient);
-            att.patientName = patient.name;
-        });
         state.attachments = payload;
     },
     GET_APPOINTMENTS(state, payload) {
-        payload.forEach(appointment => {
-            let patient = state.patients.find(p => p.id === appointment.patient);
-            state.treatments.forEach(t => {
-                if (t.patient === appointment.patient) {
-                    t.appointment = `${appointment.description} - ${this.$moment(appointment.date).format('DD/MM/yyyy')}`
-                };
-            });
-            appointment.patientName = patient.name;
-        });
-        let today = new Date();
 
-        today.setHours(0, 0, 0, 0);
-
-        state.appointments = payload.filter(appointment => {
-
-            return Date.parse(appointment.date) >= Date.parse(today);
-        });
-
+        state.appointments = payload;
         // console.log(state.appointments);
     },
     GET_PATIENT_TREATMENTS(state, id) {
@@ -345,6 +321,13 @@ const actions = {
 
 
 
+    },
+
+    async onChangePagination({ state, commit }, payload) {
+
+        let url = `/${payload.module.toLowerCase()}/${payload.param}`
+        const response = await this.$axios.get(url);
+        commit(`GET_${payload.module}`, response.data);
     },
     async addUser({ state, commit }, payload) {
         // console.log('Payload: ', payload)
@@ -578,10 +561,28 @@ const actions = {
     setPimage({ commit }, image) {
         commit('SET_PIMAGE', image);
     },
+    async loadAppointments({ state, commit }) {
+        try {
+
+            // const allAppointments = await store.dispatch('loadAppointments');
+            let allAppointments = await $axios.get('/appointments/');
+
+            commit("GET_APPOINTMENTS", allAppointments.data);
+
+            // this.$store.dispatch('loadData', 'DONE');
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    },
 };
 
 const getters = {
     patients(state) {
+        return state.patients;
+    },
+    patientsData(state) {
         return state.patients;
     },
     isAuthenticated(state) {
