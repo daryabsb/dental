@@ -91,6 +91,7 @@
 										</li>
 									</ul>
 									<client-only>
+										<!-- <test-upload :id="pid"></test-upload> -->
 										<upload-image :id="pid"></upload-image>
 									</client-only>
 									<div class="button-list btn-social-icon">

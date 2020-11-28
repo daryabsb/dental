@@ -174,23 +174,45 @@
                     </div> <!-- end navigation -->
                 </div> <!-- end container-fluid -->
             </div> <!-- end navbar-custom -->
+            <b-row>
+                <b-col>
+                    <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    :variant="alertStatus ? 'success' : 'warning'"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+    >
+      <p>{{alertMsg}}</p>
+      
+    </b-alert>
+                </b-col>
+            </b-row>
         </div>
         <!-- Top Bar End -->
 
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { store, mutations } from '../../store/utils/conf'
 
 export default {
     data(){
         return {
-            //showMenu: false,
+            status: true,
+            
+            // dismissCountDown: 0,
             
         }
     },
+   
     methods: {
+    countDownChanged(dismissCountDown) {
+       
+       this.dismissCountDown = dismissCountDown;
+        
+      },
         
     showModal() {
             mutations.toggleAddPatientModal();
@@ -207,10 +229,20 @@ export default {
       },
       showLanguages() {
           mutations.toggleLanguages();
-      }
+      },
+        // showAlert() {
+        //     this.showAlertStore()
+        // },
+     ...mapActions([
+         'showAlertStore'
+     ])
     
         },
+       
   computed: {
+    //   status() {
+    //       return this.alertStatus
+    //   },
       isUserNavOpen() {
           return store.isUserNavOpen
       },
@@ -220,7 +252,19 @@ export default {
       isAddPatientModalOpen(){
             return store.isAddPatientModalOpen
         },
-    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+        // dismissCountDown() {
+        //     return this.counter;
+        // },
+    dismissCountDown: {
+            get() {
+                return this.counter;
+            },
+            set (newValue) {
+                console.log(newValue)
+                this.showAlertStore(newValue)
+            }
+        },
+    ...mapGetters(['isAuthenticated', 'loggedInUser', 'counter', 'alertMsg', 'alertStatus'])
   }
 }
 </script>

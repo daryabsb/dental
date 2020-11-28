@@ -18,6 +18,9 @@ const state = () => ({
     isImageUploadOpen: false,
     patientHasImage: false,
     pid: 0,
+    counter: null,
+    alertMsg: '',
+    alertStatus: true,
     /* 
     TEMPORARILY HOLDS 
     CURRENT PATIENT's IMAGE*/
@@ -138,7 +141,8 @@ const mutations = {
         state.users.unshift(payload);
     },
     ADD_PATIENT(state, payload) {
-        state.patients.unshift(payload);
+        state.patients.results.unshift(payload);
+        // state.counter = 3
         // console.log('From Payload: ', payload);
         // console.log('From state: ', state.patients);
     },
@@ -192,6 +196,16 @@ const mutations = {
         state.files.splice(indexOfFile, 1);
     },
 
+    /* THIS WILL TRIGGER THE ALERT */
+    'SHOW_ALERT_COUNTER' (state, counter) {
+        state.counter = counter;
+    },
+    'TRIGGER_ALERT' (state, alertBoard) {
+        state.counter = 3;
+        state.alertMsg = alertBoard.msg;
+        state.alertStatus = alertBoard.status;
+    },
+
     /* CHECK THE CODE BELOW*/
     ADD_NEW_TREATMENT(state, payload) {
         state.treatments.results.unshift(payload);
@@ -215,7 +229,7 @@ const mutations = {
     PUSH_IMAGE(state, payload) {
 
         // console.log(payload);
-        let patient = state.patients.find(p => p.id === payload.id)
+        // let patient = state.patients.find(p => p.id === payload.id)
         state.pimage = payload.image;
         // let indexOfPatient = state.patients.indexOf(patient)
         // console.log(state.patient[indexOfPatient])
@@ -378,6 +392,11 @@ const actions = {
         try {
             const newPatient = await this.$axios.post(url, payload);
             commit("ADD_PATIENT", newPatient.data);
+            let alertBoard = {
+                status: true,
+                msg: 'You have successfully added a new patient!'
+            }
+            commit('TRIGGER_ALERT', alertBoard)
         } catch (err) {
             console.log(err);
         }
@@ -553,6 +572,15 @@ const actions = {
         }
 
     },
+    showAlertStore({ state, commit }, counter) {
+        if (counter >= 0) {
+            commit('SHOW_ALERT_COUNTER', counter)
+        }
+
+    },
+    triggerAlert({ state, commit }) {
+        commit('TRIGGER_ALERT')
+    },
     getPatientTreats({ state, commit }, id) {
         commit("GET_PATIENT_TREATMENTS", id);
     },
@@ -629,6 +657,9 @@ const getters = {
     },
     pid(state) {
         return state.pid;
+    },
+    counter(state) {
+        return state.counter;
     },
 };
 

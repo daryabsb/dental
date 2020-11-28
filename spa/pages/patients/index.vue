@@ -23,9 +23,9 @@
 		<!--end row-->
 		<!-- end page title end breadcrumb -->
 		<div>
-			<client-only>
+			<!-- <client-only>
 				<upload-image :id="pid"></upload-image>
-			</client-only>
+			</client-only> -->
 		</div>
 
 		<div class="row">
@@ -168,12 +168,12 @@ export default {
 				this.$refs["my-modal"].show();
 			}
 		},
-		onUploadImage(id) {
-			this.pid = id;
-			// this.$store.conf.dispatch('conf/toggleImageUploadOpen')
-			this.$store.dispatch("toggleImageUploadOpen");
-			// this.show = true;
-		},
+		// onUploadImage(id) {
+		// 	this.pid = id;
+		// 	// this.$store.conf.dispatch('conf/toggleImageUploadOpen')
+		// 	this.$store.dispatch("toggleImageUploadOpen");
+		// 	// this.show = true;
+		// },
 		onEditPatient(patient) {
 			this.editPatient = patient;
 		},

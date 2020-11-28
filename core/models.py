@@ -206,6 +206,9 @@ class Patient(models.Model):
         'Doctor', on_delete=models.SET_NULL, 
         null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to=product_image_file_path)
+    # image = models.ImageField(
+    #     upload_to=product_image_file_path,
+    #     default='uploads/product/4edc7b2c-0f96-4fb6-a8bc-22a61e47cd6f.png')
 
     class Meta:
         ordering = ('-created',)
@@ -216,6 +219,12 @@ class Patient(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk is None:
             self.age = calculateAge(self.dob)
+        if self.pk is None: 
+            if self.gender == 'male':
+                self.image = 'uploads/product/05e9ff3c-ee03-439b-8bc3-ad38b56a4859.png'
+            else:
+                self.image = 'uploads/product/4edc7b2c-0f96-4fb6-a8bc-22a61e47cd6f.png'
+        print(self.image)
         super(Patient, self).save(*args, **kwargs)
 
     @property
