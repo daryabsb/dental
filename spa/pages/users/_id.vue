@@ -1,4 +1,17 @@
 <template>
+
+<!-- 
+
+1. add todos
+2. add general settings
+3. add user settings
+4. add general numbers(patients, treatments, files)
+
+
+
+
+
+ -->
 	<div class="container-fluid">
 		<!-- Page-Title -->
 		<div class="row">
@@ -13,13 +26,13 @@
 								<nuxt-link to="/patients">Patients</nuxt-link>
 							</li>
 							<li class="breadcrumb-item active">
-								{{ patient.name }}
+								{{ $auth.user.name }}
 							</li>
 						</ol>
 						<!--end breadcrumb-->
 					</div>
 					<!--end /div-->
-					<h4 class="page-title">Patient's Profile</h4>
+					<h4 class="page-title">User's Profile</h4>
 				</div>
 				<!--end page-title-box-->
 			</div>
@@ -44,9 +57,15 @@
 												style="width: 95%"
 												class="rounded-circle"
 											/>
+											<!-- <img
+												src="~assets/images/users/user-1.jpg"
+												alt="patient"
+												style="width: 95%"
+												class="rounded-circle"
+											/> -->
 											<span
 												@click="
-													onUploadImage(patient.id)
+													onUploadImage(user.id)
 												"
 												class="fro-profile_main-pic-change"
 											>
@@ -55,10 +74,10 @@
 										</div>
 										<div class="met-profile_user-detail">
 											<h5 class="met-user-name">
-												{{ patient.name }}
+												{{ user.name }}
 											</h5>
 											<p class="mb-0 met-user-name-post">
-												UI/UX Designer
+												{{ user.is_staff ? 'Admin' : 'Normal User' }}
 											</p>
 										</div>
 									</div>
@@ -66,25 +85,25 @@
 								<!--end col-->
 								<div class="col-lg-4 ml-auto">
 									<ul class="list-unstyled personal-detail">
-										<li class="">
+										<!-- <li class="">
 											<i
 												class="dripicons-phone mr-2 text-info font-18"
 											></i>
 											<b> Phone </b> : {{ patient.phone }}
-										</li>
+										</li> -->
 										<li class="mt-2">
 											<i
 												class="dripicons-mail text-info font-18 mt-2 mr-2"
 											></i>
-											<b> Email </b> : {{ patient.email }}
+											<b> Email </b> : {{ user.email }}
 										</li>
 										<li class="mt-2">
 											<i
 												class="dripicons-location text-info font-18 mt-2 mr-2"
 											></i>
-											<b>Birthday</b> :
+											<b>Date Joined</b> :
 											{{
-												$moment(patient.dob).format(
+												$moment(user.created).format(
 													"DD/MM/yyyy"
 												)
 											}}
@@ -159,27 +178,28 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="tab-content detail-list">
-					<tab-general
-						:examinations="patient.examinations"
+					
+					<tab-user-settings
+						:user="$auth.user" v-if="displayContents('tabUser')"
+					></tab-user-settings>
+					<tab-general-settings
+						:settings="$auth.user"
 						v-if="displayContents('tabGeneral')"
-					></tab-general>
-					<tab-treatment
-						:patient="patient" v-if="displayContents('tabTreatment')"
-					></tab-treatment>
+					></tab-general-settings>
 
-					<tab-files
+					<!-- <tab-files
 					
 					v-if="displayContents('tabFiles')"
 					:files="pdfs"
 					:images="images"
 					:imagesURL="imagesURL"
 					:patient="patient"
-					></tab-files>
+					></tab-files> -->
 
-					<tab-appointments
+					<!-- <tab-appointments
 						v-if="displayContents('tabAppointments')"
 						:appointments="appointments"
-					></tab-appointments>
+					></tab-appointments> -->
 				</div>
 				<!--end tab-content-->
 			</div>
@@ -201,18 +221,18 @@ export default {
 		// mutations.togglePatientHistoryTab();
 		console.log("Function is loaded and the ID is: ", id);
 
-		let patientsURL = "/patients";
+		let usersURL = "/users";
 		// let attachmentsURL = '/attachments'
 
 		try {
-            let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
+            let singleUser = await $axios.$get(`${usersURL}/${id}/`);
             
-			const [patientLoaded] = await Promise.all([singlePatient]);
+			const [userLoaded] = await Promise.all([singleUser]);
             // store.state.pimage = patientLoaded.image;
             
             // this.img = patientLoaded.image;
 			return {
-				patient: patientLoaded,
+				user: userLoaded,
             };
 
             
@@ -225,42 +245,42 @@ export default {
 		return {
 			tabs: [
 				{
+					name: "tabUser",
+					displayName: "User Settings",
+				},
+				{
 					name: "tabGeneral",
-					displayName: "General",
+					displayName: "General Settings",
 				},
-				{
-					name: "tabTreatment",
-					displayName: "Treatments",
-				},
-				{
-					name: "tabFiles",
-					displayName: "Files",
-				},
-				{
-					name: "tabAppointments",
-					displayName: "Appointments",
-				},
+				// {
+				// 	name: "tabFiles",
+				// 	displayName: "Files",
+				// },
+				// {
+				// 	name: "tabRe",
+				// 	displayName: "Appointments",
+				// },
 			],
 			activeTabName: null,
 			pid: 0,
 			url: '',
-			pdfs: null,
-      		images: null,
-			imagesURL: null,
-			appointments: null,
+			// pdfs: null,
+      		// images: null,
+			// imagesURL: null,
+			// appointments: null,
 		};
 	},
 	methods: {
 		setActiveTabName(name) {
 			this.activeTabName = name;
-			if (name === 'tabFiles') {
-				console.log('TAB FILES')
-				this.onLoadPDFs(this.patient.id);
-				this.onLoadImages(this.patient.id)
+			// if (name === 'tabFiles') {
+			// 	console.log('TAB FILES')
+			// 	this.onLoadPDFs(this.patient.id);
+			// 	this.onLoadImages(this.patient.id)
 
-			} else if (name === 'tabAppointments') {
-				this.onLoadAppointments(this.patient.id);
-			}
+			// } else if (name === 'tabAppointments') {
+			// 	this.onLoadAppointments(this.patient.id);
+			// }
 			
 		},
 		displayContents(name) {
@@ -269,7 +289,7 @@ export default {
 		
 		async onUploadImage(id) {
 			this.pid = id;
-			this.url = `/patients/${id}/image/`;
+			this.url = `/users/${id}/image/`;
 			await this.$store.dispatch("toggleImageUploadOpen");
 
 			// change photo of the current patient;
@@ -281,123 +301,12 @@ export default {
             
             this.patient.image = this.$store.state.pimage;
         },
-		async onLoadPDFs(patientID) {
-			// Load pdfs of the patient
-
-			let id = patientID;
-
-			let attachmentsURL = "/attachments";
-
-			try {
-				let singlePatientPdfs = await this.$axios.$get(
-					`${attachmentsURL}/?p=${id}&type=pdf`
-				);
-
-				this.pdfs = singlePatientPdfs.results;
-				console.log(this.pdfs)
-
-				// this.pdfs = patientFiles
-			} catch (err) {
-				console.log(err);
-			}
-
-			// console.log('ID: ', patientID)
-			// console.log('has pdf: ', this.hasPDF)
-			this.togglePdf();
-		},
-		async onLoadAppointments(patientID) {
-			// Load pdfs of the patient
-
-			let id = patientID;
-
-			let appointmentsURL = "/appointments";
-
-			try {
-				let singlePatientAppointments = await this.$axios.$get(
-					`${appointmentsURL}/?p=${id}`
-				);
-
-				this.appointments = singlePatientAppointments.results;
-				// console.log(patientData)
-
-				// this.pdfs = patientFiles
-			} catch (err) {
-				console.log(err);
-			}
-
-			// console.log('ID: ', patientID)
-			// console.log('has pdf: ', this.hasPDF)
-		},
-		async onLoadImages(patientID) {
-			let id = patientID;
-
-			let attachmentsURL = "/attachments";
-			let url = `${attachmentsURL}/?p=${id}&type=image`
-
-			try {
-				let singlePatientImages = await this.$axios.$get(url);
-				this.images = singlePatientImages.results;
-				this.imagesURL = singlePatientImages.results.map(image=>image.file);
-				console.log(this.images)
-
-				// this.images = patientImages;
-			} catch (err) {
-				console.log(err);
-			}
-
-			this.toggleImages();
-		},
-		togglePdf() {
-			if (!this.isPdfTabOpen) {
-				mutations.togglePdfTab();
-			}
-			if (this.isImagesTabOpen) {
-				mutations.toggleImagesTab();
-			}
-			if (this.isPatientHistoryTabOpen) {
-				mutations.togglePatientHistoryTab();
-			}
-		},
-
-		toggleImages() {
-			if (!this.isImagesTabOpen) {
-				mutations.toggleImagesTab();
-			}
-			if (this.isPdfTabOpen) {
-				mutations.togglePdfTab();
-			}
-			if (this.isPatientHistoryTabOpen) {
-				mutations.togglePatientHistoryTab();
-			}
-		},
-		toggleHealthCondition() {
-			if (!this.isPatientHistoryTabOpen) {
-				mutations.togglePatientHistoryTab();
-			}
-			if (this.isPdfTabOpen) {
-				mutations.togglePdfTab();
-			}
-			if (this.isImagesTabOpen) {
-				mutations.toggleImagesTab();
-			}
-		},
-
-		onlyUnique(value, index, self) {
-			return self.indexOf(value) === index;
-		},
+		
+	
     },
 	computed: {
         
-		isPdfTabOpen() {
-			return store.isPdfTabOpen;
-		},
-		isImagesTabOpen() {
-			return store.isImagesTabOpen;
-		},
-		isPatientHistoryTabOpen() {
-			return store.isPatientHistoryTabOpen;
-		},
-
+	
 		// patient() {
 		//   return this.getPatient;
 		// },
@@ -413,7 +322,7 @@ export default {
 	mounted() {
 		// The currently active tab, init as the 1st item in the tabs array
         this.activeTabName = this.tabs[0].name;
-        this.$store.dispatch('setPimage', this.patient.image);
+        this.$store.dispatch('setPimage', this.user.image);
 	},
 };
 </script>

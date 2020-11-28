@@ -26,7 +26,7 @@ from core.models import User, Patient, Attachment, Treatment, ComingTreatment
 from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
     PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,
-    PatientPictureSerializer,)
+    PatientPictureSerializer, UserPictureSerializer,)
 from .pagination import PatientPagination
 
 
@@ -267,11 +267,23 @@ class ImageUpdateView(generics.RetrieveUpdateAPIView):
     # permission_classes = [IsAuthenticated]
     lookup_field = 'id'
 
-    
+ 
     
     def get_object(self):
         kwarg_id = self.kwargs.get("id")
         obj = Patient.objects.get(id=kwarg_id)
+        return obj
+
+class UserImageUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserPictureSerializer
+    # permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+
+ 
+    
+    def get_object(self):
+        kwarg_id = self.kwargs.get("id")
+        obj = User.objects.get(id=kwarg_id)
         return obj
     # def get_object(self):
     #     """

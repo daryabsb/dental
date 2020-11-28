@@ -750,7 +750,7 @@ export default {
       /* DISPATCH ACTION @STORE */
       if(this.patient.id === undefined) {
         console.log('ADD PATIENT')
-        this.$store.dispatch('addPatient', this.patient);
+        this.$store.dispatch('addPatient', {vm : this, payload : this.patient});
         
       } else {
         console.log('EDIT PATIENT')

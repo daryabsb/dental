@@ -381,7 +381,7 @@ const actions = {
             console.log(err);
         }
     },
-    async addPatient({ state, commit }, payload) {
+    async addPatient({ state, commit, dispatch  },{vm, payload}) {
         // const options = {
         //   headers: {
         //     "Content-Type": "multipart/form-data"
@@ -396,10 +396,25 @@ const actions = {
                 status: true,
                 msg: 'You have successfully added a new patient!'
             }
-            commit('TRIGGER_ALERT', alertBoard)
+            // commit('TRIGGER_ALERT', alertBoard)
+            dispatch("makeToast",{
+                variant:'success', 
+                vm: vm, 
+                module:'Patient'
+            });
+            
+           
         } catch (err) {
+          
             console.log(err);
+            dispatch("makeToast",{
+                variant:'danger', 
+                vm: vm, 
+                module:'Patient'
+            })
+      
         }
+            
     },
     async editPatient({ state, commit }, payload) {
         const id = payload.id;
@@ -604,7 +619,28 @@ const actions = {
         }
 
 
+
     },
+    makeToast({state},{variant = null, vm, module}) {
+       
+        if (variant === 'success') {
+        vm.$bvToast.toast(`You successfully added a ${module}`, {
+                title: `Add new ${module}`,
+                variant: variant,
+                autoHideDelay: 5000,
+                solid: true
+                })
+
+        } else if (variant === 'danger') {
+            vm.$bvToast.toast(`Unfortunately you failed adding a ${module}`, {
+                title: `Add new ${module}`,
+                variant: variant,
+                autoHideDelay: 5000,
+                solid: true
+                }) 
+        }
+      
+      },
 };
 
 const getters = {
@@ -660,6 +696,12 @@ const getters = {
     },
     counter(state) {
         return state.counter;
+    },
+    alertMsg(state) {
+        return state.alertMsg;
+    },
+    alertStatus(state) {
+        return state.alertStatus;
     },
 };
 

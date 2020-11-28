@@ -1,7 +1,8 @@
 <template>
   <div>
     
-    <Topbar />
+    <!-- <Topbar /> -->
+    <Navbar />
       <div class="page-wrapper">
             
 

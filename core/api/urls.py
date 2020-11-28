@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
     PatientViewSet, TreatmentViewSet, UserViewSet, AppointmentViewSet,
-    ImageUpdateView)
+    ImageUpdateView, UserImageUpdateView)
 
 
 router = routers.DefaultRouter()
@@ -23,4 +23,5 @@ urlpatterns = [
     path('user/token/', CreateTokenView.as_view(), name='token'),
     path('user/me/', ManageUserView.as_view(), name='me'),
     path("patients/<int:id>/image/", ImageUpdateView.as_view(), name="patient-image-update"),
+    path("users/<int:id>/image/", UserImageUpdateView.as_view(), name="user-image-update"),
 ]

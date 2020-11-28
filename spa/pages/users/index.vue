@@ -188,7 +188,7 @@
                               class="a-link-normal"
                             >
                               <img
-                                src="~assets/images/users/user-10.jpg"
+                                :src="user.image"
                                 alt=""
                                 class="thumb-sm rounded-circle mr-2"
                               />{{ user.name }}

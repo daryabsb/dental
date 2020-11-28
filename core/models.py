@@ -32,12 +32,12 @@ def save_pdf_pages_attachment(sender, instance, created, **kwargs):
     if created:
         instance.save()
 
-def product_image_file_path(instance, filename):
+def profile_image_file_path(instance, filename):
     # Generate file path for new recipe image
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
 
-    return os.path.join('uploads/product/', filename)
+    return os.path.join('uploads/profile/', filename)
 
 
 
@@ -79,6 +79,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    image = models.ImageField(null=True, blank=True, upload_to=profile_image_file_path)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -205,7 +206,7 @@ class Patient(models.Model):
     doctor = models.ForeignKey(
         'Doctor', on_delete=models.SET_NULL, 
         null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, upload_to=product_image_file_path)
+    image = models.ImageField(null=True, blank=True, upload_to=profile_image_file_path)
     # image = models.ImageField(
     #     upload_to=product_image_file_path,
     #     default='uploads/product/4edc7b2c-0f96-4fb6-a8bc-22a61e47cd6f.png')

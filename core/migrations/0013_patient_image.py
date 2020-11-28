@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='image',
-            field=models.ImageField(blank=True, null=True, upload_to=core.models.product_image_file_path),
+            field=models.ImageField(blank=True, null=True, upload_to=core.models.profile_image_file_path),
         ),
     ]

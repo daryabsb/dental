@@ -70,7 +70,7 @@
                                             <button 
                                                 class="btn btn-primary btn-round btn-block waves-effect waves-light"  
                                                 @click="addNewUser()"
-                                                v-ielse
+                                                v-else
                                             >Update <i class="fas fa-sign-in-alt ml-1"></i>
                                             </button>
 

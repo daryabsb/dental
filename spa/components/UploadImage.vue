@@ -10,7 +10,7 @@
         langType="en"
 		:width="300"
 		:height="300"
-		:url="`/patients/${id}/image/`"
+		:url="url"
 		
 		img-format="png"></my-upload>
 		<!-- v-model="show" -->
@@ -23,7 +23,7 @@
 import {store, mutations} from '../store/utils/conf';
 import {mapGetters} from 'vuex'
 export default {
-    props: ['id'],
+    props: ['id', 'url'],
     data() {
             return {
                 

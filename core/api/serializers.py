@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from core.models import (
-    Patient, Attachment, Doctor, Treatment, ComingTreatment, 
+    User, Patient, Attachment, Doctor, Treatment, ComingTreatment, 
     ClinicalExamination, MedicalExamination,
     )
 
@@ -10,7 +10,7 @@ class UserListSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = get_user_model()
-        fields = ('id','email', 'password', 'name', 'is_staff','created',)
+        fields = ('id','email', 'password', 'name', 'is_staff', 'image','created',)
         extra_kwargs = {'password': {'write_only': True, 'min_length': 4, 'required':False}}
         read_only_Fields = ('id',)
 
@@ -310,3 +310,9 @@ class PatientPictureSerializer(serializers.ModelSerializer):
         fields = ("id", "image",)
         read_only_Fields = ('id',)
 
+class UserPictureSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = ("id", "image",)
+        read_only_Fields = ('id',)
