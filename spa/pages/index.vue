@@ -139,12 +139,12 @@ export default {
 		};
 	},
 	methods: {
-		patientName(id) {
-			let patient = this.$store.state.patients.find(
-				(patient) => patient.id === id
-			);
-			return patient.name;
-		},
+		// patientName(id) {
+		// 	let patient = this.$store.state.patients.find(
+		// 		(patient) => patient.id === id
+		// 	);
+		// 	return patient.name;
+		// },
 
 		openPdf(url) {
 			// var page = url.substring(url.lastIndexOf('/') + 1);

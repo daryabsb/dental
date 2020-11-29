@@ -1,8 +1,8 @@
 <template>
   <div>
     
-    <!-- <Topbar /> -->
-    <Navbar />
+    <Topbar />
+    <!-- <Navbar /> -->
       <div class="page-wrapper">
             
 
@@ -19,6 +19,10 @@
 </template>
 
 <style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+}
 /* .show {
 display: block;
 }*/

@@ -174,6 +174,12 @@
                     </div> <!-- end navigation -->
                 </div> <!-- end container-fluid -->
             </div> <!-- end navbar-custom -->
+
+<!-- ADDING NEW NAVBAR FOR TESTING -->
+
+<!-- <navbar></navbar> -->
+<!-- NAVBAR NEW TEST -->
+
             <b-row>
                 <b-col>
                     <b-alert
@@ -188,6 +194,7 @@
     </b-alert>
                 </b-col>
             </b-row>
+
         </div>
         <!-- Top Bar End -->
 
