@@ -1,7 +1,7 @@
 <template>
 
     <div id="cal">
-        <h1>My Calendar</h1>
+        <h1>{{message}}</h1>
         <calendar-view
             :show-date="showDate"
             class="theme-default holiday-us-traditional holiday-us-official">
@@ -10,7 +10,7 @@
                 slot-scope="t"
                 :header-props="t.headerProps"
                 @input="setShowDate" 
-                @click-item="alert('dur')"
+                @click-date="onDateSelect"
                 />
                 
         </calendar-view>
@@ -26,7 +26,7 @@ require("vue-simple-calendar/static/css/default.css")
 
 export default {
     data: function() {
-            return { showDate: new Date() }
+            return { showDate: new Date(), message: '', }
         },
         components: {
             CalendarView,
@@ -37,9 +37,9 @@ export default {
             setShowDate(d) {
                 this.showDate = d;
             },
-            onDateSelect(event) {
+            onDateSelect(date) {
                 // this.showDate = date
-                alert(event);
+               this.message = `You clicked: ${d.toLocaleDateString()}`;
             },
         }
     
