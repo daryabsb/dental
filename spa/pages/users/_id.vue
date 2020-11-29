@@ -23,10 +23,10 @@
 								<nuxt-link to="/">Home</nuxt-link>
 							</li>
 							<li class="breadcrumb-item">
-								<nuxt-link to="/patients">Patients</nuxt-link>
+								<nuxt-link to="/users">Users</nuxt-link>
 							</li>
 							<li class="breadcrumb-item active">
-								{{ $auth.user.name }}
+								{{ user.name }}
 							</li>
 						</ol>
 						<!--end breadcrumb-->
@@ -180,7 +180,7 @@
 				<div class="tab-content detail-list">
 					
 					<tab-user-settings
-						:user="$auth.user" v-if="displayContents('tabUser')"
+						:user="user" v-if="displayContents('tabUser')"
 					></tab-user-settings>
 					<tab-general-settings
 						:settings="$auth.user"

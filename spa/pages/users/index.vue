@@ -80,117 +80,40 @@
                   </div>
                   <div class="col-sm-6 col-md-8">
                     <div id="datatable_filter" class="dataTables_filter">
-                      <label style="display: inline;"
-                        >Search: <input
-                        style="margin-right:10px;"
-                          type="search"
-                          class="form-control form-control-sm"
-                          placeholder=""
-                      />
-                        </label>
+                      <search-comp
+									:input="true"
+									:date="false"
+									:pagination="false"
+									url="/users/"
+									moduleState="USERS"
+								></search-comp>
+
+                      <!-- <label style="display: inline;"
+                      >Search: <input v-model="searchQuery"  style="margin-right:10px;" type="search" class="form-control form-control-sm"/>
+                      </label> -->
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <table
-                      id="datatable"
-                      class="table dataTable no-footer"
-                      role="grid"
-                      aria-describedby="datatable_info"
-                    >
+                    <table class="table dataTable no-footer">
                       <thead class="thead-light">
                         <tr role="row">
-                          <th
-                            class="sorting_asc"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-sort="ascending"
-                            aria-label="User Name: activate to sort column descending"
-                            style="width: 201px"
-                          >
-                            User Name
-                          </th>
-                         
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="ID: activate to sort column ascending"
-                            style="width: 54px"
-                          >
-                            ID
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Address: activate to sort column ascending"
-                            style="width: 207px"
-                          >
-                            Email
-                          </th>
-                          
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Last Visit: activate to sort column ascending"
-                            style="width: 100px"
-                          >
-                            Created At
-                          </th>
-                          <th
-                            class="sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Status: activate to sort column ascending"
-                            style="width: 78px"
-                          >
-                            Is Admin
-                          </th>
-                          <th
-                            class="text-right sorting"
-                            tabindex="0"
-                            aria-controls="datatable"
-                            rowspan="1"
-                            colspan="1"
-                            aria-label="Action: activate to sort column ascending"
-                            style="width: 78px"
-                          >
-                            Action
-                          </th>
+                          <th class="sorting_asc" style="width: 201px">User Name </th>
+                          <th class="sorting" style="width: 54px">ID</th>
+                          <th class="sorting" style="width: 207px">Email </th>
+                          <th class="sorting" style="width: 100px">Created At </th>
+                          <th class="sorting" style="width: 78px">Is Admin</th>
+                          <th class="text-right sorting" style="width: 78px">Action</th>
                         </tr>
                         <!--end tr-->
                       </thead>
 <!-- <pre>{{users}}</pre> -->
                       <tbody>
-                        <tr
-                          role="row"
-                          class="odd"
-                          v-for="user in users"
-                          :key="user.id"
-                        >
-                        
+                        <tr v-for="user in users" :key="user.id">
                           <td class="sorting_1">
-                            <nuxt-link
-                              :to="`/users/${user.id}`"
-                              class="a-link-normal"
-                            >
-                              <img
-                                :src="user.image"
-                                alt=""
-                                class="thumb-sm rounded-circle mr-2"
+                            <nuxt-link :to="`/users/${user.id}`" class="a-link-normal">
+                              <img :src="user.image" alt="user" class="thumb-sm rounded-circle mr-2"
                               />{{ user.name }}
                             </nuxt-link>
                           </td>
@@ -198,23 +121,12 @@
                           <td>{{ user.email }}</td>
                           <td>{{ $moment(user.created).format("DD-MM-yyyy") }}</td>
                           <td>
-                            <span 
-                            class="badge"
-                            :class="{ 'badge-soft-success': user.is_staff, 'badge-soft-danger': !user.is_staff }"
-                              >{{user.is_staff}}</span
-                            >
+                            <span class="badge" :class="{ 'badge-soft-success': user.is_staff, 'badge-soft-danger': !user.is_staff }"
+                              >{{user.is_staff}}</span>
                           </td>
                           <td class="text-right">
-                            <a
-                              @click="showModal(true, user)"
-                              class="mr-2"
-                              ><i class="fas fa-edit text-info font-16"></i
-                            ></a>
-                            <a @click="confirmDelete(user.name, user.id)"
-                              ><i
-                                class="fas fa-trash-alt text-danger font-16"
-                              ></i
-                            ></a>
+                            <a @click="showModal(true, user)" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
+                            <a @click="confirmDelete(user.name, user.id)"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                           </td>
                         </tr>
                         <ModalConfirm
@@ -314,6 +226,7 @@ export default {
     return {
       nameDelete: "",
       idDelete: "",
+      searchQuery: "",
     //   editUser: [],
       editId: "",
       editName: "",

@@ -1,5 +1,5 @@
 <template>
-                                <div class="tab-pane fade" id="settings_detail">
+                               
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="card">
@@ -25,18 +25,18 @@
                                                     <div class="">
                                                         <form class="form-horizontal form-material mb-0">
                                                             <div class="form-group">
-                                                                <input type="text" placeholder="Full Name" class="form-control">
+                                                                <input v-model="user.name" type="text" placeholder="Full Name" class="form-control">
                                                             </div>
                                                             
                                                             <div class="form-group row">
                                                                 <div class="col-md-4">
-                                                                    <input type="email" placeholder="Email" class="form-control" name="example-email" id="example-email">
+                                                                    <input v-model="user.email" type="email" placeholder="Email" class="form-control" name="example-email" id="example-email">
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="password" placeholder="password" class="form-control">
+                                                                    <input v-model="password1" type="password" placeholder="password" class="form-control">
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="password" placeholder="Re-password" class="form-control">
+                                                                    <input v-model="password2" type="password" placeholder="Re-password" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -63,7 +63,7 @@
                                             </div>
                                         </div> <!--end col-->                                          
                                     </div><!--end row-->
-                                </div><!--end settings detail-->
+                             
  
  
 </template>
@@ -71,6 +71,12 @@
 <script>
 export default {
     props: ['user'],
+    data() {
+        return {
+            password1: '',
+            password2: '',
+        }
+    },
     methods: {
         showPatientTreatmentModal() {
             this.$refs['p-treatment-modal'].show()

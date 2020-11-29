@@ -41,6 +41,7 @@ export default {
         { src: './plugins/vuescroll.js' },
         { src: './plugins/vue-myupload.js' },
         { src: './plugins/vue-form-wizard.js' },
+        { src: './plugins/vue-cal.js' },
     ],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)

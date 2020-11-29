@@ -57,6 +57,29 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserListSerializer
     lookup_field = 'id'
 
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = User.objects.all()
+        # PERFORM FILTER BY SEARCH INPUT
+        conditions = Q()
+        keywords = self.request.query_params.get('input', None)
+        # print(keywords)
+        if keywords:
+            
+            keywords_list = keywords.split(' ') 
+            # print(keywords_list)
+            for word in keywords_list:
+                conditions |= Q(name__icontains=word) | Q(email__icontains=word)
+    
+            if conditions:
+                # print(type(conditions))
+                queryset = User.objects.filter(conditions)
+
+        return queryset
+
 class AttachmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = Attachment.objects.all()
