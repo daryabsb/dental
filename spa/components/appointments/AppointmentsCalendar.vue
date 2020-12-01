@@ -1,9 +1,12 @@
 <template>
 <div id="calendar">
-		<div class="calendar-controls">
+	
+		<b-col>
+			
+		<div class="calendar-controls" v-if="boxTrue">
 			<div v-if="message" class="notification is-success">{{ message }}</div>
 
-			<div class="box">
+			<div class="box" v-if="boxTrue">
 				<h4 class="title is-5">Play with the options!</h4>
 
 				<div class="field">
@@ -113,6 +116,32 @@
 				</button>
 			</div>
 		</div>
+		
+		</b-col>
+	</b-row>
+			<b-row>
+						<b-col>
+							
+
+						</b-col>
+					</b-row>
+					
+<b-card no-body class="overflow-hidden" v-if="appointmentPatient">
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img  style="max-width: 10rem;" :src="appointmentPatient.image" alt="Image" class="rounded-circle m-3"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body :title="appointment.title">
+          <b-card-text>
+            {{$moment(appointment.startDate).format('DD/MM/yyyy')}}
+          </b-card-text>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+  
+	
 		<div class="calendar-parent">
 			<calendar-view
 				:items="items"
@@ -147,7 +176,9 @@
 					@input="setShowDate"
 				/>
 			</calendar-view>
-		</div>
+		
+	</div>
+
 	</div>
 </template>
 <script>
@@ -188,8 +219,11 @@ export default {
 			newItemStartDate: "",
 			newItemEndDate: "",
 			useDefaultTheme: true,
-			useHolidayTheme: true,
+			useHolidayTheme: false,
 			useTodayIcons: false,
+			appointment: null,
+			appointmentPatient: null,
+			boxTrue: false,
 			itemsBAK: [
 				{
 					id: "e0",
@@ -271,7 +305,8 @@ export default {
             let item = {};
             item.id = app.id
             item.startDate = this.thisMonth(this.$moment( app.date).date())
-            item.title = patient.name
+			item.title = patient.name
+			item.pid = patient.id
 
             itemsPush.push(item)
         });
@@ -280,27 +315,16 @@ export default {
         ...mapGetters(['patientsData'])
 	},
 	mounted() {
-        
-        var i;
-        for(i = 0; i < this.appointments.length; i++){
-            console.log(this.$moment(this.appointments.date).date());
-            this.appointments[i].title = this.appointments[i]['description'];
-            this.appointments[i].startDate = this.appointments[i]['date'];
-            delete this.appointments[i].description;
-            delete this.appointments[i].date;
-}
-// console.log(this.appointments)
 		this.newItemStartDate = this.isoYearMonthDay(this.today())
 		this.newItemEndDate = this.isoYearMonthDay(this.today())
 	},
 
 	methods: {
-		periodChanged() {
-			// range, eventSource) {
+		periodChanged(range, eventSource) {
 			// Demo does nothing with this information, just including the method to demonstrate how
 			// you can listen for changes to the displayed range and react to them (by loading items, etc.)
-			//console.log(eventSource)
-			//console.log(range)
+			console.log(eventSource)
+			console.log(range)
 		},
 		thisMonth(d, h, m) {
 			const t = new Date()
@@ -313,6 +337,10 @@ export default {
 		},
 		onClickItem(e) {
 			this.message = `You clicked: ${e.title}`
+			this.appointment = this.items.find(app=>app.id===e.id);
+			let patient = this.patientsData.results.find(p=>p.id===this.appointment.pid)
+			this.appointmentPatient = patient;
+			console.log(this.appointment, ' | ', this.appointmentPatient)
 		},
 		setShowDate(d) {
 			this.message = `Changing calendar view to ${d.toLocaleDateString()}`
@@ -357,14 +385,14 @@ body {
 
 #calendar {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	font-family: Calibri, sans-serif;
-	width: 95vw;
+	/* width: 95vw; */
 	min-width: 30rem;
 	max-width: 100rem;
 	min-height: 40rem;
-	margin-left: auto;
-	margin-right: auto;
+	/* margin-left: auto; */
+	/* margin-right: auto; */
 }
 
 .calendar-controls {

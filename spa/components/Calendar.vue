@@ -1,5 +1,5 @@
 <template>
-<div id="calendar">
+<div id="calendar1">
 		<div class="calendar-controls">
 			<div v-if="message" class="notification is-success">{{ message }}</div>
 
@@ -330,7 +330,7 @@ body {
 	background-color: #f7fcff;
 }
 
-#calendar {
+#calendar1 {
 	display: flex;
 	flex-direction: row;
 	font-family: Calibri, sans-serif;

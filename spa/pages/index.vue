@@ -57,30 +57,9 @@
 			</b-col>
 			<b-col lg="8">
 				<b-card>
-					<b-row>
-						<b-col>
-							<b-card no-body class="overflow-hidden">
-    <b-row no-gutters>
-      <b-col md="6">
-        <b-card-img  style="max-width: 10rem;" src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-circle m-3"></b-card-img>
-      </b-col>
-      <b-col md="6">
-        <b-card-body title="Horizontal Card">
-          <b-card-text>
-            This is a wider card with supporting text as a natural lead-in to additional content.
-            This content is a little bit longer.
-          </b-card-text>
-        </b-card-body>
-      </b-col>
-    </b-row>
-  </b-card>
-						</b-col>
-					</b-row>
-					<b-row>
-						<b-col>
+					
 							<appointments-calendar :appointments="appointments"></appointments-calendar>
-						</b-col>
-					</b-row>
+						
 					<b-table
 							:items="appointments"
 							:fields="appointmentsFields"

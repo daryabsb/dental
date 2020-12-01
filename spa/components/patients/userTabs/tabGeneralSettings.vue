@@ -1,7 +1,7 @@
 <template>
 <row>
     <col-12>
-  <Calendar />
+  <vue-cal></vue-cal>
   </col-12>
 </row>
 </template>
