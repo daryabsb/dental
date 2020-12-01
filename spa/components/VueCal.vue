@@ -1,6 +1,6 @@
 <template>
 
-	<b-container id="cal2">
+	<div>
     <b-row class="mb-3">
       <b-col>
         <b-button @click="customEventCreation">Add an new appointment</b-button>
@@ -41,19 +41,20 @@
     <b-card-title>
     
       <span>{{ selectedEvent.title }}</span>
-      <strong>{{ selectedEvent.start && selectedEvent.start.format('DD/MM/YYYY') }}</strong>
+      <strong>{{ $moment(selectedEvent.start).format('DD/MM/YYYY') && $moment(selectedEvent.start).format('DD/MM/YYYY') }}</strong>
     </b-card-title>
     <b-card-text>
       <p v-html="selectedEvent.contentFull"/>
       <strong>Event details:</strong>
       <ul>
-        <li>Event starts at: {{ selectedEvent.start && selectedEvent.start.formatTime() }}</li>
-        <li>Event ends at: {{ selectedEvent.end && selectedEvent.end.formatTime() }}</li>
+        <li>Event starts at: {{ $moment(selectedEvent.start).format('hh:mm A') && $moment(selectedEvent.start).format('hh:mm A') }}</li>
+        <li>Event ends at: {{ $moment(selectedEvent.end).format('hh:mm A') && $moment(selectedEvent.end).format('hh:mm A') }}</li>
       </ul>
     </b-card-text>
   </b-card>
 </b-modal>
- <div 
+
+ <!-- <div 
         class="external-event text-pink"
         v-for="(item, i) in draggables"
         :key="i"
@@ -62,22 +63,28 @@
      <strong>{{ item.title }}</strong>
      ({{ item.duration ? `${item.duration} min` : 'no duration' }})
   <div>{{ item.content }}</div>
-</div>
+</div> -->
 		<vue-cal
 		ref="vuecal"
 		selected-date="2018-11-19"
          :time-from="12 * 60"
          :time-to="21 * 60"
-         :disable-views="['years', 'year']"
+         
          :editable-events="{ title: true, drag: true, resize: true, delete: true, create: true }"
          :events="events"
          :on-event-click="onEventClick"
+		
+		 @event-drag-create="showPatientAppointmentModal"
+		 
    
 		></vue-cal>
+		<!-- :disable-views="['years', 'year']" -->
+		<!-- @event-drop="showPatientAppointmentModal" -->
+		 <!-- @event-drag-create="showEventCreationDialog = true" -->
     <!-- VUE CAL METHODS TO USE -->
      <!-- hide-weekends -->
-           <!-- @event-drop="onEventDrop" -->
-	</b-container>
+           
+	</div>
 </template>
 <script>
 import VueCal from 'vue-cal';
@@ -136,6 +143,8 @@ export default {
 }),
 methods: {
   onEventClick (event, e) {
+	//   this.$emit('select-menu-item',event, e)
+	  
     this.selectedEvent = event
     this.showDialog = true
 
@@ -143,7 +152,8 @@ methods: {
     e.stopPropagation()
   },
 
-  customEventCreation () {
+  customEventCreation (event) {
+	  console.log('create event', event)
     const dateTime = prompt('Create event on (YYYY-MM-DD HH:mm)', '2020-12-01 13:15')
     this.showPatientAppointmentModal()
 
@@ -170,7 +180,8 @@ showPatientAppointmentModal(status=false, id='') {
 			this.$refs["p-appointment-modal"].hide();
     },
     onEventDragStart (e, draggable) {
-      // Passing the event's data to Vue Cal through the DataTransfer object.
+	  // Passing the event's data to Vue Cal through the DataTransfer object.
+	  console.log(draggable);
       e.dataTransfer.setData('event', JSON.stringify(draggable))
       e.dataTransfer.setData('cursor-grab-at', e.offsetY)
     },
@@ -179,14 +190,37 @@ showPatientAppointmentModal(status=false, id='') {
     // `originalEvent` is the event that was dragged into Vue Cal, it can come from the same
     //  Vue Cal instance, another one, or an external source.
     // `external` is a boolean that lets you know if the event is not coming from any Vue Cal.
-    // onEventDrop ({ event, originalEvent, external }) {
-    //   // If the event is external, delete it from the data source on drop into Vue Cal.
-    //   // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
-    //   if (external) {
-    //     const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
-    //     if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
-    //   }
-    // },
+    onEventDrop ({ event, originalEvent, external }) {
+      // If the event is external, delete it from the data source on drop into Vue Cal.
+	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
+	  console.log('event', event)
+	  console.log('original-event', originalEvent)
+	  console.log('external', external)
+      if (external) {
+		  console.log(external);
+        // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
+        // if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
+      }
+	},
+	onEventCreate (event, deleteEventFunction) {
+	
+	this.selectedEvent = event
+	console.log(this.selectedEvent)
+	this.showPatientAppointmentModal()
+    // this.showEventCreationDialog = true
+    this.deleteEventFunction = deleteEventFunction
+
+    return event
+  },
+//   cancelEventCreation () {
+//     this.closeCreationDialog()
+//     this.deleteEventFunction()
+//   },
+  closeCreationDialog () {
+    // this.showEventCreationDialog = false
+    this.selectedEvent = {}
+  },
+	
 },
 
 }

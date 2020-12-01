@@ -33,40 +33,78 @@
 			</b-col>
 		</b-row>
 		<b-row>
-							<b-col>
-								
-							</b-col>
-						</b-row>
-		
-		<b-row>
 			<b-col lg="4">
 				<b-card style="height:44.3rem;">
+					
 					<b-table
 							:items="colPatients"
 							:fields="fields"
+							primary-key="id"
 							striped
+							selectable
+							sortable
 							sticky-header="41.5rem"
 							head-variant="light"
-							@dragstart="onEventDragStart($event, item)">
+							draggable="true"
+							@dragstart='onEventDragStart($event, item)'
+							
+							>
 						>
 							<!-- :variant="row.item.status ? 'success' : 'danger'" -->
-							<template #cell(name)="row">
+							<!-- <template #cell(name)="row" @drag="onEventDragStart($event, items)"> -->
+								
+							<template 
+							#cell(name)="row" 
+							
+							>
+							<div 
+       
+        draggable="true"
+        @dragstart="onEventDragStart($event, row.item)">
+							<!-- <draggable v-model="colPatients" tag="tr" :move="trigEvent"> -->
 								<!-- `data.value` is the value after formatted by the Formatter -->
-								<nuxt-link :to="`/patients/${row.item.id}`">
+								<nuxt-link :to="`/patients/${row.item.id}`" >
+								
+    
+
 								<img :src="row.item.image" alt class="thumb-sm rounded-circle mr-2" />
 								{{ row.item.name }}</nuxt-link>
+								</div>
 							</template>
+							
 							<template
 								#cell(status)="row"
 								cellVariant="danger"
 							>{{ row.item.status ? 'Active' : 'Inactive'}}</template>
 						</b-table>
+						
 				</b-card>
 			</b-col>
 			<b-col lg="8">
 				<b-card>
-					<vue-cal></vue-cal>
+					<b-row>
+						<b-col>
+							<vue-cal
+								ref="vuecal"
+								selected-date="2018-11-19"
+								:time-from="12 * 60"
+								:time-to="21 * 60"
+								
+								:editable-events="{ title: true, drag: true, resize: true, delete: true, create: true }"
+								:events="events"
+								:on-event-click="onEventClick"
+								
+								@event-drag-create="showPatientAppointmentModal"
+								
+						
+							></vue-cal>
+						</b-col>
+					</b-row>
+					
 							<!-- <appointments-calendar :appointments="appointments"></appointments-calendar> -->
+					<b-row>
+					<b-col>
+
 						
 					<b-table
 							:items="appointments"
@@ -101,6 +139,9 @@
 								</a>
 							</template>
 						</b-table>
+						</b-col>
+		</b-row>
+		 			
 						<b-row>
 									<b-col md="6">Showing {{currentPage}} of {{numPages}} entries</b-col>
 									<b-col md="6">
@@ -112,11 +153,11 @@
 										></b-pagination>
 									</b-col>
 								</b-row>
+						
 				</b-card>
-			</b-col>
-		</b-row>
-		 							
-
+							
+</b-col>
+					</b-row>
 		
 	</b-container>
 	<!-- container -->
@@ -127,12 +168,20 @@
 import { store, mutations } from "../store/utils/conf";
 // import PdfViewer from "vue-pdf-app";
 import { mapGetters, mapMutations } from "vuex";
+import draggable from 'vuedraggable';
+import VueCal from 'vue-cal';
+// import AddNewappointment from './patients/AddNewAppointment';
+import 'vue-cal/dist/vuecal.css'
 
 export default {
 	async asyncData({ $axios, app, store }) {
 		await store.dispatch("loadData");
 
 		// this.$store.dispatch('loadData', 'DONE');
+	},
+	components: {
+		 draggable,
+		 VueCal,
 	},
 	data() {
 		return {
@@ -147,20 +196,112 @@ export default {
 			searchQuery: "",
 			url: "",
 			currentPage: 1,
+			events: [
+    {
+      start: '2020-11-20 14:00',
+      end: '2018-11-20 18:00',
+      title: 'Need to go shopping',
+      icon: 'shopping_cart', // Custom attribute.
+      content: 'Click to see my shopping list',
+      contentFull: 'My shopping list is rather long:<br><ul><li>Avocados</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>', // Custom attribute.
+      class: 'leisure'
+    },
+    {
+      start: '2020-11-22 10:00',
+      end: '2018-11-22 15:00',
+      title: 'Golf with John',
+      icon: 'golf_course', // Custom attribute.
+      content: 'Do I need to tell how many holes?',
+      contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
+      class: 'sport'
+    }
+  ],
 		};
 	},
 	methods: {
+		 onEventClick (event, e) {
+	//   this.$emit('select-menu-item',event, e)
+	  
+    this.selectedEvent = event
+    this.showDialog = true
+
+    // Prevent navigating to narrower view (default vue-cal behavior).
+    e.stopPropagation()
+  },
+
+  customEventCreation (event) {
+	  console.log('create event', event)
+    const dateTime = prompt('Create event on (YYYY-MM-DD HH:mm)', '2020-12-01 13:15')
+    this.showPatientAppointmentModal()
+
+    // Check if date format is correct before creating event.
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
+      this.$refs.vuecal.createEvent(
+        // Formatted start date and time or JavaScript Date object.
+        dateTime,
+        // Event duration in minutes (Integer).
+        120,
+        // Custom event props (optional).
+        { title: 'New Event', content: 'yay! 🎉', class: 'blue-event' }
+      )
+    } else if (dateTime) alert('Wrong date format.')
+},
+		trigEvent: (e)=> console.log(e.draggedContext.element.name),
 		// patientName(id) {
 		// 	let patient = this.$store.state.patients.find(
 		// 		(patient) => patient.id === id
 		// 	);
 		// 	return patient.name;
 		// },
-		onEventDragStart (e, draggable) {
+		onEventDragStart (e, item) {
+	  console.log('e');
+			
       // Passing the event's data to Vue Cal through the DataTransfer object.
-      e.dataTransfer.setData('event', JSON.stringify(draggable))
-      e.dataTransfer.setData('cursor-grab-at', e.offsetY)
+    //   e.dataTransfer.setData('event', draggable)
+	//   e.dataTransfer.setData('cursor-grab-at', e.offsetY)
+	  console.log(item);
+	},
+	onEventDrop ({ event, originalEvent, external }) {
+      // If the event is external, delete it from the data source on drop into Vue Cal.
+	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
+	  console.log('event', event)
+	  console.log('original-event', originalEvent)
+	  console.log('external', external)
+      if (external) {
+		  console.log(external);
+        // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
+        // if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
+      }
+	},
+	showPatientAppointmentModal(status=false, id='') {
+      this.edit = status;
+      this.selectedID = id;
+			// this.hideSelectPatientModal();
+			this.$refs["p-appointment-modal"].show();
+			// this.selectedID = '';
+		},
+		hidePatientAppointmentModal() {
+			this.$refs["p-appointment-modal"].hide();
     },
+	onEventCreate (event, deleteEventFunction) {
+	
+	this.selectedEvent = event
+	console.log(this.selectedEvent)
+	this.showPatientAppointmentModal()
+    // this.showEventCreationDialog = true
+    this.deleteEventFunction = deleteEventFunction
+
+    return event
+  },
+// 	whenDragStart(event, item) {
+// 		console.log(item);
+// 	},
+// 	startDrag: (evt, item) => {
+// 		console.log(evt)
+//     //   evt.dataTransfer.dropEffect = 'move'
+//     //   evt.dataTransfer.effectAllowed = 'move'
+//     //   evt.dataTransfer.setData('itemID', item.id)
+// },
 
 		openPdf(url) {
 			// var page = url.substring(url.lastIndexOf('/') + 1);
