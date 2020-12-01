@@ -1,13 +1,45 @@
 <template>
 
 	<b-container id="cal2">
-		<b-button @click="customEventCreation">Add an Event</b-button>
-		
+    <b-row class="mb-3">
+      <b-col>
+        <b-button @click="customEventCreation">Add an new appointment</b-button>
+       
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <div 
+        class="external-event"
+        v-for="(item, i) in draggables"
+        :key="i"
+        draggable="true"
+        @dragstart="onEventDragStart($event, item)">
+     <strong>{{ item.title }}</strong>
+     ({{ item.duration ? `${item.duration} min` : 'no duration' }})
+  <div>{{ item.content }}</div>
+</div>
+      </b-col>
+    </b-row>
+    <b-modal
+							variant="primary"
+							size="lg"
+							ref="p-appointment-modal"
+							hide-footer
+							title="Add a new Appointment"
+						>
+		<add-new-appointment
+								@hidePatientAppointmentModal="hidePatientAppointmentModal"
+								
+							></add-new-appointment>
+              <!-- :patientID="selectedID"
+                :edit="edit" -->
+    </b-modal>
 
 		<b-modal v-model="showDialog">
   <b-card>
     <b-card-title>
-      <b-icon>{{ selectedEvent.icon }}</b-icon>
+    
       <span>{{ selectedEvent.title }}</span>
       <strong>{{ selectedEvent.start && selectedEvent.start.format('DD/MM/YYYY') }}</strong>
     </b-card-title>
@@ -21,30 +53,68 @@
     </b-card-text>
   </b-card>
 </b-modal>
+ <div 
+        class="external-event text-pink"
+        v-for="(item, i) in draggables"
+        :key="i"
+        draggable="true"
+        @dragstart="onEventDragStart($event, item)">
+     <strong>{{ item.title }}</strong>
+     ({{ item.duration ? `${item.duration} min` : 'no duration' }})
+  <div>{{ item.content }}</div>
+</div>
 		<vue-cal
 		ref="vuecal"
 		selected-date="2018-11-19"
-         :time-from="9 * 60"
-         :time-to="19 * 60"
+         :time-from="12 * 60"
+         :time-to="21 * 60"
          :disable-views="['years', 'year']"
-         hide-weekends
+         :editable-events="{ title: true, drag: true, resize: true, delete: true, create: true }"
          :events="events"
          :on-event-click="onEventClick"
+   
 		></vue-cal>
+    <!-- VUE CAL METHODS TO USE -->
+     <!-- hide-weekends -->
+           <!-- @event-drop="onEventDrop" -->
 	</b-container>
 </template>
 <script>
-import VueCal from 'vue-cal'
+import VueCal from 'vue-cal';
+// import AddNewappointment from './patients/AddNewAppointment';
 import 'vue-cal/dist/vuecal.css'
 
 export default {
+  props: ['user', 'selectID', 'edit'],
 	 components: { VueCal },
 	 data: () => ({
   selectedEvent: {},
   showDialog: false,
+  draggables: [
+      {
+        // The id (or however you name it), will help you find which event to delete
+        // from the callback triggered on drop into Vue Cal.
+        id: 1,
+        title: 'Ext. Event 1',
+        content: 'content 1',
+        duration: 60
+      },
+      {
+        id: 2,
+        title: 'Ext. Event 2',
+        content: 'content 2',
+        duration: 30
+      },
+      {
+        id: 3,
+        title: 'Ext. Event 3',
+        content: 'content 3'
+        // No defined duration here: will default to 2 hours.
+      }
+    ],
   events: [
     {
-      start: '2018-11-20 14:00',
+      start: '2020-11-20 14:00',
       end: '2018-11-20 18:00',
       title: 'Need to go shopping',
       icon: 'shopping_cart', // Custom attribute.
@@ -53,7 +123,7 @@ export default {
       class: 'leisure'
     },
     {
-      start: '2018-11-22 10:00',
+      start: '2020-11-22 10:00',
       end: '2018-11-22 15:00',
       title: 'Golf with John',
       icon: 'golf_course', // Custom attribute.
@@ -71,14 +141,15 @@ methods: {
 
     // Prevent navigating to narrower view (default vue-cal behavior).
     e.stopPropagation()
-  }
-},
-customEventCreation () {
-    const dateTime = '2020-11-27 13:15';
+  },
+
+  customEventCreation () {
+    const dateTime = prompt('Create event on (YYYY-MM-DD HH:mm)', '2020-12-01 13:15')
+    this.showPatientAppointmentModal()
 
     // Check if date format is correct before creating event.
     if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
-      this.$refs['vuecal'].createEvent(
+      this.$refs.vuecal.createEvent(
         // Formatted start date and time or JavaScript Date object.
         dateTime,
         // Event duration in minutes (Integer).
@@ -87,7 +158,37 @@ customEventCreation () {
         { title: 'New Event', content: 'yay! 🎉', class: 'blue-event' }
       )
     } else if (dateTime) alert('Wrong date format.')
-}
+},
+showPatientAppointmentModal(status=false, id='') {
+      this.edit = status;
+      this.selectedID = id;
+			// this.hideSelectPatientModal();
+			this.$refs["p-appointment-modal"].show();
+			// this.selectedID = '';
+		},
+		hidePatientAppointmentModal() {
+			this.$refs["p-appointment-modal"].hide();
+    },
+    onEventDragStart (e, draggable) {
+      // Passing the event's data to Vue Cal through the DataTransfer object.
+      e.dataTransfer.setData('event', JSON.stringify(draggable))
+      e.dataTransfer.setData('cursor-grab-at', e.offsetY)
+    },
+    // The 3 parameters are destructured from the passed $event in @event-drop="onEventDrop".
+    // `event` is the final event as Vue Cal understands it.
+    // `originalEvent` is the event that was dragged into Vue Cal, it can come from the same
+    //  Vue Cal instance, another one, or an external source.
+    // `external` is a boolean that lets you know if the event is not coming from any Vue Cal.
+    // onEventDrop ({ event, originalEvent, external }) {
+    //   // If the event is external, delete it from the data source on drop into Vue Cal.
+    //   // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
+    //   if (external) {
+    //     const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
+    //     if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
+    //   }
+    // },
+},
+
 }
 </script>
 <style>

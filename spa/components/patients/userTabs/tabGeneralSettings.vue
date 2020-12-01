@@ -1,13 +1,13 @@
 <template>
-<row>
-    <col-12>
-  <vue-cal></vue-cal>
-  </col-12>
-</row>
+<b-row>
+    <b-col lg="12">
+  <vue-cal :user="user"></vue-cal>
+  </b-col>
+</b-row>
 </template>
 
 <script>
 export default {
-    props: ['settings']
+    props: ['settings', 'user']
 }
 </script>

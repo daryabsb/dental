@@ -16,6 +16,7 @@
 						</b-card>
 					</b-col>
 					<b-col cols="8">
+						
 						<b-card title="Appointments">
 							
 										<search-comp
@@ -32,6 +33,12 @@
 			</b-col>
 		</b-row>
 		<b-row>
+							<b-col>
+								
+							</b-col>
+						</b-row>
+		
+		<b-row>
 			<b-col lg="4">
 				<b-card style="height:44.3rem;">
 					<b-table
@@ -40,6 +47,7 @@
 							striped
 							sticky-header="41.5rem"
 							head-variant="light"
+							@dragstart="onEventDragStart($event, item)">
 						>
 							<!-- :variant="row.item.status ? 'success' : 'danger'" -->
 							<template #cell(name)="row">
@@ -57,8 +65,8 @@
 			</b-col>
 			<b-col lg="8">
 				<b-card>
-					
-							<appointments-calendar :appointments="appointments"></appointments-calendar>
+					<vue-cal></vue-cal>
+							<!-- <appointments-calendar :appointments="appointments"></appointments-calendar> -->
 						
 					<b-table
 							:items="appointments"
@@ -148,6 +156,11 @@ export default {
 		// 	);
 		// 	return patient.name;
 		// },
+		onEventDragStart (e, draggable) {
+      // Passing the event's data to Vue Cal through the DataTransfer object.
+      e.dataTransfer.setData('event', JSON.stringify(draggable))
+      e.dataTransfer.setData('cursor-grab-at', e.offsetY)
+    },
 
 		openPdf(url) {
 			// var page = url.substring(url.lastIndexOf('/') + 1);

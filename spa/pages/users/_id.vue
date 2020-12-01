@@ -177,12 +177,18 @@
 		<!--end row-->
 		<div class="row">
 			<div class="col-12">
+				<pre>{{user.patients}}</pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
 				<div class="tab-content detail-list">
 					
 					<tab-user-settings
 						:user="user" v-if="displayContents('tabUser')"
 					></tab-user-settings>
 					<tab-general-settings
+						:urer="user"
 						:settings="$auth.user"
 						v-if="displayContents('tabGeneral')"
 					></tab-general-settings>
