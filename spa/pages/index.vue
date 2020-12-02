@@ -84,25 +84,41 @@
 				<b-card>
 					<b-row>
 						<b-col>
+							<!-- //2018-11-19" -->
 							<vue-cal
 								ref="vuecal"
-								selected-date="2018-11-19"
+								:selected-date="date_today" 
 								:time-from="12 * 60"
 								:time-to="21 * 60"
-								
-								:editable-events="{ title: true, drag: true, resize: true, delete: true, create: true }"
+								active-view="day"
+								:clickToNavigate="true"
+								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
 								:events="events"
 								:on-event-click="onEventClick"
+								@event-drop="onEventDrop"
 								
-								@event-drag-create="showPatientAppointmentModal"
 								
 						
 							></vue-cal>
+							<b-modal
+							variant="primary"
+							size="lg"
+							ref="p-appointment-modal"
+							hide-footer
+							title="Add a new Appointment"
+						>
+							<add-new-appointment
+								@hidePatientAppointmentModal="hidePatientAppointmentModal"
+								:patientID="edit ? selectedID : ''"
+								
+							></add-new-appointment>
+								
+    					</b-modal>
 						</b-col>
 					</b-row>
 					
 							<!-- <appointments-calendar :appointments="appointments"></appointments-calendar> -->
-					<b-row>
+				<!--	<b-row>
 					<b-col>
 
 						
@@ -113,10 +129,10 @@
 							sticky-header="54.5rem"
 							head-variant="light"
 						>
-							<!-- :variant="row.item.status ? 'success' : 'danger'" -->
+							<!-- :variant="row.item.status ? 'success' : 'danger'"
 							
 							<template #cell(patientName)="row">
-								<!-- `data.value` is the value after formatted by the Formatter -->
+								<!-- `data.value` is the value after formatted by the Formatter
 								<nuxt-link :to="`/patients/${row.item.patient}`">
 									<img :src="patient(row.item).image" alt class="thumb-sm rounded-circle mr-2" />
 												{{ patient(row.item).name }}
@@ -152,7 +168,7 @@
 											per-page="10"
 										></b-pagination>
 									</b-col>
-								</b-row>
+								</b-row>-->
 						
 				</b-card>
 							
@@ -190,7 +206,8 @@ export default {
 			appointmentsFields: ['patientName', 'description', 'date', 'time', 'actions'],
 			nameDelete: "",
 			idDelete: "",
-			// date_today: new Date(),
+			date_today: new Date(),
+			selectedDate: this.$moment(new Date().format('yyyy-MM-DD')),
 
 			link: "",
 			searchQuery: "",
@@ -216,6 +233,7 @@ export default {
       class: 'sport'
     }
   ],
+  edit: false,
 		};
 	},
 	methods: {
@@ -229,49 +247,61 @@ export default {
     e.stopPropagation()
   },
 
-  customEventCreation (event) {
-	  console.log('create event', event)
-    const dateTime = prompt('Create event on (YYYY-MM-DD HH:mm)', '2020-12-01 13:15')
-    this.showPatientAppointmentModal()
+//   customEventCreation (event) {
+// 	  console.log('create event', event)
+//     const dateTime = prompt('Create event on (YYYY-MM-DD HH:mm)', '2020-12-01 13:15')
+//     this.showPatientAppointmentModal()
 
-    // Check if date format is correct before creating event.
-    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
-      this.$refs.vuecal.createEvent(
-        // Formatted start date and time or JavaScript Date object.
-        dateTime,
-        // Event duration in minutes (Integer).
-        120,
-        // Custom event props (optional).
-        { title: 'New Event', content: 'yay! 🎉', class: 'blue-event' }
-      )
-    } else if (dateTime) alert('Wrong date format.')
-},
-		trigEvent: (e)=> console.log(e.draggedContext.element.name),
-		// patientName(id) {
-		// 	let patient = this.$store.state.patients.find(
-		// 		(patient) => patient.id === id
-		// 	);
-		// 	return patient.name;
-		// },
+//     // Check if date format is correct before creating event.
+//     if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
+//       this.$refs.vuecal.createEvent(
+//         // Formatted start date and time or JavaScript Date object.
+//         dateTime,
+//         // Event duration in minutes (Integer).
+//         120,
+//         // Custom event props (optional).
+//         { title: 'New Event', content: 'yay! 🎉', class: 'blue-event' }
+//       )
+//     } else if (dateTime) alert('Wrong date format.')
+// },
+
 		onEventDragStart (e, item) {
 	  console.log('e');
 			
       // Passing the event's data to Vue Cal through the DataTransfer object.
-    //   e.dataTransfer.setData('event', draggable)
-	//   e.dataTransfer.setData('cursor-grab-at', e.offsetY)
+      e.dataTransfer.setData('event', JSON.stringify(item))
+	  e.dataTransfer.setData('cursor-grab-at', e.offsetY)
 	  console.log(item);
 	},
+	// EVENT DROP
 	onEventDrop ({ event, originalEvent, external }) {
       // If the event is external, delete it from the data source on drop into Vue Cal.
 	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
+	
+
+
+
+
+	
+	event.title = event.name;
+	//   event.id = event.id;
+	//   let findIvent = this.events.find(ev=>ev.id === event.id)
+	//   if(!findIvent && !findIvent.start === event.start) {
+		 
+	//   }
+	  
 	  console.log('event', event)
-	  console.log('original-event', originalEvent)
-	  console.log('external', external)
+	//   console.log('original-event', originalEvent)
+	//   console.log('external', external)
       if (external) {
-		  console.log(external);
+		   this.events.push(event)
         // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
-        // if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
-      }
+		// if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
+      } else {
+		  let thisEvent = this.events.find(ev=>ev._eid===event._eid);
+		 let findEventIndex = this.events.indexOf(thisEvent.id) 
+		  this.events.splice(findEventIndex, 1, event)
+	  }
 	},
 	showPatientAppointmentModal(status=false, id='') {
       this.edit = status;
@@ -280,8 +310,8 @@ export default {
 			this.$refs["p-appointment-modal"].show();
 			// this.selectedID = '';
 		},
-		hidePatientAppointmentModal() {
-			this.$refs["p-appointment-modal"].hide();
+	hidePatientAppointmentModal() {
+		this.$refs["p-appointment-modal"].hide();
     },
 	onEventCreate (event, deleteEventFunction) {
 	
@@ -384,6 +414,24 @@ export default {
 			});
 			// return picked;
 		},
+		appToCalendar() {
+			let calEvents = [];
+			this.getAppointments.results.forEach(app=>{
+				let evt = {};
+				let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date).add(642, 'seconds').format('yyyy-MM-DD hh:mm');
+      			evt.title = patient.name;
+      			evt.icon = patient.image; // Custom attribute.
+      			evt.content = app.description;
+      			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
+				  evt.class = 'sport'
+				  this.events.push(evt)
+				  calEvents.push(evt)
+			});
+			console.log(calEvents)
+			return calEvents
+		},
 		...mapGetters([
 			"isAuthenticated",
 			"loggedInUser",
@@ -391,6 +439,23 @@ export default {
 			"getAppointments",
 			"patientsData",
 		]),
+	},
+	mounted() {
+		let calEvents = [];
+			this.getAppointments.results.forEach(app=>{
+				let evt = {};
+				let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date).add(642, 'seconds').format('yyyy-MM-DD hh:mm');
+      			evt.title = patient.name;
+      			evt.icon = patient.image; // Custom attribute.
+      			evt.content = app.description;
+      			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
+				  evt.class = 'sport'
+				  this.events.push(evt)
+				  calEvents.push(evt)
+			});
+			console.log(this.events)
 	},
 };
 

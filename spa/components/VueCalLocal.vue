@@ -73,11 +73,12 @@
          :editable-events="{ title: true, drag: true, resize: true, delete: true, create: true }"
          :events="events"
          :on-event-click="onEventClick"
-		
-		 @event-drag-create="showPatientAppointmentModal"
+		@on-event-create="onEventCreate"
+		 
 		 
    
 		></vue-cal>
+    <!-- @event-drag-create="showPatientAppointmentModal" -->
 		<!-- :disable-views="['years', 'year']" -->
 		<!-- @event-drop="showPatientAppointmentModal" -->
 		 <!-- @event-drag-create="showEventCreationDialog = true" -->
@@ -205,7 +206,7 @@ showPatientAppointmentModal(status=false, id='') {
 	onEventCreate (event, deleteEventFunction) {
 	
 	this.selectedEvent = event
-	console.log(this.selectedEvent)
+	console.log('selectedEvent: ', this.selectedEvent)
 	this.showPatientAppointmentModal()
     // this.showEventCreationDialog = true
     this.deleteEventFunction = deleteEventFunction
@@ -227,13 +228,14 @@ showPatientAppointmentModal(status=false, id='') {
 </script>
 <style>
 #cal2 {
-	height: 50vh;
+	/* height: 70vh; */
 }
 .vuecal__event {cursor: pointer;}
 
 .vuecal__event-title {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: .8em;
+  color: rgb(20, 137, 247);
+  /* font-weight: bold; */
   margin: 4px 0 8px;
 }
 
