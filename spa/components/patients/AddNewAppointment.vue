@@ -52,7 +52,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { store, mutations } from '../../store/utils/conf'
 export default {
-    props: ['patientID', 'edit'],
+    props: ['patientID', 'editDate', 'editTime', 'edit'],
 
     data(){
         return {
@@ -103,6 +103,21 @@ export default {
             this.$emit('hidePatientAppointmentModal');
         },
 
+    },
+    mounted() {
+        if (this.edit) {
+                console.log('You already have a patient, try to edit that one!')
+                const app = this.getAppointments.results.find(a=>a.patient===this.patientID)
+                
+                    this.appointment.id = app.id;
+                    this.appointment.patient = app.patient;
+                    this.appointment.description = app.description;
+                    this.appointment.date = this.editDate;
+                    this.appointment.time = this.editTime;
+                    
+                
+                
+        }
     },
     computed: {
         isEditModalToHide() {

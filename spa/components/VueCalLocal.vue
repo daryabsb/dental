@@ -236,11 +236,19 @@ showPatientAppointmentModal(status=false, id='') {
   font-size: .8em;
   color: rgb(20, 137, 247);
   /* font-weight: bold; */
-  margin: 4px 0 8px;
+  margin: 2px 0 0px;
 }
 
 .vuecal__event-time {
+  font-size: .8em;
   display: inline-block;
+  margin-bottom: .4em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.vuecal span {
+  font-size: 1em;
+  /* display: inline-block; */
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

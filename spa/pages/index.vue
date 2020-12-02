@@ -88,8 +88,9 @@
 							<vue-cal
 								ref="vuecal"
 								:selected-date="date_today" 
-								:time-from="12 * 60"
-								:time-to="21 * 60"
+								:time-from="1 * 60"
+								:time-to="23 * 60"
+								:time-cell-height="40"
 								active-view="day"
 								:clickToNavigate="true"
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
@@ -99,7 +100,14 @@
 								
 								
 						
-							></vue-cal>
+							>
+							<!-- <template v-slot:time-cell="{ hours, minutes }">
+    <div :class="{ 'vuecal__time-cell-line': true, hours: !minutes }">
+      <strong v-if="!minutes" style="font-size: 15px">{{ hours }}</strong>
+      <span v-else style="font-size: 11px">{{ minutes }}</span>
+    </div>
+  </template> -->
+							</vue-cal>
 							<b-modal
 							variant="primary"
 							size="lg"
@@ -109,7 +117,10 @@
 						>
 							<add-new-appointment
 								@hidePatientAppointmentModal="hidePatientAppointmentModal"
-								:patientID="edit ? selectedID : ''"
+								:patientID="selectedID"
+								:editDate="editDate"
+								:editTime="editTime"
+								:edit="edit"
 								
 							></add-new-appointment>
 								
@@ -213,39 +224,43 @@ export default {
 			searchQuery: "",
 			url: "",
 			currentPage: 1,
-			events: [
-    {
-      start: '2020-11-20 14:00',
-      end: '2018-11-20 18:00',
-      title: 'Need to go shopping',
-      icon: 'shopping_cart', // Custom attribute.
-      content: 'Click to see my shopping list',
-      contentFull: 'My shopping list is rather long:<br><ul><li>Avocados</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>', // Custom attribute.
-      class: 'leisure'
-    },
-    {
-      start: '2020-11-22 10:00',
-      end: '2018-11-22 15:00',
-      title: 'Golf with John',
-      icon: 'golf_course', // Custom attribute.
-      content: 'Do I need to tell how many holes?',
-      contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
-      class: 'sport'
-    }
-  ],
-  edit: false,
+			events: [],
+// 			[
+//     {
+//       start: '2020-11-20 14:00',
+//       end: '2018-11-20 18:00',
+//       title: 'Need to go shopping',
+//       icon: 'shopping_cart', // Custom attribute.
+//       content: 'Click to see my shopping list',
+//       contentFull: 'My shopping list is rather long:<br><ul><li>Avocados</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>', // Custom attribute.
+//       class: 'leisure'
+//     },
+//     {
+//       start: '2020-11-22 10:00',
+//       end: '2018-11-22 15:00',
+//       title: 'Golf with John',
+//       icon: 'golf_course', // Custom attribute.
+//       content: 'Do I need to tell how many holes?',
+//       contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
+//       class: 'sport'
+//     }
+//   ],
+	selectedID: '',
+	editDate: '',
+	editTime: '',
+  	edit: false,
 		};
 	},
 	methods: {
-		 onEventClick (event, e) {
-	//   this.$emit('select-menu-item',event, e)
+// 		 onEventClick (event, e) {
+// 	//   this.$emit('select-menu-item',event, e)
 	  
-    this.selectedEvent = event
-    this.showDialog = true
+//     this.selectedEvent = event
+//     this.showDialog = true
 
-    // Prevent navigating to narrower view (default vue-cal behavior).
-    e.stopPropagation()
-  },
+//     // Prevent navigating to narrower view (default vue-cal behavior).
+//     e.stopPropagation()
+//   },
 
 //   customEventCreation (event) {
 // 	  console.log('create event', event)
@@ -278,11 +293,6 @@ export default {
       // If the event is external, delete it from the data source on drop into Vue Cal.
 	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
 	
-
-
-
-
-	
 	event.title = event.name;
 	//   event.id = event.id;
 	//   let findIvent = this.events.find(ev=>ev.id === event.id)
@@ -294,18 +304,40 @@ export default {
 	//   console.log('original-event', originalEvent)
 	//   console.log('external', external)
       if (external) {
+
 		   this.events.push(event)
         // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
 		// if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
       } else {
 		  let thisEvent = this.events.find(ev=>ev._eid===event._eid);
-		 let findEventIndex = this.events.indexOf(thisEvent.id) 
+		 let findEventIndex = this.events.indexOf(thisEvent._eid) 
 		  this.events.splice(findEventIndex, 1, event)
 	  }
 	},
-	showPatientAppointmentModal(status=false, id='') {
-      this.edit = status;
-      this.selectedID = id;
+	onEventClick (event, e) {
+	//   this.$emit('select-menu-item',event, e)
+	  console.log('this.events: ',this.events)
+	  console.log('e: ',e)
+	  console.log('event: ',event)
+	  let ev = this.events.find(evt=>evt.id===event.id);
+	  console.log('ev: ',ev)
+
+	this.selectedEvent = event
+	if(ev.id){
+		
+	this.selectedID = ev.patient
+	this.editDate = this.$moment(ev.start).format('yyyy-MM-DD')
+	// this.editDate = ev.start;
+	this.editTime = this.$moment(ev.start).format('hh:mm')
+	this.edit = true;
+	}
+	
+    this.showPatientAppointmentModal()
+
+    // Prevent navigating to narrower view (default vue-cal behavior).
+    e.stopPropagation()
+  },
+	showPatientAppointmentModal() {
 			// this.hideSelectPatientModal();
 			this.$refs["p-appointment-modal"].show();
 			// this.selectedID = '';
@@ -419,6 +451,8 @@ export default {
 			this.getAppointments.results.forEach(app=>{
 				let evt = {};
 				let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				evt.id= app.id;
+				evt.patient= app.patient;
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
 				evt.end= this.$moment(app.date).add(642, 'seconds').format('yyyy-MM-DD hh:mm');
       			evt.title = patient.name;
@@ -426,7 +460,7 @@ export default {
       			evt.content = app.description;
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
 				  evt.class = 'sport'
-				  this.events.push(evt)
+				//   this.events.push(evt)
 				  calEvents.push(evt)
 			});
 			console.log(calEvents)
@@ -445,8 +479,10 @@ export default {
 			this.getAppointments.results.forEach(app=>{
 				let evt = {};
 				let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				evt.id= app.id;
+				evt.patient= app.patient;
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
-				evt.end= this.$moment(app.date).add(642, 'seconds').format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
       			evt.title = patient.name;
       			evt.icon = patient.image; // Custom attribute.
       			evt.content = app.description;
@@ -460,4 +496,39 @@ export default {
 };
 
 </script>
+<style>
+@import 'vue-cal/dist/vuecal.css';
+
+#cal2 {
+	/* height: 70vh; */
+}
+.vuecal__event {cursor: pointer;}
+
+.vuecal__event-title {
+  font-size: .8em;
+  color: rgb(20, 137, 247);
+  /* font-weight: bold; */
+  margin: 2px 0 0px;
+}
+
+.vuecal__event-time {
+  font-size: .8em;
+  display: inline-block;
+  margin-bottom: .4em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.vuecal span {
+  font-size: 1em;
+  /* display: inline-block; */
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.vuecal__event-content {
+  font-style: italic;
+}
+
+</style>
  
