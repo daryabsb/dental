@@ -87,20 +87,25 @@
 							<!-- //2018-11-19" -->
 							<vue-cal
 								ref="vuecal"
+								:small="true"
 								:selected-date="date_today" 
 								:time-from="1 * 60"
 								:time-to="23 * 60"
 								:time-cell-height="40"
 								active-view="day"
-								:clickToNavigate="true"
+								
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
 								:events="events"
-								:on-event-click="onEventClick"
+								
+								:onEventDblclick="onEventClick"
 								@event-drop="onEventDrop"
+								@event-drag-create="showEventCreationDialog = true"
 								
 								
 						
 							>
+							<!-- :clickToNavigate="true" -->
+							<!-- :on-event-click -->
 							<!-- <template v-slot:time-cell="{ hours, minutes }">
     <div :class="{ 'vuecal__time-cell-line': true, hours: !minutes }">
       <strong v-if="!minutes" style="font-size: 15px">{{ hours }}</strong>
@@ -118,6 +123,7 @@
 							<add-new-appointment
 								@hidePatientAppointmentModal="hidePatientAppointmentModal"
 								:patientID="selectedID"
+								:appointmentID="appointmentID"
 								:editDate="editDate"
 								:editTime="editTime"
 								:edit="edit"
@@ -246,9 +252,11 @@ export default {
 //     }
 //   ],
 	selectedID: '',
+	appointmentID: '',
 	editDate: '',
 	editTime: '',
-  	edit: false,
+	  edit: false,
+	  showEventCreationDialog: false,
 		};
 	},
 	methods: {
@@ -294,18 +302,14 @@ export default {
 	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
 	
 	event.title = event.name;
-	//   event.id = event.id;
-	//   let findIvent = this.events.find(ev=>ev.id === event.id)
-	//   if(!findIvent && !findIvent.start === event.start) {
-		 
-	//   }
-	  
-	  console.log('event', event)
-	//   console.log('original-event', originalEvent)
-	//   console.log('external', external)
+	
+
       if (external) {
 
+		  console.log('external_event', event)
+
 		   this.events.push(event)
+		   console.log('this.events: ',this.events)
         // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
 		// if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
       } else {
@@ -316,15 +320,15 @@ export default {
 	},
 	onEventClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
-	  console.log('this.events: ',this.events)
-	  console.log('e: ',e)
-	  console.log('event: ',event)
+	//   console.log('this.events: ',this.events)
+	//   console.log('e: ',e)
+	//   console.log('event: ',event)
 	  let ev = this.events.find(evt=>evt.id===event.id);
-	  console.log('ev: ',ev)
+	//   console.log('ev: ',ev)
 
 	this.selectedEvent = event
 	if(ev.id){
-		
+	this.appointmentID = ev.id;
 	this.selectedID = ev.patient
 	this.editDate = this.$moment(ev.start).format('yyyy-MM-DD')
 	// this.editDate = ev.start;
@@ -491,7 +495,7 @@ export default {
 				  this.events.push(evt)
 				  calEvents.push(evt)
 			});
-			console.log(this.events)
+			// console.log(this.events)
 	},
 };
 

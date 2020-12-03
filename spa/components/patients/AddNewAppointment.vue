@@ -52,7 +52,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { store, mutations } from '../../store/utils/conf'
 export default {
-    props: ['patientID', 'editDate', 'editTime', 'edit'],
+    props: ['patientID', 'appointmentID', 'editDate', 'editTime', 'edit'],
 
     data(){
         return {
@@ -107,7 +107,7 @@ export default {
     mounted() {
         if (this.edit) {
                 console.log('You already have a patient, try to edit that one!')
-                const app = this.getAppointments.results.find(a=>a.patient===this.patientID)
+                const app = this.getAppointments.results.find(a => a.id===this.appointmentID)
                 
                     this.appointment.id = app.id;
                     this.appointment.patient = app.patient;
