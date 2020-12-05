@@ -91,11 +91,17 @@
 								:selected-date="date_today" 
 								:time-from="1 * 60"
 								:time-to="23 * 60"
-								:time-cell-height="40"
-								active-view="day"
+								:time-cell-height="60"
+								:timeStep="60"
+								:active-view="'day'"
+								:todayButton="true"
+								:snapToTime="15"
+								:stickySplitLabels="true"
+
 								
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
-								:events="events"
+								:events="appToCalendar"
+								:watchRealTime="true"
 								
 								:onEventDblclick="onEventClick"
 								@event-drop="onEventDrop"
@@ -297,26 +303,51 @@ export default {
 	  console.log(item);
 	},
 	// EVENT DROP
-	onEventDrop ({ event, originalEvent, external }) {
+	onEventDrop ({ event, originalEvent, external }, deleteEvent) {
       // If the event is external, delete it from the data source on drop into Vue Cal.
 	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
 	
-	event.title = event.name;
+	this.deleteEventFunction = deleteEvent
+
+	// event.title = event.name;
 	
 
       if (external) {
+		  let data = {
+			  patient: event.id,
+			  title: event.name,
+			  description: '',
+			  date: this.$moment(event.startDate).format('yyyy-MM-DDThh:mm')
+		  }
+		  console.log('inspect date before submit: ', data.date)
+		  this.$store.dispatch('addAppointment', data)
 
-		  console.log('external_event', event)
+		  const thisEvent = 
 
-		   this.events.push(event)
-		   console.log('this.events: ',this.events)
-        // const extEventToDeletePos = this.draggables.findIndex(item => item.id === originalEvent.id)
-		// if (extEventToDeletePos > -1) this.draggables.splice(extEventToDeletePos, 1)
+		
+			event.title = event.name;
+		
       } else {
-		  let thisEvent = this.events.find(ev=>ev._eid===event._eid);
-		 let findEventIndex = this.events.indexOf(thisEvent._eid) 
-		  this.events.splice(findEventIndex, 1, event)
+
+		  let data = {
+			  id: event.id,
+			  patient: event.patient,
+			  title: event.title,
+			  description: '',
+			  date: this.$moment(event.startDate).format('yyyy-MM-DDThh:mm'),
+			  date_to: this.$moment(event.endDate).format('yyyy-MM-DDThh:mm')
+		  }
+		   this.$store.dispatch('editAppointment', data)
+
+
+		//   let thisEvent = this.events.find(ev=>ev.id===event.id);
+		//  let findEventIndex = this.events.indexOf(thisEvent.id) 
+		//   this.events.splice(findEventIndex, 1, event)
 	  }
+	},
+	deleteEvent(event) {
+		let id = event.id
+		this.$store.dispatch('onDeleteAppointment', id);
 	},
 	onEventClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
@@ -451,24 +482,25 @@ export default {
 			// return picked;
 		},
 		appToCalendar() {
-			let calEvents = [];
+			let calEv = [];
 			this.getAppointments.results.forEach(app=>{
 				let evt = {};
 				let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
-				evt.end= this.$moment(app.date).add(642, 'seconds').format('yyyy-MM-DD hh:mm');
-      			evt.title = patient.name;
+				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date_to).format('yyyy-MM-DD hh:mm');
+
+      			evt.title = app.title;
       			evt.icon = patient.image; // Custom attribute.
       			evt.content = app.description;
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
 				  evt.class = 'sport'
-				//   this.events.push(evt)
-				  calEvents.push(evt)
+				  this.events.push(evt)
+				  calEv.push(evt)
 			});
-			console.log(calEvents)
-			return calEvents
+			return calEv;
 		},
 		...mapGetters([
 			"isAuthenticated",
@@ -478,25 +510,51 @@ export default {
 			"patientsData",
 		]),
 	},
-	mounted() {
-		let calEvents = [];
+	// mounted() {
+	// 	let calEvents = [];
+	// 		this.getAppointments.results.forEach(app=>{
+	// 			let evt = {};
+	// 			let patient = this.patientsData.results.find(p=>p.id===app.patient);
+	// 			evt.id= app.id;
+	// 			evt.patient= app.patient;
+	// 			evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
+	// 			// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
+	// 			evt.end= this.$moment(app.date_to).format('yyyy-MM-DD hh:mm');
+
+    //   			evt.title = app.title;
+    //   			evt.icon = patient.image; // Custom attribute.
+    //   			evt.content = app.description;
+    //   			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
+	// 			  evt.class = 'sport'
+	// 			  this.events.push(evt)
+	// 			  calEvents.push(evt)
+	// 		});
+			
+	// 		// console.log(this.events)
+	// },
+	watch: {
+		calEvents() {
+			let calEv = [];
 			this.getAppointments.results.forEach(app=>{
 				let evt = {};
 				let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
-				evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
-      			evt.title = patient.name;
+				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date_to).format('yyyy-MM-DD hh:mm');
+
+      			evt.title = app.title;
       			evt.icon = patient.image; // Custom attribute.
       			evt.content = app.description;
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
 				  evt.class = 'sport'
 				  this.events.push(evt)
-				  calEvents.push(evt)
+				  calEv.push(evt)
 			});
-			// console.log(this.events)
-	},
+			return calEv;
+		}
+	}
 };
 
 </script>

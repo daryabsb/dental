@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 import datetime
+from datetime import timedelta
 from django.apps import apps
 from multiselectfield import MultiSelectField
 
@@ -305,13 +306,23 @@ class Treatment(models.Model):
 class ComingTreatment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='appointments')
-    description = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField()
+    date_to = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-date',)
+
+    def save(self, *args, **kwargs):
+        if self.date_to is None:
+            self.date_to = self.date + timedelta(hours=1)
+        if self.title is None:
+            self.title = self.patient.name
+
+        super(ComingTreatment, self).save(*args, **kwargs)
 
    
     def __str__(self):

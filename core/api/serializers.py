@@ -110,7 +110,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ComingTreatment
-        fields = ('id', 'patient', 'description', 'date')
+        fields = ('id', 'patient', 'title', 'description', 'date', 'date_to')
         read_only_Fields = ('id',)
 
 

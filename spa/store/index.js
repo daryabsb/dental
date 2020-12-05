@@ -149,11 +149,22 @@ const mutations = {
     ADD_NEW_APPOINTMENT(state, payload) {
         let patient = state.patients.results.find(p => p.id === payload.patient);
         let today = new Date();
+        // console.log('payload', payload)
+        // console.log('Find the appointment')
 
+        // console.log()
         if (Date.parse(payload.date) >= Date.parse(today)) {
             state.appointments.results.unshift(payload);
         }
+        let apposa = state.appointments.results.find(app => app.id === payload.id)
+        console.log('inspect date after submit: ', payload.date)
+            // console.log('the data: ', apposa)
 
+    },
+    EDIT_APPOINTMENT(state, payload) {
+        let app = state.appointments.results.find(a => a.id === payload.id)
+        let appIndex = state.appointments.results.indexOf(app);
+        state.appointments.results.splice(appIndex, 1, payload);
     },
     EDIT_USER(state, payload) {
         // FIND ITEM AND PLACE IN STATE
@@ -186,6 +197,13 @@ const mutations = {
         // console.log(patient, indexOfPatient);
 
         state.patients.splice(indexOfPatient, 1);
+    },
+    DELETE_APPOINTMENT(state, id) {
+        let appointment = state.appointments.results.find(app => app.id === id);
+        let indexOfAppointmernt = state.appointments.results.indexOf(appointment);
+        // console.log(patient, indexOfPatient);
+
+        state.appointments.results.slice(indexOfAppointmernt, 1);
     },
     PUSH_NEW_FILES(state, payload) {
         state.files.push(payload);
@@ -381,40 +399,36 @@ const actions = {
             console.log(err);
         }
     },
-    async addPatient({ state, commit, dispatch  },{vm, payload}) {
-        // const options = {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data"
-        //   }
-        // };
+    async addPatient({ state, commit, dispatch }, { vm, payload }) {
+
         let url = "/patients/";
 
         try {
             const newPatient = await this.$axios.post(url, payload);
             commit("ADD_PATIENT", newPatient.data);
             let alertBoard = {
-                status: true,
-                msg: 'You have successfully added a new patient!'
-            }
-            // commit('TRIGGER_ALERT', alertBoard)
-            dispatch("makeToast",{
-                variant:'success', 
-                vm: vm, 
-                module:'Patient'
+                    status: true,
+                    msg: 'You have successfully added a new patient!'
+                }
+                // commit('TRIGGER_ALERT', alertBoard)
+            dispatch("makeToast", {
+                variant: 'success',
+                vm: vm,
+                module: 'Patient'
             });
-            
-           
+
+
         } catch (err) {
-          
+
             console.log(err);
-            dispatch("makeToast",{
-                variant:'danger', 
-                vm: vm, 
-                module:'Patient'
+            dispatch("makeToast", {
+                variant: 'danger',
+                vm: vm,
+                module: 'Patient'
             })
-      
+
         }
-            
+
     },
     async editPatient({ state, commit }, payload) {
         const id = payload.id;
@@ -464,6 +478,16 @@ const actions = {
             console.log(error);
         }
     },
+    async onDeleteAppointment({ state, commit }, id) {
+
+        try {
+            await this.$axios.delete(`/appointments/${id}/`);
+            commit("DELETE_APPOINTMENT", id);
+            console.log('event deleted')
+        } catch (error) {
+            console.log(error);
+        }
+    },
     async onUploadFile({ state, commit }, payload) {
         try {
             let url = "/attachments/";
@@ -504,8 +528,27 @@ const actions = {
 
         try {
             // console.log(Array.from(payload));
-            const newTreatment = await this.$axios.post(url, payload);
-            commit("ADD_NEW_APPOINTMENT", newTreatment.data);
+            const newAppointment = await this.$axios.post(url, payload);
+            console.log('neApp: ', newAppointment.data)
+            commit("ADD_NEW_APPOINTMENT", newAppointment.data);
+        } catch (err) {
+            console.log(err);
+        }
+
+    },
+    async editAppointment({ state, commit }, payload) {
+        let id = payload.id
+        let url = `/appointments/${id}/`;
+
+
+
+        try {
+            // console.log(Array.from(payload));
+            console.log("Appointment editted");
+
+            const newAppointment = await this.$axios.put(url, payload);
+
+            commit("EDIT_APPOINTMENT", newAppointment.data);
         } catch (err) {
             console.log(err);
         }
@@ -621,15 +664,15 @@ const actions = {
 
 
     },
-    makeToast({state},{variant = null, vm, module}) {
-       
+    makeToast({ state }, { variant = null, vm, module }) {
+
         if (variant === 'success') {
-        vm.$bvToast.toast(`You successfully added a ${module}`, {
+            vm.$bvToast.toast(`You successfully added a ${module}`, {
                 title: `Add new ${module}`,
                 variant: variant,
                 autoHideDelay: 5000,
                 solid: true
-                })
+            })
 
         } else if (variant === 'danger') {
             vm.$bvToast.toast(`Unfortunately you failed adding a ${module}`, {
@@ -637,10 +680,10 @@ const actions = {
                 variant: variant,
                 autoHideDelay: 5000,
                 solid: true
-                }) 
+            })
         }
-      
-      },
+
+    },
 };
 
 const getters = {
