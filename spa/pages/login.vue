@@ -106,7 +106,7 @@ export default {
           
         });
         // console.log(Loginfo)
-        // this.$router.push('/')
+        this.$router.push({ path: '/' })
       } catch (err) {
         console.log(err)
       }

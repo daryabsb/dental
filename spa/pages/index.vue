@@ -4,7 +4,7 @@
 		<b-row class="mt-3">
 			<b-col>
 				<b-row>
-					<b-col cols="4">
+					<b-col cols="3">
 						<b-card title="All Patients">
 							<b-input-group class="mb-3">
 										<b-input-group-prepend is-text>
@@ -15,7 +15,7 @@
 									</b-input-group>
 						</b-card>
 					</b-col>
-					<b-col cols="8">
+					<b-col cols="9">
 						
 						<b-card title="Appointments">
 							
@@ -33,7 +33,7 @@
 			</b-col>
 		</b-row>
 		<b-row>
-			<b-col lg="4">
+			<b-col lg="3">
 				<b-card style="height:44.3rem;">
 					
 					<b-table
@@ -59,8 +59,8 @@
 							>
 							<div 
        
-        draggable="true"
-        @dragstart="onEventDragStart($event, row.item)">
+        					draggable="true"
+        					@dragstart="onEventDragStart($event, row.item)">
 							<!-- <draggable v-model="colPatients" tag="tr" :move="trigEvent"> -->
 								<!-- `data.value` is the value after formatted by the Formatter -->
 								<nuxt-link :to="`/patients/${row.item.id}`" >
@@ -72,31 +72,33 @@
 								</div>
 							</template>
 							
-							<template
+							<!-- <template
 								#cell(status)="row"
 								cellVariant="danger"
-							>{{ row.item.status ? 'Active' : 'Inactive'}}</template>
+							>{{ row.item.status ? 'Active' : 'Inactive'}}</template> -->
 						</b-table>
 						
 				</b-card>
 			</b-col>
-			<b-col lg="8">
+			<b-col lg="9">
 				<b-card>
 					<b-row>
-						<b-col>
+						<b-col md="12">
 							<!-- //2018-11-19" -->
 							<vue-cal
 								ref="vuecal"
 								:small="true"
 								:selected-date="date_today" 
-								:time-from="1 * 60"
-								:time-to="23 * 60"
+								:time-from="12 * 60"
+								:time-to="21 * 60"
 								:time-cell-height="60"
 								:timeStep="60"
 								:active-view="'day'"
 								:todayButton="true"
 								:snapToTime="15"
 								:stickySplitLabels="true"
+								@event-duration-change="onEventDurationChange"
+								
 
 								
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
@@ -110,6 +112,8 @@
 								
 						
 							>
+							<!-- <template v-slot:title="{title, view}"> -->
+							
 							<!-- :clickToNavigate="true" -->
 							<!-- :on-event-click -->
 							<!-- <template v-slot:time-cell="{ hours, minutes }">
@@ -216,6 +220,19 @@ export default {
 	async asyncData({ $axios, app, store }) {
 		await store.dispatch("loadData");
 
+		let appointmentsResponse = $axios.$get('/appointments/?page_size=100')
+      	let patientsResponse = $axios.$get('/patients/?page_size=100')
+
+      const [appResponse, patResponse] = await Promise.all([appointmentsResponse, patientsResponse])
+
+      // console.log(catResponse);
+      // console.log(tagResponse);
+
+      return {
+        appointments: appResponse.results,
+        patients: patResponse.results
+      }
+
 		// this.$store.dispatch('loadData', 'DONE');
 	},
 	components: {
@@ -225,13 +242,14 @@ export default {
 	data() {
 		return {
 			// LEFT TABLE DATA
-			fields: ["name", "status"],
+			fields: ["name"],
 			appointmentsFields: ['patientName', 'description', 'date', 'time', 'actions'],
 			nameDelete: "",
 			idDelete: "",
 			date_today: new Date(),
 			selectedDate: this.$moment(new Date().format('yyyy-MM-DD')),
 
+			// allAppointments: [],
 			link: "",
 			searchQuery: "",
 			url: "",
@@ -322,10 +340,9 @@ export default {
 		  console.log('inspect date before submit: ', data.date)
 		  this.$store.dispatch('addAppointment', data)
 
-		  const thisEvent = 
 
 		
-			event.title = event.name;
+			// event.title = event.name;
 		
       } else {
 
@@ -344,6 +361,9 @@ export default {
 		//  let findEventIndex = this.events.indexOf(thisEvent.id) 
 		//   this.events.splice(findEventIndex, 1, event)
 	  }
+	},
+	onEventDurationChange(event) {
+		console.log(event);
 	},
 	deleteEvent(event) {
 		let id = event.id
@@ -467,13 +487,14 @@ export default {
 			let pages = this.calculatePagesCount(10, count);
 			return pages;
 		},
-		patients() {
-			return this.patientsData.results;
-		},
-		appointments() {
-			return this.getAppointments.results;
-		},
+		// patients() {
+		// 	return this.patientsData.results;
+		// },
+		// appointments() {
+		// 	return this.getAppointments.results;
+		// },
 		colPatients() {
+			// console.log(this.patients)
 			return this.patients.filter((patient) => {
 				return patient.name
 					.toLowerCase()
@@ -483,9 +504,12 @@ export default {
 		},
 		appToCalendar() {
 			let calEv = [];
-			this.getAppointments.results.forEach(app=>{
+			// console.log(this.getAllAppointments)
+			// this.getAppointments.results.forEach(app=>{
+			// this.allAppointments.forEach(app=>{
+			this.getAllAppointments.forEach(app=>{
 				let evt = {};
-				let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				// let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
 
@@ -509,16 +533,19 @@ export default {
 
 
 
-				console.log(evt)
+				
 
 				  this.events.push(evt)
+				  
 				  calEv.push(evt)
 			});
+			console.log(calEv)
 			return calEv;
 		},
 		...mapGetters([
 			"isAuthenticated",
 			"loggedInUser",
+			"getAllAppointments",
 			// "getTreatments",
 			"getAppointments",
 			"patientsData",

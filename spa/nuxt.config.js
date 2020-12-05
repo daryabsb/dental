@@ -92,6 +92,7 @@ export default {
             callback: '/login',
             home: '/'
         },
+
     },
     router: {
         middleware: ['auth']

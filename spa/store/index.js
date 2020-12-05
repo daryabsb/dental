@@ -6,6 +6,7 @@ const state = () => ({
     patient: [],
     treatments: [],
     appointments: [],
+    allAppointments: [],
     attachments: [],
     curTreats: [],
     patientPdfFiles: [],
@@ -127,6 +128,9 @@ const mutations = {
         state.appointments = payload;
         // console.log(state.appointments);
     },
+    GET_ALL_APPOINTMENTS(state, payload) {
+        state.allAppointments = payload;
+    },
     GET_PATIENT_TREATMENTS(state, id) {
         // console.log(state.treatments)
         state.curTreats = state.treatments.filter(treat => treat.patient === id);
@@ -149,22 +153,26 @@ const mutations = {
     ADD_NEW_APPOINTMENT(state, payload) {
         let patient = state.patients.results.find(p => p.id === payload.patient);
         let today = new Date();
-        // console.log('payload', payload)
-        // console.log('Find the appointment')
+        console.log('payload for all', payload)
+            // console.log('Find the appointment')
 
         // console.log()
         if (Date.parse(payload.date) >= Date.parse(today)) {
             state.appointments.results.unshift(payload);
+            state.allAppointments.unshift(payload);
         }
-        let apposa = state.appointments.results.find(app => app.id === payload.id)
-        console.log('inspect date after submit: ', payload.date)
-            // console.log('the data: ', apposa)
+
 
     },
     EDIT_APPOINTMENT(state, payload) {
         let app = state.appointments.results.find(a => a.id === payload.id)
+        let apple = state.allAppointments.find(a => a.id === payload.id)
+
+
         let appIndex = state.appointments.results.indexOf(app);
+        let appAllIndex = state.allAppointments.indexOf(apple);
         state.appointments.results.splice(appIndex, 1, payload);
+        state.allAppointments.splice(appAllIndex, 1, payload);
     },
     EDIT_USER(state, payload) {
         // FIND ITEM AND PLACE IN STATE
@@ -201,9 +209,11 @@ const mutations = {
     DELETE_APPOINTMENT(state, id) {
         let appointment = state.appointments.results.find(app => app.id === id);
         let indexOfAppointmernt = state.appointments.results.indexOf(appointment);
+        let indexOfAllAppointmernt = state.allAppointments.indexOf(appointment);
         // console.log(patient, indexOfPatient);
 
         state.appointments.results.slice(indexOfAppointmernt, 1);
+        state.allAppointments.slice(indexOfAllAppointmernt, 1);
     },
     PUSH_NEW_FILES(state, payload) {
         state.files.push(payload);
@@ -283,20 +293,23 @@ const actions = {
         let treatmentUrl = "/treatments/";
         let usersUrl = "/users/";
         let appointmentUrl = "/appointments/";
+        let allAppointmentUrl = "/appointments/?page_size=100";
         let attachmentsUrl = "/attachments/";
-        // console.log(url);
+        console.log(allAppointmentUrl);
 
         try {
             const allPatients = await this.$axios.get(patientUrl);
             const allTreatments = await this.$axios.get(treatmentUrl);
             const allUsers = await this.$axios.get(usersUrl);
-            const allAppointments = await this.$axios.get(appointmentUrl);
+            const appointmentsData = await this.$axios.get(appointmentUrl);
+            const allAppointmentsData = await this.$axios.get(allAppointmentUrl);
             const allAttachments = await this.$axios.get(attachmentsUrl);
 
             commit("GET_PATIENTS", allPatients.data);
             commit("GET_USERS", allUsers.data);
             commit("GET_TREATMENTS", allTreatments.data);
-            commit("GET_APPOINTMENTS", allAppointments.data);
+            commit("GET_APPOINTMENTS", appointmentsData.data);
+            commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
             commit("GET_ATTACHMENTS", allAttachments.data);
             //   console.log(allPatients.data)
 
@@ -529,7 +542,7 @@ const actions = {
         try {
             // console.log(Array.from(payload));
             const newAppointment = await this.$axios.post(url, payload);
-            console.log('neApp: ', newAppointment.data)
+            console.log('newApp: ', newAppointment.data)
             commit("ADD_NEW_APPOINTMENT", newAppointment.data);
         } catch (err) {
             console.log(err);
@@ -715,6 +728,9 @@ const getters = {
     },
     getAppointments(state) {
         return state.appointments;
+    },
+    getAllAppointments(state) {
+        return state.allAppointments;
     },
     hasPDF(state) {
         return state.hasPDF;
