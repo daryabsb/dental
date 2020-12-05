@@ -334,8 +334,8 @@ export default {
 			  patient: event.patient,
 			  title: event.title,
 			  description: '',
-			  date: this.$moment(event.startDate).format('yyyy-MM-DDThh:mm'),
-			  date_to: this.$moment(event.endDate).format('yyyy-MM-DDThh:mm')
+			  date: this.$moment(event.startDate).format('yyyy-MM-DDTHH:mm'),
+			  date_to: this.$moment(event.endDate).format('yyyy-MM-DDTHH:mm')
 		  }
 		   this.$store.dispatch('editAppointment', data)
 
@@ -488,15 +488,29 @@ export default {
 				let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
-				evt.start= this.$moment(app.date).format('yyyy-MM-DD hh:mm');
+
+				// evt.startDate = new Date(app.date);
+				// evt.endDate = new Date(app.date_to);
+				
+				// evt.endTimeMinutes = Math.floor(math.abc(new Date()))
+
+				evt.start= this.$moment(app.date).format('yyyy-MM-DD HH:mm');
 				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
-				evt.end= this.$moment(app.date_to).format('yyyy-MM-DD hh:mm');
+				evt.end= this.$moment(app.date_to).format('yyyy-MM-DD HH:mm');
+
+				
 
       			evt.title = app.title;
-      			evt.icon = patient.image; // Custom attribute.
       			evt.content = app.description;
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
 				  evt.class = 'sport'
+
+
+
+
+
+				console.log(evt)
+
 				  this.events.push(evt)
 				  calEv.push(evt)
 			});
