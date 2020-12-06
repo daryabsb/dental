@@ -153,16 +153,19 @@ const mutations = {
     ADD_NEW_APPOINTMENT(state, payload) {
         let patient = state.patients.results.find(p => p.id === payload.patient);
         let today = new Date();
-        console.log('payload for all', payload)
-            // console.log('Find the appointment')
-        state.allAppointments.unshift(payload);
+        // console.log('payload for all', payload)
+        // console.log('Find the appointment')
+
         // console.log()
         if (Date.parse(payload.date) >= Date.parse(today)) {
             state.appointments.results.unshift(payload);
-            
+            // state.allAppointments.unshift(payload);
         }
 
 
+    },
+    ADD_NEW_ALL_APPOINTMENT(state, payload) {
+        state.allAppointments.unshift(payload)
     },
     EDIT_APPOINTMENT(state, payload) {
         let app = state.appointments.results.find(a => a.id === payload.id)
@@ -542,8 +545,9 @@ const actions = {
         try {
             // console.log(Array.from(payload));
             const newAppointment = await this.$axios.post(url, payload);
-            console.log('newApp: ', newAppointment.data)
+            console.log('newAppolo: ', newAppointment.data)
             commit("ADD_NEW_APPOINTMENT", newAppointment.data);
+            commit("ADD_NEW_ALL_APPOINTMENT", newAppointment.data);
         } catch (err) {
             console.log(err);
         }
@@ -560,6 +564,8 @@ const actions = {
             console.log("Appointment editted");
 
             const newAppointment = await this.$axios.put(url, payload);
+
+            console.log('testing from add function', newAppointment.data)
 
             commit("EDIT_APPOINTMENT", newAppointment.data);
         } catch (err) {

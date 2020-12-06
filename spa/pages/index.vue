@@ -86,35 +86,36 @@
 						<b-col md="12">
 							<b-tabs content-class="mt-3" justified>
     <b-tab @click="selectTabEvent" title="Calendar" active><p>
-		
+		<!-- :time-cell-height="60"  -->
 		<!-- //2018-11-19" -->
 							<vue-cal
 								ref="vuecal"
 								:small="true"
 								:selected-date="date_today" 
-								:time-from="12 * 60"
+								:time-from="1 * 60"
 								:time-to="21 * 60"
-								:time-cell-height="60"
 								:timeStep="60"
-								:active-view="'day'"
+								active-view="day"
 								:todayButton="true"
 								:snapToTime="15"
-								:stickySplitLabels="true"
+								:watchRealTime="true"
+								:startWeekOnSunday="true"
 								@event-duration-change="onEventDurationChange"
 								:on-event-click="onEventClick"
-
-								
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
 								:events="appToCalendar"
-								:watchRealTime="true"
-								
 								:onEventDblclick="onEventDoubleClick"
 								@event-drop="onEventDrop"
 								@event-drag-create="showEventCreationDialog = true"
+								@cell-focus="selectedDate = $event"
 								
 								
-						
 							>
+
+<!-- :stickySplitLabels="true" -->
+
+
+
 							<!-- <template v-slot:title="{title, view}"> -->
 							
 							<!-- :clickToNavigate="true" -->
@@ -146,7 +147,26 @@
     					</b-modal>
 		
 		</p></b-tab>
-    <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'"><p>I'm the second tab</p></b-tab>
+    <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy>
+		<b-row>
+			<b-col md="6">
+				
+				<vue-cal
+					
+					
+					
+					:active-view="activeView"
+					:events="appToCalendar"
+					:disable-views="['years', 'year', 'month']"
+					:selected-date="selectedDate"
+					class="vuecal--blue-theme"
+					:stickySplitLabels="true"
+					
+					>
+				</vue-cal>
+			</b-col>
+		</b-row>
+	</b-tab>
     <b-tab title="Very, very long title"><p>I'm the tab with the very, very long title</p></b-tab>
     <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
   </b-tabs>
@@ -262,7 +282,7 @@ export default {
 			nameDelete: "",
 			idDelete: "",
 			date_today: new Date(),
-			selectedDate: this.$moment(new Date().format('yyyy-MM-DD')),
+			selectedDate: '',
 
 			// allAppointments: [],
 			link: "",
@@ -293,6 +313,7 @@ export default {
 //     }
 //   ],
 	selectedID: '',
+	activeView: 'day',
 	appointmentID: '',
 	editDate: '',
 	editTime: '',
@@ -357,9 +378,9 @@ export default {
 			  patient: event.id,
 			  title: event.name,
 			  description: '',
-			  date: this.$moment(event.startDate).format('yyyy-MM-DDThh:mm')
+			  date: this.$moment(event.startDate).format('yyyy-MM-DDTHH:mm')
 		  }
-		//   console.log('inspect date before submit: ', data.date)
+		  console.log('inspect date before submit: ', data)
 		  this.$store.dispatch('addAppointment', data)
 
 
@@ -391,6 +412,11 @@ export default {
 		let id = event.id
 		this.$store.dispatch('onDeleteAppointment', id);
 	},
+	scrollToCurrentTime () {
+  		const calendar = document.querySelector('#vuecal .vuecal__bg')
+  		const hours = this.now.getHours() + this.now.getMinutes() / 60
+  		calendar.scrollTo({ top: hours * this.timeCellHeight, behavior: 'smooth' })
+},
 	onEventDoubleClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
 	//   console.log('this.events: ',this.events)
@@ -524,8 +550,9 @@ export default {
 			});
 			// return picked;
 		},
-		appToCalendar() {
-			let calEv = [];
+		appToCalendar: {
+			get() {
+				let calEv = [];
 			// console.log(this.getAllAppointments)
 			// this.getAppointments.results.forEach(app=>{
 			// this.allAppointments.forEach(app=>{
@@ -534,12 +561,15 @@ export default {
 				// let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
+				console.log(app.title, ': ', app.date, ' | ', app.date_to)
 
-				evt.startDate = new Date(app.date);
-				evt.endDate = new Date(app.date_to);
+				// evt.startDate = new Date(app.date);
+				// evt.endDate = new Date(app.date_to);
 				
 				// evt.endTimeMinutes = Math.floor(math.abc(new Date()))
-				var minutes = Math.floor(millis / 60000)
+				// evt.startTimeMinutes = Math.floor(Math.abs(evt.startDate.getHours() * 60) + Math.abs(evt.startDate.getMinutes()))
+				// evt.endTimeMinutes = Math.floor(Math.abs(evt.endDate.getHours() * 60) + Math.abs(evt.endDate.getMinutes()))
+				// var minutes = Math.floor(millis / 60000)
 
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD HH:mm');
 				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
@@ -556,8 +586,13 @@ export default {
 				  
 				  calEv.push(evt)
 			});
-			console.log(calEv)
+			// console.log(calEv)
 			return calEv;
+			},
+			set(newValue) {
+				console.log('new value', newValue)
+			}
+			
 		},
 		...mapGetters([
 			"isAuthenticated",
@@ -622,13 +657,16 @@ export default {
 #cal2 {
 	/* height: 70vh; */
 }
-.vuecal__event {cursor: pointer;}
+.vuecal__event {
+	cursor: pointer;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
 
 .vuecal__event-title {
   font-size: .8em;
   color: rgb(20, 137, 247);
   /* font-weight: bold; */
-  margin: 2px 0 0px;
+  margin: 0;
 }
 
 .vuecal__event-time {
@@ -636,18 +674,26 @@ export default {
   display: inline-block;
   margin-bottom: .4em;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
 .vuecal span {
   font-size: 1em;
   /* display: inline-block; */
   margin-bottom: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
 .vuecal__event-content {
   font-style: italic;
+}
+
+.vuecal--blue-theme .vuecal__event {
+	display: flex;
+	justify-content: space-around;
+}
+.vuecal span {
+	border: 0;
 }
 
 </style>
