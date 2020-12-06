@@ -1,0 +1,93 @@
+[
+  {
+    "name": "appointments",
+    "path": "/appointments",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\appointments\\\\index.vue",
+    "chunkName": "pages/appointments/index",
+    "_name": "_37138117"
+  },
+  {
+    "name": "home",
+    "path": "/home",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\home.vue",
+    "chunkName": "pages/home",
+    "_name": "_7bc2c294"
+  },
+  {
+    "name": "home-BAK",
+    "path": "/home-BAK",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\home-BAK.vue",
+    "chunkName": "pages/home-BAK",
+    "_name": "_82292656"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_c0cbc2bc"
+  },
+  {
+    "name": "patients",
+    "path": "/patients",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\patients\\\\index.vue",
+    "chunkName": "pages/patients/index",
+    "_name": "_86e20006"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\register.vue",
+    "chunkName": "pages/register",
+    "_name": "_6338420c"
+  },
+  {
+    "name": "treatments",
+    "path": "/treatments",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\treatments\\\\index.vue",
+    "chunkName": "pages/treatments/index",
+    "_name": "_7b2b84b0"
+  },
+  {
+    "name": "users",
+    "path": "/users",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\users\\\\index.vue",
+    "chunkName": "pages/users/index",
+    "_name": "_87c198be"
+  },
+  {
+    "name": "appointments-appointments-bak",
+    "path": "/appointments/appointments-bak",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\appointments\\\\appointments-bak.vue",
+    "chunkName": "pages/appointments/appointments-bak",
+    "_name": "_1c13f3be"
+  },
+  {
+    "name": "treatments-treatment-bak",
+    "path": "/treatments/treatment-bak",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\treatments\\\\treatment-bak.vue",
+    "chunkName": "pages/treatments/treatment-bak",
+    "_name": "_bfbf2ed6"
+  },
+  {
+    "name": "patients-id",
+    "path": "/patients/:id",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\patients\\\\_id.vue",
+    "chunkName": "pages/patients/_id",
+    "_name": "_aa3244b6"
+  },
+  {
+    "name": "users-id",
+    "path": "/users/:id",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\users\\\\_id.vue",
+    "chunkName": "pages/users/_id",
+    "_name": "_e910ab6e"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\api\\\\dental\\\\spa\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_541b08ea"
+  }
+]

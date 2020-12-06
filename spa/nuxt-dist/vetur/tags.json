@@ -1,0 +1,362 @@
+{
+  "Calendar": {
+    "description": "Auto imported from components/Calendar.vue"
+  },
+  "LazyCalendar": {
+    "description": "Auto imported from components/Calendar.vue"
+  },
+  "ConfirmDelete": {
+    "description": "Auto imported from components/ConfirmDelete.vue"
+  },
+  "LazyConfirmDelete": {
+    "description": "Auto imported from components/ConfirmDelete.vue"
+  },
+  "LoginForm": {
+    "description": "Auto imported from components/loginForm.vue"
+  },
+  "LazyLoginForm": {
+    "description": "Auto imported from components/loginForm.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "Pdfviewer": {
+    "description": "Auto imported from components/Pdfviewer.vue"
+  },
+  "LazyPdfviewer": {
+    "description": "Auto imported from components/Pdfviewer.vue"
+  },
+  "RegisterForm": {
+    "description": "Auto imported from components/registerForm.vue"
+  },
+  "LazyRegisterForm": {
+    "description": "Auto imported from components/registerForm.vue"
+  },
+  "TestUpload": {
+    "description": "Auto imported from components/TestUpload.vue"
+  },
+  "LazyTestUpload": {
+    "description": "Auto imported from components/TestUpload.vue"
+  },
+  "UploadImage": {
+    "description": "Auto imported from components/UploadImage.vue"
+  },
+  "LazyUploadImage": {
+    "description": "Auto imported from components/UploadImage.vue"
+  },
+  "VueCalLocal": {
+    "description": "Auto imported from components/VueCalLocal.vue"
+  },
+  "LazyVueCalLocal": {
+    "description": "Auto imported from components/VueCalLocal.vue"
+  },
+  "AppointmentsCalendar": {
+    "description": "Auto imported from components/appointments/AppointmentsCalendar.vue"
+  },
+  "LazyAppointmentsCalendar": {
+    "description": "Auto imported from components/appointments/AppointmentsCalendar.vue"
+  },
+  "AddAppointmentBak": {
+    "description": "Auto imported from components/modals/AddAppointment-bak.vue"
+  },
+  "LazyAddAppointmentBak": {
+    "description": "Auto imported from components/modals/AddAppointment-bak.vue"
+  },
+  "AddUserBak": {
+    "description": "Auto imported from components/modals/AddUser-BAK.vue"
+  },
+  "LazyAddUserBak": {
+    "description": "Auto imported from components/modals/AddUser-BAK.vue"
+  },
+  "AddUser": {
+    "description": "Auto imported from components/modals/AddUser.vue"
+  },
+  "LazyAddUser": {
+    "description": "Auto imported from components/modals/AddUser.vue"
+  },
+  "Dropit": {
+    "description": "Auto imported from components/modals/Dropit.vue"
+  },
+  "LazyDropit": {
+    "description": "Auto imported from components/modals/Dropit.vue"
+  },
+  "DropzoneCopy": {
+    "description": "Auto imported from components/modals/Dropzone copy.vue"
+  },
+  "LazyDropzoneCopy": {
+    "description": "Auto imported from components/modals/Dropzone copy.vue"
+  },
+  "DropzoneBak01": {
+    "description": "Auto imported from components/modals/Dropzone-BAK01.vue"
+  },
+  "LazyDropzoneBak01": {
+    "description": "Auto imported from components/modals/Dropzone-BAK01.vue"
+  },
+  "Dropzone": {
+    "description": "Auto imported from components/modals/Dropzone.vue"
+  },
+  "LazyDropzone": {
+    "description": "Auto imported from components/modals/Dropzone.vue"
+  },
+  "ModalConfirm": {
+    "description": "Auto imported from components/modals/ModalConfirm.vue"
+  },
+  "LazyModalConfirm": {
+    "description": "Auto imported from components/modals/ModalConfirm.vue"
+  },
+  "ModalSelectPatient": {
+    "description": "Auto imported from components/modals/ModalSelectPatient.vue"
+  },
+  "LazyModalSelectPatient": {
+    "description": "Auto imported from components/modals/ModalSelectPatient.vue"
+  },
+  "ModalTreatment": {
+    "description": "Auto imported from components/modals/ModalTreatment.vue"
+  },
+  "LazyModalTreatment": {
+    "description": "Auto imported from components/modals/ModalTreatment.vue"
+  },
+  "Pdf": {
+    "description": "Auto imported from components/modals/Pdf.vue"
+  },
+  "LazyPdf": {
+    "description": "Auto imported from components/modals/Pdf.vue"
+  },
+  "PdfTabBak": {
+    "description": "Auto imported from components/modals/PdfTab-BAK.vue"
+  },
+  "LazyPdfTabBak": {
+    "description": "Auto imported from components/modals/PdfTab-BAK.vue"
+  },
+  "PdfTabBak02": {
+    "description": "Auto imported from components/modals/PdfTab-BAK02.vue"
+  },
+  "LazyPdfTabBak02": {
+    "description": "Auto imported from components/modals/PdfTab-BAK02.vue"
+  },
+  "PdfTab": {
+    "description": "Auto imported from components/modals/PdfTab.vue"
+  },
+  "LazyPdfTab": {
+    "description": "Auto imported from components/modals/PdfTab.vue"
+  },
+  "PdfTabModal": {
+    "description": "Auto imported from components/modals/PdfTabModal.vue"
+  },
+  "LazyPdfTabModal": {
+    "description": "Auto imported from components/modals/PdfTabModal.vue"
+  },
+  "Pdftest": {
+    "description": "Auto imported from components/modals/PDFTEST.vue"
+  },
+  "LazyPdftest": {
+    "description": "Auto imported from components/modals/PDFTEST.vue"
+  },
+  "ShowModal": {
+    "description": "Auto imported from components/modals/ShowModal.vue"
+  },
+  "LazyShowModal": {
+    "description": "Auto imported from components/modals/ShowModal.vue"
+  },
+  "Slider": {
+    "description": "Auto imported from components/modals/Slider.vue"
+  },
+  "LazySlider": {
+    "description": "Auto imported from components/modals/Slider.vue"
+  },
+  "TestComp": {
+    "description": "Auto imported from components/modals/testComp.vue"
+  },
+  "LazyTestComp": {
+    "description": "Auto imported from components/modals/testComp.vue"
+  },
+  "TestForm": {
+    "description": "Auto imported from components/modals/testForm.vue"
+  },
+  "LazyTestForm": {
+    "description": "Auto imported from components/modals/testForm.vue"
+  },
+  "TestTabs": {
+    "description": "Auto imported from components/modals/testTabs.vue"
+  },
+  "LazyTestTabs": {
+    "description": "Auto imported from components/modals/testTabs.vue"
+  },
+  "TestWizard": {
+    "description": "Auto imported from components/modals/testWizard.vue"
+  },
+  "LazyTestWizard": {
+    "description": "Auto imported from components/modals/testWizard.vue"
+  },
+  "VGalBak": {
+    "description": "Auto imported from components/modals/vGal-BAK.vue"
+  },
+  "LazyVGalBak": {
+    "description": "Auto imported from components/modals/vGal-BAK.vue"
+  },
+  "VGal": {
+    "description": "Auto imported from components/modals/vGal.vue"
+  },
+  "LazyVGal": {
+    "description": "Auto imported from components/modals/vGal.vue"
+  },
+  "Footer": {
+    "description": "Auto imported from components/navs/Footer.vue"
+  },
+  "LazyFooter": {
+    "description": "Auto imported from components/navs/Footer.vue"
+  },
+  "Navbar": {
+    "description": "Auto imported from components/navs/Navbar.vue"
+  },
+  "LazyNavbar": {
+    "description": "Auto imported from components/navs/Navbar.vue"
+  },
+  "Topbar": {
+    "description": "Auto imported from components/navs/Topbar.vue"
+  },
+  "LazyTopbar": {
+    "description": "Auto imported from components/navs/Topbar.vue"
+  },
+  "AddNewAppointment": {
+    "description": "Auto imported from components/patients/AddNewAppointment.vue"
+  },
+  "LazyAddNewAppointment": {
+    "description": "Auto imported from components/patients/AddNewAppointment.vue"
+  },
+  "AddNewPatient": {
+    "description": "Auto imported from components/patients/addNewPatient.vue"
+  },
+  "LazyAddNewPatient": {
+    "description": "Auto imported from components/patients/addNewPatient.vue"
+  },
+  "AddNewTreatment": {
+    "description": "Auto imported from components/patients/addNewTreatment.vue"
+  },
+  "LazyAddNewTreatment": {
+    "description": "Auto imported from components/patients/addNewTreatment.vue"
+  },
+  "AddPatient": {
+    "description": "Auto imported from components/patients/AddPatient.vue"
+  },
+  "LazyAddPatient": {
+    "description": "Auto imported from components/patients/AddPatient.vue"
+  },
+  "PatientHistory": {
+    "description": "Auto imported from components/patients/PatientHistory.vue"
+  },
+  "LazyPatientHistory": {
+    "description": "Auto imported from components/patients/PatientHistory.vue"
+  },
+  "PatientTreatment": {
+    "description": "Auto imported from components/patients/PatientTreatment.vue"
+  },
+  "LazyPatientTreatment": {
+    "description": "Auto imported from components/patients/PatientTreatment.vue"
+  },
+  "TabFilesTest": {
+    "description": "Auto imported from components/patients/TabFilesTest.vue"
+  },
+  "LazyTabFilesTest": {
+    "description": "Auto imported from components/patients/TabFilesTest.vue"
+  },
+  "Search": {
+    "description": "Auto imported from components/search/Search.vue"
+  },
+  "LazySearch": {
+    "description": "Auto imported from components/search/Search.vue"
+  },
+  "SearchCompBak01": {
+    "description": "Auto imported from components/search/SearchComp-BAK01.vue"
+  },
+  "LazySearchCompBak01": {
+    "description": "Auto imported from components/search/SearchComp-BAK01.vue"
+  },
+  "SearchComp": {
+    "description": "Auto imported from components/search/SearchComp.vue"
+  },
+  "LazySearchComp": {
+    "description": "Auto imported from components/search/SearchComp.vue"
+  },
+  "SearchCustom": {
+    "description": "Auto imported from components/search/SearchCustom.vue"
+  },
+  "LazySearchCustom": {
+    "description": "Auto imported from components/search/SearchCustom.vue"
+  },
+  "VBar": {
+    "description": "Auto imported from components/v-bar/v-bar.vue"
+  },
+  "LazyVBar": {
+    "description": "Auto imported from components/v-bar/v-bar.vue"
+  },
+  "LanguagesNav": {
+    "description": "Auto imported from components/navs/menus/LanguagesNav.vue"
+  },
+  "LazyLanguagesNav": {
+    "description": "Auto imported from components/navs/menus/LanguagesNav.vue"
+  },
+  "NotificationNav": {
+    "description": "Auto imported from components/navs/menus/NotificationNav.vue"
+  },
+  "LazyNotificationNav": {
+    "description": "Auto imported from components/navs/menus/NotificationNav.vue"
+  },
+  "UserMenu": {
+    "description": "Auto imported from components/navs/menus/UserMenu.vue"
+  },
+  "LazyUserMenu": {
+    "description": "Auto imported from components/navs/menus/UserMenu.vue"
+  },
+  "TabAppointments": {
+    "description": "Auto imported from components/patients/tabs/TabAppointments.vue"
+  },
+  "LazyTabAppointments": {
+    "description": "Auto imported from components/patients/tabs/TabAppointments.vue"
+  },
+  "TabFiles": {
+    "description": "Auto imported from components/patients/tabs/TabFiles.vue"
+  },
+  "LazyTabFiles": {
+    "description": "Auto imported from components/patients/tabs/TabFiles.vue"
+  },
+  "TabFilesTease": {
+    "description": "Auto imported from components/patients/tabs/TabFilesTease.vue"
+  },
+  "LazyTabFilesTease": {
+    "description": "Auto imported from components/patients/tabs/TabFilesTease.vue"
+  },
+  "TabGeneral": {
+    "description": "Auto imported from components/patients/tabs/TabGeneral.vue"
+  },
+  "LazyTabGeneral": {
+    "description": "Auto imported from components/patients/tabs/TabGeneral.vue"
+  },
+  "TabTreatment": {
+    "description": "Auto imported from components/patients/tabs/TabTreatment.vue"
+  },
+  "LazyTabTreatment": {
+    "description": "Auto imported from components/patients/tabs/TabTreatment.vue"
+  },
+  "TabGeneralSettings": {
+    "description": "Auto imported from components/patients/userTabs/tabGeneralSettings.vue"
+  },
+  "LazyTabGeneralSettings": {
+    "description": "Auto imported from components/patients/userTabs/tabGeneralSettings.vue"
+  },
+  "TabUserSettings": {
+    "description": "Auto imported from components/patients/userTabs/TabUserSettings.vue"
+  },
+  "LazyTabUserSettings": {
+    "description": "Auto imported from components/patients/userTabs/TabUserSettings.vue"
+  },
+  "FilesContent": {
+    "description": "Auto imported from components/patients/tabs/tabs-files/filesContent.vue"
+  },
+  "LazyFilesContent": {
+    "description": "Auto imported from components/patients/tabs/tabs-files/filesContent.vue"
+  }
+}

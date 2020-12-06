@@ -84,7 +84,10 @@
 				<b-card>
 					<b-row>
 						<b-col md="12">
-							<!-- //2018-11-19" -->
+							<b-tabs content-class="mt-3" justified>
+    <b-tab @click="selectTabEvent" title="Calendar" active><p>
+		
+		<!-- //2018-11-19" -->
 							<vue-cal
 								ref="vuecal"
 								:small="true"
@@ -98,14 +101,14 @@
 								:snapToTime="15"
 								:stickySplitLabels="true"
 								@event-duration-change="onEventDurationChange"
-								
+								:on-event-click="onEventClick"
 
 								
 								:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
 								:events="appToCalendar"
 								:watchRealTime="true"
 								
-								:onEventDblclick="onEventClick"
+								:onEventDblclick="onEventDoubleClick"
 								@event-drop="onEventDrop"
 								@event-drag-create="showEventCreationDialog = true"
 								
@@ -141,6 +144,18 @@
 							></add-new-appointment>
 								
     					</b-modal>
+		
+		</p></b-tab>
+    <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'"><p>I'm the second tab</p></b-tab>
+    <b-tab title="Very, very long title"><p>I'm the tab with the very, very long title</p></b-tab>
+    <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
+  </b-tabs>
+
+
+
+
+
+							
 						</b-col>
 					</b-row>
 					
@@ -220,8 +235,8 @@ export default {
 	async asyncData({ $axios, app, store }) {
 		await store.dispatch("loadData");
 
-		let appointmentsResponse = $axios.$get('/appointments/?page_size=100')
-      	let patientsResponse = $axios.$get('/patients/?page_size=100')
+		let appointmentsResponse = await $axios.$get('/appointments/?page_size=100')
+      	let patientsResponse = await $axios.$get('/patients/?page_size=100')
 
       const [appResponse, patResponse] = await Promise.all([appointmentsResponse, patientsResponse])
 
@@ -229,7 +244,7 @@ export default {
       // console.log(tagResponse);
 
       return {
-        appointments: appResponse.results,
+        appointmentsTest: appResponse.results,
         patients: patResponse.results
       }
 
@@ -255,6 +270,8 @@ export default {
 			url: "",
 			currentPage: 1,
 			events: [],
+			tabIndex: 0,
+			secondTabTitle: false,
 // 			[
 //     {
 //       start: '2020-11-20 14:00',
@@ -284,15 +301,20 @@ export default {
 		};
 	},
 	methods: {
-// 		 onEventClick (event, e) {
-// 	//   this.$emit('select-menu-item',event, e)
+	onEventClick (event, e) {
+	//   this.$emit('select-menu-item',event, e)
 	  
-//     this.selectedEvent = event
-//     this.showDialog = true
+	this.selectedEvent = event
+	// this.secondTabTitle = true;
+	// this.showDialog = true
+	console.log(this.selectedEvent)
 
-//     // Prevent navigating to narrower view (default vue-cal behavior).
-//     e.stopPropagation()
-//   },
+    // Prevent navigating to narrower view (default vue-cal behavior).
+    e.stopPropagation()
+  },
+  selectTabEvent() {
+	  this.secondTabTitle = false;
+  },
 
 //   customEventCreation (event) {
 // 	  console.log('create event', event)
@@ -325,7 +347,7 @@ export default {
       // If the event is external, delete it from the data source on drop into Vue Cal.
 	  // If the event comes from another Vue Cal instance, it will be deleted automatically in there.
 	
-	this.deleteEventFunction = deleteEvent
+	// this.deleteEventFunction = deleteEvent
 
 	// event.title = event.name;
 	
@@ -337,7 +359,7 @@ export default {
 			  description: '',
 			  date: this.$moment(event.startDate).format('yyyy-MM-DDThh:mm')
 		  }
-		  console.log('inspect date before submit: ', data.date)
+		//   console.log('inspect date before submit: ', data.date)
 		  this.$store.dispatch('addAppointment', data)
 
 
@@ -369,7 +391,7 @@ export default {
 		let id = event.id
 		this.$store.dispatch('onDeleteAppointment', id);
 	},
-	onEventClick (event, e) {
+	onEventDoubleClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
 	//   console.log('this.events: ',this.events)
 	//   console.log('e: ',e)
@@ -513,10 +535,11 @@ export default {
 				evt.id= app.id;
 				evt.patient= app.patient;
 
-				// evt.startDate = new Date(app.date);
-				// evt.endDate = new Date(app.date_to);
+				evt.startDate = new Date(app.date);
+				evt.endDate = new Date(app.date_to);
 				
 				// evt.endTimeMinutes = Math.floor(math.abc(new Date()))
+				var minutes = Math.floor(millis / 60000)
 
 				evt.start= this.$moment(app.date).format('yyyy-MM-DD HH:mm');
 				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
@@ -529,13 +552,7 @@ export default {
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
 				  evt.class = 'sport'
 
-
-
-
-
-				
-
-				  this.events.push(evt)
+				//   this.events.push(evt)
 				  
 				  calEv.push(evt)
 			});

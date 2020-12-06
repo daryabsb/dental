@@ -155,11 +155,11 @@ const mutations = {
         let today = new Date();
         console.log('payload for all', payload)
             // console.log('Find the appointment')
-
+        state.allAppointments.unshift(payload);
         // console.log()
         if (Date.parse(payload.date) >= Date.parse(today)) {
             state.appointments.results.unshift(payload);
-            state.allAppointments.unshift(payload);
+            
         }
 
 
