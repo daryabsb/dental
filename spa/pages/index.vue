@@ -85,7 +85,7 @@
 					<b-row>
 						<b-col md="12">
 							<b-tabs content-class="mt-3" justified>
-    <b-tab @click="selectTabEvent" title="Calendar" active><p>
+    <b-tab @click="activeView = 'day'" title="Calendar" active><p>
 		<!-- :time-cell-height="60"  -->
 		<!-- //2018-11-19" -->
 							<vue-cal
@@ -94,10 +94,11 @@
 								:selected-date="date_today" 
 								:time-from="1 * 60"
 								:time-to="21 * 60"
-								:timeStep="60"
-								active-view="day"
+								:timeStep="120"
+								:timeCellHeight="90"
+								:active-view="activeView"
 								:todayButton="true"
-								:snapToTime="15"
+								:snapToTime="30"
 								:watchRealTime="true"
 								:startWeekOnSunday="true"
 								@event-duration-change="onEventDurationChange"
@@ -147,23 +148,112 @@
     					</b-modal>
 		
 		</p></b-tab>
-    <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy>
+    <!-- <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy> -->
+    <b-tab title="Today's Appointments" lazy>
 		<b-row>
 			<b-col md="6">
-				
+				<!-- :active-view="activeView" -->
 				<vue-cal
 					
 					
 					
-					:active-view="activeView"
+					
+					active-view="day"
 					:events="appToCalendar"
-					:disable-views="['years', 'year', 'month']"
+					:disable-views="['week', 'years', 'year', 'month']"
 					:selected-date="selectedDate"
-					class="vuecal--blue-theme"
-					:stickySplitLabels="true"
+					class="vuecal--blue-green"
+
+					
+
+					ref="vuecal-day"
+					:small="true"
+					:time-from="1 * 60"
+					:time-to="21 * 60"
+					:timeStep="120"
+					:timeCellHeight="90"
+					:snapToTime="30"
+					:watchRealTime="true"
+					:startWeekOnSunday="true"
+					@event-duration-change="onEventDurationChange"
+					:on-event-click="onEventClick"
+					:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
+					:onEventDblclick="onEventDoubleClick"
+					@event-drop="onEventDrop"
+					@event-drag-create="showEventCreationDialog = true"
+					@cell-focus="selectedDate = $event"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					
 					>
 				</vue-cal>
+			</b-col>
+			<b-col>
+				<b-card no-body class="overflow-hidden" style="max-width: 540px;">
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img :src="selectedPatient ? selectedPatient.image : 'https://picsum.photos/400/400/?image=20'" alt="Image" class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        
+        <b-card-body :title="selectedPatient ? selectedPatient.name : 'John Doe'">
+          <b-card-text>
+            This is a wider card with supporting text as a natural lead-in to additional content.
+            This content is a little bit longer.
+          </b-card-text>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+				<div class="accordion" role="tablist">
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-1 variant="info">Clinical Examinations</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <tab-general
+						:examinations="selectedPatient ? selectedPatient.examinations : '?'"
+						
+					></tab-general>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+  </div>
 			</b-col>
 		</b-row>
 	</b-tab>
@@ -191,10 +281,10 @@
 							sticky-header="54.5rem"
 							head-variant="light"
 						>
-							<!-- :variant="row.item.status ? 'success' : 'danger'"
+							:variant="row.item.status ? 'success' : 'danger'"
 							
 							<template #cell(patientName)="row">
-								<!-- `data.value` is the value after formatted by the Formatter
+								`data.value` is the value after formatted by the Formatter
 								<nuxt-link :to="`/patients/${row.item.patient}`">
 									<img :src="patient(row.item).image" alt class="thumb-sm rounded-circle mr-2" />
 												{{ patient(row.item).name }}
@@ -276,6 +366,19 @@ export default {
 	},
 	data() {
 		return {
+			text: `
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+					richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+					brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+					tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+					assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+					wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+					vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+					synth nesciunt you probably haven't heard of them accusamus labore VHS.
+					`,
+			examinations: [],
+			selectedPatient: null,
+      		
 			// LEFT TABLE DATA
 			fields: ["name"],
 			appointmentsFields: ['patientName', 'description', 'date', 'time', 'actions'],
@@ -313,7 +416,7 @@ export default {
 //     }
 //   ],
 	selectedID: '',
-	activeView: 'day',
+	activeView: 'week',
 	appointmentID: '',
 	editDate: '',
 	editTime: '',
@@ -324,8 +427,10 @@ export default {
 	methods: {
 	onEventClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
-	  
+	this.selectedPatient = this.patientsData.results.find(p=>p.id===event.patient)
+	// this.examinations = selectedPatient.examinations;
 	this.selectedEvent = event
+	
 	// this.secondTabTitle = true;
 	// this.showDialog = true
 	console.log(this.selectedEvent)
@@ -558,40 +663,50 @@ export default {
 			// this.allAppointments.forEach(app=>{
 			this.getAllAppointments.forEach(app=>{
 				let evt = {};
-				// let patient = this.patientsData.results.find(p=>p.id===app.patient);
 				evt.id= app.id;
 				evt.patient= app.patient;
-				console.log(app.title, ': ', app.date, ' | ', app.date_to)
+				evt.title = app.title;
+      			evt.start = app.start;
+      			evt.end = app.end;
+      			evt.content = app.description;
+				// evt.class = 'sport'
+				calEv.push(evt)
+				});
+				return calEv;
+			},
+			set(newValue) {
+				console.log('new value', newValue)
+			}
+				
+				// let patient = this.patientsData.results.find(p=>p.id===app.patient);
+				
+				// console.log(app.title, ': ', app.startDate, ' | ', app.endDate)
+				// console.log(typeof app.startDate)
 
-				// evt.startDate = new Date(app.date);
-				// evt.endDate = new Date(app.date_to);
+				// evt.startDate = new Date(app.startDate);
+				// evt.endDate = new Date(app.endDate);
 				
 				// evt.endTimeMinutes = Math.floor(math.abc(new Date()))
 				// evt.startTimeMinutes = Math.floor(Math.abs(evt.startDate.getHours() * 60) + Math.abs(evt.startDate.getMinutes()))
 				// evt.endTimeMinutes = Math.floor(Math.abs(evt.endDate.getHours() * 60) + Math.abs(evt.endDate.getMinutes()))
 				// var minutes = Math.floor(millis / 60000)
 
-				evt.start= this.$moment(app.date).format('yyyy-MM-DD HH:mm');
+				// evt.start= this.$moment(app.date).format('yyyy-MM-DD HH:mm');
 				// evt.end= this.$moment(app.date).add(3600, 'seconds').format('yyyy-MM-DD hh:mm');
-				evt.end= this.$moment(app.date_to).format('yyyy-MM-DD HH:mm');
+				// evt.end= this.$moment(app.date_to).format('yyyy-MM-DD HH:mm');
 
 				
 
-      			evt.title = app.title;
-      			evt.content = app.description;
+      			
       			// evt.contentFull: 'Okay.<br>It will be a 18 hole golf course.', // Custom attribute.
-				  evt.class = 'sport'
+				  
 
 				//   this.events.push(evt)
 				  
-				  calEv.push(evt)
-			});
+				  
+			
 			// console.log(calEv)
-			return calEv;
-			},
-			set(newValue) {
-				console.log('new value', newValue)
-			}
+			
 			
 		},
 		...mapGetters([
@@ -659,20 +774,22 @@ export default {
 }
 .vuecal__event {
 	cursor: pointer;
+	
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .vuecal__event-title {
-  font-size: .8em;
+  font-size: .7rem;
   color: rgb(20, 137, 247);
   /* font-weight: bold; */
   margin: 0;
 }
 
 .vuecal__event-time {
-  font-size: .8em;
+  font-size: .7rem;
   display: inline-block;
   margin-bottom: .4em;
+  margin-top: -4px;
   padding-bottom: 12px;
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
@@ -680,6 +797,7 @@ export default {
   font-size: 1em;
   /* display: inline-block; */
   margin-bottom: 12px;
+  margin-top: -4px;
   padding-bottom: 12px;
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
@@ -690,11 +808,27 @@ export default {
 
 .vuecal--blue-theme .vuecal__event {
 	display: flex;
+	background-color: #DCDCDC;
 	justify-content: space-around;
+	align-items: center;
 }
-.vuecal span {
-	border: 0;
+.vuecal--blue-theme .vuecal__event .vuecal__event-title,
+.vuecal--blue-theme .vuecal__event .vuecal__event-time,
+.vuecal--blue-theme .vuecal__event .vuecal__event-time {
+	margin-top: 0;
+  padding-bottom: 0;
+  font-weight: 400;
+  font-size: 1rem;
 }
+.vuecal__view-btn .vuecal__view-btn--active {
+	border-bottom: 0;
+}
+
+.larger-thumb {
+	width: 8rem;
+	height: 8rem;
+}
+
 
 </style>
  

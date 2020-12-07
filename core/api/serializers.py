@@ -10,9 +10,6 @@ from core.models import (
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the users object"""
 
-   
-
-   
     class Meta:
         model = get_user_model()
         fields = ('id','email', 'password', 'name', 'is_staff')
@@ -108,10 +105,28 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     # patient = serializers.PrimaryKeyRelatedField(read_only=True)
 
+    start = serializers.SerializerMethodField()
+    end = serializers.SerializerMethodField()
+    startDate = serializers.SerializerMethodField()
+    endDate = serializers.SerializerMethodField()
+
     class Meta:
         model = ComingTreatment
-        fields = ('id', 'patient', 'title', 'description', 'date', 'date_to')
+        fields = ('id', 'patient', 'title', 'description', 'date', 'date_to',
+                    'start', 'end', 'startDate', 'endDate')
         read_only_Fields = ('id',)
+
+    def get_start(self, obj):
+        return f"{obj.date.strftime('%Y-%m-%d')} {obj.date.strftime('%H:%M')}"
+
+    def get_end(self, obj):
+        return f"{obj.date_to.strftime('%Y-%m-%d')} {obj.date_to.strftime('%H:%M')}"
+    
+    def get_startDate(self, obj):
+            return obj.date
+
+    def get_endDate(self, obj):
+        return obj.date_to
 
 
 class TreatmentSerializer(serializers.ModelSerializer):
