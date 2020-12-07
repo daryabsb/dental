@@ -151,7 +151,7 @@
     <!-- <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy> -->
     <b-tab title="Today's Appointments" lazy>
 		<b-row>
-			<b-col md="6">
+			<b-col>
 				<!-- :active-view="activeView" -->
 				<vue-cal
 					
@@ -182,6 +182,7 @@
 					@event-drop="onEventDrop"
 					@event-drag-create="showEventCreationDialog = true"
 					@cell-focus="selectedDate = $event"
+					@cell-click="selectedPatient = null"
 
 
 
@@ -200,9 +201,9 @@
 					>
 				</vue-cal>
 			</b-col>
-			<b-col>
+			<b-col v-if="selectedPatient">
 				<b-card no-body class="overflow-hidden" style="max-width: 540px;">
-    <b-row no-gutters>
+    <b-row no-gutters >
       <b-col md="6">
         <b-card-img :src="selectedPatient ? selectedPatient.image : 'https://picsum.photos/400/400/?image=20'" alt="Image" class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
       </b-col>
@@ -210,6 +211,7 @@
         
         <b-card-body :title="selectedPatient ? selectedPatient.name : 'John Doe'">
           <b-card-text>
+			  <p><strong>Phone: </strong>{{selectedPatient.phone}}</p>
             This is a wider card with supporting text as a natural lead-in to additional content.
             This content is a little bit longer.
           </b-card-text>
