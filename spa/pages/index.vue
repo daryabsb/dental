@@ -149,7 +149,7 @@
 		
 		</p></b-tab>
     <!-- <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy> -->
-    <b-tab title="Today's Appointments" lazy>
+    <b-tab @click="swichView" title="Today's Appointments" lazy>
 		<b-row>
 			<b-col>
 				<!-- :active-view="activeView" -->
@@ -158,14 +158,14 @@
 					
 					
 					
-					active-view="day"
+					
 					:events="appToCalendar"
 					:disable-views="['week', 'years', 'year', 'month']"
 					:selected-date="selectedDate"
 					class="vuecal--blue-green"
 
 					
-
+					:active-view.sync="activeView"
 					ref="vuecal-day"
 					:small="true"
 					:time-from="1 * 60"
@@ -236,11 +236,11 @@
 
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
+        <b-button block v-b-toggle.accordion-2 variant="info">Treatments</b-button>
       </b-card-header>
       <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
         <b-card-body>
-          <b-card-text>{{ text }}</b-card-text>
+          <treatment-activity :patient="selectedPatient"></treatment-activity>
         </b-card-body>
       </b-collapse>
     </b-card>
@@ -417,16 +417,20 @@ export default {
 //       class: 'sport'
 //     }
 //   ],
-	selectedID: '',
-	activeView: 'week',
-	appointmentID: '',
-	editDate: '',
-	editTime: '',
-	  edit: false,
-	  showEventCreationDialog: false,
-		};
-	},
+		selectedID: '',
+		activeView: 'day',
+		appointmentID: '',
+		editDate: '',
+		editTime: '',
+		edit: false,
+		showEventCreationDialog: false,
+			};
+		},
 	methods: {
+		swichView() {
+			// this.$refs["vuecal-day"].switchView('day', new Date())
+			// this.$refs["p-appointment-modal"].hide();
+		},
 	onEventClick (event, e) {
 	//   this.$emit('select-menu-item',event, e)
 	this.selectedPatient = this.patientsData.results.find(p=>p.id===event.patient)
