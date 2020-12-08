@@ -92,11 +92,10 @@ export default {
             callback: '/login',
             home: '/'
         },
-
     },
-    router: {
-        middleware: ['auth']
-    },
+    // router: {
+    //     middleware: ['auth']
+    // },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {},

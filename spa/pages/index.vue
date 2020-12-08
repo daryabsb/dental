@@ -202,14 +202,14 @@
 				</vue-cal>
 			</b-col>
 			<b-col v-if="selectedPatient">
-				<b-card no-body class="overflow-hidden" style="max-width: 540px;">
+				<b-card no-body class="overflow-hidden">
     <b-row no-gutters >
       <b-col md="6">
-        <b-card-img :src="selectedPatient ? selectedPatient.image : 'https://picsum.photos/400/400/?image=20'" alt="Image" class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
+        <b-card-img :src="selectedPatient.image" alt="Image" class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
       </b-col>
       <b-col md="6">
         
-        <b-card-body :title="selectedPatient ? selectedPatient.name : 'John Doe'">
+        <b-card-body :title="selectedPatient.name">
           <b-card-text>
 			  <p><strong>Phone: </strong>{{selectedPatient.phone}}</p>
             This is a wider card with supporting text as a natural lead-in to additional content.

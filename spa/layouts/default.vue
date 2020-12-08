@@ -1,29 +1,27 @@
 <template>
-  <div>
-    
-    <Topbar />
-    <!-- <Navbar /> -->
-      <div class="page-wrapper">
-            
+<div>
 
-            <!-- Page Content-->
-            <div class="page-content">
+  <new-top-bar></new-top-bar>
+  <new-menu-bar></new-menu-bar>
+    <!-- <div class="page-wrapper">
+      <div class="page-content"> -->
     <Nuxt />
-    </div>
-            <!-- end page content -->
-            <!-- <Footer /> -->
-            
-        </div>
-        <!-- end page-wrapper -->
-  </div>
-</template>
+        <!-- </div>
+  </div> -->
 
+</div>
+</template>
 <style>
+@import "bootstrap/dist/css/bootstrap.css";
+@import "bootstrap-vue/dist/bootstrap-vue.css";
+
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
 }
-/* .show {
-display: block;
-}*/
+
+.logo-custom {
+  /* width: 2rem; */
+  height: 1rem;
+}
 </style>
