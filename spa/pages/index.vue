@@ -220,21 +220,8 @@
     </b-row>
   </b-card>
 				<div class="accordion" role="tablist">
-    <b-card no-body class="mb-1">
-      <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle.accordion-1 variant="info">Clinical Examinations</b-button>
-      </b-card-header>
-      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-        <b-card-body>
-          <tab-general
-						:examinations="selectedPatient ? selectedPatient.examinations : '?'"
-						
-					></tab-general>
-        </b-card-body>
-      </b-collapse>
-    </b-card>
-
-    <b-card no-body class="mb-1">
+    
+	 <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-2 variant="info">Treatments</b-button>
       </b-card-header>
@@ -244,14 +231,27 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-
+	<b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-1 variant="info">Clinical Examinations</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1"  accordion="my-accordion" role="tabpanel">
+        <!-- visible -->
+		<b-card-body>
+          <clinical-alias
+						:examinations="selectedPatient ? selectedPatient.examinations : '?'"
+						
+					></clinical-alias>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
       </b-card-header>
       <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
         <b-card-body>
-          <b-card-text>{{ text }}</b-card-text>
+          <b-card-text><pre>{{ patientVisits(selectedPatient.id) }}</pre></b-card-text>
         </b-card-body>
       </b-collapse>
     </b-card>
@@ -342,6 +342,7 @@ import draggable from 'vuedraggable';
 import VueCal from 'vue-cal';
 // import AddNewappointment from './patients/AddNewAppointment';
 import 'vue-cal/dist/vuecal.css'
+import ClinicalAlias from '../components/patients/tabs/aliases/clinicalAlias.vue';
 
 export default {
 	async asyncData({ $axios, app, store }) {
@@ -447,6 +448,7 @@ export default {
   selectTabEvent() {
 	  this.secondTabTitle = false;
   },
+  
 
 //   customEventCreation (event) {
 // 	  console.log('create event', event)
@@ -517,7 +519,16 @@ export default {
 	  }
 	},
 	onEventDurationChange(event) {
-		console.log(event);
+		// console.log(event.event);
+		let data = {
+			  id: event.event.id,
+			  patient: event.event.patient,
+			  title: event.event.title,
+			  description: event.event.content,
+			  date: this.$moment(event.event.startDate).format('yyyy-MM-DDTHH:mm'),
+			  date_to: this.$moment(event.event.endDate).format('yyyy-MM-DDTHH:mm')
+		  }
+		   this.$store.dispatch('editAppointment', data)
 	},
 	deleteEvent(event) {
 		let id = event.id
@@ -614,6 +625,16 @@ export default {
 		lastObject(arr) {
 			return arr[arr.length - 1];
 		},
+		patientVisits(id) {
+			let today = new Date()
+			
+			const pApps = this.getAllAppointments.filter((appt) =>{
+				appt.patient === id
+			});
+			console.log(this.getAllAppointments)
+			return pApps;
+
+		},
 	},
 	computed: {
 		searchAppointments() {
@@ -628,6 +649,8 @@ export default {
 				);
 			});
 		},
+
+		
 
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;

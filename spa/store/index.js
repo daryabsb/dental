@@ -555,6 +555,7 @@ const actions = {
     },
     async editAppointment({ state, commit }, payload) {
         let id = payload.id
+        // console.log('undefined ID in payload: ', payload)
         let url = `/appointments/${id}/`;
 
 
@@ -565,7 +566,7 @@ const actions = {
 
             const newAppointment = await this.$axios.put(url, payload);
 
-            console.log('testing from add function', newAppointment.data)
+            // console.log('testing from add function', newAppointment.data)
 
             commit("EDIT_APPOINTMENT", newAppointment.data);
         } catch (err) {
