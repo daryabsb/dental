@@ -101,9 +101,9 @@ export default {
     build: {
         // analyze: true,
         // // or
-        analyze: {
-        analyzerMode: 'static'
-        },
+        // analyze: {
+        // analyzerMode: 'static'
+        // },
         maxChunkSize: 300000
     },
     server: {

@@ -96,7 +96,7 @@
 								:time-to="21 * 60"
 								:timeStep="120"
 								:timeCellHeight="90"
-								:active-view="activeView"
+								active-view="week"
 								:todayButton="true"
 								:snapToTime="30"
 								:watchRealTime="true"
@@ -109,6 +109,7 @@
 								@event-drop="onEventDrop"
 								@event-drag-create="showEventCreationDialog = true"
 								@cell-focus="selectedDate = $event"
+								@event-delete="onEventDelete"
 								
 								
 							>
@@ -153,17 +154,21 @@
 		<b-row>
 			<b-col>
 				<!-- :active-view="activeView" -->
+				<h4 class="text-center">{{
+					selectedDate 
+							? $moment(selectedDate).format("yyyy-MM-DD") 
+							: $moment().format("yyyy-MM-DD") 
+							
+					}}</h4>
+					<!-- : new Date() -->
 				<vue-cal
-					
-					
-					
-					
-					
 					:events="appToCalendar"
 					:disable-views="['week', 'years', 'year', 'month']"
 					:selected-date="selectedDate"
 					class="vuecal--blue-green"
-
+					
+					
+					:hideTitleBar="true"
 					
 					:active-view.sync="activeView"
 					ref="vuecal-day"
@@ -175,31 +180,22 @@
 					:snapToTime="30"
 					:watchRealTime="true"
 					:startWeekOnSunday="true"
+
+					@event-drag-create="showEventCreationDialog = true"
+					@event-drop="onEventDrop"
 					@event-duration-change="onEventDurationChange"
 					:on-event-click="onEventClick"
 					:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
 					:onEventDblclick="onEventDoubleClick"
-					@event-drop="onEventDrop"
-					@event-drag-create="showEventCreationDialog = true"
+					
+					
 					@cell-focus="selectedDate = $event"
 					@cell-click="selectedPatient = null"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					
+					@event-delete="onEventDelete"
 					>
 				</vue-cal>
+				<!-- :hideViewSelector="true" -->
+				
 			</b-col>
 			<b-col v-if="selectedPatient">
 				<b-card no-body class="overflow-hidden">
@@ -340,6 +336,7 @@ import { store, mutations } from "../store/utils/conf";
 import { mapGetters, mapMutations } from "vuex";
 import draggable from 'vuedraggable';
 import VueCal from 'vue-cal';
+import 'vue-cal/dist/drag-and-drop.js'
 // import AddNewappointment from './patients/AddNewAppointment';
 import 'vue-cal/dist/vuecal.css'
 import ClinicalAlias from '../components/patients/tabs/aliases/clinicalAlias.vue';
@@ -369,16 +366,6 @@ export default {
 	},
 	data() {
 		return {
-			text: `
-					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-					richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-					brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-					tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-					assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-					wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-					vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-					synth nesciunt you probably haven't heard of them accusamus labore VHS.
-					`,
 			examinations: [],
 			selectedPatient: null,
       		
@@ -447,6 +434,31 @@ export default {
   },
   selectTabEvent() {
 	  this.secondTabTitle = false;
+  },
+  
+  onEventDelete(event) {
+	  console.log('event-=delete', event);
+	  let id = event.id;
+
+	  try {
+		   this.$store.dispatch('onDeleteAppointment', id);
+		   this.$bvToast.toast('Your event is deleted!', {
+          		title: 'Appointment Delete',
+          		variant: 'success',
+          		solid: true
+        });
+	  } catch (error) {
+		  this.$bvToast.toast('Your event is not deleted!', {
+          		title: 'Appointment Delete',
+          		variant: 'danger',
+				solid: true
+				});
+		  
+	  }
+
+	 
+
+
   },
   
 

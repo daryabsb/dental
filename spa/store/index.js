@@ -211,6 +211,7 @@ const mutations = {
     },
     DELETE_APPOINTMENT(state, id) {
         let appointment = state.appointments.results.find(app => app.id === id);
+
         let indexOfAppointmernt = state.appointments.results.indexOf(appointment);
         let indexOfAllAppointmernt = state.allAppointments.indexOf(appointment);
         // console.log(patient, indexOfPatient);
@@ -555,7 +556,7 @@ const actions = {
     },
     async editAppointment({ state, commit }, payload) {
         let id = payload.id
-        // console.log('undefined ID in payload: ', payload)
+            // console.log('undefined ID in payload: ', payload)
         let url = `/appointments/${id}/`;
 
 
