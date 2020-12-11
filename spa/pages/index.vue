@@ -446,7 +446,7 @@ export default {
           		title: 'Appointment Delete',
           		variant: 'success',
           		solid: true
-        });
+        		});
 	  } catch (error) {
 		  this.$bvToast.toast('Your event is not deleted!', {
           		title: 'Appointment Delete',
