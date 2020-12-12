@@ -6,6 +6,7 @@
         "dev": "nuxt",
         "build": "nuxt build",
         "start": "nuxt start",
+        "analyze": "nuxt build --analyze",
         "generate": "nuxt generate"
     },
     "dependencies": {
@@ -23,7 +24,7 @@
         "pdfvuer": "^1.7.3",
         "uuid": "^8.3.2",
         "v-bar": "^3.0.0",
-        "vue-cal": "^3.9.0",
+        "vue-cal": "^3.0.0-alpha.8",
         "vue-carousel": "^0.18.0",
         "vue-cookie": "^1.1.4",
         "vue-cookies": "^1.7.4",

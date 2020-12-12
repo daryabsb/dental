@@ -12,7 +12,13 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-        ]
+        ],
+        script: [
+            {
+            //   src: 'vue-cal/dist/drag-and-drop.js'
+            }
+          ],
+       
     },
 
     // Global CSS (https://go.nuxtjs.dev/config-css)
