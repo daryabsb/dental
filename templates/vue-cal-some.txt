@@ -1,0 +1,46 @@
+ @event-duration-change="logEvents('event-duration-change', $event)"
+
+<vue-cal selected-date="2018-11-19"
+         :time-from="7 * 60"
+         :time-to="23 * 60"
+         :disable-views="['years', 'year']"
+         hide-weekends
+         editable-events
+         :events="events"
+         cell-contextmenu
+         @ready="logEvents('ready', $event)"
+         @view-change="logEvents('view-change', $event)"
+         @cell-click="logEvents('cell-click', $event)"
+         @cell-dblclick="logEvents('cell-dblclick', $event)"
+         @cell-contextmenu="logEvents('cell-contextmenu', $event)"
+         @cell-focus="logEvents('cell-focus', $event)"
+         @event-focus="logEvents('event-focus', $event)"
+         @event-mouse-enter="logEvents('event-mouse-enter', $event)"
+         @event-mouse-leave="logEvents('event-mouse-leave', $event)"
+         @event-title-change="logEvents('event-title-change', $event)"
+         @event-content-change="logEvents('event-content-change', $event)"
+         @event-duration-change="logEvents('event-duration-change', $event)"
+         @event-drop="logEvents('event-drop', $event)"
+         @event-create="logEvents('event-create', $event)"
+         @event-drag-create="logEvents('event-drag-create', $event)"
+         @event-delete="logEvents('event-delete', $event)">
+</vue-cal>
+
+
+<button @click="activeView = 'day'">Day</button>
+<button @click="activeView = 'week'">Week</button>
+<button @click="activeView = 'month'">Month</button>
+<button @click="activeView = 'year'">Year</button>
+<button @click="activeView = 'years'">Years</button>
+<br />
+<button @click="$refs.vuecal.previous()">Previous</button>
+<button @click="$refs.vuecal.switchView('day', new Date())">Today</button>
+<button @click="$refs.vuecal.next()">Next</button>
+
+<vue-cal small
+  ref="vuecal"
+  :active-view.sync="activeView"
+  :time="false"
+  hide-view-selector
+  :selected-date="selectedDate">
+</vue-cal>

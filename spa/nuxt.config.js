@@ -61,6 +61,12 @@ export default {
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
     ],
+    // vue: {
+    //     config: {
+    //         productionTip: true,
+    //         devtools: false
+    //     }
+    // },
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
@@ -99,15 +105,18 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
-        // analyze: true,
-        // // or
-        // analyze: {
-        // analyzerMode: 'static'
-        // },
-        maxChunkSize: 300000
+        extend(config, { isClient }) {
+            if (isClient) {
+                config.optimization.minimize = false;
+                config.optimization.splitChunks = false;
+
+            }
+        }
+
+        // maxChunkSize: 300000
     },
     server: {
         port: 8080 // default: 3000
             //host: "0.0.0.0" // default: localhost
-    },
+    }
 }

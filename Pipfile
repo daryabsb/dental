@@ -17,6 +17,7 @@ django-cors-headers = "*"
 flake8 = "*"
 pypdf2 = "*"
 pillow = "*"
+mod-wsgi = "*"
 
 [requires]
 python_version = "3.8"
