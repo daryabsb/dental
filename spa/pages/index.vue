@@ -336,9 +336,9 @@ import { store, mutations } from "../store/utils/conf";
 import { mapGetters, mapMutations } from "vuex";
 import draggable from 'vuedraggable';
 import VueCal from 'vue-cal';
-import 'vue-cal/dist/drag-and-drop.js'
+// import 'vue-cal/dist/drag-and-drop.js'
 // import AddNewappointment from './patients/AddNewAppointment';
-import 'vue-cal/dist/vuecal.css'
+// import 'vue-cal/dist/vuecal.css'
 import ClinicalAlias from '../components/patients/tabs/aliases/clinicalAlias.vue';
 
 export default {
