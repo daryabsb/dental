@@ -27,9 +27,9 @@ SECRET_KEY = 'k&*6+z7d1u_9y*@p$*&$q)!9z(^y(e6tv8fr5j$%m5v%e&n8en'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost"]
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
 
 
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'corsheaders',
-    'rest_framework',
+   'corsheaders',
+   'rest_framework',
     'rest_framework.authtoken',
    
 
@@ -70,26 +70,27 @@ MIDDLEWARE = [
 
  # add this block below MIDDLEWARE
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
+    'http://localhost',	
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
  # add this block below MIDDLEWARE
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',  
-)
+#CORS_ORIGIN_WHITELIST = (
+ #   'http://localhost:3000',  
+#)
 
 CORS_ORIGIN_REGEX_WHITELIST = [
-    r"^https://\w+\.localhost:3000$",
+    r"^https://\w+\.localhost$",
+    r"http://\w+\.localhost$",
 ]
 CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
+   'DELETE',
+   'GET',
+   'OPTIONS',
+   'PATCH',
+   'POST',
+   'PUT',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -179,4 +180,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]

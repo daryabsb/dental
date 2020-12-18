@@ -102,7 +102,7 @@ class AttachmentViewSet(viewsets.ModelViewSet):
         if type is not None:
             queryset = queryset.filter(file_type=type)
 
-        return queryset
+        return queryset.order_by('-id')
 
     def perform_create(self, serializer):
         """Create a new attachment"""
