@@ -2,6 +2,10 @@ export default {
     // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
     ssr: false,
 
+    env: {
+        baseUrl: process.env.BASE_URL || 'http://localhost:8080'
+      },
+
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
         title: 'spa',
@@ -59,6 +63,8 @@ export default {
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
+        '@nuxtjs/dotenv',
+
         '@nuxtjs/auth',
         // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
@@ -77,21 +83,26 @@ export default {
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        baseURL: 'http://localhost:8000/api'
+        // baseURL: 'http://172.16.10.8:8000/api'
+        // baseURL: `${process.env.baseUrl}:8000/api`
+        baseURL: process.env.API_URL
     },
     auth: {
         strategies: {
             local: {
                 endpoints: {
                     login: {
-                        url: "http://localhost:8000/api/user/token/",
+                        url: process.env.LOGIN_URL,
+                        // url: 'http://172.16.10.8:8000/api/user/token/',
                         method: "POST",
                         propertyName: "token",
                         altProperty: 'refresh'
                     },
                     logout: true,
                     user: {
-                        url: "http://localhost:8000/api/user/me",
+                        url: process.env.USER_URL,
+                        // url: `${process.env.baseUrl}:8000/api/user/me`,
+                        // url: 'http://172.16.10.8:8000/api/user/me',
                         method: "get",
                         propertyName: false
                     }
