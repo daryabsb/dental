@@ -1,0 +1,4 @@
+URL=http://172.16.10.8
+API_URL=http://172.16.10.8:8000/api
+LOGIN_URL=http://172.16.10.8:8000/api/user/token/
+USER_URL=http://172.16.10.8:8000/api/user/me/
