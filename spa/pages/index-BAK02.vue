@@ -152,72 +152,106 @@
     <!-- <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy> -->
     <b-tab @click="swichView" title="Today's Appointments" lazy>
 		<b-row>
-			<b-col v-if="selectedPatient">
-				<b-card no-body class="overflow-hidden">
-					<b-row no-gutters >
-						<b-col md="6">
-							<b-card-img :src="selectedPatient.image" 
-								alt="Image" 
-								class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
-						</b-col>
-						<b-col md="6">
+			<b-col>
+				<!-- :active-view="activeView" -->
+				<h4 class="text-center">{{
+					selectedDate 
+							? $moment(selectedDate).format("yyyy-MM-DD") 
+							: $moment().format("yyyy-MM-DD") 
+							
+					}}</h4>
+					<!-- : new Date() -->
+				<vue-cal
+					:events="appToCalendar"
+					:disable-views="['week', 'years', 'year', 'month']"
+					:selected-date="selectedDate"
+					class="vuecal--blue-green"
 					
-							<b-card-body :title="selectedPatient.name">
-							<b-card-text>
-								<p><strong>Phone: </strong>{{selectedPatient.phone}}</p>
-								This is a wider card with supporting text as 
-								a natural lead-in to additional content.
-								This content is a little bit longer.
-							</b-card-text>
-							</b-card-body>
-						</b-col>
-					</b-row>
-  				</b-card>
-				<div class="accordion" role="tablist">
-    
-				<b-card no-body class="mb-1">
-				<b-card-header header-tag="header" class="p-1" role="tab">
-					<b-button block v-b-toggle.accordion-2 variant="info">Treatments</b-button>
-				</b-card-header>
-				<b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-					<b-card-body>
-					<treatment-activity :patient="selectedPatient"></treatment-activity>
-					</b-card-body>
-				</b-collapse>
-				</b-card>
-				<b-card no-body class="mb-1">
-				<b-card-header header-tag="header" class="p-1" role="tab">
-					<b-button block v-b-toggle.accordion-1 variant="info">Clinical Examinations</b-button>
-				</b-card-header>
-				<b-collapse id="accordion-1"  accordion="my-accordion" role="tabpanel">
-					<!-- visible -->
-					<b-card-body>
-					<clinical-alias
-									:examinations="selectedPatient ? selectedPatient.examinations : '?'"
-									
-								></clinical-alias>
-					</b-card-body>
-				</b-collapse>
-				</b-card>
-				<b-card no-body class="mb-1">
-				<b-card-header header-tag="header" class="p-1" role="tab">
-					<b-button block v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
-				</b-card-header>
-				<b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-					<b-card-body>
-					<b-card-text><pre>{{ patientVisits(selectedPatient.id) }}</pre></b-card-text>
-					</b-card-body>
-				</b-collapse>
-				</b-card>
-			</div>
+					
+					:hideTitleBar="true"
+					
+					:active-view.sync="activeView"
+					ref="vuecal-day"
+					:small="true"
+					:time-from="1 * 60"
+					:time-to="21 * 60"
+					:timeStep="120"
+					:timeCellHeight="90"
+					:snapToTime="30"
+					:watchRealTime="true"
+					:startWeekOnSunday="true"
+
+					@event-drag-create="showEventCreationDialog = true"
+					@event-drop="onEventDrop"
+					@event-duration-change="onEventDurationChange"
+					:on-event-click="onEventClick"
+					:editable-events="{ title: false, drag: true, resize: true, delete: true, create: true }"
+					:onEventDblclick="onEventDoubleClick"
+					
+					
+					@cell-focus="selectedDate = $event"
+					@cell-click="selectedPatient = null"
+					@event-delete="onEventDelete"
+					>
+				</vue-cal>
+				<!-- :hideViewSelector="true" -->
+				
 			</b-col>
 			<b-col v-if="selectedPatient">
-				<h4>
-					
-					<template v-if="selectedPatient.gender==='male'">Mr</template>
-					<template v-else>Mrs</template> {{selectedPatient.name}}'s treatments
-				</h4>
-				
+				<b-card no-body class="overflow-hidden">
+    <b-row no-gutters >
+      <b-col md="6">
+        <b-card-img :src="selectedPatient.image" alt="Image" class="larger-thumb thumb-xl rounded-circle my-3 ml-3"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        
+        <b-card-body :title="selectedPatient.name">
+          <b-card-text>
+			  <p><strong>Phone: </strong>{{selectedPatient.phone}}</p>
+            This is a wider card with supporting text as a natural lead-in to additional content.
+            This content is a little bit longer.
+          </b-card-text>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
+				<div class="accordion" role="tablist">
+    
+	 <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-2 variant="info">Treatments</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <treatment-activity :patient="selectedPatient"></treatment-activity>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+	<b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-1 variant="info">Clinical Examinations</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1"  accordion="my-accordion" role="tabpanel">
+        <!-- visible -->
+		<b-card-body>
+          <clinical-alias
+						:examinations="selectedPatient ? selectedPatient.examinations : '?'"
+						
+					></clinical-alias>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text><pre>{{ patientVisits(selectedPatient.id) }}</pre></b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+  </div>
 			</b-col>
 		</b-row>
 	</b-tab>
