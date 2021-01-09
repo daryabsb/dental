@@ -164,7 +164,7 @@
 													<b-card-header header-tag="header" class="p-1" role="tab">
 														<b-button block v-b-toggle.accordion-2 variant="info">Treatments</b-button>
 													</b-card-header>
-													<b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+													<b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel" visible>
 														<b-card-body>
 															<treatment-activity :patient="selectedPatient"></treatment-activity>
 														</b-card-body>
@@ -186,7 +186,7 @@
 														<b-button block v-b-toggle.accordion-3 variant="info">Visits</b-button>
 													</b-card-header>
 													<b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-														<b-card-body>
+														<b-card-body class="treatments-activity">
 															<b-card-text>
 																<b-list-group>
 																	<b-list-group-item class="d-flex justify-content-between align-items-center"
