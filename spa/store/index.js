@@ -187,20 +187,24 @@ const mutations = {
     },
     EDIT_PATIENT(state, payload) {
         // FIND ITEM AND PLACE IN STATE
-        const editedPatient = state.patients.find(
+        const editedPatient = state.patients.results.find(
             patient => patient.id === payload.id
         );
-        let indexOfPatient = state.patients.indexOf(editedPatient);
+        let indexOfPatient = state.patients.results.indexOf(editedPatient);
 
         // REPLACE EDITED ITEM WITH NEW INFO
-        state.patients.splice(indexOfPatient, 1, payload);
+        state.patients.results.splice(indexOfPatient, 1, payload);
     },
     DELETE_ITEM(state, payload) {
-        let item = payload.module.find(item => item.id === payload.id);
-        let indexOfModule = payload.module.indexOf(item);
+        // console.log(
+        //     'payload.module: ', payload.module,
+        //     'moduleName: ', payload.moduleName
+        // )
+        let item = payload.module.results.find(item => item.id === payload.id);
+        let indexOfModule = payload.module.results.indexOf(item);
         // console.log(patient, indexOfPatient);
 
-        payload.module.splice(indexOfModule, 1);
+        payload.module.results.splice(indexOfModule, 1);
     },
     DELETE_PATIENT(state, id) {
         let patient = state.patients.find(patient => patient.id === id);
@@ -240,11 +244,30 @@ const mutations = {
 
     /* CHECK THE CODE BELOW*/
     ADD_NEW_TREATMENT(state, payload) {
+        let patient = state.patients.results.find(p => p.id === payload.patient);
+        let indexOfPatient = state.patients.results.indexOf(patient)
+
+        patient.treatments.unshift(payload);
+
+        state.patients.results.splice(indexOfPatient, 1, payload);
+        console.log('cannot read 1')
         state.treatments.results.unshift(payload);
+        console.log('cannot read 2')
+
         state.treatments.results[0].files = [];
         state.treatments.results[0].files = state.files;
+        console.log('cannot read 3')
+
         state.files = [];
         // console.log(payload)
+    },
+    EDIT_TREATMENT(state, payload) {
+        let treatment = state.treatments.results.find(treat => treat.id === payload.id)
+        let treatIndex = state.treatments.results.indexOf(treatment)
+            // console.log(treatment, 'then', payload);
+        state.treatments.results.splice(treatIndex, 1, payload);
+        // console.log(state.treatments.results[treatIndex])
+
     },
     PATIENT_PDF_FILES(state, payload) {
         state.patientPdfFiles = payload;
@@ -534,6 +557,18 @@ const actions = {
             // console.log(Array.from(payload));
             const newTreatment = await this.$axios.post(url, payload);
             commit("ADD_NEW_TREATMENT", newTreatment.data);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    async editTreatment({ state, commit }, payload) {
+        let id = payload.id;
+        let url = `/treatments/${id}/`;
+        // console.log(payload)
+        try {
+            // console.log(Array.from(payload));
+            const editTreatment = await this.$axios.put(url, payload);
+            commit("EDIT_TREATMENT", editTreatment.data);
         } catch (err) {
             console.log(err);
         }

@@ -6,7 +6,7 @@
                                             
                                                    <div class="row">
                         <div class="col-lg-12">
-                            <div class="row">
+                            <div class="row mx-1">
                                 <div class="col-lg-12">
                                      <div class="card">
                                 <div class="card-body">
@@ -63,7 +63,11 @@
                                 <div class="col-lg-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span>
+                                            <img 
+                                            style="width: 7rem;"
+                                            class="float-right" src="~assets/images/ex/nasolabial-sulcus.svg" alt="">
+                                            
+                                            <!-- <span class="float-right text-muted font-weight-normal">Normal / CLASS I</span> -->
                                             <h4 class="font-weight-normal mt-0 mb-4">Nasolabial Sulcus</h4>
                                             <h5 class="mb-0 font-weight-normal text-success">{{examinations.nasolabial_sulcus}}</h5>
                                         </div><!--end card-body-->

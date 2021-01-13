@@ -135,11 +135,13 @@
 											<b-card no-body class="overflow-hidden">
 												<b-row no-gutters v-if="selectedPatient">
 													<b-col md="6">
+														<nuxt-link :to="`/patients/${selectedPatient.id}`">
 														<b-card-img
 															:src="selectedPatient.image"
 															alt="Image"
 															class="larger-thumb thumb-xl rounded-circle my-3 ml-3"
 														></b-card-img>
+														</nuxt-link>
 													</b-col>
 													<b-col md="6">
 														<b-card-body :title="selectedPatient.name">

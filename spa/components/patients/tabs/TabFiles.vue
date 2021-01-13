@@ -37,16 +37,37 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row container-grid nf-col-3  projects-wrapper">
+                                                         <b-modal 
+                                                                    ref="pdf-preview" 
+                                                                    hide-footer 
+                                                                    :title="fName ? fName : ''"
+                                                                    size="lg">
+                                                                <!-- <div class="d-block text-center">
+                                                                    <h3>Hello From My Modal!</h3>
+                                                                </div>
+                                                                <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button> -->
+                                                               <pdf-view
+                                                                    v-for="i in pageCount" 
+                                                                    :key="i"
+                                                                    :src="src" 
+                                                                    :page="i"
+                                                                    />
+                                                               
+                                                                </b-modal>
                                                         <div class="col-lg-4 col-md-6 p-0 nf-item branding design coffee spacing" 
                                                         v-for="file in files" :key="file.id"
                                                         v-if="displayContents('tabFiles')"
                                                         >
+                                                       
+                                                        
                                                             <div class="item-box p-3">
                                                                 <a 
                                                                 class="cbox-gallary1 mfp-image p-3" 
                                                                 href="javascript: void(0);" 
                                                                 title="Consequat massa quis"
+                                                                @click="showModal(file)"
                                                                 >
+                                                                
 
                                                                     <pdf-view :src="file.file" class="item-container" />
                                                                     <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
@@ -185,6 +206,9 @@ export default {
 			],
             activeTabName: null,
             index: null,
+            src: '',
+            fName: '',
+            pageCount: 1,
         }
         
     },
@@ -194,7 +218,16 @@ export default {
 		},
 		displayContents(name) {
 			return this.activeTabName === name;
-		},
+        },
+        showModal(file) {
+            this.src = file.file;
+            this.fName = file.filename;
+            this.pageCount = file.page_count
+        this.$refs['pdf-preview'].show()
+      },
+      hideModal() {
+        this.$refs['pdf-preview'].hide()
+      },
     },
     computed: {
     // imageUrls() {

@@ -92,6 +92,13 @@
 												>
 													<i class="fas fa-trash-alt text-danger font-16"></i>
 												</a>
+												<ModalConfirm
+												:title="'Confirm Delete'"
+												:module="$store.state.patients"
+												:moduleName="'patients'"
+												:name="patientNameDelete"
+												:id="patientIdDelete"
+												/>
 											</template>
 										</b-table>
 									</b-col>
@@ -138,6 +145,7 @@ export default {
 			// pid: "",
 			patientNameDelete: "",
 			patientIdDelete: "",
+			idDelete: "",
 			editPatient: null,
 			edit: true,
 			searchInput: "",

@@ -55,6 +55,19 @@
 								:patientID="selectedID"
 							></add-new-treatment>
 						</b-modal>
+				<!-- EDIT TREATMENT FORM MODAL -->
+           <b-modal
+							variant="primary"
+							size="lg"
+							ref="e-treatment-modal"
+							hide-footer
+							title="Edit treatment"
+						>
+							<edit-treatment
+								@hideModal="hideModal"
+								:treatId="editId"
+							></edit-treatment>
+						</b-modal>
 
             	<search-comp
 									:input="true"
@@ -87,6 +100,9 @@
                 </template>
                 <template #cell(actions)="row">
                  
+														<!-- <a @click="showModal(true, row.item)" class="mr-2">
+															<i class="fas fa-edit text-info font-16"></i>
+														</a> -->
 														<a @click="showModal(true, row.item)" class="mr-2">
 															<i class="fas fa-edit text-info font-16"></i>
 														</a>
@@ -96,8 +112,8 @@
 													
 												<ModalConfirm
 													:title="'Confirm Delete'"
-													:module="$store.state.users"
-													:moduleName="'users'"
+													:module="$store.state.treatments"
+													:moduleName="'treatments'"
 													:name="nameDelete"
 													:id="idDelete"
 												/>
@@ -179,17 +195,18 @@ export default {
 			mutations.toggleTreatment();
 		},
 		showModal(modalState, data = {}) {
-			if (!modalState) {
-				this.editId = "";
-				// this.editPatient = "";
-				this.editDescription = "";
-				this.editDate = "";
-				//this.$store.conf.actions.dispatch('showAddUserModal');
-				store.isEditModal = false;
-				mutations.toggleAppointmentModal();
+			// console.log('clicked')
+			// if (!modalState) {
+			// 	this.editId = "";
+			// 	// this.editPatient = "";
+			// 	this.editDescription = "";
+			// 	this.editDate = "";
+			// 	//this.$store.conf.actions.dispatch('showAddUserModal');
+			// 	store.isEditModal = false;
+			// 	mutations.toggleAppointmentModal();
 
-				//this.addUserModal = !this.addUserModal;
-			} else {
+			// 	//this.addUserModal = !this.addUserModal;
+			// } else {
 				this.editId = data.id;
 				this.editPatient = data.patient;
 				this.editDescription = data.description;
@@ -197,8 +214,12 @@ export default {
 
 				//this.addUserModal = !this.addUserModal;
 				store.isEditModal = true;
-				mutations.toggleAppointmentModal();
-			}
+				this.$refs["e-treatment-modal"].show()
+				// this.showPatientTreatmentModal();
+			// }
+		},
+		hideModal() {
+			this.$refs["e-treatment-modal"].hide()
 		},
 		selectPatientModal() {
 			mutations.toggleSelectPatientModal();
@@ -208,10 +229,11 @@ export default {
 				(this.idDelete = id),
 				mutations.toggleConfirmDelete();
 		},
-		showPatientTreatmentModal() {
+		showPatientTreatmentModal(id="") {
 			this.hideSelectPatientModal();
-			this.$refs["p-treatment-modal"].show();
 			// this.selectedID = '';
+			this.$refs["p-treatment-modal"].show();
+			
 		},
 		hidePatientTreatmentModal() {
 			this.$refs["p-treatment-modal"].hide();
