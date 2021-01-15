@@ -4,24 +4,36 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-body">
-                  <div class="input-group mb-1">
+                  <!-- <pre>{{options}}</pre> -->
+                  <!-- <div class="input-group mb-1">
                     <b-form-group inline>
       <b-form-radio  v-model="selected" name="some-radios" value="options">Select an option</b-form-radio>
       <b-form-radio v-model="selected" name="some-radios" value="custom">Custom treatment</b-form-radio>
     </b-form-group>
-                    <!-- <h1>this {{ patientID }} that</h1> -->
-                  </div>
-                  <div class="input-group mb-1">
+                    <h1>this {{ patientID }} that</h1>
+                  </div> -->
+                  <!-- <div class="input-group mb-1"> -->
+                   <b-input-group>
+
+                  <input v-model="title" name="title" class="form-control" v-if="addOption" />
                    <b-form-select 
-                   v-model="title" 
-                   :options="treatChoices" 
-                   @change="setTreatDetail($event)"
-                   v-if="selected === 'options'"
-                   
-                    text-field="value"
+                    v-model="title" 
+                    :options="options" 
+                    @change="setTreatDetail($event)"
+                    value-field="title"
+                    text-field="title"
+                    v-if="!addOption"
                    ></b-form-select>
-                    <input v-model="title" name="title" class="form-control" v-if="selected === 'custom'" />
-                  </div>
+                  
+                    
+                    <b-input-group-append>
+                      <b-button variant="outline-secondary" @click="addOption = !addOption">
+                        <strong v-if="addOption">-</strong>
+                        <strong v-else>+</strong>
+                        </b-button>
+                    </b-input-group-append>
+                    </b-input-group>
+                  <!-- </div> -->
                   <div class="form-group mb-1">
                     <label for="exampleFormControlTextarea1">Description</label>
                     <textarea
@@ -60,18 +72,24 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import { store, mutations } from "../../store/utils/conf";
 import { choices } from "../../store/utils/choices";
 
 export default {
+ 
   props: ["patientID"],
   data() {
     return {
+      addOption:false,
       title: "",
       description: "",
       show: true,
       selected: '',
     };
+  },
+  mounted() {
+    // NOTHING YET
   },
   methods: {
     onSaveTreatment() {
@@ -90,7 +108,18 @@ export default {
       formData.append("files", files);
 
     //   console.log(Array.from(formData));
+    if(this.addOption) {
+      let data = {
+        module: 'Treatment',
+        title: this.title,
+        description: this.description
+      }
+    console.log('testing data: ', data)
+      this.$store.dispatch("addTreatmentTemplate", data);
 
+
+
+    }
       let data = {
         // "user": this.$auth.user.id,
         patient: this.patientID,
@@ -116,10 +145,10 @@ export default {
       this.$emit('hidePatientTreatmentModal');
     },
     setTreatDetail(event) {
-        
-        let option = choices.treatmentPlans.find(treat=>treat.value === event)
+        console.log(event)
+        let option = this.options.find(treat=>treat.title === event)
         // console.log(text)
-        this.description = option.text;
+        this.description = option.description;
         },
   },
   computed: {
@@ -129,9 +158,13 @@ export default {
     treatChoices() {
         return choices.treatmentPlans;
     },
+    options() {
+      return this.treatmentOptions;
+    },
     // treatDetails() {
     //     return choices.treatmentPlans.find(treat=>);
     // },
+    ...mapGetters(['treatmentOptions'])
   },
 };
 </script>

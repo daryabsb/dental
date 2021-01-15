@@ -22,11 +22,11 @@ from rest_framework import authentication, permissions, parsers, viewsets, mixin
 # from rest_framework.authentication import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
 
-from core.models import User, Patient, Attachment, Treatment, ComingTreatment
+from core.models import User, Patient, Attachment, Treatment, ComingTreatment, TreatmentTemplate
 from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
     PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,
-    PatientPictureSerializer, UserPictureSerializer,)
+    PatientPictureSerializer, UserPictureSerializer,TreatmentTemplateSerializer)
 from .pagination import PatientPagination, AppointmentPagination
 
 
@@ -79,6 +79,29 @@ class UserViewSet(viewsets.ModelViewSet):
                 queryset = User.objects.filter(conditions)
 
         return queryset
+
+class TreatmentTemplateViewSet(viewsets.ModelViewSet):
+    # Manage ingredientss in the database
+    queryset = TreatmentTemplate.objects.all()
+    serializer_class = TreatmentTemplateSerializer
+    # pagination_class = PatientPagination
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        
+        queryset = TreatmentTemplate.objects.all()
+        
+        # PERFORM FILTER BY SEARCH INPUT
+        keywords = self.request.query_params.get('module', None)
+        # print(keywords)
+        if keywords:
+            queryset = TreatmentTemplate.objects.filter(module=keywords)
+
+        return queryset
+
+    def perform_create(self, serializer):
+        """Create a new treatment template"""
+        serializer.save(user=self.request.user)
 
 class AttachmentViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database

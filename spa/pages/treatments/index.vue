@@ -231,12 +231,14 @@ export default {
 		},
 		showPatientTreatmentModal(id="") {
 			this.hideSelectPatientModal();
-			// this.selectedID = '';
+			
 			this.$refs["p-treatment-modal"].show();
 			
 		},
 		hidePatientTreatmentModal() {
 			this.$refs["p-treatment-modal"].hide();
+			this.selectedID = '';
+
 		},
 		showSelectPatientModal() {
 			this.$refs["p-select-patient-modal"].show();

@@ -195,18 +195,16 @@ import { store, mutations } from "../../store/utils/conf";
 import { mapState, mapActions, mapGetters } from "vuex";
 export default {
 	async asyncData({ $axios, store, params }) {
-		
 		let id = params.id;
 		console.log("Page Loaded: ", id);
 		// store.dispatch('loadPatientData', id);
 		// mutations.togglePatientHistoryTab();
 		console.log("Function is loaded and the ID is: ", id);
-		// await store.dispatch('loadPatient',id);
+
 		let patientsURL = "/patients";
 		// let attachmentsURL = '/attachments'
 
 		try {
-
             let singlePatient = await $axios.$get(`${patientsURL}/${id}/`);
             
 			const [patientLoaded] = await Promise.all([singlePatient]);
@@ -216,17 +214,15 @@ export default {
 			return {
 				patient: patientLoaded,
             };
-			console.log('?')
+
             
             
 		} catch (err) {
 			console.log(err);
 		}
 	},
-	
 	data() {
 		return {
-			
 			tabs: [
 				{
 					name: "tabGeneral",
@@ -406,7 +402,6 @@ export default {
 		//   return this.getPatient;
 		// },
 		...mapGetters([
-			// "patient",
 			"getPatientPDFs",
 			"getPatientImages",
 			"hasPDF",

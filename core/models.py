@@ -245,6 +245,24 @@ FILE_TYPE = (
     ('pdf', 'PDF'),
     ('image', 'IMAGE')
 )
+
+class TreatmentTemplate(models.Model):
+    MODULE_TYPE = (
+        ('Appointment','Appointment'),
+        ('Treatment','Treatment'),
+        ('Operation','Operation'),
+    )
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    module = models.CharField(max_length=20,choices=MODULE_TYPE, default='Treatment')
+    title = models.CharField(max_length=120)
+    description = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.module} - {self.title}'
+
+
 class Attachment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE, related_name='attachments')

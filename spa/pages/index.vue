@@ -298,25 +298,34 @@ import ClinicalAlias from "../components/patients/tabs/aliases/clinicalAlias.vue
 
 export default {
 	async asyncData({ $axios, app, store }) {
-		await store.dispatch("loadData");
+		
+			await store.dispatch("loadData");
 
-		let appointmentsResponse = await $axios.$get(
-			"/appointments/?page_size=100"
-		);
-		let patientsResponse = await $axios.$get("/patients/?page_size=100");
+		
 
-		const [appResponse, patResponse] = await Promise.all([
-			appointmentsResponse,
-			patientsResponse,
-		]);
+		// let appointmentsResponse = await $axios.$get(
+		// 	"/appointments/?page_size=100"
+		// );
+		// try {
+			
+		// 	let patientsResponse = await $axios.$get("/patients/?page_size=100");
 
-		// console.log(catResponse);
-		// console.log(tagResponse);
+		// const [appResponse, patResponse] = await Promise.all([
+		// 	appointmentsResponse,
+		// 	patientsResponse,
+		// ]);
 
-		return {
-			appointmentsTest: appResponse.results,
-			patients: patResponse.results,
-		};
+		// // console.log(catResponse);
+		// // console.log(tagResponse);
+
+		// return {
+		// 	appointmentsTest: appResponse.results,
+		// 	patients: patResponse.results,
+		// };
+		// } catch (error) {
+		// 	console.log(error)
+		// }
+		
 
 		// this.$store.dispatch('loadData', 'DONE');
 	},
@@ -594,14 +603,14 @@ export default {
 			};
 			this.$store.dispatch("onChangePagination", data);
 		},
-		patient(appointment) {
-			// console.log(this.patients);
-			let patient = this.patients.find(
-				(p) => p.id === appointment.patient
-			);
+		// patient(appointment) {
+		// 	// console.log(this.patients);
+		// 	let patient = this.patients.find(
+		// 		(p) => p.id === appointment.patient
+		// 	);
 
-			return patient;
-		},
+		// 	return patient;
+		// },
 		lastObject(arr) {
 			return arr[arr.length - 1];
 		},
@@ -657,7 +666,10 @@ export default {
 		// },
 		colPatients() {
 			// console.log(this.patients)
-			return this.patients.filter((patient) => {
+
+			// return this.patients.filter((patient) => {
+				console.log(this.allPatients.results)
+			return this.allPatients.results.filter((patient) => {
 				return patient.name
 					.toLowerCase()
 					.includes(this.searchQuery.toLowerCase());
@@ -717,6 +729,7 @@ export default {
 			// "getTreatments",
 			"getAppointments",
 			"patientsData",
+			"allPatients",
 		]),
 	},
 	// mounted() {

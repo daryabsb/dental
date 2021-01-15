@@ -4,7 +4,7 @@ export default {
 
     env: {
         baseUrl: process.env.BASE_URL || 'http://localhost:8080'
-      },
+    },
 
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
@@ -17,12 +17,10 @@ export default {
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
         ],
-        script: [
-            {
+        script: [{
             //   src: 'vue-cal/dist/drag-and-drop.js'
-            }
-          ],
-       
+        }],
+
     },
 
 
@@ -113,9 +111,10 @@ export default {
         redirect: {
             login: '/login',
             logout: '/login',
-            callback: '/login',
+            callback: '/callback',
             home: '/'
         },
+        watchLoggedIn: true
     },
     // router: {
     //     middleware: ['auth']
@@ -123,13 +122,13 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
-        extend(config, { isClient }) {
-            if (isClient) {
-                config.optimization.minimize = false;
-                config.optimization.splitChunks = false;
+        // extend(config, { isClient }) {
+        //     if (isClient) {
+        //         config.optimization.minimize = false;
+        //         config.optimization.splitChunks = false;
 
-            }
-        }
+        //     }
+        // }
 
         // maxChunkSize: 300000
     },

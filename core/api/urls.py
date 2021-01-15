@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
     PatientViewSet, TreatmentViewSet, UserViewSet, AppointmentViewSet,
-    ImageUpdateView, UserImageUpdateView)
+    ImageUpdateView, UserImageUpdateView, TreatmentTemplateViewSet)
 
 
 router = routers.DefaultRouter()
@@ -13,6 +13,7 @@ router.register('attachments', AttachmentViewSet)
 router.register('patients', PatientViewSet)
 router.register('treatments', TreatmentViewSet)
 router.register('appointments', AppointmentViewSet)
+router.register('templates', TreatmentTemplateViewSet)
 # router.register(r'Receive', api.ReceiveViewSet)
 
 

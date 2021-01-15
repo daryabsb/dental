@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 from .models import (
     User, Address, Doctor, Patient, Timetable, Schedule,
     Attachment, Treatment,ComingTreatment, ClinicalExamination,
-    MedicalExamination,
+    MedicalExamination, TreatmentTemplate,
     )
 
 class UserAdmin(BaseUserAdmin):
@@ -38,3 +38,4 @@ admin.site.register(Treatment)
 admin.site.register(ComingTreatment)
 admin.site.register(ClinicalExamination)
 admin.site.register(MedicalExamination)
+admin.site.register(TreatmentTemplate)

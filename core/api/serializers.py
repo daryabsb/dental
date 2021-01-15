@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from core.models import (
     User, Patient, Attachment, Doctor, Treatment, ComingTreatment, 
-    ClinicalExamination, MedicalExamination,
+    ClinicalExamination, MedicalExamination, TreatmentTemplate,
     )
 
 
@@ -145,6 +145,13 @@ class TreatmentSerializer(serializers.ModelSerializer):
             'id', 'patient', 'title', 'description', 'files', 'created'         
         ]
         read_only_Fields = ('id','created',)
+
+class TreatmentTemplateSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = TreatmentTemplate
+        fields = ['id','module','title','description']
+        read_only_Fields = ('id',)
 
 class TreatmentListSerializer(serializers.ModelSerializer):
     # Serializer for uploading images for recipes

@@ -3,6 +3,7 @@
 const state = () => ({
     users: [],
     patients: [],
+    allPatients: [],
     patient: [],
     treatments: [],
     appointments: [],
@@ -22,6 +23,7 @@ const state = () => ({
     counter: null,
     alertMsg: '',
     alertStatus: true,
+    treatmentOptions: [],
     /* 
     TEMPORARILY HOLDS 
     CURRENT PATIENT's IMAGE*/
@@ -79,6 +81,12 @@ const mutations = {
     GET_PATIENTS(state, payload) {
         state.patients = payload;
     },
+    GET_ALL_PATIENTS(state, payload) {
+        state.allPatients = payload;
+    },
+    // LOAD_PATIENT(state, payload) {
+    //     state.patient = payload;
+    // },
     SET_PATIENT_DATA(state, payload) {
 
         // console.log(payload[2]);
@@ -135,6 +143,9 @@ const mutations = {
         // console.log(state.treatments)
         state.curTreats = state.treatments.filter(treat => treat.patient === id);
     },
+    GET_TREATMENT_OPTIONS(state, payload) {
+        state.treatmentOptions = payload;
+    },
     // 'GET_PATIENT_TREATS' (state, payload) {
     //     const curPatient = state.patients
     //         .filter(patient => patient.id === payload.id)
@@ -144,6 +155,7 @@ const mutations = {
     ADD_USER(state, payload) {
         state.users.unshift(payload);
     },
+
     ADD_PATIENT(state, payload) {
         state.patients.results.unshift(payload);
         // state.counter = 3
@@ -166,6 +178,9 @@ const mutations = {
     },
     ADD_NEW_ALL_APPOINTMENT(state, payload) {
         state.allAppointments.unshift(payload)
+    },
+    ADD_TREATMENT_TEMPLATE(state, payload) {
+        state.treatmentOptions.push(payload)
     },
     EDIT_APPOINTMENT(state, payload) {
         let app = state.appointments.results.find(a => a.id === payload.id)
@@ -244,22 +259,21 @@ const mutations = {
 
     /* CHECK THE CODE BELOW*/
     ADD_NEW_TREATMENT(state, payload) {
+        state.treatments.results.unshift(payload);
+        state.treatments.results[0].files = [];
+        state.treatments.results[0].files = state.files;
+        state.files = [];
+
         let patient = state.patients.results.find(p => p.id === payload.patient);
         let indexOfPatient = state.patients.results.indexOf(patient)
 
         patient.treatments.unshift(payload);
 
-        state.patients.results.splice(indexOfPatient, 1, payload);
-        console.log('cannot read 1')
-        state.treatments.results.unshift(payload);
-        console.log('cannot read 2')
+        state.patients.results.splice(indexOfPatient, 1, patient);
+        state.allPatients.results.splice(indexOfPatient, 1, patient);
 
-        state.treatments.results[0].files = [];
-        state.treatments.results[0].files = state.files;
-        console.log('cannot read 3')
+        console.log(patient.treatments[0], ' == ', state.patients.results[indexOfPatient].treatments[0])
 
-        state.files = [];
-        // console.log(payload)
     },
     EDIT_TREATMENT(state, payload) {
         let treatment = state.treatments.results.find(treat => treat.id === payload.id)
@@ -317,33 +331,43 @@ const actions = {
         // console.log('OnLoad: this will run regardless of login with 0, ', payload);
 
         let patientUrl = "/patients/";
+        let allPatientsUrl = "/patients/?page_size=100";
         let treatmentUrl = "/treatments/";
         let usersUrl = "/users/";
         let appointmentUrl = "/appointments/";
         let allAppointmentUrl = "/appointments/?page_size=100";
         let attachmentsUrl = "/attachments/";
+        let treatmentOptionsUrl = '/templates/?module=Treatment'
         console.log(allAppointmentUrl);
 
         try {
             const allPatients = await this.$axios.get(patientUrl);
+            const patientsAll = await this.$axios.get(allPatientsUrl);
             const allTreatments = await this.$axios.get(treatmentUrl);
             const allUsers = await this.$axios.get(usersUrl);
             const appointmentsData = await this.$axios.get(appointmentUrl);
             const allAppointmentsData = await this.$axios.get(allAppointmentUrl);
             const allAttachments = await this.$axios.get(attachmentsUrl);
+            const treatmentOptions = await this.$axios.get(treatmentOptionsUrl);
 
             commit("GET_PATIENTS", allPatients.data);
+            commit("GET_ALL_PATIENTS", patientsAll.data);
             commit("GET_USERS", allUsers.data);
             commit("GET_TREATMENTS", allTreatments.data);
             commit("GET_APPOINTMENTS", appointmentsData.data);
             commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
             commit("GET_ATTACHMENTS", allAttachments.data);
+            commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
             //   console.log(allPatients.data)
 
         } catch (err) {
             console.log(err);
         }
     },
+    // async loadPatient({ state, commit }, id) {
+    //     const patient = state.allPatients.results.find(p => p.id === id);
+    //     commit('LOAD_PATIENT', patient);
+    // },
     async loadPatientData({ state, commit }, id) {
 
         console.log('Function is loaded and the ID is: ', id);
@@ -550,12 +574,24 @@ const actions = {
             console.log(error);
         }
     },
+    async addTreatmentTemplate({ state, commit }, payload) {
+        let url = "/templates/";
+        // console.log(payload)
+        try {
+            const newTemplate = await this.$axios.post(url, payload);
+            commit("ADD_TREATMENT_TEMPLATE", newTemplate.data);
+            // console.log('new template added')
+        } catch (err) {
+            console.log(err);
+        }
+    },
     async addNewTreatment({ state, commit }, payload) {
         let url = "/treatments/";
         // console.log(payload)
         try {
-            // console.log(Array.from(payload));
+            console.log("reached here 1");
             const newTreatment = await this.$axios.post(url, payload);
+            console.log("reached here 2");
             commit("ADD_NEW_TREATMENT", newTreatment.data);
         } catch (err) {
             console.log(err);
@@ -743,8 +779,14 @@ const actions = {
 };
 
 const getters = {
+    // patient(state) {
+    //     return state.patient;
+    // },
     patients(state) {
         return state.patients;
+    },
+    allPatients(state) {
+        return state.allPatients;
     },
     patientsData(state) {
         return state.patients;
@@ -804,6 +846,9 @@ const getters = {
     },
     alertStatus(state) {
         return state.alertStatus;
+    },
+    treatmentOptions(state) {
+        return state.treatmentOptions;
     },
 };
 
