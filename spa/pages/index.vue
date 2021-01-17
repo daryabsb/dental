@@ -3,32 +3,31 @@
 		<b-row class="mt-3">
 			<b-col>
 				<b-row>
-					<b-col cols="3">
+					<!-- <b-col cols="3">
 						<b-card title="All Patients">
 							<b-input-group class="mb-3">
 								<b-input-group-prepend is-text>
-									<!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
 									<i class="fas fa-search"></i>
 								</b-input-group-prepend>
 								<b-form-input v-model="searchQuery" aria-label="Text input with checkbox"></b-form-input>
 							</b-input-group>
 						</b-card>
-					</b-col>
-					<b-col cols="9">
-						<b-card title="Appointments">
+					</b-col> -->
+					<b-col>
+						<b-card title="Search for patients Mr Doctor">
 							<search-comp
 								:input="true"
-								:date="true"
+								:date="false"
 								:pagination="false"
-								url="/appointments/"
-								moduleState="APPOINTMENTS"
+								url="/patients/"
+								moduleState="ALL_PATIENTS"
 							></search-comp>
 						</b-card>
 					</b-col>
 				</b-row>
 			</b-col>
 		</b-row>
-		<b-row>
+		<b-row style="max-height:50rem; overflow:auto;">
 			<b-col lg="3">
 				<b-card style="height:44.3rem;">
 					<b-table
