@@ -71,7 +71,8 @@ MIDDLEWARE = [
 
  # add this block below MIDDLEWARE
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost',	
+    'http://localhost',
+    'http://172.16.10.157'
 )
 
 CORS_ORIGIN_ALLOW_ALL = True

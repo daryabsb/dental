@@ -46,11 +46,11 @@ export default {
     plugins: [
         { src: "~/plugins/vue-pdf.js" },
         { src: './plugins/vue-gallery.client.js' },
-        { src: './plugins/vue-carousel.js' },
+        // { src: './plugins/vue-carousel.js' },
         { src: "~/plugins/localStorage.js" },
-        { src: './plugins/vuescroll.js' },
+        // { src: './plugins/vuescroll.js' },
         { src: './plugins/vue-myupload.js' },
-        { src: './plugins/vue-form-wizard.js' },
+        // { src: './plugins/vue-form-wizard.js' },
         { src: './plugins/vue-cal.js' },
     ],
 
@@ -69,7 +69,12 @@ export default {
         'bootstrap-vue/nuxt',
         // https://go.nuxtjs.dev/axios
         '@nuxtjs/moment',
-        '@nuxtjs/axios',
+        // '@nuxtjs/axios',
+        ['@nuxtjs/axios', {
+            credentials: false,
+            proxyHeaders: false,
+            baseURL: process.env.API_URL
+        }],
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
     ],
@@ -84,8 +89,11 @@ export default {
     axios: {
         // baseURL: 'http://172.16.10.8:8000/api'
         // baseURL: `${process.env.baseUrl}:8000/api`
+        // proxy: true,
         baseURL: process.env.API_URL
+
     },
+
     auth: {
         strategies: {
             local: {
@@ -112,17 +120,19 @@ export default {
         redirect: {
             login: '/login',
             logout: '/login',
-            callback: '/callback',
+            callback: false,
             home: '/'
         },
         watchLoggedIn: true
     },
+
     // router: {
     //     middleware: ['auth']
     // },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
+        // transpile: ['vue-pdf']
         // extend(config, { isClient }) {
         //     if (isClient) {
         //         config.optimization.minimize = false;
@@ -134,7 +144,7 @@ export default {
         // maxChunkSize: 300000
     },
     server: {
-        port: 8080 // default: 3000
-            //host: "0.0.0.0" // default: localhost
+        port: 8080, // default: 3000
+        host: "0.0.0.0" // default: localhost
     }
 }

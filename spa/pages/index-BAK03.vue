@@ -70,18 +70,19 @@
 						<b-col md="12">
 							<b-tabs content-class="mt-3" justified>
 								<b-tab @click="activeView = 'day'" title="Calendar" active>
-								
+									<p>
 										<!-- :time-cell-height="60"  -->
 										<!-- //2018-11-19" -->
 										<vue-cal
 											ref="vuecal"
 											:small="true"
 											:selected-date="date_today"
-											:time-from="12 * 60"
-											:time-to="22 * 60"
+											:time-from="1 * 60"
+											:time-to="21 * 60"
 											:timeStep="120"
 											:timeCellHeight="90"
-											active-view="day"
+											active-view="week"
+											:todayButton="true"
 											:snapToTime="30"
 											:watchRealTime="true"
 											:startWeekOnSunday="true"
@@ -95,19 +96,6 @@
 											@cell-focus="selectedDate = $event"
 											@event-delete="onEventDelete"
 										>
-						 				
-										<template v-slot:title="{ title, view }">
-										
-											
-											<span v-if="view.id === 'years'">Years</span>
-											<!-- Using Vue Cal injected Date prototypes -->
-											<span v-else-if="view.id === 'year'">{{ view.startDate.format('YYYY') }}</span>
-											<span v-else-if="view.id === 'month'">{{ view.startDate.format('MMMM YYYY') }}</span>
-											<!-- <span v-else-if="view.id === 'week'">w{{ view.startDate.getWeek() }} ({{ view.startDate.format('MMM YYYY') }})</span> -->
-											<span class="text-right" v-else-if="view.id === 'week'">{{ view.startDate.format('MMMM (YYYY)') }}</span>
-											<span v-else-if="view.id === 'day'">{{ view.startDate.format('dddd D MMMM (YYYY)') }}</span> 
-										
-  											</template>
 											<!-- :stickySplitLabels="true" -->
 
 											<!-- <template v-slot:title="{title, view}"> -->
@@ -115,10 +103,10 @@
 											<!-- :clickToNavigate="true" -->
 											<!-- :on-event-click -->
 											<!-- <template v-slot:time-cell="{ hours, minutes }">
-											<div :class="{ 'vuecal__time-cell-line': true, hours: !minutes }">
-											<strong v-if="!minutes" style="font-size: 15px">{{ hours }}</strong>
-											<span v-else style="font-size: 11px">{{ minutes }}</span>
-											</div>
+    <div :class="{ 'vuecal__time-cell-line': true, hours: !minutes }">
+      <strong v-if="!minutes" style="font-size: 15px">{{ hours }}</strong>
+      <span v-else style="font-size: 11px">{{ minutes }}</span>
+    </div>
 											</template>-->
 										</vue-cal>
 										<b-modal
@@ -137,7 +125,7 @@
 												:edit="edit"
 											></add-new-appointment>
 										</b-modal>
-									
+									</p>
 								</b-tab>
 								<!-- <b-tab :title="secondTabTitle ? selectedEvent.title : 'No patient selected'" lazy> -->
 								<b-tab @click="swichView" :title="selectedPatient.name" lazy v-if="selectedPatient">
@@ -309,56 +297,16 @@ import ClinicalAlias from "../components/patients/tabs/aliases/clinicalAlias.vue
 
 export default {
 	async asyncData({ $axios, app, store, redirect }) {
-		
-		 let patientUrl = "/patients/";
-        let allPatientsUrl = "/patients/?page_size=100";
-        let treatmentUrl = "/treatments/";
-        let usersUrl = "/users/";
-        let appointmentUrl = "/appointments/";
-        let allAppointmentUrl = "/appointments/?page_size=100";
-        let attachmentsUrl = "/attachments/";
-        let treatmentOptionsUrl = '/templates/?module=Treatment'
-        console.log(allAppointmentUrl);
-
-        try {
-            const allPatients = await $axios.get(patientUrl);
-            const patientsAll = await $axios.get(allPatientsUrl);
-            const allTreatments = await $axios.get(treatmentUrl);
-            const allUsers = await $axios.get(usersUrl);
-            const appointmentsData = await $axios.get(appointmentUrl);
-            const allAppointmentsData = await $axios.get(allAppointmentUrl);
-            const allAttachments = await $axios.get(attachmentsUrl);
-            const treatmentOptions = await $axios.get(treatmentOptionsUrl);
-
-            store.commit("GET_PATIENTS", allPatients.data);
-            store.commit("GET_ALL_PATIENTS", patientsAll.data);
-            store.commit("GET_USERS", allUsers.data);
-            store.commit("GET_TREATMENTS", allTreatments.data);
-            store.commit("GET_APPOINTMENTS", appointmentsData.data);
-            store.commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
-            store.commit("GET_ATTACHMENTS", allAttachments.data);
-            store.commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
-            //   console.log(allPatients.data)
-
-        } catch (err) {
-            console.log(err);
-        }
-		
-		
-		
-		
-		
-		
 		// console.log("store.$auth")
 		// console.log(store.$auth)
 	
 
-			// try {
-			// 	await store.dispatch("loadData");
-			// } catch (error) {
-			// 	console.log(error)
-			// redirect("/login")
-			// }
+			try {
+				await store.dispatch("loadData");
+			} catch (error) {
+				console.log(error)
+			redirect("/login")
+			}
 			
 			
 		

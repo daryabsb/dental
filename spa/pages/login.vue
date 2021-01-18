@@ -19,7 +19,7 @@
                                             <span class="auth-form-icon">
                                                 <i class="dripicons-user"></i> 
                                             </span>                                                                                                              
-                                            <input v-model="email" type="text" class="form-control" id="email" placeholder="Enter a valid email">
+                                            <input v-model="email" type="text" class="form-control" id="email" @keyup.enter="onLogin" placeholder="Enter a valid email">
                                         </div>                                    
                                     </div><!--end form-group--> 
         
@@ -29,7 +29,7 @@
                                             <span class="auth-form-icon">
                                                 <i class="dripicons-lock"></i> 
                                             </span>                                                       
-                                            <input v-model="password" type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                            <input v-model="password" type="password" class="form-control" id="userpassword" @keyup.enter="onLogin" placeholder="Enter password">
                                         </div>                               
                                     </div><!--end form-group--> 
         
@@ -107,9 +107,11 @@ export default {
         });
         // console.log(Loginfo)
         // this.$router.push({ path: '/' })
+       
       } catch (err) {
         console.log(err)
       }
+       this.$router.push({ path: '/' })
     }
   }
 }

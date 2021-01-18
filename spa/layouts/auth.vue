@@ -3,7 +3,7 @@
         </template>
 
        <script>
-export default {
+        export default {
   head: {
     bodyAttrs: {
       class: 'account-body accountbg'
