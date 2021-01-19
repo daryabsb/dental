@@ -132,16 +132,16 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
-        // transpile: ['vue-pdf']
-        // extend(config, { isClient }) {
-        //     if (isClient) {
-        //         config.optimization.minimize = false;
-        //         config.optimization.splitChunks = false;
+        transpile: ['vue-pdf'],
+        extend(config, { isClient }) {
+            if (isClient) {
+                config.optimization.minimize = false;
+                config.optimization.splitChunks = false;
 
-        //     }
-        // }
+            }
+        },
 
-        // maxChunkSize: 300000
+        maxChunkSize: 300000
     },
     server: {
         port: 8080, // default: 3000
