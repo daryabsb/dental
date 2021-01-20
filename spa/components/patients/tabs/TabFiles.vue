@@ -73,8 +73,8 @@
                                                                     <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
                                                                     <div class="item-mask">
                                                                         <div class="item-caption">
-                                                                            <h5 class="text-white">{{getTreatment(file.id,'title')}}</h5>
-                                                                            <p class="text-white">{{getTreatment(file.id,'description')}}</p>
+                                                                            <h5 class="text-white">{{$moment(getTreatment(file.id, 'date')).format('yyyy-MM-DD')}}</h5>
+                                                                            <p class="text-white">{{getTreatment(file.id, 'description')}}</p>
                                                                         </div>
                                                                     </div>
                                                                 </a>
@@ -83,9 +83,9 @@
                                                         <!-- <pre>{{imageUrls}}</pre> -->
                                                         <div class="col-lg-4 d-flex align-items-center col-md-6 p-0 nf-item branding design coffee spacing" 
                                                         v-for="(image, imageIndex) in images" :key="image.id"
-                                                        v-if="displayContents('tabImages')"
+                                                        
                                                         >
-                                                            <div class="item-box p-3">
+                                                            <div class="item-box p-3" v-if="displayContents('tabImages')">
                                                                 <a 
                                                                 class="cbox-gallary1 mfp-image p-3" 
                                                                 
@@ -229,18 +229,30 @@ export default {
       hideModal() {
         this.$refs['pdf-preview'].hide()
       },
-      getTreatment(file,text) {
-          const treatment = this.patient.treatments.find(treat=>{
-              let theFile = treat.files.find(f=>f.id===file)
-              file === theFile
-              console.log('find treat: ', treat)
-          })
-          console.log('teatment: ',treatment);
-          if (text === 'title') {
-              return 'Canan Banine'
-          } else {
-              return 'It is required to find the right treatment'
-          }
+      getTreatment(file, text='') {
+
+        var treatments = this.patient.treatments
+
+        var tr = treatments.map((treatment) => {
+        if(treatment.files.includes(file) && treatment != undefined) {
+                // return treatment.description;
+                
+                return treatment;
+                
+        }
+        return;
+        })
+        // .join(" ").substring(1, 50) + '...'
+        if(text === 'date') {
+            console.log(tr, text)
+            return tr.created;
+        } else if (text === 'description') {
+            return tr.description;
+        }
+// Lodash
+        // return tr;
+            // console.log('found',tr)
+         
       },
     },
     computed: {
