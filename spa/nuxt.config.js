@@ -50,7 +50,7 @@ export default {
         { src: "~/plugins/localStorage.js" },
         // { src: './plugins/vuescroll.js' },
         { src: './plugins/vue-myupload.js' },
-        // { src: './plugins/vue-form-wizard.js' },
+        { src: './plugins/vue-form-wizard.js' },
         { src: './plugins/vue-cal.js' },
     ],
 

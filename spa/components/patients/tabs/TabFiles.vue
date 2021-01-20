@@ -73,8 +73,8 @@
                                                                     <!-- <img class="item-container " src="~assets/images/small/img-1.jpg" alt="7" /> -->
                                                                     <div class="item-mask">
                                                                         <div class="item-caption">
-                                                                            <h5 class="text-white">Consequat massa quis</h5>
-                                                                            <p class="text-white">Branding, Design, Coffee</p>
+                                                                            <h5 class="text-white">{{getTreatment(file.id,'title')}}</h5>
+                                                                            <p class="text-white">{{getTreatment(file.id,'description')}}</p>
                                                                         </div>
                                                                     </div>
                                                                 </a>
@@ -182,6 +182,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 export default {
     props: ['files', 'images','imagesURL', 'patient'],
     data() {
@@ -228,12 +229,26 @@ export default {
       hideModal() {
         this.$refs['pdf-preview'].hide()
       },
+      getTreatment(file,text) {
+          const treatment = this.patient.treatments.find(treat=>{
+              let theFile = treat.files.find(f=>f.id===file)
+              file === theFile
+              console.log('find treat: ', treat)
+          })
+          console.log('teatment: ',treatment);
+          if (text === 'title') {
+              return 'Canan Banine'
+          } else {
+              return 'It is required to find the right treatment'
+          }
+      },
     },
     computed: {
     // imageUrls() {
     //   console.log(this.images)
     //   return this.images.map((image) => image.file);
     // },
+    // ...mapGetters(['getTreatments'])
   },
   mounted() {
 		// The currently active tab, init as the 1st item in the tabs array
