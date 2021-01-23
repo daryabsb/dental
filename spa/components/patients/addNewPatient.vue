@@ -751,11 +751,21 @@ export default {
       if(this.patient.id === undefined) {
         console.log('ADD PATIENT')
         this.$store.dispatch('addPatient', {vm : this, payload : this.patient});
+        this.$bvToast.toast("A new patient has been added!", {
+					title: "Add New Patient",
+					variant: "success",
+					solid: true,
+				});
         
       } else {
         console.log('EDIT PATIENT')
         
         this.$store.dispatch('editPatient', this.patient);
+        this.$bvToast.toast("Your request for editing has been processed!", {
+					title: "Edit Patient",
+					variant: "success",
+					solid: true,
+				});
       }
       
       this.hide();

@@ -10,13 +10,13 @@
                                 </div><!--end auth-logo-box-->
                                 
                                 <div class="text-center auth-logo-text">
-                                    <h4 class="mt-0 mb-3 mt-5">Let's Get Started Metrica</h4>
-                                    <p class="text-muted mb-0">Sign in to continue to Metrica.</p>  
+                                    <h4 class="mt-0 mb-3 mt-5">Let's Get Started Doctor</h4>
+                                    <p class="text-muted mb-0">Have a nice day.</p>  
                                 </div> <!--end auth-logo-text-->  
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <div class="input-group mb-3">
-                                            <span class="auth-form-icon">
+                                            <span class="auth-form-icon pt-2 mr-3">
                                                 <i class="dripicons-user"></i> 
                                             </span>                                                                                                              
                                             <input v-model="email" type="text" class="form-control" id="email" @keyup.enter="onLogin" placeholder="Enter a valid email">
@@ -26,24 +26,24 @@
                                     <div class="form-group">
                                         <label for="userpassword">Password</label>                                            
                                         <div class="input-group mb-3"> 
-                                            <span class="auth-form-icon">
+                                            <span class="auth-form-icon pt-2 mr-3">
                                                 <i class="dripicons-lock"></i> 
                                             </span>                                                       
-                                            <input v-model="password" type="password" class="form-control" id="userpassword" @keyup.enter="onLogin" placeholder="Enter password">
+                                            <input v-model="password" type="password" class="form-control" id="userpassword" @enter="onLogin" placeholder="Enter password">
                                         </div>                               
                                     </div><!--end form-group--> 
         
-                                    <div class="form-group row mt-4">
+                                    <!-- <div class="form-group row mt-4">
                                         <div class="col-sm-6">
                                             <div class="custom-control custom-switch switch-success">
                                                 <input type="checkbox" class="custom-control-input" id="customSwitchSuccess">
                                                 <label class="custom-control-label text-muted" for="customSwitchSuccess">Remember me</label>
                                             </div>
-                                        </div><!--end col--> 
+                                        </div>
                                         <div class="col-sm-6 text-right">
                                             <a href="auth-recover-pw.html" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot password?</a>                                    
-                                        </div><!--end col--> 
-                                    </div><!--end form-group--> 
+                                        </div>
+                                    </div> -->
         
                                     <div class="form-group mb-0 row">
                                         <div class="col-12 mt-2">

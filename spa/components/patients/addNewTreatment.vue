@@ -130,6 +130,11 @@ export default {
       // console.log(data)
 
       this.$store.dispatch("addNewTreatment", data);
+      this.$bvToast.toast("A new treatment has been added!", {
+					title: "Add New Treatment",
+					variant: "success",
+					solid: true,
+				});
 
       this.title = "";
       this.description = "";

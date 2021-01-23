@@ -254,14 +254,14 @@ export default {
       return store.isConfirmDeleteOpen;
     },
     patients() {
-      return this.patientsData.results;
+      return this.colPatients;
     },
     numPages() {
       let count = this.getAppointments.count;
       let pages = this.calculatePagesCount(10, count);
       return pages;
     },
-    ...mapGetters(['getAppointments', 'patientsData'])
+    ...mapGetters(['getAppointments', 'patientsData', 'colPatients'])
   },
 };
 </script>

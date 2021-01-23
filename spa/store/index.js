@@ -325,40 +325,40 @@ const actions = {
 
     async nuxtServerInit({ state, commit }, { req }) {
 
-        console.log('Wait a second')
-        let patientUrl = "/patients/";
-        let allPatientsUrl = "/patients/?page_size=100";
-        let treatmentUrl = "/treatments/";
-        let usersUrl = "/users/";
-        let appointmentUrl = "/appointments/";
-        let allAppointmentUrl = "/appointments/?page_size=100";
-        let attachmentsUrl = "/attachments/";
-        let treatmentOptionsUrl = '/templates/?module=Treatment'
-        console.log(allAppointmentUrl);
+        // console.log('Wait a second')
+        // let patientUrl = "/patients/";
+        // let allPatientsUrl = "/patients/?page_size=100";
+        // let treatmentUrl = "/treatments/";
+        // let usersUrl = "/users/";
+        // let appointmentUrl = "/appointments/";
+        // let allAppointmentUrl = "/appointments/?page_size=100";
+        // let attachmentsUrl = "/attachments/";
+        // let treatmentOptionsUrl = '/templates/?module=Treatment'
+        // console.log(allAppointmentUrl);
 
-        try {
-            const allPatients = await this.$axios.get(patientUrl);
-            const patientsAll = await this.$axios.get(allPatientsUrl);
-            const allTreatments = await this.$axios.get(treatmentUrl);
-            const allUsers = await this.$axios.get(usersUrl);
-            const appointmentsData = await this.$axios.get(appointmentUrl);
-            const allAppointmentsData = await this.$axios.get(allAppointmentUrl);
-            const allAttachments = await this.$axios.get(attachmentsUrl);
-            const treatmentOptions = await this.$axios.get(treatmentOptionsUrl);
+        // try {
+        // const allPatients = await this.$axios.get(patientUrl);
+        // const patientsAll = await this.$axios.get(allPatientsUrl);
+        // const allTreatments = await this.$axios.get(treatmentUrl);
+        // const allUsers = await this.$axios.get(usersUrl);
+        // const appointmentsData = await this.$axios.get(appointmentUrl);
+        // const allAppointmentsData = await this.$axios.get(allAppointmentUrl);
+        // const allAttachments = await this.$axios.get(attachmentsUrl);
+        // const treatmentOptions = await this.$axios.get(treatmentOptionsUrl);
 
-            commit("GET_PATIENTS", allPatients.data);
-            commit("GET_ALL_PATIENTS", patientsAll.data);
-            commit("GET_USERS", allUsers.data);
-            commit("GET_TREATMENTS", allTreatments.data);
-            commit("GET_APPOINTMENTS", appointmentsData.data);
-            commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
-            commit("GET_ATTACHMENTS", allAttachments.data);
-            commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
-            //   console.log(allPatients.data)
+        // commit("GET_PATIENTS", allPatients.data);
+        // commit("GET_ALL_PATIENTS", patientsAll.data);
+        // commit("GET_USERS", allUsers.data);
+        // commit("GET_TREATMENTS", allTreatments.data);
+        // commit("GET_APPOINTMENTS", appointmentsData.data);
+        // commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
+        // commit("GET_ATTACHMENTS", allAttachments.data);
+        // commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
+        //   console.log(allPatients.data)
 
-        } catch (err) {
-            console.log(err);
-        }
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
     },
 
 

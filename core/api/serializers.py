@@ -49,6 +49,8 @@ class AuthTokenSerializer(serializers.Serializer):
             email=email,
             password=password
         )
+
+        print(attrs)
        
         if not user:
             msg = _('Unable to authenticate with provided credentials')

@@ -148,6 +148,7 @@ import { store, mutations } from "../../store/utils/conf";
 export default {
 	async asyncData({ $axios, app, store }) {
 		// await store.dispatch("loadData");
+		console.log('TREATMENT PAGE LOADED')
 		let treatmentUrl = "/treatments/";
 		const allTreatments = await $axios.get(treatmentUrl);
 		store.commit("GET_TREATMENTS", allTreatments.data);
@@ -281,7 +282,8 @@ export default {
 			return pages;
 		},
 		patients() {
-			return this.patientsData.results;
+			// return this.patientsData.results;
+			return this.colPatients;
 		},
 		isAppointmentModalOpen() {
 			return store.isAppointmentModalOpen;
@@ -289,7 +291,7 @@ export default {
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;
 		},
-		...mapGetters(["getTreatments", "patientsData"]),
+		...mapGetters(["getTreatments", "patientsData", "colPatients"]),
 	},
 };
 </script>

@@ -89,6 +89,7 @@ class UserViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database
     queryset = User.objects.all()
     serializer_class = UserListSerializer
+    permission_classes = (permissions.IsAuthenticated,)
     lookup_field = 'id'
 
     def get_queryset(self):

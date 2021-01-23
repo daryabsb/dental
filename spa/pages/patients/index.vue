@@ -133,7 +133,10 @@ import { choices } from "../../store/utils/choices";
 
 export default {
 	async asyncData({ $axios, app, store }) {
-		await store.dispatch("loadData");
+		// await store.dispatch("loadData");
+		let patientUrl = "/patients/";
+		const allPatients = await $axios.get(patientUrl);
+		store.commit("GET_PATIENTS", allPatients.data);
 
 		// this.$store.dispatch('loadData', 'DONE');
 	},
