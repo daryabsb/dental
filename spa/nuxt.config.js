@@ -121,7 +121,7 @@ export default {
             login: '/login',
             logout: '/login',
             callback: false,
-            home: '/'
+            home: '/dashboard'
         },
         watchLoggedIn: true
     },
