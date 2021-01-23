@@ -69,6 +69,7 @@ export default {
 	methods: {
 		onSearchInput() {
 			// 1. WE GET THE INPUT SEARCH IF ANY
+
 			if (this.input) {
 				this.data.searchInput = this.searchInput;
 			}

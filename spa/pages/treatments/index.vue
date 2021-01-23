@@ -147,7 +147,10 @@ import { store, mutations } from "../../store/utils/conf";
 
 export default {
 	async asyncData({ $axios, app, store }) {
-		await store.dispatch("loadData");
+		// await store.dispatch("loadData");
+		let treatmentUrl = "/treatments/";
+		const allTreatments = await $axios.get(treatmentUrl);
+		store.commit("GET_TREATMENTS", allTreatments.data);
 
 		// this.$store.dispatch('loadData', 'DONE');
 	},

@@ -19,8 +19,8 @@
 								:input="true"
 								:date="false"
 								:pagination="false"
-								url="/patients/"
-								moduleState="ALL_PATIENTS"
+								url="/patient-names/"
+								moduleState="PATIENTS_NAMES"
 							></search-comp>
 						</b-card>
 					</b-col>
@@ -317,27 +317,30 @@ export default {
         let appointmentUrl = "/appointments/";
         let allAppointmentUrl = "/appointments/?page_size=100";
         let attachmentsUrl = "/attachments/";
-        let treatmentOptionsUrl = '/templates/?module=Treatment'
-        console.log(allAppointmentUrl);
+		let treatmentOptionsUrl = '/templates/?module=Treatment'
+		let colPatientsURL = '/patient-names/'
+        // console.log(allAppointmentUrl);
 
         try {
-            const allPatients = await $axios.get(patientUrl);
-            const patientsAll = await $axios.get(allPatientsUrl);
-            const allTreatments = await $axios.get(treatmentUrl);
-            const allUsers = await $axios.get(usersUrl);
-            const appointmentsData = await $axios.get(appointmentUrl);
+            const colPatientsData = await $axios.get(colPatientsURL);
+            // const allPatients = await $axios.get(patientUrl);
+            // const patientsAll = await $axios.get(allPatientsUrl);
+            // const allTreatments = await $axios.get(treatmentUrl);
+            // const allUsers = await $axios.get(usersUrl);
+            // const appointmentsData = await $axios.get(appointmentUrl);
             const allAppointmentsData = await $axios.get(allAppointmentUrl);
-            const allAttachments = await $axios.get(attachmentsUrl);
-            const treatmentOptions = await $axios.get(treatmentOptionsUrl);
+            // const allAttachments = await $axios.get(attachmentsUrl);
+            // const treatmentOptions = await $axios.get(treatmentOptionsUrl);
 
-            store.commit("GET_PATIENTS", allPatients.data);
-            store.commit("GET_ALL_PATIENTS", patientsAll.data);
-            store.commit("GET_USERS", allUsers.data);
-            store.commit("GET_TREATMENTS", allTreatments.data);
-            store.commit("GET_APPOINTMENTS", appointmentsData.data);
+            store.commit("GET_PATIENTS_NAMES", colPatientsData.data);
+            // store.commit("GET_PATIENTS", allPatients.data);
+            // store.commit("GET_ALL_PATIENTS", patientsAll.data);
+            // store.commit("GET_USERS", allUsers.data);
+            // store.commit("GET_TREATMENTS", allTreatments.data);
+            // store.commit("GET_APPOINTMENTS", appointmentsData.data);
             store.commit("GET_ALL_APPOINTMENTS", allAppointmentsData.data.results);
-            store.commit("GET_ATTACHMENTS", allAttachments.data);
-            store.commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
+            // store.commit("GET_ATTACHMENTS", allAttachments.data);
+            // store.commit("GET_TREATMENT_OPTIONS", treatmentOptions.data.results);
             //   console.log(allPatients.data)
 
         } catch (err) {
@@ -725,23 +728,23 @@ export default {
 		// appointments() {
 		// 	return this.getAppointments.results;
 		// },
-		colPatients() {
-			// console.log(this.patients)
+		// colPatients() {
+		// 	// console.log(this.patients)
 
-			// return this.patients.filter((patient) => {
-				// console.log(this.allPatients.results)
-				if(this.$auth.loggedIn) {
-					return this.allPatients.results.filter((patient) => {
-									return patient.name
-										.toLowerCase()
-										.includes(this.searchQuery.toLowerCase());
-								});
-				} else {
-					this.$router.push("/login");
-				}
+		// 	// return this.patients.filter((patient) => {
+		// 		// console.log(this.allPatients.results)
+		// 		if(this.$auth.loggedIn) {
+		// 			return this.allPatients.results.filter((patient) => {
+		// 							return patient.name
+		// 								.toLowerCase()
+		// 								.includes(this.searchQuery.toLowerCase());
+		// 						});
+		// 		} else {
+		// 			this.$router.push("/login");
+		// 		}
 			
-			// return picked;
-		},
+		// 	// return picked;
+		// },
 		appToCalendar: {
 			get() {
 				let calEv = [];
@@ -796,6 +799,7 @@ export default {
 			"getAppointments",
 			"patientsData",
 			"allPatients",
+			"colPatients",
 		]),
 	},
 	// mounted() {

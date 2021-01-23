@@ -25,7 +25,8 @@ from core.models import User, Patient, Attachment, Treatment, ComingTreatment, T
 from .serializers import (
     UserListSerializer, UserSerializer, AuthTokenSerializer, AttachmentSerializer, 
     PatientSerializer, TreatmentSerializer, TreatmentListSerializer, AppointmentSerializer,
-    PatientPictureSerializer, UserPictureSerializer,TreatmentTemplateSerializer, ChangePasswordSerializer,)
+    PatientPictureSerializer, UserPictureSerializer,TreatmentTemplateSerializer, ChangePasswordSerializer,
+    PatientNameSerializer,)
 from .pagination import PatientPagination, AppointmentPagination
 
 
@@ -299,6 +300,31 @@ class TreatmentViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return TreatmentListSerializer
         return self.serializer_class
+
+class PatientNameViewset(viewsets.ModelViewSet):
+    queryset = Patient.objects.all()
+    serializer_class = PatientNameSerializer
+    pagination_class = PatientPagination
+
+    def get_queryset(self):
+        
+        queryset = Patient.objects.all()
+        
+        # PERFORM FILTER BY SEARCH INPUT
+        conditions = Q()
+        keywords = self.request.query_params.get('input', None)
+        # print(keywords)
+        if keywords:
+            
+            keywords_list = keywords.split(' ') 
+            for word in keywords_list:
+                conditions |= Q(name__icontains=word) | Q(email__icontains=word)
+
+            if conditions:
+                # print(type(conditions))
+                queryset = Patient.objects.filter(conditions)
+
+        return queryset
 
 class PatientViewSet(viewsets.ModelViewSet):
     # Manage ingredientss in the database

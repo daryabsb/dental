@@ -3,6 +3,7 @@
 const state = () => ({
     users: [],
     patients: [],
+    patientsNames: [],
     allPatients: [],
     patient: [],
     treatments: [],
@@ -80,6 +81,9 @@ const state = () => ({
 const mutations = {
     GET_PATIENTS(state, payload) {
         state.patients = payload;
+    },
+    GET_PATIENTS_NAMES(state, payload) {
+        state.patientsNames = payload;
     },
     GET_ALL_PATIENTS(state, payload) {
         state.allPatients = payload;
@@ -696,9 +700,7 @@ const actions = {
         let url = payload.url;
         let query = '';
 
-
-
-        if (payload.date.dq === 'none') {
+        if (payload.date.dq === 'none' || payload.date === '') {
 
             query = `?input=${payload.searchInput}`;
 
@@ -883,6 +885,9 @@ const getters = {
     treatmentOptions(state) {
         return state.treatmentOptions;
     },
+    colPatients(state) {
+        return state.patientsNames.results;
+    }
 };
 
 export default {

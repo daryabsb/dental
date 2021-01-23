@@ -5,7 +5,7 @@ from .views import (
     CreateUserView, CreateTokenView, ManageUserView, AttachmentViewSet, 
     PatientViewSet, TreatmentViewSet, UserViewSet, AppointmentViewSet,
     ImageUpdateView, UserImageUpdateView, TreatmentTemplateViewSet,
-    ChangePasswordView,)
+    ChangePasswordView,PatientNameViewset,)
 
 
 router = routers.DefaultRouter()
@@ -26,5 +26,6 @@ urlpatterns = [
     path('user/me/', ManageUserView.as_view(), name='me'),
     path('user/change-password/', ChangePasswordView.as_view(), name='password-change'),
     path("patients/<int:id>/image/", ImageUpdateView.as_view(), name="patient-image-update"),
+    path("patient-names/", PatientNameViewset.as_view({'get': 'list'}), name="patient-names"),
     path("users/<int:id>/image/", UserImageUpdateView.as_view(), name="user-image-update"),
 ]

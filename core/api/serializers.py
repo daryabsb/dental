@@ -224,6 +224,13 @@ class MedicalExaminationSerializer(serializers.ModelSerializer):
         ]
         read_only_Fields = ('id','created','updated',)
 
+class PatientNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Patient
+        fields = ['id','name', 'email', 'image']
+        read_only_Fields = ('id',)
+
 
 class PatientSerializer(serializers.ModelSerializer):
    
