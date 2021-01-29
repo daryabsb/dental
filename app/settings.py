@@ -29,9 +29,9 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ["localhost", '127.0.0.1', '192.168.1.6']
 ALLOWED_HOSTS = ["*"]
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
 
 
 # Application definition
@@ -70,30 +70,39 @@ MIDDLEWARE = [
 
 
  # add this block below MIDDLEWARE
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost',
-    'http://192.168.1.2'
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost',
+#     'http://192.168.1.6',
+#     'http://192.168.1.6'
+#     'http://handren.com',
+# )
 
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_HEADERS = default_headers + ('cache-control',)
+# CORS_ALLOW_HEADERS = default_headers
 
  # add this block below MIDDLEWARE
-#CORS_ORIGIN_WHITELIST = (
- #   'http://localhost:3000',  
-#)
+CORS_ORIGIN_WHITELIST = (
+   'http://192.168.1.6:8000',
+   'http://192.168.1.6:8000/media/upload_files/',
+    
+)
+
+ACCESS_CONTROL_ALLOW_ORIGIN = '*'
 
 CORS_ORIGIN_REGEX_WHITELIST = [
-    r"^https://\w+\.localhost$",
-    r"http://\w+\.localhost$",
+#     r"^https://\w+\.localhost$",
+    r"http://\w+\.192.168.1.6$",
 ]
-CORS_ALLOW_METHODS = [
-   'DELETE',
-   'GET',
-   'OPTIONS',
-   'PATCH',
-   'POST',
-   'PUT',
-]
+# CORS_ALLOW_METHODS = [
+#    'DELETE',
+#    'GET',
+#    'OPTIONS',
+#    'PATCH',
+#    'POST',
+#    'PUT',
+# ]
 
 ROOT_URLCONF = 'app.urls'
 
