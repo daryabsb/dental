@@ -41,14 +41,14 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        { src: "~/plugins/vue-pdf.js" },
+        // { src: "~/plugins/vue-pdf.js" },
         { src: './plugins/vue-gallery.client.js' },
         // { src: './plugins/vue-carousel.js' },
         { src: "~/plugins/localStorage.js" },
         // { src: './plugins/vuescroll.js' },
-        { src: './plugins/vue-myupload.js' },
-        { src: './plugins/vue-form-wizard.js' },
-        { src: './plugins/vue-cal.js' },
+        // { src: './plugins/vue-myupload.js' },
+        // { src: './plugins/vue-form-wizard.js' },
+        // { src: './plugins/vue-cal.js' },
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

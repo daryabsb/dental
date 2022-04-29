@@ -325,16 +325,16 @@ const actions = {
 
     async nuxtServerInit({ state, commit }, { req }) {
 
-        // console.log('Wait a second')
-        // let patientUrl = "/patients/";
-        // let allPatientsUrl = "/patients/?page_size=100";
-        // let treatmentUrl = "/treatments/";
-        // let usersUrl = "/users/";
-        // let appointmentUrl = "/appointments/";
-        // let allAppointmentUrl = "/appointments/?page_size=100";
-        // let attachmentsUrl = "/attachments/";
-        // let treatmentOptionsUrl = '/templates/?module=Treatment'
-        // console.log(allAppointmentUrl);
+        console.log('Wait a second')
+            // let patientUrl = "/patients/";
+            // let allPatientsUrl = "/patients/?page_size=100";
+            // let treatmentUrl = "/treatments/";
+            // let usersUrl = "/users/";
+            // let appointmentUrl = "/appointments/";
+            // let allAppointmentUrl = "/appointments/?page_size=100";
+            // let attachmentsUrl = "/attachments/";
+            // let treatmentOptionsUrl = '/templates/?module=Treatment'
+            // console.log(allAppointmentUrl);
 
         // try {
         // const allPatients = await this.$axios.get(patientUrl);
