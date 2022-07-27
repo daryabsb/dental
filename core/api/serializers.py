@@ -44,13 +44,14 @@ class AuthTokenSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
         
+
         user = authenticate(
             request=self.context.get('request'),
             email=email,
             password=password
         )
 
-        print(attrs)
+       
        
         if not user:
             msg = _('Unable to authenticate with provided credentials')

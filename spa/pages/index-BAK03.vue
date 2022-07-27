@@ -93,11 +93,11 @@
 											:onEventDblclick="onEventDoubleClick"
 											@event-drop="onEventDrop"
 											@event-drag-create="showEventCreationDialog = true"
-											@cell-focus="selectedDate = $event"
+											
 											@event-delete="onEventDelete"
 										>
 											<!-- :stickySplitLabels="true" -->
-
+<!-- @cell-focus="selectedDate = $event" -->
 											<!-- <template v-slot:title="{title, view}"> -->
 
 											<!-- :clickToNavigate="true" -->

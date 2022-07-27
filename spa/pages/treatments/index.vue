@@ -87,10 +87,13 @@
 											head-variant="light"
                 >
                 <template #cell(patientName)="row" >
-                  <nuxt-link :to="`/patients/${row.item.patient}`" >
-															<img :src="patient(row.item).image" alt class="thumb-sm rounded-circle mr-2" />
-															{{ patient(row.item).name }}
-														</nuxt-link>
+                  
+				 
+				  <nuxt-link :to="`/patients/${row.item.patient}`" >
+				
+						<img :src="`${patient(row.item).image}`" alt class="thumb-sm rounded-circle mr-2" />
+						{{ patient(row.item).name }}
+					</nuxt-link>
                 </template>
                 <template #cell(description)="row">
                   {{ row.item.description.substring(1, 150) + '...' }}
@@ -263,10 +266,14 @@ export default {
 			this.$store.dispatch("onChangePagination", data);
 		},
 		patient(treat) {
-			//  console.log(treat)
+			
+			//  console.log("patients",this.patientsData)
+			//  console.log("id",id)
 			//  treat.patient ? console.log(treat.patient) : console.log('not found');
-			const patient = this.patients.find((p) => p.id === treat.patient);
-			// console.log(this.patients)
+			
+			const patient = this.patientsData.results.find(p => p.id === treat.patient);
+			
+			
 			return patient;
 		},
 	},
@@ -291,7 +298,7 @@ export default {
 		isConfirmDeleteOpen() {
 			return store.isConfirmDeleteOpen;
 		},
-		...mapGetters(["getTreatments", "patientsData", "colPatients"]),
+		...mapGetters(["getTreatments", "patientsData", "colPatients", "allPatients"]),
 	},
 };
 </script>

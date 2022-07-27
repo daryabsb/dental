@@ -2,6 +2,7 @@
     
 <div>
 	<!-- <a class="btn" @click="toggleShow">set avatar</a> -->
+	<client-only>
 	<my-upload field="img"
         @crop-success="cropSuccess"
         @crop-upload-success="cropUploadSuccess"
@@ -13,6 +14,7 @@
 		:url="url"
 		
 		img-format="png"></my-upload>
+		</client-only>
 		<!-- v-model="show" -->
 	<!-- <img :src="imgDataUrl"> -->
     <!-- :params="params" -->

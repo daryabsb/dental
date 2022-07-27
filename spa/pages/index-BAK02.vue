@@ -108,12 +108,12 @@
 								:onEventDblclick="onEventDoubleClick"
 								@event-drop="onEventDrop"
 								@event-drag-create="showEventCreationDialog = true"
-								@cell-focus="selectedDate = $event"
+								
 								@event-delete="onEventDelete"
 								
 								
 							>
-
+<!-- @cell-focus="selectedDate = $event" -->
 <!-- :stickySplitLabels="true" -->
 
 

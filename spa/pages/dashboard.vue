@@ -92,10 +92,10 @@
 											:onEventDblclick="onEventDoubleClick"
 											@event-drop="onEventDrop"
 											@event-drag-create="showEventCreationDialog = true"
-											@cell-focus="selectedDate = $event"
+											@cell-focus="selectedDate"
 											@event-delete="onEventDelete"
 										>
-						 				
+						 				<!-- @cell-focus="selectedDate = $event" -->
 										<template v-slot:title="{ title, view }">
 										
 											

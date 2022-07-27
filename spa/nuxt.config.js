@@ -1,6 +1,6 @@
 export default {
     // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-    ssr: false,
+    // ssr: false,
 
     env: {
         baseUrl: process.env.BASE_URL || 'http://localhost:8080'
@@ -44,13 +44,13 @@ export default {
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
-        { src: "~/plugins/vue-pdf.js" },
-        { src: './plugins/vue-gallery.client.js' },
-        // { src: './plugins/vue-carousel.js' },
-        { src: "~/plugins/localStorage.js" },
-        // { src: './plugins/vuescroll.js' },
-        { src: './plugins/vue-myupload.js' },
-        { src: './plugins/vue-form-wizard.js' },
+        { src: "~/plugins/vue-pdf.js", mode: 'client'  },
+        { src: './plugins/vue-gallery.client.js', mode: 'client'  },
+        // { src: './plugins/vue-carousel.js', mode: 'client'  },
+        { src: "~/plugins/localStorage.js", mode: 'client'  },
+        // { src: './plugins/vuescroll.js', mode: 'client'  },
+        { src: './plugins/vue-myupload.js', mode: 'client' },
+        // { src: './plugins/vue-form-wizard.js', mode: 'client'  },
         { src: './plugins/vue-cal.js' },
     ],
 
@@ -65,6 +65,7 @@ export default {
         '@nuxtjs/dotenv',
 
         '@nuxtjs/auth',
+        // '@nuxtjs/auth-next',
         // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         // https://go.nuxtjs.dev/axios
@@ -118,17 +119,18 @@ export default {
             }
         },
         redirect: {
+            
             login: '/login',
             logout: '/login',
             callback: false,
-            home: '/'
+            home: '/',
         },
         watchLoggedIn: true
     },
 
-    // router: {
-    //     middleware: ['auth']
-    // },
+    router: {
+        // middleware: ['auth']
+    },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {

@@ -167,14 +167,17 @@ const mutations = {
         // console.log('From state: ', state.patients);
     },
     ADD_NEW_APPOINTMENT(state, payload) {
-        let patient = state.patients.results.find(p => p.id === payload.patient);
+        // console.log('payload', payload)
+
+        // let patient = state.patients.results.find(p => p.id === payload.patient);
+        // let patient = state.patients.find(p => p.id === payload.patient);
         let today = new Date();
         // console.log('payload for all', payload)
         // console.log('Find the appointment')
 
         // console.log()
         if (Date.parse(payload.date) >= Date.parse(today)) {
-            state.appointments.results.unshift(payload);
+            state.allAppointments.unshift(payload);
             // state.allAppointments.unshift(payload);
         }
 
@@ -187,13 +190,19 @@ const mutations = {
         state.treatmentOptions.push(payload)
     },
     EDIT_APPOINTMENT(state, payload) {
-        let app = state.appointments.results.find(a => a.id === payload.id)
+        
+
+        
+        // let app = state.appointments.results.find(a => a.id === payload.id)
         let apple = state.allAppointments.find(a => a.id === payload.id)
+        // console.log("App Found",app)
+        
 
-
-        let appIndex = state.appointments.results.indexOf(app);
+        // let appIndex = state.appointments.results.indexOf(app);
         let appAllIndex = state.allAppointments.indexOf(apple);
-        state.appointments.results.splice(appIndex, 1, payload);
+        // console.log("appAllIndex",appAllIndex)
+        
+        // state.allAppointments.results.splice(appIndex, 1, payload);
         state.allAppointments.splice(appAllIndex, 1, payload);
     },
     EDIT_USER(state, payload) {
@@ -233,14 +242,16 @@ const mutations = {
         state.patients.splice(indexOfPatient, 1);
     },
     DELETE_APPOINTMENT(state, id) {
-        let appointment = state.appointments.results.find(app => app.id === id);
+        // console.log("id",id)
 
-        let indexOfAppointmernt = state.appointments.results.indexOf(appointment);
-        let indexOfAllAppointmernt = state.allAppointments.indexOf(appointment);
-        // console.log(patient, indexOfPatient);
+        let appointment = state.allAppointments.find(a => a.id === id);
+        // console.log("appointment",appointment)
+        // let indexOfAppointmernt = state.allAppointments.results.indexOf(appointment);
+        let indexOfAllAppointmernt = state.allAppointments.indexOf(appointment)
+        // console.log("indexOf", indexOfAllAppointmernt);
 
-        state.appointments.results.slice(indexOfAppointmernt, 1);
-        state.allAppointments.slice(indexOfAllAppointmernt, 1);
+        // state.allAppointments.results.slice(indexOfAppointmernt, 1);
+        state.allAppointments.splice(indexOfAllAppointmernt, 1);
     },
     PUSH_NEW_FILES(state, payload) {
         state.files.push(payload);
@@ -654,8 +665,8 @@ const actions = {
         try {
             // console.log(Array.from(payload));
             const newAppointment = await this.$axios.post(url, payload);
-            console.log('newAppolo: ', newAppointment.data)
-            commit("ADD_NEW_APPOINTMENT", newAppointment.data);
+            // console.log('newAppolo: ', newAppointment.data)
+            // commit("ADD_NEW_APPOINTMENT", newAppointment.data);
             commit("ADD_NEW_ALL_APPOINTMENT", newAppointment.data);
         } catch (err) {
             console.log(err);

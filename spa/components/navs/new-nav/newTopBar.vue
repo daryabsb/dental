@@ -68,6 +68,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+
   layout: "new",
   methods: {
     closeMenu() {

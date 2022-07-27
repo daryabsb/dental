@@ -73,6 +73,7 @@
 								
 										<!-- :time-cell-height="60"  -->
 										<!-- //2018-11-19" -->
+										<client-only>
 										<vue-cal
 											ref="vuecal"
 											:small="true"
@@ -121,6 +122,7 @@
 											</div>
 											</template>-->
 										</vue-cal>
+										</client-only>
 										<b-modal
 											variant="primary"
 											size="lg"
@@ -309,7 +311,6 @@ import ClinicalAlias from "../components/patients/tabs/aliases/clinicalAlias.vue
 
 export default {
 	async asyncData({ $axios, app, store, redirect }) {
-		
 		 let patientUrl = "/patients/";
         let allPatientsUrl = "/patients/?page_size=100";
         let treatmentUrl = "/treatments/";
@@ -541,8 +542,13 @@ export default {
 						"yyyy-MM-DDTHH:mm"
 					),
 				};
-				console.log("inspect date before submit: ", data);
+				// console.log("data: ", data);
 				this.$store.dispatch("addAppointment", data);
+				this.$bvToast.toast(`Your added an appointment for ${data.title}!`, {
+					title: "Appointment Added",
+					variant: "success",
+					solid: true,
+				});
 
 				// event.title = event.name;
 			} else {
@@ -559,6 +565,11 @@ export default {
 					),
 				};
 				this.$store.dispatch("editAppointment", data);
+				// this.$bvToast.toast(`Your appointment was not added for ${data.title}!`, {
+				// 	title: "Appointment not Added",
+				// 	variant: "danger",
+				// 	solid: true,
+				// });
 
 				//   let thisEvent = this.events.find(ev=>ev.id===event.id);
 				//  let findEventIndex = this.events.indexOf(thisEvent.id)

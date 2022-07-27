@@ -29,7 +29,7 @@
                                             <span class="auth-form-icon pt-2 mr-3">
                                                 <i class="dripicons-lock"></i> 
                                             </span>                                                       
-                                            <input v-model="password" type="password" class="form-control" id="userpassword" @keyup.enter="onLogin" placeholder="Enter password">
+                                            <input v-model="password" type="password" class="form-control" id="userpassword" @enter="onLogin" placeholder="Enter password">
                                         </div>                               
                                     </div><!--end form-group--> 
         
@@ -105,18 +105,14 @@ export default {
           }
           
         });
-        // console.log(loginfo)
+        // console.log(Loginfo)
         // this.$router.push({ path: '/' })
        
       } catch (err) {
         console.log(err)
       }
-    //    this.$router.push({ path: '/' })
-    },
-    // trigerLogin() {
-    //     // alert ("Enter released!")
-    //     this.onLogin()
-    // },
+       this.$router.push({ path: '/' })
+    }
   }
 }
 </script>
