@@ -3,6 +3,7 @@
   <b-navbar toggleable="sm" type="light" variant="white">
       <template>
     <div class="topbar-left">
+	<nuxt-link to="/">
       <b-navbar-brand tag="span">
         <img
           src="~assets/images/logo-sm-2.png"
@@ -10,6 +11,7 @@
           class="logo-custom logo-sm"
         />
       </b-navbar-brand>
+	</nuxt-link>
       <b-navbar-brand tag="span" class="mr-8">
         <img
           src="~assets/images/logo-dark-2.png"
@@ -23,14 +25,14 @@
     <b-collapse id="nav-collapse" is-nav>
     <b-navbar-nav class="text-center">
         <template>
-      <ul class="list-unstyled topbar-nav mb-3">
+      <!-- <ul class="list-unstyled topbar-nav mb-3">
         <li class="hide-phone app-search">
           <form role="search" class="">
             <input type="text" placeholder="Search..." class="form-control" />
             <a href=""><i class="fas fa-search"></i></a>
           </form>
         </li>
-      </ul>
+      </ul> -->
       </template>
       <!--end topbar-nav-->
 
